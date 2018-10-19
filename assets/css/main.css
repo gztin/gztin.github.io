@@ -1305,7 +1305,9 @@ p {
 		}
 
 		@media screen and (max-width: 736px) {
-
+			.flx_content > img{
+				width: 100%;
+			}
 			.row {
 				display: flex;
 				flex-wrap: wrap;
