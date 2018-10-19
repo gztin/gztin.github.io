@@ -78,6 +78,9 @@ input, select, textarea {
 .thumbnail .caption{
 	text-align: center;
 }
+.caption > p{
+	margin: margin: 0px 0 0em 0;
+}
 
 /* Basic */
 
