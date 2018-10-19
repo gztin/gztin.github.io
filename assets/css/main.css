@@ -78,6 +78,9 @@ input, select, textarea {
 .thumbnail .caption{
 	text-align: center;
 }
+p {
+		margin: 0 0 2em 0;
+}
 .caption > p{
 	margin: margin: 0px 0 0em 0;
 }
@@ -172,9 +175,7 @@ input, select, textarea {
 		font-style: italic;
 	}
 
-	p {
-		margin: 0 0 2em 0;
-	}
+	
 
 	h1 {
 		font-size: 2.75em;
