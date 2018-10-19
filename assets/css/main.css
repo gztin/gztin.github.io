@@ -85,6 +85,9 @@ p {
 	margin:0px 0 0em 0;
 }
 
+.inner > div > img{
+	width: 100%;
+}
 /* Basic */
 
 	@-ms-viewport {
