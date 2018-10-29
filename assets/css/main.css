@@ -85,7 +85,7 @@ p {
 	margin:0px 0 0em 0;
 }
 
-.flx_content > img{
+.flx_content > a > img{
 	width: 500px;
 }
 /* Basic */
