@@ -84,7 +84,9 @@ p {
 .caption > p{
 	margin:0px 0 0em 0;
 }
-
+.flx_content > a > img{
+	width: 100%;
+}
 
 /* Basic */
 
@@ -138,9 +140,7 @@ p {
 	}
 
 		@media screen and (max-width: 1680px) {
-			.flx_content > a > img{
-				width: 500px;
-			}
+			
 			body, input, select, textarea {
 				font-size: 14pt;
 			}
@@ -148,9 +148,7 @@ p {
 		}
 
 		@media screen and (max-width: 1280px) {
-			.flx_content > a > img{
-				width: 500px;
-			}
+			
 			body, input, select, textarea {
 				font-size: 12pt;
 			}
