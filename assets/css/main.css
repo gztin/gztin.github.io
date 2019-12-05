@@ -73,7 +73,7 @@ input, select, textarea {
 }
 
 .thumbnail>img{
-	height: 135px;
+	height: 100px;
 }
 .thumbnail .caption{
 	text-align: center;
