@@ -1,0 +1,37 @@
+@media screen and (min-width: 1024px){
+    .thumbnail{
+        width:30%;
+    }
+    .tiles{
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+@media screen and (max-width: 1023px){
+    .thumbnail{
+        width:30%;
+    }
+    .tiles{
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+@media screen and (max-width: 720px){
+    .thumbnail{
+        width:40%;
+    }
+    .tiles{
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+@media screen and (max-width: 480px){
+    .thumbnail{
+        width:40%;
+    }
+    .tiles{
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+

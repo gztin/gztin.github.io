@@ -12,7 +12,9 @@
 		<link href="assets/css/lightbox.css" rel="stylesheet" type="text/css" />
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css?v=2"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://unpkg.com/vue@next"></script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -48,93 +50,10 @@
 							<h1>LOGO設計</h1>
 						</div>
 						<div class="container">
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_01.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_01.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_02.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_02.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_03.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_03.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_04.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_04.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_05.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_05.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_06.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_06.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_07.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_07.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_08.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_08.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_09.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_09.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_10.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_10.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_11.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_11.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_12.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_12.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_13.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_13.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_14.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_14.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_15.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_15.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/logo/img_16.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/logo/img_16.jpg" alt="">
-									</a>
-								</div>
+							<div id="app" class="picData">
+								<a v-for="q of logo" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
+                                    <img :src="q.img" alt="">
+                                </a>
 							</div>
 						</div>
 					</div>
@@ -190,6 +109,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/data.js?v=1"></script>
 	</body>
 </html>

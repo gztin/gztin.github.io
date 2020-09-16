@@ -6,69 +6,63 @@
 -->
 <html>
 	<head>
-		<title>GZtin 作品集</title>
+		<title>博弈UI/美術</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<link rel="stylesheet" href="assets/css/style.css?v=2"/>
-		<script src="https://unpkg.com/vue@next"></script>
+		<link href="assets/css/lightbox.css" rel="stylesheet" type="text/css" />
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/style.css?v=2" />
+        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+        <script src="https://unpkg.com/vue@next"></script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
 			<div id="wrapper">
 				<!-- Header -->
-				<header id="header">
-					<div class="inner">
-						<!-- Logo -->
-						<a href="index.html" class="logo">
-							<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">GZtin 作品集</span>
-						</a>
-						<!-- Nav -->
-						<nav>
-							<ul>
-								<li><a href="#menu">選單</a></li>
-							</ul>
-						</nav>
-					</div>
-				</header>
+					<header id="header">
+						<div class="inner">
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">GZtin 作品集</span>
+								</a>
+							<!-- Nav -->
+								<nav>
+									<ul>
+										<li><a href="#menu">Menu</a></li>
+									</ul>
+								</nav>
+						</div>
+					</header>
 				<!-- Menu -->
-				<nav id="menu">
-					<h2>選單</h2>
-					<ul>
-						<li><a href="index.html">作品集</a></li>
-						<li><a href="aboutme.html">個人資訊</a></li>
-					</ul>
-				</nav>
+					<nav id="menu">
+						<h2>選單</h2>
+						<ul>
+							<li><a href="index.html">作品集</a></li>
+							<li><a href="aboutme.html">個人資訊</a></li>
+						</ul>
+					</nav>
 
 				<!-- Main -->
 					<div id="main">
-						<div id="app">
-							<div class="inner">
-								<header>
-									<h1>簡介</h1>
-									<p>{{des}}</p>
-								</header>
-								<hr>
-								<section class="tiles">
-									<article v-for="i of index" class="style1">
-										<span class="image">
-											<img :src="i.img" alt="" />
-										</span>
-										<a :href="i.link">
-											<h2>{{i.title}}</h2>
-										</a>
-									</article>
-								</section>
-							</div>
+						<div class="inner">
+							<h1>博弈UI/美術</h1>
+						</div>
+						<div class="container">
+                            <div id="app" class="picData">
+                                <a v-for="q of web" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
+                                    <img :src="q.img" alt="">
+                                </a>
+                            </div>
 						</div>
 					</div>
+
 				<!-- Footer -->
 					<footer id="footer">
 						<div class="inner">
 							<section>
-								<h2>Get in touch</h2>
-								<form action='https://www.getform.org/f/4d7f2fe2-0d62-4b15-af24-9a39beafa299' method="POST">
+								<h2>留下訊息</h2>
+								<form method="post" action="#">
 									<div class="fields">
 										<div class="field half">
 											<input type="text" name="user_name" id="name" placeholder="姓名" />
@@ -103,14 +97,17 @@
 							</ul>
 						</div>
 					</footer>
+
 			</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+			<script src="assets/js/lightbox-2.6.min.js"></script>
 			<script src="assets/js/browser.min.js"></script>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/data.js?v=1"></script>
+            <script src="assets/js/data.js?v=1"></script>
 	</body>
 </html>

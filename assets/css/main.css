@@ -139,21 +139,20 @@ p {
 		line-height: 1.75;
 	}
 
-		@media screen and (max-width: 1680px) {
+	@media screen and (max-width: 1680px) {
 
-			body, input, select, textarea {
-				font-size: 14pt;
-			}
-
+		body, input, select, textarea {
+			font-size: 14pt;
 		}
 
-		@media screen and (max-width: 1280px) {
+	}
 
-			body, input, select, textarea {
-				font-size: 12pt;
-			}
-
+	@media screen and (max-width: 1280px) {
+		body, input, select, textarea {
+			font-size: 12pt;
 		}
+
+	}
 
 	a {
 		-moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
@@ -2706,15 +2705,7 @@ p {
 				background-color: #000;
 				opacity: 0.6;
 				border: 1px solid #cdcdcd;
-			}<article class="style1">
-									<span class="image">
-										<img src="images/pic01.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>XX 設計</h2>
-									</a>
-								</article>
-
+			}
 
 			body:not(.is-touch) .tiles article:hover > .image {
 				-moz-transform: scale(1.1);
@@ -2737,7 +2728,7 @@ p {
 				opacity: 1;
 			}
 
-		* + .tiles {<article class="style1">
+		* + .tiles {
 
 			margin-top: 2em;
 		}
@@ -2761,10 +2752,10 @@ p {
 				margin: -1.25em 0 0 -1.25em;
 			}
 
-				.tiles article {
-					width: calc(33.3333333333% - 1.25em);
-					margin: 1.25em 0 0 1.25em;
-				}
+			.tiles article {
+				width: calc(33.3333333333% - 1.25em);
+				margin: 1.25em 0 0 1.25em;
+			}
 
 		}
 
@@ -3301,17 +3292,22 @@ p {
 
 /* Wrapper */
 
+#wrapper > * > .inner {
+	width: 100%;
+	max-width: 80em;
+	margin: 0 auto;
+	padding: 0 2.5em;
+}
+
+@media screen and (max-width: 736px) {
+
 	#wrapper > * > .inner {
-		width: 100%;
-		max-width: 80em;
-		margin: 0 auto;
-		padding: 0 2.5em;
+		padding: 0 1.25em;
 	}
 
-		@media screen and (max-width: 736px) {
-
-			#wrapper > * > .inner {
-				padding: 0 1.25em;
-			}
-
-		}
+}
+.picData{
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
