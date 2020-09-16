@@ -6,13 +6,15 @@
 -->
 <html>
 	<head>
-		<title>LOGO設計/插畫</title>
+		<title>LOGO設計</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link href="assets/css/lightbox.css" rel="stylesheet" type="text/css" />
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css?v=2"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://unpkg.com/vue@next"></script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -45,74 +47,13 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>平面相關設計</h1>
+							<h1>插畫/繪圖</h1>
 						</div>
 						<div class="container">
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_13.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_13.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_14.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_14.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_15.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_15.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_16.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_16.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_17.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_17.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_18.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_18.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_19.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_19.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_20.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_20.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_21.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_21.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_22.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_22.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_23.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_23.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/painter/img_24.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/painter/img_24.jpg" alt="">
-									</a>
-								</div>
+							<div id="app" class="picData">
+								<a v-for="q of painter" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
+                                    <img :src="q.img" alt="">
+                                </a>
 							</div>
 						</div>
 					</div>
@@ -168,6 +109,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/data.js?v=1"></script>
 	</body>
 </html>

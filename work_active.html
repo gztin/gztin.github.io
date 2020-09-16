@@ -6,13 +6,15 @@
 -->
 <html>
 	<head>
-		<title>DM/活動網頁</title>
+		<title>平面相關設計</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link href="assets/css/lightbox.css" rel="stylesheet" type="text/css" />
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/style.css?v=2"/>
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://unpkg.com/vue@next"></script>
 	</head>
 	<body class="is-preload">
 		<!-- Wrapper -->
@@ -23,7 +25,7 @@
 						<div class="inner">
 							<!-- Logo -->
 								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/DM.svg" alt="" /></span><span class="title">GZtin 作品集</span>
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">GZtin 作品集</span>
 								</a>
 							<!-- Nav -->
 								<nav>
@@ -45,74 +47,13 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
-							<h1>平面相關設計</h1>
+							<h1>Web/系統 UI</h1>
 						</div>
 						<div class="container">
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_01.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_01.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_02.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_02.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_03.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_03.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_04.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_04.jpg" alt="">
-									</a>
-								</div>
-							</div>
-							<div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_05.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_05.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_06.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_06.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_07.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_07.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_08.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_08.jpg" alt="">
-									</a>
-								</div>
-                            </div>
-                            <div class="inner">
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_09.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_09.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_10.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_10.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_11.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_11.jpg" alt="">
-									</a>
-								</div>
-								<div class="col-xs-6 col-sm-6 col-md-3 col-lg-3">
-									<a href="images/DM/img_12.jpg" class="thumbnail" data-lightbox="roadtrip">
-										<img src="images/DM/img_12.jpg" alt="">
-									</a>
-								</div>
+							<div id="app" class="picData">
+								<a v-for="q of active" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
+                                    <img :src="q.img" alt="">
+                                </a>
 							</div>
 						</div>
 					</div>
@@ -168,6 +109,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-
+			<script src="assets/js/data.js?v=1"></script>
 	</body>
 </html>
