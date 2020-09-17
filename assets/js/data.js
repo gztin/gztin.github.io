@@ -6,6 +6,12 @@ const app = Vue.createApp({
                 '也因為喜歡畫畫，所以也出品過很多款不同風格的Line插畫貼圖。不管是遊戲風格的插畫或者是漫畫風格我都能'+
                 '自由發揮，將自己創作融入生活，也是我想做的事。在這段職涯中因緣際會加入新創公司，接觸了專案管理，以'+
                 '及累積完整的專案開發經歷，這對我來說非常有意義，也期許未來自己的專業能對於團隊有所貢獻。',
+                
+            timeLine:'第一份工作是在台達電子擔任UI設計師，80%的時間設計軟體介面，20%時間協助部門測試智慧電錶'+
+                     '後期部門營收不佳，被迫轉型成為硬體領域，但由於部門前景以及狀況未明確很長一段時間，所以萌生'+
+                     '嘗試不同的領域的想法，而當時看到一間新創公司想要做跟服務相關的題目，我聽完介紹後，認為有發'+
+                     '展的可能，所以轉換了跑道。在公司成長的期間，我也被委任PM的職務。新創公司生存不容易，後期因'+
+                     '投入市場後，狀況不如預期，股東考量後決定不再繼續投資，只好選擇離開。後來轉換跑道',
             index:[
                 {link:'work_system.html',img:'images/pic01.jpg',title:'Web/系統 UI'},
                 {link:'work_app.html',img:'images/pic02.jpg',title:'APP UI'},
@@ -76,6 +82,7 @@ const app = Vue.createApp({
                 {img:'images/gamebleWeb/pota27.png'},
                 {img:'images/gamebleWeb/pota28.png'},
                 {img:'images/gamebleWeb/pota29.png'},
+                {img:'images/gamebleWeb/pota30.png'},
                 {img:'images/gamebleWeb/pota31.png'},
                 {img:'images/gamebleWeb/pota32.png'},
                 {img:'images/gamebleWeb/pota33.png'},
@@ -108,7 +115,16 @@ const app = Vue.createApp({
                 {img:'images/gamebleWeb/pota60.png'},
                 {img:'images/gamebleWeb/pota61.png'},
                 {img:'images/gamebleWeb/pota62.png'},
-                {img:'images/gamebleWeb/pota63.png'}
+                {img:'images/gamebleWeb/pota63.png'},
+                {img:'images/gamebleWeb/pota64.png'},
+                {img:'images/gamebleWeb/pota65.png'},
+                {img:'images/gamebleWeb/pota66.png'},
+                {img:'images/gamebleWeb/pota67.png'},
+                {img:'images/gamebleWeb/pota68.png'},
+                {img:'images/gamebleWeb/pota69.png'},
+                {img:'images/gamebleWeb/pota70.png'},
+                {img:'images/gamebleWeb/pota71.png'},
+                {img:'images/gamebleWeb/pota72.png'}
             ],
             logo:[
                 {img:'images/logo/img_01.jpg'},
@@ -205,15 +221,168 @@ const app = Vue.createApp({
                 {img:'images/appui/img_18.jpg'},
                 {img:'images/appui/img_19.jpg'},
                 {img:'images/appui/img_20.jpg'},
-                {img:'images/appui/img_21.jpg'},
-                {img:'images/appui/img_22.jpg'},
-                {img:'images/appui/img_23.jpg'},
-                {img:'images/appui/img_24.jpg'},
-                {img:'images/appui/img_25.jpg'},
-                {img:'images/appui/img_26.jpg'},
-                {img:'images/appui/img_27.jpg'},
-                {img:'images/appui/img_28.jpg'}
+                {img:'images/appui/img_21.png'},
+                {img:'images/appui/img_22.png'},
+                {img:'images/appui/img_23.png'},
+                {img:'images/appui/img_24.png'},
+                {img:'images/appui/img_25.png'},
+                {img:'images/appui/img_26.png'},
+                {img:'images/appui/img_27.png'},
+                {img:'images/appui/img_28.png'}
 
+            ],
+            ability:[
+                {skill:'平台/系統介面設計'},
+                {skill:'APP介面設計'},
+                {skill:'插畫繪製'},
+                {skill:'HMTL5'},
+                {skill:'測試流程設計'},
+                {skill:'活動企劃/發想'},
+                {skill:'專案規劃與管理'}
+            ],
+            item:[
+                {name:'PhotoShop'},
+                {name:'AdobeXD'},
+                {name:'sublimeText'},
+                {name:'Visual StdioCode'},
+                {name:'HTML5/CSS3'},
+                {name:'JQuery'}
+            ],
+            experience:[
+                {
+                    title:'華藝互動科技',
+                    duration:'( 2018/11~至今 )',
+                    duty:'職務內容',
+                    join:'參與過的專案:',
+                    item:[
+                        {name:'PhotoShop'},
+                        {name:'AdobeXD'},
+                        {name:'sublimeText'},
+                        {name:'Visual StdioCode'},
+                        {name:'HTML5/CSS3'},
+                        {name:'JQuery'}
+                    ],
+                    content:[
+                        {job:'依客戶的需求製作對應的網站版型'},
+                        {job:'製作手遊介面以及美術元件設計'},
+                        {job:'製作網頁元件以及動態效果'},
+                        {job:'繪製美術場景圖、廣告素材圖片'}
+                    ]
+                },
+                {
+                    title:'富及數位互動-專案經理',
+                    duration:'( 2016/09~2018/10 )',
+                    duty:'職務內容',
+                    join:'參與過的專案:',
+                    item:[
+                        {name:'PhotoShop'},
+                        {name:'AdobeXD'},
+                        {name:'sublimeText'},
+                        {name:'Visual StdioCode'},
+                        {name:'HTML5/CSS3'},
+                        {name:'JQuery'}
+                    ],
+                    content:[
+                        {job:'參與產品的UI規劃與設計'},
+                        {job:'平台及活動網頁的製作'},
+                        {job:'與後端人員配合建立後台管理系統'},
+                        {job:'專案時程規劃與執行'},
+                        {job:'人力資源的安排與執行'},
+                        {job:'專案測試程序相關的規劃與執行'}
+                    ],
+                    project:[
+                        {goal:'富家匯APP開發'},
+                        {goal:'富家保APP開發'},
+                        {goal:'APP後臺管理系統'},
+                        {goal:'平台相關文宣/海報設計'},
+                        {goal:'昀曦科技官方網站'},
+                        {goal:'富及數位互動公司官網'},
+                        {goal:'薄提詩面膜販售平台'}
+                    ]
+                },
+                {
+                    title:'名漢科技-UI設計師',
+                    duration:'( 2015/04~2016/8 )',
+                    duty:'職務內容',
+                    join:'參與過的專案:',
+                    item:[
+                        {name:'PhotoShop'},
+                        {name:'AdobeXD'},
+                        {name:'sublimeText'},
+                        {name:'Visual StdioCode'},
+                        {name:'HTML5/CSS3'},
+                        {name:'JQuery'}
+                    ],
+                    content:[
+                        {job:'參與產品的UI規劃與設計'},
+                        {job:'平台及活動網頁的製作'},
+                        {job:'與後端人員配合建立後台管理系統'},
+                        {job:'專案時程規劃與執行'},
+                        {job:'人力資源的安排與執行'},
+                        {job:'專案測試程序相關的規劃與執行'}
+                    ],
+                    project:[
+                        {goal:'GV001點歌機'},
+                        {goal:'KTV娛樂平台系統'},
+                        {goal:'K歌評分系統'},
+                        {goal:'智慧e-link APP'}
+                    ]
+                },
+                {
+                    title:'創赫數位-PM/網頁設計師',
+                    duration:'( 2014/02~2014/10 )',
+                    duty:'職務內容',
+                    join:'參與過的專案:',
+                    item:[
+                        {name:'PhotoShop'},
+                        {name:'AdobeXD'},
+                        {name:'sublimeText'},
+                        {name:'Visual StdioCode'},
+                        {name:'HTML5/CSS3'},
+                        {name:'JQuery'}
+                    ],
+                    content:[
+                        {job:'視覺設計、產品企劃討論'},
+                        {job:'人力資源的安排與執行'},
+                        {job:'專案時程規劃與執行'},
+                        {job:'專案測試程序相關的規劃與執行'}
+                    ],
+                    project:[
+                        {goal:'Early Plan平台'},
+                        {goal:'Early Plan APP'}
+                    ]
+                },
+                {
+                    title:'台達電子UI設計師',
+                    duration:'( 2011/01~2013/08 )',
+                    duty:'職務內容',
+                    join:'參與過的專案:',
+                    item:[
+                        {name:'PhotoShop'},
+                        {name:'AdobeXD'},
+                        {name:'sublimeText'},
+                        {name:'Visual StdioCode'},
+                        {name:'HTML5/CSS3'},
+                        {name:'JQuery'}
+                    ],
+                    content:[
+                        {job:'APP、Web UI/UX'},
+                        {job:'視覺設計、產品企劃討論'},
+                        {job:'協助團隊完善用戶在產品的使用體驗'},
+                        {job:'協助智慧電錶測試&撰寫測試報告'},
+                        {job:'收集用戶回饋並優化產品'}
+                    ],
+                    project:[
+                        {goal:'海寧皮革城Dash board設計'},
+                        {goal:'中國東莞能源在線系統介面設計'},
+                        {goal:'IBEMS 能源管理系統介面開發'},
+                        {goal:'屏東太陽能監測系統介面設計'},
+                        {goal:'高樹太陽能監測系統介面設計'},
+                        {goal:'里港太陽能監測系統介面設計'},
+                        {goal:'硬體效能測試以及測試報告撰寫'},
+                        {goal:'專案測試相關的規劃與執行'}
+                    ]
+                }
             ]
         }
     }

@@ -3,17 +3,41 @@
     flex-wrap: wrap;
     justify-content: space-around;
 }
-
+#header {
+    padding: 3em 0 0.1em 0;
+}
+.des{
+    padding: 2%;
+    text-align: justify;
+}
+.work{
+    display:flex;
+    flex-direction: column;
+}
+.work-content{
+    display:flex;
+    flex-direction: column;
+}
+.work-content:last-child > hr{display:none;}
 @media screen and (min-width: 1024px){
+    header > h1{
+        margin-left: 2%;
+    }
     .thumbnail{
         width:30%;
     }
     .tiles{
         padding-left: 5%;
         padding-right: 5%;
+    }
+    .job-title{
+        display:flex;
     }
 }
 @media screen and (max-width: 1023px){
+    header > h1{
+        margin-left: 2%;
+    }
     .thumbnail{
         width:30%;
     }
@@ -21,23 +45,88 @@
         padding-left: 5%;
         padding-right: 5%;
     }
+    .job-title{
+        display:flex;
+    }
 }
 @media screen and (max-width: 720px){
+    header > h1{
+        margin-left: 2%;
+    }
     .thumbnail{
         width:40%;
     }
     .tiles{
         padding-left: 5%;
         padding-right: 5%;
+    }
+    .job-title{
+        display:flex;
     }
 }
 @media screen and (max-width: 480px){
+    #header{
+        padding:0px;
+    }
+    #header .logo{
+        margin-top:20px;
+    }
+    header > h1{
+        padding-left: 5%;
+        margin: 0px;
+    }
+    #main{
+        padding-top:105px;
+        padding-bottom: 0px;
+        background:#000;
+        color: #d6d6d6;
+    }
+    #header > .inner{
+        background: #000;
+        position: fixed;
+        z-index: 999;
+    }
+    #header > .inner > nav{margin:2%;}
     .thumbnail{
         width:40%;
+    }
+    .title{color:#fff;}
+    .des{
+        padding:5%;
     }
     .tiles{
         padding-left: 5%;
         padding-right: 5%;
+    }
+    .join{
+        margin-top:20px;
+    }
+    .job-title > h2{margin:0;}
+    .job-title{
+        color: #fff;
+        display:flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+    .meinf{
+        background: #1d1d1d;
+        margin: 4%;
+        padding: 4%;
+        border-radius: 10px;
+    }
+    .meinf > h1{
+        color: #ff9234;
+        font-size: 23px;
+    }
+    .job,.join{
+        background: #1d1d1d;
+        padding: 4%;
+        border-radius: 10px;
+    }
+    #footer{
+        background: #000;
+        color: #9c9c9c;
+        padding-top: 10px;
     }
 }
 
