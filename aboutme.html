@@ -47,23 +47,21 @@
 						<div id="main">
 							<div class="inner">
 								<div id="app">
-									<h2 style="font-weight: bold;">經歷</h2>
-									
 									<div class="row">
-										<div class="meinf col-xs-12 col-lg-4">
-											<h1>Work Experience</h1>
+										<div class="meinf col-xs-12 col-md-4 col-lg-4">
+											<h1>工作經歷</h1>
 											<dl>
 												<li v-for="p of experience">{{p.title}}</li>
 											</dl>
 										</div>
-										<div class="meinf col-xs-12 col-lg-4">
-											<h1>Item/Skill</h1>
+										<div class="meinf col-xs-12 col-md-4 col-lg-4">
+											<h1>常用工具</h1>
 											<dl>
 												<li v-for="q of item">{{q.name}}</li>
 											</dl>
 										</div>
-										<div class="meinf col-xs-12 col-lg-4">
-											<h1>Perfessional</h1>
+										<div class="meinf col-xs-12 col-md-4 col-lg-4">
+											<h1>擅長技能</h1>
 											<dl>
 												<li v-for="r of ability">{{r.skill}}</li>
 											</dl>
@@ -77,13 +75,13 @@
 											<span>{{j.duration}}</span>
 										</div>
 										<dl>
-											<div class="col-lg-6 col-xs-12 job">
+											<div class="col-lg-6 col-md-6 col-xs-12 job">
 												<li style="font-weight: bold;color: #ff9234;">{{j.duty}}</li>
 												<li v-for="k of j.content">{{k.job}}</li>
 											</div>
-											<div class="col-lg-6 col-xs-12 join">
+											<div class="col-lg-6 col-md-6 col-xs-12 join">
 												<li style="font-weight: bold;color: #ff9234;">{{j.join}}</li>
-												<li v-for="k of j.project">{{k.goal}}</li>
+												<li v-for="m of j.project">{{m.goal}}</li>
 											</div>
 										</dl>
 										<hr>
@@ -118,12 +116,6 @@
 							<section>
 								<h2>聯絡資訊</h2>
 								<ul class="icons">
-									<!-- <li><a href="#" class="icon style2 fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon style2 fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon style2 fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon style2 fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon style2 fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="#" class="icon style2 fa-500px"><span class="label">500px</span></a></li> -->
 									<li><a href="tel:0972288738" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
 									<li><a href="mailto:atharsfake@gmail.com" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
 								</ul>

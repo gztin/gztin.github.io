@@ -216,9 +216,9 @@ const app = Vue.createApp({
                 {img:'images/appui/img_13.jpg'},
                 {img:'images/appui/img_14.jpg'},
                 {img:'images/appui/img_15.jpg'},
-                {img:'images/appui/img_16.jpg'},
+                // {img:'images/appui/img_16.jpg'},
                 {img:'images/appui/img_17.jpg'},
-                {img:'images/appui/img_18.jpg'},
+                // {img:'images/appui/img_18.jpg'},
                 {img:'images/appui/img_19.jpg'},
                 {img:'images/appui/img_20.jpg'},
                 {img:'images/appui/img_21.png'},
@@ -226,9 +226,9 @@ const app = Vue.createApp({
                 {img:'images/appui/img_23.png'},
                 {img:'images/appui/img_24.png'},
                 {img:'images/appui/img_25.png'},
-                {img:'images/appui/img_26.png'},
-                {img:'images/appui/img_27.png'},
-                {img:'images/appui/img_28.png'}
+                {img:'images/appui/img_26.png'}
+                // {img:'images/appui/img_27.png'},
+                // {img:'images/appui/img_28.png'}
 
             ],
             ability:[
