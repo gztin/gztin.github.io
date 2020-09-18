@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>LOGO設計</title>
+		<title>Web/系統 UI</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link href="assets/css/lightbox.css" rel="stylesheet" type="text/css" />
@@ -51,8 +51,8 @@
 						</div>
 						<div class="container">
 							<div id="app" class="picData">
-								<a v-for="q of webui" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
-                                    <img :src="q.img" alt="">
+								<a v-for="q of webui" :href="q.img" v-bind:style="{background:'url('+q.img+')'}"  class="thumbnail" data-lightbox="roadtrip">
+                                    <!-- <img :src="q.img" alt=""> -->
                                 </a>
 							</div>
 						</div>

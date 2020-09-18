@@ -51,8 +51,8 @@
 						</div>
 						<div class="container">
 							<div id="app" class="picData">
-								<a v-for="q of painter" :href="q.img" class="thumbnail" data-lightbox="roadtrip">
-                                    <img :src="q.img" alt="">
+								<a v-for="q of painter" :href="q.img" v-bind:style="{background:'url('+q.img+')'}"  class="thumbnail" data-lightbox="roadtrip">
+                                    <!-- <img :src="q.img" alt=""> -->
                                 </a>
 							</div>
 						</div>
@@ -109,6 +109,6 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
-			<script src="assets/js/data.js?v=1"></script>
+			<script src="assets/js/data.js?v=2"></script>
 	</body>
 </html>
