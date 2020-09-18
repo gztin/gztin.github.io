@@ -25,6 +25,8 @@
     }
     .thumbnail{
         width:30%;
+        height:290px;
+        background-size: cover!important;
     }
     .tiles{
         padding-left: 5%;
@@ -53,6 +55,8 @@
     }
     .thumbnail{
         width:30%;
+        height:250px;
+        background-size: cover!important;
     }
     .tiles{
         padding-left: 5%;
@@ -68,6 +72,8 @@
     }
     .thumbnail{
         width:40%;
+        height:200px;
+        background-size: cover!important;
     }
     .tiles{
         padding-left: 5%;
@@ -102,6 +108,8 @@
     #header > .inner > nav{margin:2%;}
     .thumbnail{
         width:40%;
+        height:135px;
+        background-size: cover!important;
     }
     .title{color:#fff;}
     .des{
