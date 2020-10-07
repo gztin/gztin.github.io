@@ -53,7 +53,7 @@ const app = Vue.createApp({
                 {img:'images/gambleBanner/img_g30.jpg'}
             ],
             web:[
-                {img:'images/gamebleWeb/pota01.png'},
+                {img:'images/gamebleWeb/pota01.jpg'},
                 {img:'images/gamebleWeb/pota02.png'},
                 {img:'images/gamebleWeb/pota03.png'},
                 {img:'images/gamebleWeb/pota04.png'},
