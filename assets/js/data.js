@@ -1,11 +1,7 @@
 const app = Vue.createApp({
     data(){
         return {
-            des:'我畢業於中原大學資訊工程學系，第一份工作在偶然的機會下踏入UI以及網頁設計的領域，資歷大約3年左右。'+
-                '舉凡平面設計、系統平台、一頁式活動網站、行動裝置介面設計、點歌機系統介面等不同類型的UI，都有涉獵。'+
-                '也因為喜歡畫畫，所以也出品過很多款不同風格的Line插畫貼圖。不管是遊戲風格的插畫或者是漫畫風格我都能'+
-                '自由發揮，將自己創作融入生活，也是我想做的事。在這段職涯中因緣際會加入新創公司，接觸了專案管理，以'+
-                '及累積完整的專案開發經歷，這對我來說非常有意義，也期許未來自己的專業能對於團隊有所貢獻。',
+            des:'我畢業於中原大學資訊工程學系，對於設計相關方面的事物很感興趣，像繪製插畫、貼圖。職涯比較多時間是擔任UI/UX/網頁設計師的職務，協助公司網站/系統平台開發製作，以及手機App UI 介面設計，也曾在新創產業擔任PM的專案經驗，在任職期間協助公司開發社區平台並且導入到社區，產品註冊率高達七成，且成功協助社區轉型及提升行政效率。目前在公司是擔任UI/UX，希望上述的能力可以給公司帶來幫助。',
                 
             timeLine:'第一份工作是在台達電子擔任UI設計師，80%的時間設計軟體介面，20%時間協助部門測試智慧電錶'+
                      '後期部門營收不佳，被迫轉型成為硬體領域，但由於部門前景以及狀況未明確很長一段時間，所以萌生'+
@@ -18,7 +14,7 @@ const app = Vue.createApp({
                 {link:'work_LOGO.html',img:'images/logo/img_02.jpg',title:'LOGO設計'},
                 {link:'work_active.html',img:'images/pic04.jpg',title:'平面相關設計'},
                 {link:'work_painter.html',img:'images/pic03.jpg',title:'插畫/繪圖'},
-                {link:'work_gambleWeb.html',img:'images/pic04a.png',title:'博弈UI/美術'}
+                {link:'work_gambleWeb.html',img:'images/pic04a.png',title:'遊戲外包美術'}
             ],
             banner:[
                 {img:'images/gambleBanner/img_g01.jpg'},
