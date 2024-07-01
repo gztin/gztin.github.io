@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" >
+<title>古早味小瑪莉遊戲機</title>
+<link  rel="stylesheet" href="style.css?v=10">
+<script src="https://unpkg.com/vue@next"></script>
+</head>
+
+<body>
+	<div id="app" class="game-grid">
+		<div class="game-view">
+			<div class="container">
+				<div class="item bet1"><span class="betPic orange"></span><span class="light betLight-left"></span></div>
+				<div class="item bet2"><span class="betPic bell"></span><span class="light"></span></div>
+				<div class="item bet3"><span class="betPic bar1"></span><span class="light"></div>
+				<div class="item bet4"><span class="betPic bar3"></span><span class="light"></div>
+				<div class="item bet5"><span class="betPic bar2"></span><span class="light"></div>
+				<div class="item bet6"><span class="betPic apple"></span><span class="light"></div>
+				<div class="item bet7"><span class="betPic lemon"></span><span class="light betLight-right"></div>
+				<div class="item bet24"><span class="betPic watermelon"></span><span class="light betLight-left"></span></div>
+				<div class="item dashboard">
+					<div class="board-content">
+						<div class="inf-dashboard">
+							<div class="money-inf">
+								<span class="title">BONUSWIN</span>
+								<span class="inf-bonus">0</span>
+							</div>
+							<div class="money-inf">
+								<span class="title">CREDIT</span>
+								<span class="inf-credit">0</span>
+							</div>
+							<div class="money-inf putMoney">
+								<span>投幣</span>
+							</div>
+							<div class="money-inf">
+								<div class="title-guess small">
+									<span class="guess-range">0-6</span>
+									<span class="guess-bet">小</span>
+								</div>
+								<div class="guess-result">0</div>
+								<div class="title-guess big">
+									<span class="guess-range">8-13</span>
+									<span class="guess-bet">大</span>
+								</div>
+							</div>
+						</div>
+						<div class="inf-dashboard">
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic bar3"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic seven"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic star2"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic watermelon"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic bell"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic lemon"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic orange"></span>
+								<span class="betInf">0</span>
+							</div>
+							<div class="sub-inf">
+								<!-- <span class="betPoint">5倍</span> -->
+								<span class="betPic apple"></span>
+								<span class="betInf">0</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="item bet8"><span class="betPic watermelon"></span><span class="light betLight-right"></div>
+				<div class="item bet23"><span class="betPic lucky"></span><span class="light betLight-left"></div>
+				<div class="item bet9"><span class="betPic apple"></span><span class="light betLight-right"></div>
+				<div class="item bet22"><span class="betPic orange"></span><span class="light betLight-left"></div>
+				<div class="item bet10"><span class="betPic orange"></span><span class="light betLight-right"></div>
+				<div class="item bet21 "><span class="betPic bell"></span><span class="light betLight-left"></div>
+				<div class="item bet11"><span class="betPic seven"></span><span class="light betLight-right"></div>
+				<div class="item bet20"><span class="betPic seven"></span><span class="light betLight-left"></div>
+				<div class="item bet12"><span class="betPic apple"></span><span class="light betLight-right"></div>
+				<div class="item bet19"><span class="betPic lemon"></span><span class="light betLight-left"></div>
+				<div class="item bet18"><span class="betPic lemon"></span><span class="light"></div>
+				<div class="item bet17"><span class="betPic star2"></span><span class="light"></div>
+				<div class="item bet16"><span class="betPic star3"></span><span class="light"></div>
+				<div class="item bet15"><span class="betPic lucky"></span><span class="light"></div>
+				<div class="item bet14"><span class="betPic apple"></span><span class="light"></div>
+				<div class="item bet13"><span class="betPic bell"></span><span class="light betLight-right"></div>
+			</div>
+			<div class="game-control">
+				<div class="control-block">
+					<div class="game-set">
+						<span class="btn-bet cash">重玩</span>
+					</div>
+					<div class="game-set">
+						<input class="btn-bet win" value="WIN">
+						<input class="btn-bet credit" value="CREDIT">
+					</div>
+					<div class="game-set">
+						<span class="btn-bet size-small">小</span>
+						<span class="btn-bet size-big">大</span>
+					</div>
+					<div class="game-set">
+						<input class="btn-bet play" type="button" value="PLAY">
+						<!-- <span class="btn-bet play">PLAY</span> -->
+					</div>
+				</div>
+				<div class="control-block">
+					<div class="btn-bet bet-option">
+						<span class="betCount"></span>
+						<span class="betPic bar3"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option">
+						<span class="betCount"></span>
+						<span class="betPic seven"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option">
+						<span class="betCount"></span>
+						<span class="betPic star2"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option ">
+						<span class="betCount"></span>
+						<span class="betPic watermelon"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option ">
+						<span class="betCount"></span>
+						<span class="betPic bell"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option ">
+						<span class="betCount"></span>
+						<span class="betPic lemon"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option ">
+						<span class="betCount"></span>
+						<span class="betPic orange"></span>
+						<span class="betInf"></span>
+					</div>
+					<div class="btn-bet bet-option ">
+						<span class="betCount"></span>
+						<span class="betPic apple"></span>
+						<span class="betInf"></span>
+					</div>
+				</div>
+				<div class="control-cellphone">
+						<div class="bet-1">
+							<span class="btn-bet cash">重玩</span>
+							<span class="btn-bet win">WIN</span>
+							<span class="btn-bet credit" >CREDIT</span>
+							<span class="btn-bet size-small">小</span>
+							<span class="btn-bet size-big">大</span>
+							<span class="btn-bet play">PLAY</span>
+							<span class="btn-bet betPlay">下注</span>
+						</div>
+						<div class="bet-2">
+							<div class="backToGame"><span class="betBar">返回遊戲</span></div>
+							<div class="betSetting">
+								<div class="btn-bet bet-option">
+									<span class="betCount"></span>
+									<span class="betPic bar3"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option">
+									<span class="betCount"></span>
+									<span class="betPic seven"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option">
+									<span class="betCount"></span>
+									<span class="betPic star2"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option ">
+									<span class="betCount"></span>
+									<span class="betPic watermelon"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option ">
+									<span class="betCount"></span>
+									<span class="betPic bell"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option ">
+									<span class="betCount"></span>
+									<span class="betPic lemon"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option ">
+									<span class="betCount"></span>
+									<span class="betPic orange"></span>
+									<span class="betInf"></span>
+								</div>
+								<div class="btn-bet bet-option ">
+									<span class="betCount"></span>
+									<span class="betPic apple"></span>
+									<span class="betInf"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src = "play.js?v=43"></script>
+	
+</body>
+</html>
