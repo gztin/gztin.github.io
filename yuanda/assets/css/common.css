@@ -1,0 +1,555 @@
+@charset "UTF-8";html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    display: block
+}
+
+body {
+    line-height: 1
+}
+
+ol,ul {
+    list-style: none
+}
+
+blockquote,q {
+    quotes: none
+}
+
+blockquote:before,blockquote:after,q:before,q:after {
+    content: '';
+    content: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none;
+    max-height: 999999px
+}
+
+body {
+    font-weight: 500;
+    font-family: '微軟正黑體','MS UI Gothic',Arial,Helvetica,sans-serif;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    -ms-text-size-adjust: none;
+    text-size-adjust: none
+}
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    color: #214dda;
+    font-size: 1em
+}
+
+:focus {
+    outline: 0
+}
+
+img {
+    width: 100%;
+    vertical-align: middle
+}
+
+.clearboth {
+    clear: both
+}
+
+.breakMob {
+    display: none
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    padding: 20px;
+    height: 80px;
+    *height: 40px;
+    z-index: 100;
+    background-image: url("../images/header/header_bg.png");
+    background-repeat: no-repeat;
+    background-position: center right;
+    background-color: white
+}
+
+.header.scrolling {
+    -webkit-box-shadow: 0 0 18px rgba(0,0,0,0.22);
+    box-shadow: 0 0 18px rgba(0,0,0,0.22)
+}
+
+.header .yuantaLogo a {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 308px;
+    height: 39px;
+    background-image: url("../images/header/yuanta_logo.svg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    float: left;
+}
+.header .yuantaplusLogo {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 130px;
+    height: 39px;
+    background-image: url("../images/header/yuantaplus_logo.svg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    float: right;
+}
+.header .mediaIcons {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    right: 10px;
+    -webkit-transform: translate(0,50%);
+    -ms-transform: translate(0,50%);
+    transform: translate(0,50%)
+}
+
+.header .mediaIcons li {
+    display: block;
+    margin: 20px 10px;
+    background-size: 100%;
+    background-repeat: no-repeat
+}
+
+.header .mediaIcons li.facebook {
+    background-image: url("../images/header/socialmedia_facebook_grey.png");
+    background-position: bottom center
+}
+
+@media screen and (min-width: 1025px) {
+    .header .mediaIcons li.facebook:hover {
+        background-image:url("../images/header/socialmedia_facebook.png")
+    }
+}
+
+.header .mediaIcons li.line {
+    background-image: url("../images/header/socialmedia_line_grey.png");
+    background-position: bottom center
+}
+
+@media screen and (min-width: 1025px) {
+    .header .mediaIcons li.line:hover {
+        background-image:url("../images/header/socialmedia_line.png")
+    }
+}
+
+.header .mediaIcons li.instagram {
+    background-image: url("../images/header/socialmedia_instagram_grey.png");
+    background-position: bottom center
+}
+
+@media screen and (min-width: 1025px) {
+    .header .mediaIcons li.instagram:hover {
+        background-image:url("../images/header/socialmedia_instagram.png")
+    }
+}
+
+.header .mediaIcons li.youtube {
+    background-image: url("../images/header/socialmedia_youtube_grey.png");
+    background-position: bottom center
+}
+
+@media screen and (min-width: 1025px) {
+    .header .mediaIcons li.youtube:hover {
+        background-image:url("../images/header/socialmedia_youtube.png")
+    }
+}
+
+.header .mediaIcons li.telegram {
+    background-image: url("../images/header/socialmedia_telegram_grey.png");
+    background-position: bottom center
+}
+
+@media screen and (min-width: 1025px) {
+    .header .mediaIcons li.telegram:hover {
+        background-image:url("../images/header/socialmedia_telegram.png")
+    }
+}
+
+.header .mediaIcons a {
+    display: block;
+    width: 33px;
+    height: 33px
+}
+
+.footer {
+    width: 100%;
+    background-color: #007fe0;
+    height: 80px;
+    padding: 10px 0
+}
+.footer a {
+    color: #fff
+}
+
+.footerCont {
+    color: white;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 13px;
+    line-height: 28px;
+	text-align: center;
+}
+
+.footerCont .copyright {
+    width: 100%;
+}
+
+.footerCont .contWrapper {
+    width: 100%;
+}
+
+.contWrapper .footer-item {
+	display: inline-block;
+	padding: 0 5px;
+}
+
+.contWrapper .footer-item a{
+    display: inline-block;
+    text-decoration: underline;
+}
+
+.goTop {
+    display: none;
+    position: fixed;
+    z-index: 99;
+    right: 15px;
+    bottom: 20px;
+    opacity: .7;
+    width: 54px;
+    height: 54px;
+    cursor: pointer;
+    background-image: url("../images/side/goTop.svg");
+    background-size: 100% auto;
+    background-repeat: no-repeat
+}
+
+@media screen and (min-width: 1025px) {
+    .goTop:hover {
+        opacity:1
+    }
+}
+
+.wrapper {
+    width: 100%;
+    color: #fff;
+    font-weight: 400
+}
+
+@media screen and (min-width: 1201px) {
+    .wrapper {
+        font-size:18px
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width:1025px) {
+    .wrapper {
+        font-size:18px
+    }
+}
+
+
+@media screen and (max-width: 767px) {
+    .wrapper {
+        font-size:15px;
+        line-height:23px;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    .wrapper {
+        line-height:32px;
+    }
+}
+
+@media screen and (max-width: 1024px) and (min-width:768px) {
+    .wrapper {
+        line-height:28px;
+        font-size:16px;
+    }
+}
+
+.container {
+    position: relative;
+    width: 85%;
+    max-width: 1000px;
+    margin: 0 auto;
+    z-index: 1
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        height:76px
+    }
+
+    .header .yuantaLogo a {
+        width: 281px;
+        height: 36px
+    }
+
+    .header .yuantaplusLogo {
+        width: 120px;
+        height: 36px
+    }
+
+    .header .mediaIcons a {
+        width: 28px;
+        height: 28px
+    }
+}
+
+@media screen and (max-width: 767px) {
+    h2::after {
+        margin:30px auto
+    }
+
+    p {
+        padding-bottom: 10px
+    }
+
+    .breakMob {
+        display: block
+    }
+
+    .header {
+        padding: 16px;
+        height: 58px
+    }
+
+    .header .yuantaLogo a {
+        width: 203px;
+        height: 26px
+    }
+
+    .header .yuantaplusLogo {
+        width: 87px;
+        height: 26px
+    }
+    .header .mediaIcons {
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        -webkit-transform: none;
+        -ms-transform: none;
+        transform: none;
+        background-color: rgba(0,159,232,0.9);
+        text-align: center;
+        padding: 4px 0
+    }
+
+    .header .mediaIcons li {
+        display: inline-block;
+        *display: inline;
+        zoom:1;vertical-align: middle;
+        margin: 6px
+    }
+
+    .header .mediaIcons li.facebook {
+        background-image: url("../images/header/socialmedia_facebook.svg");
+        background-position: bottom center
+    }
+
+    .header .mediaIcons li.line {
+        background-image: url("../images/header/socialmedia_line.svg");
+        background-position: bottom center
+    }
+
+    .header .mediaIcons li.instagram {
+        background-image: url("../images/header/socialmedia_instagram.svg");
+        background-position: bottom center
+    }
+
+    .header .mediaIcons li.youtube {
+        background-image: url("../images/header/socialmedia_youtube.svg");
+        background-position: bottom center
+    }
+
+    .header .mediaIcons li.telegram {
+        background-image: url("../images/header/socialmedia_telegram.svg");
+        background-position: bottom center
+    }
+
+
+    .footer {
+        padding-bottom: 60px;
+        height: auto
+    }
+
+    .footerCont {
+        font-size: 12px;
+        line-height: 20px;
+		text-align: left;
+    }
+	
+	.contWrapper .footer-item {
+		width: 100%;
+		display: block;
+		padding: 0;
+	}
+
+    .footerCont .copyright,.footerCont .contact {
+        float: none;
+        display: block;
+        max-width: 100%;
+        padding-bottom: 10px
+    }
+
+    .goTop {
+        width: 43px;
+        height: 43px;
+        bottom: 60px;
+    }
+}
+
+
+@media screen and (max-width: 345px) {
+    .header .yuantaLogo a {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        width: 123px;
+        height: 26px;
+        background-image: url("../images/header/yuantabank_logo.svg");
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        float: left
+    }
+}
+
+/* appDownload */
+.appDownload{display:-webkit-flex;display:flex;-webkit-justify-content:center;justify-content:center;padding:0 0 40px;}
+.appDownload-QRcode img{width:120px;margin-right:20px;}
+.appDownload-link h5{margin:10px 0;font-size:16px;line-height:22px;text-align:center;font-weight:bold;color:#333333;}
+.appDownload-link a{display:inline-block;padding:0 3px;text-decoration:none;transition:.3s;}
+.appDownload-link img{width:180px}
+@media only screen and (min-width:950px){
+.appDownload-link a:hover{-webkit-transform:translateY(-10%);transform:translateY(-10%)}
+}
+@media only screen and (max-width:949px){
+/* .appDownload{padding:18px 0 20px;} */
+.appDownload-QRcode{display:none}
+.appDownload-link img{width:140px}
+}
+
+/* ------ creditSlogan ------ */
+.creditSlogan{width: 100%; height: auto; background:#f1f1f1; padding: 25px 20px; display: flex; justify-content: center; align-items: center; box-sizing: border-box;}
+.creditSlogan div{ font-size:14px; color: #575757; padding: 0 0 0 30px; line-height: 1.6;}
+.creditSlogan div:first-child{font-size:28px; font-weight: bold; color:#575757; letter-spacing: 0.6px; border-right: 1px solid #666666; padding: 0 30px 0 0;}
+.creditSlogan div span:first-child::after{ content: '：';}
+.creditSlogan div:first-child span:first-child{ padding: 0 10px 0 0;}
+.creditSlogan div:first-child span:first-child::after{ display: none;}
+.creditSlogan a{color:#007fe0;}
+.creditSlogan a:hover{color:#007fe0;}
+@media screen and (max-width: 1200px){
+.creditSlogan div{ font-size:14px; padding: 0 0 0 10px;}
+.creditSlogan div:first-child{padding: 0 10px 0 0;}
+}
+@media screen and (max-width: 1024px){
+.topView h2{ width:100%; position: absolute; top:30%;}
+.creditSlogan div{font-size:14px; padding: 0 0 0 10px;}
+.creditSlogan div:first-child{ box-sizing: border-box;padding:0;}
+.creditSlogan div:first-child span{display: block;}
+}
+@media screen and (max-width: 870px){
+.creditSlogan{ height: 125px; flex-direction: column; flex-wrap: wrap; align-content: center; }
+.creditSlogan div{ align-self:flex-start;}
+.creditSlogan div:first-child{font-size:20px; margin: 0;}
+.creditSlogan p{font-size: 14px; line-height: 22px;}
+}
+@media screen and (max-width: 800px){
+.creditSlogan{ width:100%; height: auto; padding: 20px;}
+.creditSlogan div{ width:100%; align-self:center; text-align: center;}
+.creditSlogan div:first-child{ font-size:30px; border-bottom: 1px solid ;border-right:none; display: flex; justify-content:center; margin: 0 0 10px;}
+.creditSlogan p{font-size: 14px; line-height: 2; padding: 0;}
+}
+@media screen and (max-width: 420px){
+.creditSlogan{ padding: 20px 10px;}
+.creditSlogan div:first-child{ font-size:24px;}
+.creditSlogan p{font-size: 12px; line-height: 1.8;}
+}
+
+/* ------ yuantaman ------ */
+.yuantaman {
+  position: fixed;
+  right: 15px;
+  bottom: 80px;
+  z-index: 50;
+  transition: .3s; }
+  .yuantaman-hibox, .yuantaman-box {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.2);
+    background: #fff;
+    z-index: 10; }
+    .yuantaman-txt {
+        font-size: 12px;
+        color: #707070;
+        line-height: 1.6;
+        text-align: center; }
+    .yuantaman-txt span.tt-orange {
+        color: #D94600; }
+    .yuantaman-txt span.tt-blue {
+        color: #0072ff; }
+    .yuantaman-arrow {
+        width: 0px;
+        height: 0px;
+        border-width: 10px;
+        border-style: solid;
+        border-color: #fff transparent transparent transparent ;
+        position: absolute;
+        bottom: -20px;
+        right: 17px; }
+    .yuantaman-box {
+        display: none; }
+    .yuantaman-icon {
+        width: 54px;
+        height: 54px;
+        background-image: url("../images/side/yuantaman.svg"); }
+
+  @media only screen and (min-width: 768px) {
+    .yuantaman-icon:hover .yuantaman-box {
+      display: flex; } 
+  }
+  @media only screen and (max-width: 767px) {
+    .yuantaman {
+      bottom: 100px; }
+    .yuantaman-arrow {
+      border-width: 8px;
+      bottom: -16px;
+      right: 14px; }
+    .yuantaman-icon {
+      width: 43px;
+      height: 43px; }
+  }

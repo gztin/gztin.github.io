@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Layout</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .container_invest {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 1200px;
+            height: 600px;
+            background-image: url(../sample04/assets/images/common/bg_invest_1024.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 10px;
+            position: relative;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0;
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; /* 改为左对齐 */
+            width: 30%;
+            background-color: #8a2be2;
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: 1;
+            position: absolute;
+            left: 0; /* 将内容靠左 */
+        }
+
+        .top-left {
+            background-color: #ffeb3b;
+            width: 80%;
+            height: 150px;
+            margin: 10px 0; /* 删除 auto 以保持左对齐 */
+        }
+
+        .bottom-left {
+            background-color: #7b68ee;
+            width: 50%;
+            height: 80px;
+            margin: 10px 0; /* 删除 auto 以保持左对齐 */
+        }
+
+        .rightBlock {
+            background-image: url(../sample04/assets/images/common/bg_rightBlock_1024.png);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            width: 40%;
+            height: 100%;
+            margin: 10px;
+            margin-bottom: 100px;
+            position: absolute;
+            right: 10%;
+            bottom: -1%;
+        }
+
+        .bottom-container {
+            display: flex;
+            justify-content: space-around;
+            width: 88%;
+            margin: 10px;
+            position: absolute;
+            bottom: 15%;
+            height: 35%;
+            background-color: rgba(255, 255, 255, 0.8);
+            z-index: 2;
+        }
+
+        .bottom-box {
+            background-color: #ff6347;
+            width: 100%;
+            height: 100%;
+            margin: 10px;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+        }
+
+        .bottom-box:nth-child(1) {
+            background-image: url(../sample04/assets/images/common/bg_invest_card_a_1024.png);
+        }
+
+        .bottom-box:nth-child(2) {
+            background-image: url(../sample04/assets/images/common/bg_invest_card_b_1024.png);
+        }
+
+        .bottom-box:nth-child(3) {
+            background-image: url(../sample04/assets/images/common/bg_invest_card_c_1024.png);
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .main {
+                width: 100%;
+            }
+            .right {
+                width: 100%;
+                height: 200px;
+            }
+            .bottom-box {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container_invest">
+        <div class="main">
+            <div class="top-left">Top Left</div>
+            <div class="bottom-left">Bottom Left</div>
+        </div>
+        <div class="rightBlock">Right</div>
+        <div class="bottom-container">
+            <div class="bottom-box">Bottom Box 1</div>
+            <div class="bottom-box">Bottom Box 2</div>
+            <div class="bottom-box">Bottom Box 3</div>
+        </div>
+    </div>
+</body>
+</html>
