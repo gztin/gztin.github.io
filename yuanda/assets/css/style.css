@@ -2116,7 +2116,7 @@ html, body {
         color: white;
     }
     .banner{
-        background-image:url(../images/banner/KVBackground_1440c.png);
+        background-image:url(../images/banner/KVBackground_1440c.jpg);
     }
    .agentButton_1024{
         display: block;
@@ -2134,7 +2134,7 @@ html, body {
 }
 @media screen and (max-width: 1024px){
     .banner{
-        background-image:url(../images/banner/KVBackground_1440c.png);
+        background-image:url(../images/banner/KVBackground_1440c.jpg);
         height: 56vw;
     }
     .slick-track {
