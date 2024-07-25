@@ -20,7 +20,7 @@
 }
 #service01{
     padding-top: 100px;
-    padding-bottom: 150px;
+    padding-bottom: 50px;
 }
 #service02,
 #service03,
@@ -153,8 +153,8 @@ html, body {
 }
 /* 修改onlineService的slider */
 .slick-prev, .slick-next {
-    width: 48px;
-    height: 48px;
+    width: 2.5vw;
+    height: 2.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -164,13 +164,18 @@ html, body {
     z-index: 1;
 }
 .slick-prev:before, .slick-next:before {
-    width: 48px;
-    height: 48px;
+    width: 2.5vw;
+    height: 2.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+.slick-next {
+    right: 7vw;
+}
+.slick-prev {
+    left: 7vw;
+}
 .sliderButton > button.slick-prev,
 .slider_loan > .slick-prev{
     background-image: url(../images/common/arrow-left_outline.png);
@@ -539,6 +544,7 @@ html, body {
 .creditCard_menu a:hover{
     background-color: #94fffa;
     color: #013397;
+    border:#013397 solid 2px;
 }
 .creditCard_menu a:hover > span.bt_l {
     background-image: url(../images/button/bt_l_hover.png);
@@ -699,7 +705,8 @@ html, body {
 }
 .slide_onlineService,
 .slide_digital{
-    height:33vw;
+    height:38vw;
+    max-height: 769px;
 }
 .slick-dotted.slick-slider{
     margin-bottom:0px;
@@ -830,28 +837,28 @@ html, body {
 .title{
   color:#fff;
   text-align: center;
-  font-size: 32px;
+  font-size: 1.6vw;
   font-weight: 700;
 }
 .block_title{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top:2vw;
+  margin-top:4vw;
   gap:1.5vw;
 }
 .block_title > .cube > span{
   display: inline-block;
-  width: 0.5vw;
-  height: 0.5vw;
+  width: 0.7vw;
+  height: 0.7vw;
   margin: 0 0.2vw;
 }
 .title_span1{
-  background-color:#15FFD5;
+  background-color:#15FFFF;
   opacity: 0.3;
 }
 .title_span2{
-  background-color:#15FFD5;
+  background-color:#15FFFF;
 }
 .slick-dotted .slick-slider {
     margin-bottom: 0px;
@@ -873,9 +880,11 @@ html, body {
 }
 .slide > img{
     width: 100%;
-    max-width: 450px; /* Add max-width to control the size */
+    max-height: 570px;
+    max-width: 450px;
     height: auto; /* 確保圖片按比例縮放 */
     margin: 0 auto;
+    margin-top: 1vw;
 }
 .slick-dots li {
     display: inline-block;
@@ -897,7 +906,7 @@ html, body {
     width: 100%;
     max-width: 1400px;
     left: 0%;
-    bottom: 60%;
+    bottom: 55%;
 }
 .creditInf > .sliderButton > button.slick-prev,
 .creditInf > .sliderButton > button.slick-next, 
@@ -920,16 +929,10 @@ html, body {
     align-items: center;
 }
 
-.slick-next {
-    right: 4.5vw;
-}
-.slick-prev {
-    left: 4.5vw;
-}
 .slick-dots {
     text-align: center;
     bottom: 4vw;
-    scale:1.3;
+    scale:1;
 }
 .slick-dots li {
     display: inline-block;
@@ -1051,7 +1054,7 @@ html, body {
     position: absolute;
     left: 50%; /* 水平居中 */
     transform: translateX(-50%); /* 使元素完全居中 */
-    bottom:90px;
+    bottom:100px;
 }
 .button_slideService:hover{
     background-image:url(../images/button/creditService_hover.png);
@@ -1060,6 +1063,10 @@ html, body {
   background-image:url(../images/common/agent.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
+}
+.slide_onlineService > .slick-list,
+.slide_digital > .slick-list{
+    margin-top:-5vw;
 }
 /* slider end */
 
@@ -1092,20 +1099,27 @@ html, body {
 .slider_loan > .block_title > .title {
     color: #fff;
     text-align: center;
-    font-size: 32px;
+    font-size: 1.6vw;
     font-weight: 700;
 }
 .slider_loan > .block_title > .cube > span {
     display: inline-block;
-    width: 15px;
-    height: 15px;
-    margin: 0 5px;
+    width: 0.7vw;
+    height: 0.7vw;
+    margin: 0 3px;
 }
 
 .right {
     /* background-color: #fff; */
     width: 34%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.right > img{
+    width:100%;
 }
 .slider_loan > .slick-slider {
     width: 90%;
@@ -1204,6 +1218,10 @@ html, body {
     .container{
         max-width: 1500px;
     }
+    #service01 > .container,
+    #service04 > .container{
+        width: 100%;
+    }
     .agentLink{
         width:24vw;
         height:24vw;
@@ -1255,7 +1273,7 @@ html, body {
     .custom-button:hover{
         background-color: #94fffa;
         color:#013397;
-        border:#013397 solid 1px;
+        border:#013397 solid 2px;
         box-shadow: 1px 2px 10px #94fffa ;
     }
     /* .block_invest_1024{
@@ -1315,14 +1333,6 @@ html, body {
     }
     #service05 > .block_title_Pic{
         display: none;
-    }
-    
-    #service01,
-    #service02,
-    #service03,
-    #service04,
-    #service05{
-        margin-bottom:100px;
     }
     #service01{
         padding-top:100px;
@@ -1601,6 +1611,7 @@ html, body {
     .content {
         display: none;
         width:100%;
+        margin-top:-3vw;
     }
     .content.active {
         display: block;
@@ -1792,11 +1803,11 @@ html, body {
       margin: 0 5px; 
     } */
     .title_span1{
-      background-color:#15FFD5;
+      background-color:#15FFFF;
       opacity: 0.3;
     }
     .title_span2{
-      background-color:#15FFD5;
+      background-color:#15FFFF;
     }
     .slick-dotted .slick-slider {
         margin-bottom: 0px;
@@ -2018,7 +2029,7 @@ html, body {
     .slider_loan > .block_title > .title {
         color: #fff;
         text-align: center;
-        font-size: 32px;
+        font-size: 2vw;
         font-weight: bold;
     }
     .slider_loan > .block_title > .cube > span {
@@ -2133,6 +2144,16 @@ html, body {
    }
 }
 @media screen and (max-width: 1024px){
+    #service02, #service03, #service04, #service05 {
+        padding-bottom: 0px;
+    }
+    #service03{
+        padding-bottom: 100px;
+    }
+    #service01 > .container,
+    #service04 > .container{
+        width:100%;
+    }
     .banner{
         background-image:url(../images/banner/KVBackground_1440c.jpg);
         height: 56vw;
@@ -2141,15 +2162,32 @@ html, body {
         top: 30px;
     }
     .slick-dots {
-        bottom: 6vw;
+        bottom: 4.5vw;
+    }
+    .slide > img{
+        margin-top: 1vw;
+    }
+    .slick-prev {
+        left: 6vw;
+    }
+    .slick-next {
+        right: 6vw;
+    }
+    .sliderButton{
+        bottom: 60%;
     }
     .button_slideService{
         bottom:112px;
     }
-    /* .slick-prev, .slick-next {
-        width: 25px;
-        height: 25px;
-    } */
+    .content {
+        margin-top: -8vw;
+    }
+    .serviceImg > .hint_title > .creditCard_button{
+        margin-left: 10px;
+    }
+    .Block_service{
+        height:474px;
+    }
 }
 @media screen and (max-width: 1023px) {
     html, body {
@@ -2186,10 +2224,10 @@ html, body {
         height: 1500px;
         flex-direction: column;
     }
-    .rightBlock{
+    /* .rightBlock{
         width:5%;
         height:50%;
-    }
+    } */
     .main{
         width: 66%;
         margin-left: 0px;
@@ -2985,10 +3023,16 @@ html, body {
         background-color: #F4FFFF;
     }
     .creditInf > img {
-        height: 860px;
+        height: 930px;
     }
     .service_Digital > img {
-        height: 860px;
+        height: 930px;
+    }
+    .serviceImg > .hint_title > .creditCard_button {
+        margin: 0 auto;
+    }
+    .rightBlock {
+        height: 63%;
     }
     #service05 > .block_title_Pic {
         height: 150px;
@@ -3007,7 +3051,12 @@ html, body {
         flex: 0 0 calc(50% - 10px); 
         margin-bottom: 10px; 
     }
-
+    .title {
+        font-size: 32px;
+    }
+    .slide > img {
+        margin-top: 5vw;
+    }
     .Block_service{
         height:950px;
     }
@@ -3018,7 +3067,6 @@ html, body {
         background-size: contain;
         height:800px;
     }
-
     .serviceA_MenuButton > button {
         height: 8vw;
         width: 95%;
@@ -3097,6 +3145,17 @@ html, body {
 @media screen and (max-width: 790px){
     .loan {
         height: 774px;
+    }
+}
+@media screen and (max-width: 768px){
+    .hint_title {
+        margin-bottom: 4.5vw;
+    }
+    .bossRighthand, .bossLefthand {
+        scale: 1.5;
+    }
+    .bossRighthand {
+        margin-right: 29vw;
     }
 }
 @media screen and (max-width: 767px){
@@ -3408,7 +3467,9 @@ html, body {
         width: 5vw;
         height: 5vw;
     }
-    
+    .title_span1 {
+        opacity: 1;
+    }
     .loan {
         background-image:url(../images/background/bg_loanService_C.png);
         height:1000px;
@@ -4118,14 +4179,11 @@ html, body {
     #service01 > .block_title_Pic > .subTitle{
         width:59%;
     }
-    .title_onlineSerivce_pic {
+    .title_onlineSerivce_pic,
+    .title_creditCard_pic,
+    .title_digital_pic,
+    .title_loan_pic {
         height:14vw;
-    }
-    .title_creditCard_pic {
-        height: 14vw;
-    }
-    .title_digital_pic {
-        height: 14vw;
     }
     .creditCard_menu{
         height:7vw;
@@ -4196,7 +4254,6 @@ html, body {
         margin-bottom: 6vw;
     }
     .creditCard_menu {
-        width:100%;
         flex-wrap: wrap; /* 允許換行 */
     }
     .creditCard_menu a {
@@ -4472,11 +4529,37 @@ html, body {
     #content4 > .serviceImg {
         height: 690px;
     }
+    #service01, 
+    #service02, 
+    #service03, 
+    #service04, 
+    #service05 {
+        padding-bottom: 100px;
+    }
     .Block_service {
         height: 1050px;
     }
+    .title {
+        font-size: 26px;
+    }
+    .slider_loan > .block_title > .title {
+        font-size: 26px;
+    }
+    .slide > img {
+        margin-top: -1vw;
+    }
     .hint_title {
         margin-bottom: 3.5vw;
+    }
+    .container_invest {
+        height: 900px;
+    }
+    .rightBlock {
+        height: 62%;
+    }
+    .slide_onlineService > .slick-list, 
+    .slide_digital > .slick-list {
+        margin-top: 0vw;
     }
     .creditInf > img,
     .service_Digital > img {
@@ -4486,7 +4569,68 @@ html, body {
         bottom: 12vw;
     }
     .loan {
-        height:800px;
+        height:750px;
+    }
+    .placeA, .placeB {
+        height: 650px;
+    }
+    .placeC {
+        height: 500px;
+    }
+    .block_title > .cube > span,
+    .slider_loan > .block_title > .cube > span {
+        width: 9px;
+        height: 9px;
+        margin: 0 4px;
+    }
+    .slider_loan {
+        margin-bottom: 25vw;
+    }
+    .slick-list {
+        margin-top: -9vw;
+    }
+    .bossRighthand {
+        margin-right: 19vw;
+    }
+    .bossLefthand {
+        margin-top: 100px;
+    }
+}
+@media screen and (max-width: 412px){
+    #service01, 
+    #service02, 
+    #service03, 
+    #service04, 
+    #service05 {
+        padding-bottom: 50px;
+    }
+    .container_invest {
+        height: 900px;
+    }
+    .rightBlock {
+        height: 60%;
+    }
+    #service01 > .container > div > .block_title_Pic {
+        height: 103px;
+    }
+    #service02 > .block_title_Pic {
+        height: 100px;
+    }
+    #service04 > .container > div > .block_title_Pic {
+        height: 124px;
+    }
+    #service05 > .block_title_Pic {
+        height: 136px;
+    }
+    .connect_top{
+        height: 7vw;
+    }
+    .connect_buttom {
+        height: 9vw;
+    }
+    .background_Connect_buttom,
+    .background_Connect_top{
+        max-width: 78%;
     }
 }
 @media screen and (max-width: 400px){
@@ -4570,7 +4714,7 @@ html, body {
         height: 700px;
     }
     .sliderAAA > .button_slideService{
-        bottom: 21vw;
+        bottom: 28vw;
     }
     .slider_loan > .button_slideService{
         bottom:-24vw;
@@ -4598,87 +4742,137 @@ html, body {
     }
     .creditInf > img,
     .service_Digital > img {
-        height: 590px;
+        height: 560px;
     }
     .sliderButton {
         bottom: 53%;
     }
     .slick-dots {
-        bottom: 18vw;
+        bottom: 23vw;
     }
     .slider_loan {
         margin-bottom: 18vw;
     }
+    #service03{
+        padding-bottom: 100px;
+    }
 }
-/* @media screen and (min-width: 1201px) {
-    .container{
-        max-width: 100%;
+@media screen and (max-width: 360px){
+    #content1 > .serviceImg, 
+    #content2 > .serviceImg, 
+    #content3 > .serviceImg, 
+    #content4 > .serviceImg {
+        margin-top: -12vw;
     }
-    .animation_1024 {
-        margin-left: 17vw;
+    #service01, 
+    #service02, 
+    #service03, 
+    #service04, 
+    #service05 {
+        padding-bottom: 0px;
     }
-    .sectionA_MenuA{
-        background-size: 100% 100%;
-        height:35vw;
+    #service02 > .block_title_Pic {
+        height: 86px;
     }
-    .agentLink{
-        margin-left:3vw;
+    #service01 > .container > div > .block_title_Pic {
+        height: 90px;
     }
-
-    .block_title{
-        scale:2;
-        gap:2vw;
+    #service04 > .container > div > .block_title_Pic{
+        height: 109px;
     }
-    .slick-dots {
-        scale:2;
+    #service05 > .block_title_Pic {
+        height: 122px;
+    }
+    .hint_title {
+        margin-bottom: 8.5vw;
     }
     .slide > img {
-        width: 100%;
-        max-width: 600px;
-        height: auto;
-        margin: 0 auto;
+        max-width: 65vw;
+        height: 340px;
     }
-    .creditInf > .sliderButton > button.slick-prev, 
-    .creditInf > .sliderButton > button.slick-next, 
-    .service_Digital > .sliderButton > button.slick-prev, 
-    .service_Digital > .sliderButton > button.slick-next {
-        background-color: #15FFD5;
-        width: 55px;
-        height: 55px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .title {
+        font-size: 26px;
     }
-    .slick-prev{
-        left:6.2vw;
+    .slider_loan {
+        margin-bottom: 3vw;
     }
-    .slick-next{
-        right:6.2vw;
+    .slider_loan > .block_title > .title {
+        font-size: 26px;
     }
-    .button_slideService{
-        bottom:-1vw;
+    .slick-dots {
+        bottom: 17vw;
     }
-
-    
-    .custom-button{
-        font-size:1.5vw;
+    .slider_loan > .slick-slider > ul.slick-dots {
+        bottom: 10.5vw;
     }
-
-    
-    .serviceImg{
-        margin-top:5vw;
-        height:49vw;
+    .slider_loan > .button_slideService {
+        bottom: -19vw;
     }
-    
-    .block_invest{
-        height:65vw;
+    .block_title > .cube > span {
+        width: 8px;
+        height: 8px;
     }
-
-    
+    .slick-dotted.slick-slider {
+        height: 455px;
+    }
+    .creditInf > img, 
+    .service_Digital > img {
+        height: 550px;
+    }
+    .slider_loan > .block_title > .cube > span {
+        width: 8px;
+        height: 8px;
+        margin: 0 3px;
+    }
+    .slider_loan > .slick-slider > .slick-list > .slick-track > .slick-slide img {
+        margin-top: -7vw;
+    }
     .loan {
-        height:56vw;
+        height: 618px;
     }
-    .slider_loan > .button_slideService{
-        bottom:-18vw;
+    #service05 {
+        padding-bottom: 50px;
     }
-} */
+    .connect_top{
+        height: 7vw;
+    }
+    .connect_buttom {
+        height: 12vw;
+    }
+    .connect_buttom {
+        height: 10vw;
+    }
+    .background_Connect_buttom,
+    .background_Connect_top{
+        max-width:78%;
+    }
+    .creditInf > .sliderAAA > .button_slideService{
+        bottom: 34vw;
+    }
+}
+@media screen and (min-width: 1300px){
+    .slider_loan > .slick-slider > .slick-list > .slick-track > .slick-slide img{
+        max-height: 570px;
+        max-width: 380px;
+        margin-top: 3vw;
+    }
+}
+@media screen and (min-width: 2000px){
+    .slide > img {
+        margin-top: 3vw;
+    }
+    .slick-prev {
+        left: 3.5vw;
+    }
+    .slick-next {
+        right: 3.5vw;
+    }
+    #service02, 
+    #service03, 
+    #service04, 
+    #service05 {
+        padding-bottom: 200px;
+        margin-bottom: 200px;
+    }
+    
+}
