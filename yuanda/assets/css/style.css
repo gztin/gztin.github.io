@@ -537,14 +537,16 @@ html, body {
     justify-content: center;
     margin:30px auto;
 }
-.creditCard_menu a,.creditCard_menu > a.active{
-    box-shadow: 2px 2px 15px #94fffa!important;
-    border-width:2px;
+.creditCard_menu a,
+.creditCard_menu > a.active{
+    box-shadow: 2px 2px 15px #00FFFF!important;
+    border-width:4px;
 }
-.creditCard_menu a:hover{
-    background-color: #94fffa;
+.creditCard_menu > a:hover{
+    background-color: #00FFFF;
     color: #013397;
-    border:#013397 solid 2px;
+    border:#013397 solid 4px;
+    border-width:4px;
 }
 .creditCard_menu a:hover > span.bt_l {
     background-image: url(../images/button/bt_l_hover.png);
@@ -630,7 +632,7 @@ html, body {
     background-color: #013397;
     color:#fff;
     text-decoration: none;
-    border:#94fffa solid 1px;
+    border:#94fffa solid 2.5px;
 }
 .card_Service.active[data-bg="service1"],
 .card_Service.active[data-bg="service2"],
@@ -638,7 +640,7 @@ html, body {
 .card_Service.active[data-bg="service4"]{
     background-color: #94fffa;
     color:#013397;
-    border:#013397 solid 2px;
+    border:#013397 solid 2.5px;
     box-shadow: 1px 2px 3px #94fffa ;
 }
 .card_Service.active[data-bg="service1"] > span.bt_l{
@@ -1516,7 +1518,8 @@ html, body {
         width:20.5vw;
         height:6vw;
     } */
-    .creditCard_button:hover,.button_slideService:hover{
+    .creditCard_button:hover,
+    .button_slideService:hover{
         background-image:url(../images/button/creditService_hover.png);
     }
     
@@ -1675,7 +1678,7 @@ html, body {
         background-color: #013397;
         color:#fff;
         text-decoration: none;
-        border:#94fffa solid 2px;
+        border:#94fffa solid 2.5px;
     }
     .card_Service.active[data-bg="service1"],
     .card_Service.active[data-bg="service2"],
@@ -1683,7 +1686,7 @@ html, body {
     .card_Service.active[data-bg="service4"]{
         background-color: #94fffa;
         color:#013397;
-        border:#013397 solid 2px;
+        border:#013397 solid 2.5px;
     }
     .card_Service.active[data-bg="service1"] > span.bt_l{
         background-image: url(../images/button/bt_l_hover.png);
@@ -4262,7 +4265,8 @@ html, body {
         height: 11vw;
         font-size: 4vw;
     }
-    .creditCard_menu > a:nth-child(2),.creditCard_menu > a:nth-child(4){
+    .creditCard_menu > a:nth-child(2),
+    .creditCard_menu > a:nth-child(4){
         column-gap: 0;
     }
     .banner{
