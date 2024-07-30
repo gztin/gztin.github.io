@@ -20,16 +20,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1, maximum-scale=1"/>
         <meta name="format-detection" content="telephone=no">
 
-        <title>元大銀行｜網頁標題</title>
+        <title>元大銀行智能客服｜元先生智能助理 在線服務不打烊</title>
         <link rel="shortcut icon" type="image/x-icon" href="https://www.yuantabank.com.tw/bank/resources/front/images/favicon.ico" />
 		
-		<meta name="keywords" content="" />
+		<meta name="keywords" content="元大銀行、元大、元先生、智能客服、元大銀行智能客服、元大銀行智能客服、元大銀行智能助理" />
         <meta name="description" content="" />
 
         <meta property="og:title" content="" />
         <meta property="og:site_name" content="元大銀行" />
         <meta property="og:url" content="" />
-        <meta property="og:description" content="" />
+        <meta property="og:description" content="元先生智能助理，在線服務不打烊。定期定額投資、刷卡明細有疑慮、信用卡帳單金額查詢...等常見問題任您問，元先生非常樂意為您服務~" />
         <meta property="og:image" content="assets/images/share_img.jpg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="628" />
@@ -44,7 +44,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/common.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="assets/css/aos.css">
-        <link href="assets/css/style.css?v=99" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css?v=100" rel="stylesheet" type="text/css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -99,12 +99,13 @@
 			<section class="section mainSection">
                 <div class="banner">
                     <div class="agentLink"data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500">
-                        <div class="brand"></div>
+                        <img class="brand" src="img/common/brand_A.svg" alt="">
+                        <!-- <div class="brand"></div> -->
                         <a href="https://ytbk.tw/3Ujeua" target="_blank" class="agentButton_1024"></a>
                     </div>
                     <div class="animation_1024">
-                        <img class="bossRighthand" src="img/common/boss_rightHand.svg" alt="">
-                        <img class="bossLefthand" src="img/common/boss_leftHand.svg" alt="">
+                        <img class="bossRighthand" src="img/common/boss_rightHand.png" alt="">
+                        <img class="bossLefthand" src="img/common/boss_leftHand.png" alt="">
                     </div>
                     
                     <div class="block_agent">
@@ -119,7 +120,7 @@
                                     <img class="bossLefthand" src="img/common/boss_leftHand.png" alt="">
                                 </div>
                             </div>
-                            <a hreh="https://ytbk.tw/3Ujeua" class="agentButton"></a>
+                            <a hreh="https://ytbk.tw/3Ujeua" class="agentButton_rwd"></a>
                         </div> 
                     </div>  
                 </div>
@@ -128,7 +129,6 @@
                 <div class="container">
                     <div class="row">
                         <div class="container-fluid full-height d-flex justify-content-center align-items-center serviceInf">
-                            <img src="img/common/sectionA_1024.svg" alt="">
                             <div class="btn-group serviceA_MenuButton" role="group" aria-label="Basic example">
                                 <button type="button" class="btn btn-secondary button-reset custom-button" data-target="jumpPlaceA"><span class="bt_l"></span>線上申辦<span class="bt_r"></span></button>
                                 <button type="button" class="btn btn-secondary button-reset custom-button" data-target="jumpPlaceB"><span class="bt_l"></span>信用卡熱門<span class="bt_r"></span></button>
@@ -155,7 +155,6 @@
                                 <div class="container-fluid full-height d-flex justify-content-center align-items-center sliderGroup">
                                     <!-- 線上申辦 -->
                                     <div class="creditInf">
-                                        <img src="img/common/bg_onlineService_A.svg" alt="">
                                         <div class="sliderAAA">
                                             <div class="block_title">
                                             <div class="cube">
@@ -200,21 +199,22 @@
                         <div class="block_title_Pic" id="jumpPlaceB">
                             <h2 class="title_creditCard_pic title_pic" id="title"></h2>
                             <p class="subTitle">信用卡問題，元先生通通為您解答！</p>
+                            <div class="creditCard_menu">
+                                <a href="#" onclick="showContent(event, 1, this)" class="card_Service active" data-bg="service1">
+                                    <span class="bt_l"></span>帳單查詢<span class="bt_r"></span>
+                                </a>
+                                <a href="#" onclick="showContent(event, 2, this)" class="card_Service" data-bg="service2">
+                                    <span class="bt_l"></span>帳單繳款<span class="bt_r"></span>
+                                </a>
+                                <a href="#" onclick="showContent(event, 3, this)" class="card_Service" data-bg="service3">
+                                    <span class="bt_l"></span>額度調整<span class="bt_r"></span>
+                                </a>
+                                <a href="#" onclick="showContent(event, 4, this)" class="card_Service" data-bg="service4">
+                                    <span class="bt_l"></span>刷卡疑慮<span class="bt_r"></span>
+                                </a>
+                            </div>
                         </div>
-                        <div class="creditCard_menu">
-                            <a href="#" onclick="showContent(event, 1, this)" class="card_Service active" data-bg="service1">
-                                <span class="bt_l"></span>帳單查詢<span class="bt_r"></span>
-                            </a>
-                            <a href="#" onclick="showContent(event, 2, this)" class="card_Service" data-bg="service2">
-                                <span class="bt_l"></span>帳單繳款<span class="bt_r"></span>
-                            </a>
-                            <a href="#" onclick="showContent(event, 3, this)" class="card_Service" data-bg="service3">
-                                <span class="bt_l"></span>額度調整<span class="bt_r"></span>
-                            </a>
-                            <a href="#" onclick="showContent(event, 4, this)" class="card_Service" data-bg="service4">
-                                <span class="bt_l"></span>刷卡疑慮<span class="bt_r"></span>
-                            </a>
-                        </div>
+                        
                         <div id="content1" class="content active">
                             <div class="serviceImg">
                                 <div class="space_service">
@@ -268,7 +268,7 @@
                     <!-- 投資理財 -->
                     <div id="service03" class="row block_invest_1024" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="250">
                         <div class="container_invest" id="jumpPlaceC">
-                            <img src="img/common/bg_invest_1024a.png" alt="" class="img-fluid">
+                            <!-- <img src="img/common/bg_invest_1024a.png" alt="" class="img-fluid"> -->
                             <div class="main">
                                 <div class="top-left">
                                     <img src="img/common/hint_invest_1024.png" alt="" class="img-fluid">
@@ -291,7 +291,6 @@
                                 </div>
                                 <div class="container-fluid full-height d-flex justify-content-center align-items-center sliderGroup">
                                     <div class="service_Digital">
-                                        <img src="img/common/bg_digitalService_A.svg" alt="">
                                         <div class="sliderAAA">
                                             <div class="block_title">
                                             <div class="cube">
@@ -366,9 +365,7 @@
                                 </div>
                                 <a href="#" class="button_slideService"></a>
                             </div>
-                        <div class="right">
-                            <img src="img/common/hint_loan_1024.png" alt="" class="img-fluid">
-                        </div>
+                        <div class="right"></div>
                     </div>
                     </div>
                 </div>
