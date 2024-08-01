@@ -1790,8 +1790,6 @@ html, body {
         opacity: 0.5;
     }
     
-    
-
     /* footerInf */
     .block_place_inf{
         display: flex;
@@ -4166,6 +4164,15 @@ html, body {
         height:607.5px;
         background-image: url(../images/background/bg_loanService_D.svg);
         margin-top:25px;
+    }
+    .service_loan > .left > .sliderButton{
+        max-width: 312px;
+    }
+    .service_loan > .left > .sliderButton > .slick-prev {
+        left: -10px;
+    }
+    .service_loan > .left > .sliderButton > .slick-next{
+        right: -10px;
     }
     .slider_loan{
         width: 100%;
