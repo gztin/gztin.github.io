@@ -476,7 +476,7 @@ html, body {
     background-position: bottom;
     width: 100%;
     height:auto;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -1799,7 +1799,7 @@ html, body {
         width:960px;
         height:auto;
         margin: 0 auto;
-        margin-bottom:80px;
+        margin-bottom:120px;
         gap:40px;
     }
     .block_sub{
@@ -3599,6 +3599,7 @@ html, body {
     /* footerinf */
     .block_place_inf{
         width:100%;
+        margin-bottom: 92px;
     }
     .block_sub{
         width: 100%;
@@ -4218,6 +4219,8 @@ html, body {
     .Block_footerInf {
         background-image: url(../images/background/footer_bg_C.svg);
         height:1532px;
+        padding-bottom: 50px;
+        margin-bottom: 30px;
     }
     .Block_footerInf > .agentFooterPic{
         width:313px;

@@ -441,7 +441,7 @@ img {
 }
 
 /* appDownload */
-.appDownload{display:-webkit-flex;display:flex;-webkit-justify-content:center;justify-content:center;padding:0 0 40px;}
+.appDownload{display:-webkit-flex;display:flex;-webkit-justify-content:center;justify-content:center;padding:0 0 30px;}
 .appDownload-QRcode img{width:120px;margin-right:20px;}
 .appDownload-link h5{margin:10px 0;font-size:16px;line-height:22px;text-align:center;font-weight:bold;color:#333333;}
 .appDownload-link a{display:inline-block;padding:0 3px;text-decoration:none;transition:.3s;}
