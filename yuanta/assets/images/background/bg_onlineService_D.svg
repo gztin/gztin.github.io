@@ -1,48 +1,10 @@
-<svg width="400" height="666" viewBox="0 0 400 666" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M20 99L38.75 77H361.25L380 99V199L372.031 206.5V473.5L380 482V589L361.25 609H38.75L20 589V480.5L27.9688 472.963V207L20 199.271V99Z" fill="#062553" fill-opacity="0.7"/>
-<g filter="url(#filter0_d_1108_14138)">
-<path d="M20 202L26 208.102L26 471.398L20 477.5L20 202Z" fill="#0CF2FF"/>
-</g>
-<g filter="url(#filter1_d_1108_14138)">
-<path d="M380 478L374 471.898L374 208.602L380 202.5L380 478Z" fill="#0CF2FF"/>
-</g>
-<g filter="url(#filter2_d_1108_14138)">
-<path d="M44 51.9797L67 32H334L356 51.9797V337.581V610.395L335 633.387H272.038H200L67 634L44 611.89V51.9797Z" fill="#062553"/>
-<path d="M200 632.387H199.995L67.4008 632.998L45 611.465V52.4356L67.3737 33H333.614L355 52.4224V337.581V610.007L334.559 632.387H272.038H200Z" stroke="url(#paint0_linear_1108_14138)" stroke-width="2"/>
-</g>
+<svg width="360" height="595" viewBox="0 0 360 595" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 47L18.75 25H341.25L360 47V147L352.031 154.5V421.5L360 430V537L341.25 557H18.75L0 537V428.5L7.96875 420.963V155L0 147.271V47Z" fill="#062553" fill-opacity="0.7"/>
+<path d="M0 151L5.99999 157.102L6 420.398L2.71352e-05 426.5L0 151Z" fill="#0CF2FF"/>
+<path d="M360 425.5L354 419.398L354 156.102L360 150L360 425.5Z" fill="#0CF2FF"/>
+<path d="M40.405 576.999L25 562.075V16.4132L40.4142 0.999023H319.586L335 16.4132V293.397V561.585L319.586 576.999H40.405Z" fill="#062553" stroke="url(#paint0_linear_1296_23602)" stroke-width="2"/>
 <defs>
-<filter id="filter0_d_1108_14138" x="0" y="182" width="46" height="315.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset/>
-<feGaussianBlur stdDeviation="10"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.000113932 0 0 0 0 0.760027 0 0 0 0 1 0 0 0 0.5 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1108_14138"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1108_14138" result="shape"/>
-</filter>
-<filter id="filter1_d_1108_14138" x="354" y="182.5" width="46" height="315.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset/>
-<feGaussianBlur stdDeviation="10"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.000113932 0 0 0 0 0.760027 0 0 0 0 1 0 0 0 0.5 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1108_14138"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1108_14138" result="shape"/>
-</filter>
-<filter id="filter2_d_1108_14138" x="11.9937" y="-0.00625014" width="376.013" height="666.013" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feMorphology radius="2.00625" operator="dilate" in="SourceAlpha" result="effect1_dropShadow_1108_14138"/>
-<feOffset/>
-<feGaussianBlur stdDeviation="15"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.725488 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1108_14138"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1108_14138" result="shape"/>
-</filter>
-<linearGradient id="paint0_linear_1108_14138" x1="394.998" y1="787.521" x2="-145.485" y2="672.927" gradientUnits="userSpaceOnUse">
+<linearGradient id="paint0_linear_1296_23602" x1="374.998" y1="725.399" x2="-163.522" y2="606.481" gradientUnits="userSpaceOnUse">
 <stop stop-color="#00F9FF"/>
 <stop offset="0.135" stop-color="#ABFFFA"/>
 <stop offset="0.33" stop-color="#61FBFF"/>
