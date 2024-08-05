@@ -30,6 +30,27 @@ body {
 body {
     scrollbar-width: none;
 }
+.outlined-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /*需要文字透明*/
+    font-size:50px;
+    -webkit-text-stroke: 6px #fff ; 
+    z-index: -1; 
+    line-height: 50px;
+    font-weight: bold; /* 字體加粗 */
+    color: #013396; /* 文字顏色 */
+}
+.outlined-text::before{
+    content: attr(data-title);
+    position: absolute;
+    background: #013396;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 0;
+    z-index: 10;
+}
 #service01{
     padding-top: 100px;
     padding-bottom: 160px;
@@ -4243,6 +4264,9 @@ html, body {
     .block_title_Pic > .title_pic{
         width:180px;
         height:50.63px;
+    }
+    .outlined-text{
+        font-size: 32px;
     }
     .creditInf{
         margin-top:24px;
