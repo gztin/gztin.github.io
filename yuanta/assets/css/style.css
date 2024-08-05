@@ -3443,10 +3443,10 @@ html, body {
         max-width:704px;
     }
     .slide_digital {
-        width:700px;
+        width:380px;
     }
     .slide_onlineService{
-        width:700px;
+        width:380px;
     }
     .creditInf > .sliderAAA > .sliderButton {
         width: 100%;
@@ -4120,7 +4120,7 @@ html, body {
         top:0px;
     }
     .service_Digital > .sliderAAA > .slide_digital{
-        width: 329px;
+        width: 280px;
         height: 401px;
         margin-top:16px;
     }
