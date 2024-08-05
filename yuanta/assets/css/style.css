@@ -1424,6 +1424,62 @@ html, body {
 /* 貸款業務Slider  end*/
 /* update end */
 @media screen and (min-width: 1440px){
+    .bgSet01{
+        height:900px;
+    }
+    .bgSet01 > span:nth-child(1){
+        margin-right:75%;
+    }
+    .bgSet01 > span:nth-child(2) {
+        opacity: 1;
+        margin-top:700px;
+    }
+    .bgSet02{
+        margin-top:1450px;
+        height:900px;
+    }
+    .bgSet02 > span:nth-child(1) {
+        opacity: 1;
+        margin-right:75%;
+    }
+    .bgSet02 > span:nth-child(2) {
+        margin-top:700px;
+    }
+    .bgSet03{
+        margin-top:2300px;
+        height:900px;
+    }
+    .bgSet03 > span:nth-child(1) {
+        opacity: 1;
+        margin-right:75%;
+    }
+    .bgSet03 > span:nth-child(2) {
+        opacity: 1;
+        margin-top:700px;
+    }
+    .bgSet04{
+        margin-top:3800px;
+        height:800px;
+    }
+    .bgSet04 > span:nth-child(1) {
+        opacity: 1;
+        margin-right:75%;
+        margin-top:300px;
+    }
+    .bgSet05{
+        margin-top:4500px;
+        height:600px;
+    }
+    .bgSet05 > span:nth-child(1) {
+        margin-right: 75%;
+        margin-top:400px;
+    }
+    .bgSet05 > span:nth-child(2) {
+        opacity: 1;
+    }
+    .linePic > .line_right {
+        margin-top:400px;
+    }
     .brand{
         width:480px;
         height:367.29px;
@@ -2041,6 +2097,9 @@ html, body {
     .bgSet01{
         margin-top:100px;
     }
+    .bgSet01 > span:nth-child(1){
+        margin-right: 75%;
+    }
     .bgSet02{
         margin-top:1250px;
     }
@@ -2052,9 +2111,20 @@ html, body {
     }
     .bgSet03 > span:nth-child(2){
         opacity: 1;
+        margin-top:100px;
     }
     .bgSet04{
         margin-top: 4200px;
+    }
+    .bgSet04 > span:nth-child(1) {
+        opacity: 0;
+        margin-right:75%;
+    }
+    .bgSet05{
+        margin-top:4900px;
+    }
+    .bgSet05 > span:nth-child(1){
+        margin-right:75%;
     }
     .line_right{
         margin-top:350px;
@@ -3232,17 +3302,24 @@ html, body {
         overflow-x: hidden;
     }
     .linePic{
-        display: none;
+        margin-top:1550px;
+    }
+    .linePic > .line_right{
+        opacity: 0;
     }
     .bgSet01{
-        margin-top:100px;
+        margin-top:6cqmax;
+    }
+    .bgSet01 > span:nth-child(1){
+        opacity: 1;
+        margin-right:30%;
     }
     .bgSet01 > span:nth-child(2){
         opacity: 1;
         margin-top: 50px;
     }
     .bgSet02{
-        margin-top:1250px;
+        margin-top:1350px;
     }
     .bgSet02 > span:nth-child(1){
         opacity: 1;
@@ -3259,21 +3336,25 @@ html, body {
         margin-top: 50px;
     }
     .bgSet04{
-        margin-top: 3800px;
+        margin-top: 3750px;
     }
     .bgSet05{
-        margin-top: 5000px;
+        margin-top: 4850px;
+        height:400px;
     }
     .bgSet05 > span:nth-child(1){
         opacity: 1;
-        margin-top: 50px;
+        margin-top: 150px;
+        margin-right:75%;
     }
     .bgSet05 > span:nth-child(2){
         opacity: 1;
         margin-top: 0px;
     }
-    .line_right{
-        margin-top:900px;
+    
+    .block_title_Pic > .subTitle{
+        font-size: 24px;
+        line-height: 27px;
     }
     .pc_view{
         display: none;
@@ -3879,14 +3960,18 @@ html, body {
         width:700px;
         height:500px;
     }
-    .subTitle .line-break {
+    #service04 > .container > div > .block_title_Pic > .subTitle .line-break {
         display: block;
+    }
+    .subTitle .line-break {
+        display: inline;
     }
 }
 
 @media screen and (max-width: 767px){
     .bgSet01{
-        margin-top:100px;
+        margin-top:20px;
+        height:400px;
     }
     .bgSet01 > span,
     .bgSet02 > span,
@@ -3898,7 +3983,8 @@ html, body {
     }
     .bgSet01 > span:nth-child(1){
         opacity: 1;
-        margin-top: 50px;
+        margin-top: 150px;
+        margin-right:90%;
     }
     .bgSet01 > span:nth-child(2){
         margin-top: 0px;
@@ -3909,31 +3995,37 @@ html, body {
     .bgSet02 > span:nth-child(1){
         opacity: 1;
         margin-top: 50px;
+        margin-right:90%;
     }
     .bgSet03{
         margin-top: 1750px;
     }
     .bgSet03 > span:nth-child(1){
         opacity: 1;
-        margin-top: 50px;
-        margin-right:30%;
+        margin-top: 70px;
+        margin-right:85%;
     }
     .bgSet03 > span:nth-child(2){
         opacity: 1;
     }
     .bgSet04{
-        margin-top: 2600px;
+        margin-top: 2570px;
     }
     .bgSet04 > span:nth-child(1){
         opacity: 1;
-        margin-right:30%;
+        margin-right:80%;
     }
     .bgSet04 > span:nth-child(2){
         opacity: 1;
-        margin-top: 50px;
+        margin-top: 90px;
+    }
+    .bgSet05{
+        margin-top:3450px;
     }
     .bgSet05 > span:nth-child(1){
         opacity: 1;
+        margin-right:30%;
+        margin-top:90px;
     }
     .line_right{
         margin-top:900px;
