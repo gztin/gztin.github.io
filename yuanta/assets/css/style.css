@@ -21,7 +21,15 @@
 body::-webkit-scrollbar {
     display: none;
 }
+/* IE 10+ */
+body {
+    -ms-overflow-style: none;
+}
 
+/* Firefox */
+body {
+    scrollbar-width: none;
+}
 #service01{
     padding-top: 100px;
     padding-bottom: 160px;
@@ -3197,6 +3205,11 @@ html, body {
    }
 }
 @media screen and (max-width: 1023px) {
+    /* 隱藏scroll-x */
+    body {
+        overflow-x: hidden;
+    }
+
     .bgSet01{
         margin-top:100px;
         gap: 77%;
