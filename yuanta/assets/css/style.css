@@ -4526,10 +4526,10 @@ html, body {
         max-width: 312px;
     }
     .service_loan > .left > .sliderButton > .slick-prev {
-        left: -10px;
+        left: -5px;
     }
     .service_loan > .left > .sliderButton > .slick-next{
-        right: -10px;
+        right: -5px;
     }
     .slider_loan{
         width: 100%;
