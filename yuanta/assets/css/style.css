@@ -18,6 +18,9 @@
         transform: translateY(-20px);
     }
 }
+body::-webkit-scrollbar {
+    display: none;
+}
 
 #service01{
     padding-top: 100px;
