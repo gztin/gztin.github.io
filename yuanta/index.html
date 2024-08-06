@@ -44,7 +44,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/common.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="assets/css/aos.css">
-        <link href="assets/css/style.css?v=101" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css?v=100" rel="stylesheet" type="text/css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -296,6 +296,7 @@
                     <div id="service03" class="row block_invest_1024" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="250">
                         <div class="container_invest" id="jumpPlaceC">
                             <!-- <img src="img/common/bg_invest_1024a.png" alt="" class="img-fluid"> -->
+                            <div class="container_invest_bg"></div>
                             <div class="main">
                                 <div class="top-left">
                                     <img src="img/common/hint_invest_1024.png" alt="" class="img-fluid">
@@ -305,6 +306,11 @@
                                 </div>
                             </div>
                             <div class="rightBlock"></div>
+                            <div class="investBottomBlock">
+                                <div class="bottomSubBlock"></div>
+                                <div class="bottomSubBlock"></div>
+                                <div class="bottomSubBlock"></div>
+                            </div>
                         </div>
                     </div>
 
@@ -381,10 +387,10 @@
                                 </div>
                                 
                                 <div class="slick-slider-loan">
-                                    <div><img src="img/common/loan_1.png" alt="Image 1"></div>
-                                    <div><img src="img/common/loan_2.png" alt="Image 2"></div>
-                                    <div><img src="img/common/loan_3.png" alt="Image 3"></div>
-                                    <div><img src="img/common/loan_4.png" alt="Image 4"></div>
+                                    <div><img src="img/common/loan_4.png" alt="Image 1"></div>
+                                    <div><img src="img/common/loan_1.png" alt="Image 2"></div>
+                                    <div><img src="img/common/loan_2.png" alt="Image 3"></div>
+                                    <div><img src="img/common/loan_3.png" alt="Image 4"></div>
                                 </div>
                                 <div class="sliderButton">
                                     <button type="button" class="slick-prev"><i class="fa-solid fa-arrow-left"></i></button>
@@ -420,7 +426,7 @@
                                 </div>
                             </div>
                             <div class="inBPic"></div>
-                            <a href="#" id="checkApp01" target="_blank" class="button_slideService_footerInf"></a>
+                            <a href="#" id="os-specific-link" target="_blank" class="button_slideService_footerInf"></a>
                         </div>
                         <div class="placeB" data-aos="fade-left" data-aos-duration="1500" data-aos-delay="250">
                             <div class="block_title">
@@ -429,7 +435,7 @@
                                     <span class="title_span2"></span>
                                     <span class="title_span1"></span>
                                 </div>
-                                <div class="title">LINE官方帳號</div>
+                                <div class="title">LINE個人化</div>
                                 <div class="cube">
                                     <span class="title_span1"></span>
                                     <span class="title_span2"></span>
@@ -437,7 +443,7 @@
                                 </div>
                             </div>
                             <div class="inBPic"></div>
-                            <a href="#" id="checkApp02" target="_blank" class="button_slideService_footerInf"></a>
+                            <a href="https://line.me/R/ti/p/%40mwr3999i" target="_blank" class="button_slideService_footerInf"></a>
                         </div>  
                     </div>
                     <div class="placeC" data-aos="flip-left" data-aos-duration="1500">
@@ -455,7 +461,7 @@
                             </div>
                         </div>
                         <div class="inBPic"></div>
-                        <a href="#" id="checkApp03" target="_blank" class="button_slideService_footerInf"></a>
+                        <a href="https://www.yuantabank.com.tw/bank/" target="_blank" class="button_slideService_footerInf"></a>
                     </div>
                 </div> 
             </div>
@@ -693,10 +699,39 @@
                         }
                     ]
                 }).on('afterChange', function(event, slick, currentSlide){
-                    let titles = ['貸款申請', '繳款方式', '帳務查詢', '進度查詢'];
+                    let titles = ['貸款申請','繳款方式', '帳務查詢', '進度查詢' ];
                     $('#service05 .title').text(titles[currentSlide % titles.length]);
                     $('#serviceLoan').attr('href', linksLoan[currentSlide % linksLoan.length]);
                 });
+            });
+        </script>
+        <script>
+            function getOS() {
+                var userAgent = window.navigator.userAgent,
+                    platform = window.navigator.platform,
+                    macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
+                    windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE'],
+                    os = null;
+    
+                if (macosPlatforms.indexOf(platform) !== -1) {
+                    os = 'Mac';
+                } else if (windowsPlatforms.indexOf(platform) !== -1) {
+                    os = 'Windows';
+                }
+    
+                return os;
+            }
+    
+            document.addEventListener('DOMContentLoaded', function () {
+                var linkElement = document.getElementById('os-specific-link');
+                var os = getOS();
+                if (os === 'Mac') {
+                    linkElement.href = 'https://www.yuantabank.com.tw/bankwebIMG/event/Bank_Act2021/LINEBC/';
+                } else if (os === 'Windows') {
+                    linkElement.href = 'https://play.google.com/store/apps/details?id=com.yuantabank.newmobilebank.android&hl=zh_TW';
+                } else {
+                    linkElement.href = '#'; // 默认链接，或者处理其他系统
+                }
             });
         </script>
         <script>
@@ -721,37 +756,6 @@
                     }
                 }, 1500);
             }
-    
-            function handleButtonClick(event) {
-                event.preventDefault();
-                var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                var url;
-    
-                if (/android/i.test(userAgent)) {
-                    openAppOrRedirect(
-                        'intent://com.yuantabank.newmobilebank.android#Intent;scheme=your-app-scheme;package=com.yuantabank.newmobilebank.android;end',
-                        'https://play.google.com/store/apps/details?id=com.yuantabank.newmobilebank.android&hl=zh_TW'
-                    );
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    openAppOrRedirect(
-                        'your-app-scheme://',
-                        'https://apps.apple.com/app/your-app-id'
-                    );
-                } else {
-                    if (navigator.platform.indexOf('Mac') > -1) {
-                        url = 'https://www.yuantabank.com.tw/bankwebIMG/event/Bank_Act2021/LINEBC/';
-                    } else if (navigator.platform.indexOf('Win') > -1) {
-                        url = 'https://play.google.com/store/apps/details?id=com.yuantabank.newmobilebank.android&hl=zh_TW';
-                    } else {
-                        url = 'https://www.yuantabank.com.tw/bankwebIMG/event/Bank_Act2021/LINEBC/';
-                    }
-                    window.location.href = url;
-                }
-            }
-    
-            document.getElementById('checkApp01').addEventListener('click', handleButtonClick);
-            document.getElementById('checkApp02').addEventListener('click', handleButtonClick);
-            document.getElementById('checkApp03').addEventListener('click', handleButtonClick);
         </script>
         
     </body>

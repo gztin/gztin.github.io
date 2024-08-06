@@ -25,7 +25,10 @@ body::-webkit-scrollbar {
 body {
     -ms-overflow-style: none;
 }
-
+.container-fluid{
+    padding-right:0px;
+    padding-left:0px;
+}
 /* Firefox */
 body {
     scrollbar-width: none;
@@ -141,7 +144,8 @@ html, body {
     background-image: url('../images/common/sectionA_A.svg');
     background-position: center;
     background-size: cover;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    filter: drop-shadow(0px 0px 5px rgba(0, 241, 255, 0.64));
+    /* box-shadow: 0px 0px 20px 0px rgba(0, 241, 255, 0.64); */
 }
 .button-reset {
     background: none;
@@ -162,13 +166,15 @@ html, body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 .custom-button:hover{
     background-color: #00FFFF;
     color:#013397;
     border:#013397 solid 2px;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));;
+    /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 .subTitle{
     color:#fff;
@@ -301,14 +307,14 @@ html, body {
 .line_left{
     width:20%;
     height:224px;
-    background-image:url(../images/common/line_left.svg);
+    background-image:url(../images/common/line_left_1.svg);
     left:0;
     margin-top:900px;
 }
 .line_right{
     width:20%;
     height:273px;
-    background-image:url(../images/common/line_right.svg);
+    background-image:url(../images/common/line_right_1.svg);
     right: 0;
 }
 .bgSet01,
@@ -519,6 +525,8 @@ html, body {
     position: absolute;
     top: 8px;
     left: 5px;
+    width: 26px;
+    height: 15px;
 }
 .bt_r{
     background-image: url(../images/button/bt_r.png);
@@ -527,6 +535,8 @@ html, body {
     position: absolute;
     bottom: 8px;
     right: 5px;
+    width: 26px;
+    height: 15px;
 }
 .serviceA_MenuButton button:hover > span.bt_l {
     background-image: url(../images/button/bt_l_hover.png);
@@ -569,12 +579,13 @@ html, body {
 .creditCard_button,
 .button_slideService{
     width: 265px;
-    height: 62px;
+    height: 63px;
     background-image:url(../images/button/callAgent_resume_265x62.svg);
     background-size: contain;
     background-repeat: no-repeat ;
     margin:0 auto;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    box-shadow:0px 0px 8spx rgba(185, 255, 255, 0.50);
+    /* filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50)); */
 }
 
 .creditCard_button:hover,
@@ -726,6 +737,7 @@ html, body {
 }
 .serviceImg > .hint_title > .creditCard_button{
     margin:0 13px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 .space{
     width:100%;
@@ -761,6 +773,7 @@ html, body {
     background-repeat: no-repeat;
     background-size: contain;
     position: relative;
+    margin-top:-3px;
 }
 #content1 > .serviceImg > .space_service{
     background-image: url(../images/background/content_1_serviceImg.png);
@@ -963,7 +976,17 @@ html, body {
     margin: 0 auto;
     width: 1200px;
     height: 908px;
+}
+.container_invest_bg{
+    width:1200px;
+    height:600px;
+    position: absolute;
+    margin:0 auto;
+    bottom: 163.23px;
     filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    background-image: url(../images/common/bg_invest_1024_A_3.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 .top-left{
     width:425px;
@@ -974,7 +997,7 @@ html, body {
     height:142.08px;
 }
 .container_invest {
-    background-image: url(../images/common/bg_invest_1024a.png);
+    /* background-image: url(../images/common/bg_invest_1024a.png); */
     background-size: 100% auto;
     background-repeat: no-repeat;
 }
@@ -1002,9 +1025,10 @@ html, body {
     width: 425px;
     height:264.08px;
     box-sizing: border-box;
+    position: absolute;
+    left:133px;
     z-index: 1;
-    margin-bottom: 184px;
-    margin-left: 95px;
+    bottom: 378.14px;
 }
 .bottom-left {
     /* background-color: #7b68ee; */
@@ -1016,8 +1040,33 @@ html, body {
     width: 480px;
     height: 745px;
     margin-left: 64px;
+    background-image: url(../images/common/invest_A.png);
+    background-size: contain;
+    position: absolute;
+    bottom:160.77px;
+    right:98px;
+    z-index: 1;
 }
-
+.investBottomBlock{
+    width:1125px;
+    height:297.89px;
+    display: flex;
+    gap:24px;
+    position: absolute;
+    margin:0 auto;
+    bottom: 0;
+    z-index: 3;
+}
+.bottomSubBlock{
+    width:359px;
+    height:297.89px;
+    filter: drop-shadow(0px 0px 20px rgba(185, 255, 255, 0.950));
+}
+.bottomSubBlock:nth-child(1),
+.bottomSubBlock:nth-child(2),
+.bottomSubBlock:nth-child(3){
+    background-image: url(../images/common/bg_invest_1024_A_bottom_1.svg);
+}
 /* 投資理財區塊設定 end */
 .cube{
     display: flex;
@@ -1238,14 +1287,15 @@ html, body {
 }
 .button_slideService_footerInf{
     width: 328px;
-    height: 64px;
+    height: 65px;
     margin: 0 auto;
     display: block;
     /* position: absolute; */
     left: 50%;
     /* transform: translateX(-50%); */
     bottom: 45px;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    /* filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));  */
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 .placeB{
     background-image: url(../images/background/InfB_2.png);
@@ -1279,7 +1329,7 @@ html, body {
 } */
 .button_slideService{
     width: 265px;
-    height: 62px;
+    height: 63px;
     background-size: 100% 100%;
     background-repeat: no-repeat ;
     margin:0 auto;
@@ -1288,6 +1338,7 @@ html, body {
     left: 50%; /* 水平居中 */
     transform: translateX(-50%); /* 使元素完全居中 */
     bottom:24px;
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 .button_slideService{
     background-image:url(../images/button/callAgent_resume_265x62.svg);
@@ -1562,13 +1613,15 @@ html, body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .custom-button:hover{
         background-color: #00FFFF;
         color:#013397;
         border:#013397 solid 2px;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .Block_service{
         height:747px;
@@ -1685,7 +1738,7 @@ html, body {
         bottom:20px;
     }
     .creditInf > .sliderAAA > .button_slideService{
-        bottom:5px;
+        bottom:14px;
     }
     .creditCard_menu a, 
     .creditCard_menu > a.active{
@@ -1733,13 +1786,14 @@ html, body {
         /* margin-bottom: 10vw; */
     }
     .container_invest{
-        background-image: url(../images/common/bg_invest_1024_A.png);
+        /* background-image: url(../images/common/bg_invest_1024_A_2.svg); */
         width:1200px;
-        height:906px;
+        height:908px;
     }
     .main{
         width:425px;
         height:252px;
+        z-index: 2;
     }
     .top-left{
         width:425px;
@@ -1752,6 +1806,9 @@ html, body {
     }
     .button_slideService{
         bottom:13px;
+    }
+    .service_loan > .left > .button_slideService{
+        bottom:21px;
     }
     .block_boss{
         display: flex;
@@ -2213,13 +2270,19 @@ html, body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+    }
+    .serviceA_MenuButton > button{
+        font-size: 24px;
+        line-height: 30px;
     }
     .custom-button:hover{
         background-color: #00FFFF;
         color:#013397;
         border:#013397 solid 2px;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .Block_service{
         height:575px;
@@ -2236,6 +2299,8 @@ html, body {
     }
     .serviceA_MenuButton > button{
         width:188px;
+        font-size: 24px;
+        line-height: 30px;
     }
     .creditInf{
         background-image: url(../images/background/bg_onlineService_B.svg);
@@ -2279,6 +2344,7 @@ html, body {
         transform: translateX(0%);
         left: 0%;
         bottom:16px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .service_loan > .right{
         width:442px;
@@ -2330,7 +2396,7 @@ html, body {
         bottom:20px;
     }
     .creditInf > .sliderAAA > .button_slideService{
-        bottom:5px;
+        bottom:14px;
     }
     .creditCard_menu a, 
     .creditCard_menu > a.active{
@@ -2381,13 +2447,36 @@ html, body {
         width:960px;
         height:760px;
     }
+    .container_invest_bg{
+        width:960px;
+        height:500px;
+        bottom:123px;
+    }
+    .rightBlock {
+        width:410px;
+        height:636px;
+        right:107px;
+        bottom:124px;
+    }
     .main{
         width:308px;
         height:252px;
-        margin-bottom: 136px;
+        left:95px;
+        bottom:301.92px;
+    }
+    .investBottomBlock{
+        width:898.28px;
+        height:238px;
+        gap:19.18px;
+    }
+    .bottomSubBlock{
+        width:286.64px;
+        height:238px;
+        background-size: contain;
     }
     .container_invest > .main > .bottom-left > .creditCard_button{
         margin-left:14px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .button_slideService{
         bottom:5px;
@@ -2398,7 +2487,7 @@ html, body {
     }
     .top-left > img{
         width:308px;
-        height:142.08px;
+        height:auto;
         content: url('../images/common/hint_invest_B.png');
     }
     
@@ -2704,7 +2793,7 @@ html, body {
         height:435px;
     }
     .placeC > .inBPic {
-        width:652px;
+        width:668px;
         height:424px;
       }
     .Block_footerInf{
@@ -2739,12 +2828,7 @@ html, body {
         display: flex;
    }
 }
-@media screen and (max-width: 1200px){
-}
-@media screen and (max-width: 1100px){
-}
-@media screen and (max-width: 1090px){
-}
+
 @media screen and (max-width: 1024px){
     .container{
         width:100%;
@@ -2770,7 +2854,7 @@ html, body {
     }
     .agentLink{
         width:341.1px;
-        height:261px;
+        height:387px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -2791,7 +2875,7 @@ html, body {
     .agentLink > img{
         content: url('../images/common/brand_A.png'); /* 替換為你希望顯示的圖片路徑 */
         width: 100%; /* 可以根據需要設置其他樣式 */
-        height: auto; /* 保持圖片的寬高比 */
+        height: 261px; /* 保持圖片的寬高比 */
     }
     .banner{
         width:100%;
@@ -2815,6 +2899,10 @@ html, body {
         cursor: pointer;
         outline: none;
     }
+    .serviceA_MenuButton > button {
+        font-size: 24px;
+        line-height: 30px;
+    }
     .custom-button {
         /* width: 12.5vw;
         height:3.5vw; */
@@ -2825,13 +2913,15 @@ html, body {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .custom-button:hover{
         background-color: #00FFFF;
         color:#013397;
         border:#013397 solid 2px;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .Block_service{
         height:575px;
@@ -2843,7 +2933,7 @@ html, body {
         height:415px;
     }
     .serviceA_MenuButton{
-        width:992px;
+        width: 992px;
         gap:8px;
     }
     .serviceA_MenuButton > button{
@@ -3463,19 +3553,52 @@ html, body {
         background-image: url('../images/common/sectionA_C.svg'); /* 使用CSS content属性替换图片 */
         width:744px;
         height:672px;
+        filter: drop-shadow(0px 0px 5px rgba(0, 241, 255, 0.64));
     }
     
     .container_invest{
-        background-image: url(../images/background/invest_B.png);
+        /* background-image: url(../images/background/invest_B.png); */
         flex-wrap: nowrap;
         /* height: 1500px; */
         flex-direction: column;
         width:704px;
         height:1037px;
     }
+    .container_invest_bg{
+        width:704px;
+        height:974px;
+        background-image: url(../images/common/bg_invest_C.svg);
+        bottom:62.76px;
+    }
+    .investBottomBlock{
+        width:704px;
+        height:212px;
+        gap:25.14px;
+    }
+    .bottomSubBlock{
+        width:217.91px;
+        height:212px;
+        filter: none;
+        box-shadow: 0px 0px 9.35px 0px rgba(0, 255, 255, 0.66);
+    }
+    .bottomSubBlock:nth-child(1),
+    .bottomSubBlock:nth-child(2),
+    .bottomSubBlock:nth-child(3){
+        background-image: url(../images/common/bg_invest_1023_bottom_1.svg);
+    }
     .container_invest > .main{
-        width: 66%;
+        width: 504px;
+        height:246px;
         margin-left: 0px;
+        left:100px;
+        top:64px;
+    }
+    .container_invest > .rightBlock{
+        width:423px;
+        height:656px;
+        margin-left:0px;
+        right:140.5px;
+        bottom:30.24px;
     }
     .container_invest > .main > .top-left{
         margin: 0 auto;
@@ -3487,6 +3610,9 @@ html, body {
         content: url('../images/common/hint_invest_768.png'); /* 使用CSS content属性替换图片 */
         width: 100%;
         height: auto;
+    }
+    .container_invest > .main > .bottom-left > a{
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .bottom-left{
         text-align: center;
@@ -3665,15 +3791,16 @@ html, body {
     }
     .serviceA_MenuButton{
         flex-direction: column;
-        gap: 1vw;
-        bottom: 50px;
-        width:95%;
+        gap: 16px;
+        bottom: 32px;
+        width:640px;
     }
     .serviceA_MenuButton > button {
         height: 62px;
-        width: 90%;
+        width: 100%;
         font-size: 24px;
-        box-shadow: 0px 0x 8px 0px #00FFFF ;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+
     }
     .bt_l,.bt_r{
         width: 26px;
@@ -3822,7 +3949,7 @@ html, body {
     #content3 > .serviceImg > .hint_title > .hint_pic > img,
     #content4 > .serviceImg > .hint_title > .hint_pic > img{
         width:400px;
-        height:95px;
+        height:auto;
     }
     #content1 > .serviceImg > .hint_title > .hint_pic > img{
         content: url('../images/background/content_1_hint_serviceImg.png'); /* 使用CSS content属性替换图片 */
@@ -3904,9 +4031,12 @@ html, body {
     /* footerinf */
     .block_place_inf{
         width:100%;
+        margin-top:-60px;
         margin-bottom: 92px;
     }
     .block_sub{
+        padding-top: 60px;
+        padding-bottom: 40px;
         width: 100%;
         flex-wrap: wrap;
         justify-content: space-around;
@@ -3922,6 +4052,7 @@ html, body {
     .placeC{
         width:704px;
         height:663px;
+        margin-top:-39px;
     }
     .placeA > .block_title, 
     .placeB > .block_title {
@@ -3938,7 +4069,6 @@ html, body {
     }
     .placeC{
         background-image: url(../images/background/infB_3_C.svg);
-        margin-top:24px;
     }
     .placeA > .inBPic,
     .placeB > .inBPic{
@@ -3980,6 +4110,9 @@ html, body {
 }
 
 @media screen and (max-width: 767px){
+    .yuantaman{
+        display: none;
+    }
     .bgSet01{
         margin-top:20px;
         height:400px;
@@ -4115,6 +4248,7 @@ html, body {
         width:236px;
         height:48px;
         bottom: 0px;
+        background-image: url(../images/button/callAgent_resume_236x48.svg);
     }
     .slick-track{
         top:0px;
@@ -4209,6 +4343,7 @@ html, body {
     }
     .serviceImg > .hint_title > .creditCard_button {
         background-size: cover;
+        background-image: url(../images/button/callAgent_resume_217x48.png);
     }
     #content1 > .serviceImg > .hint_title > .hint_pic > img{
         content: url('../images/background/content_1_hint_serviceImg_s.png'); /* 使用CSS content属性替换图片 */
@@ -4223,18 +4358,48 @@ html, body {
         content: url('../images/background/content_4_hint_serviceImg_s.png'); /* 使用CSS content属性替换图片 */
     } 
     .container_invest {
-        background-image: url(../images/background/invest_360.png);
+        /* background-image: url(../images/background/invest_360.png); */
         width:312px;
         height: 655px;
     }
-    
+    .container_invest_bg{
+        width:312px;
+        height: 655px;
+        background-image: url(../images/common/bg_invest_D.svg);
+        bottom: 0px;
+    }
+    .container_invest > .rightBlock{
+        width:240px;
+        height:359px;
+        margin-left:0px;
+        right:36px;
+        bottom:48px;
+    }
     .container_invest > .main{
-        width:100%;
+        width:280px;
+        height:182px;
+        left: 16px;
+        top:42px;
+    }
+    .investBottomBlock{
+        width:312px;
+        height:94px;
+        gap:10.5px;
+    }
+    .bottomSubBlock{
+        width:97px;
+        height:94px;
+        filter: none;
+        box-shadow: 0px 0px 4.16px 0px rgba(0, 255, 255, 0.66);
+    }
+    .bottomSubBlock:nth-child(1),
+    .bottomSubBlock:nth-child(2),
+    .bottomSubBlock:nth-child(3){
+        background-image: url(../images/common/bg_invest_767_bottom_1.svg);
     }
     .container_invest > .main > .top-left{
         width:280px;
         height:110px;
-        margin-top: 42px;
     }
     .container_invest > .main > .top-left > img{
         content: url(../images/common/hint_invest_D.png);
@@ -4323,7 +4488,6 @@ html, body {
     }
     .creditCard_menu a {
         flex: 0 0 calc(50% - 10px); /* 每個按鈕佔50%的寬度，減去間距 */
-        margin-bottom: 10px; /* 下方間距 */
         width:148px;
         height:44px;
         font-size: 18px;
@@ -4402,6 +4566,7 @@ html, body {
         width:217px;
         height:48px;
         bottom:0px;
+        background-image: url(../images/button/callAgent_resume_217x48.svg);
     }
    
     .creditInf > .sliderAAA > .sliderButton {
@@ -4549,6 +4714,7 @@ html, body {
     .service_loan > .left > .button_slideService{
         width:217px;
         height:48px;
+        background-image: url(../images/button/callAgent_resume_217x48.svg);
     }
     /* .creditInf > .sliderButton > button.slick-prev,
     .creditInf > .sliderButton > button.slick-next, 
@@ -4582,6 +4748,7 @@ html, body {
         justify-content: center;
         flex-direction: column;
         gap:8px;
+        margin-top:-60px;
     }
     .Block_footerInf {
         background-image: url(../images/background/footer_bg_C.svg);
@@ -4651,7 +4818,8 @@ html, body {
     .placeC {
         width:313px;
         height: 367px;
-        margin-top: 32px;
+        /* margin-top: 32px; */
+        margin-top: -30px;
     }
     .placeC > .inBPic{
         width:292px;
@@ -4662,5 +4830,8 @@ html, body {
     .placeA > .button_slideService_footerInf,
     .placeB > .button_slideService_footerInf {
         bottom: 18px;
+    }
+    .footer {
+        padding-bottom: 10px;
     }
 }
