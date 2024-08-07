@@ -68,7 +68,7 @@ body {
     padding-bottom: 160px;
 }
 .title_creditCard_pic{
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    /* filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50)); */
 }
 .bossRighthand {
     animation: upAndDownA 2s infinite;
@@ -579,8 +579,8 @@ html, body {
 .creditCard_button,
 .button_slideService{
     width: 265px;
-    height: 63px;
-    background-image:url(../images/button/callAgent_resume_265x62.svg);
+    height: 62px;
+    background-image:url(../images/button/callAgent_resume_265x62_A.svg);
     background-size: contain;
     background-repeat: no-repeat ;
     margin:0 auto;
@@ -703,7 +703,8 @@ html, body {
 }
 .creditCard_menu a,
 .creditCard_menu > a.active{
-    filter: drop-shadow(1px 1px 5px #00FFFF)!important;
+    /* filter: drop-shadow(1px 1px 5px #00FFFF)!important; */
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8)!important;
     border-width:2px;
 }
 .creditCard_menu > a:hover{
@@ -726,18 +727,77 @@ html, body {
     width: 960px;
     height:563px;
     display: flex;
+    position: relative;
     justify-content: center;
     align-items: center;
     margin:0 auto;
     gap:50px;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    /* filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50)); */
 }
 .serviceImg > .hint{
     width:100%;
 }
+.serviceImg > .hint_title{
+    width:340px;
+    height:242px;
+}
+.serviceImg > .hint_title >.hint_pic >.hintContent > .line-break{
+    display: block;
+}
+#content1 > .serviceImg > .hint_title > .hint_pic,
+#content2 > .serviceImg > .hint_title > .hint_pic,
+#content3 > .serviceImg > .hint_title > .hint_pic,
+#content4 > .serviceImg > .hint_title > .hint_pic{
+    width:340px;
+    height:146px;
+    margin-bottom: 32.1px;
+    position: relative;
+}
+.hint_pic > .hintSubTitle{
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 57.92px;
+    position: absolute;
+    left:16px;
+    top:16.92px;
+}
+.hint_pic > .hintContent,
+.hint_pic >.hintContent_768{
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 34.75px;
+    position: absolute;
+    left:16px;
+    top:86.96px;
+}
+.hint_pic >.hintContent_768{
+    display: none;
+}
+.hintSet{
+    width:16.5px;
+    height:16.5px;
+    display: block;
+    background-image: url(../images/common/hintSet.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: absolute;
+    top:0;
+    left:0;
+}
+.serviceImg > .hint_title > .hint_pic > img{
+    width:100%;
+    height:auto;
+}
 .serviceImg > .hint_title > .creditCard_button{
     margin:0 13px;
+    width:265px;
+    height:62px;
     box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+}
+
+.serviceImg > .hint{
+    display: flex;
+    flex-direction: column;
 }
 .space{
     width:100%;
@@ -746,7 +806,7 @@ html, body {
 #content2 > .serviceImg,
 #content3 > .serviceImg,
 #content4 > .serviceImg{
-    background-image: url(../images/background/card_A.svg);
+    /* background-image: url(../images/background/card_A.svg); */
 }
 /* #content2 > .serviceImg{
     background-image: url(../images/background/card_2a.png);
@@ -760,8 +820,21 @@ html, body {
 .serviceImg > .hint_title{
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    margin-right: 3vw;
+    z-index: 2;
+    position: absolute;
+    width:340px;
+    height:242px;
+    right:98.99px;
+}
+.creditBG{
+    width:960px;
+    height:533px;
+    background-image: url(../images/background/card_A_1.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    bottom: 0;
+    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
 }
 
 #content1 > .serviceImg > .space_service,
@@ -772,8 +845,8 @@ html, body {
     height:554px;
     background-repeat: no-repeat;
     background-size: contain;
-    position: relative;
-    margin-top:-3px;
+    position: absolute;
+    left:99px;
 }
 #content1 > .serviceImg > .space_service{
     background-image: url(../images/background/content_1_serviceImg.png);
@@ -788,14 +861,7 @@ html, body {
     background-image: url(../images/background/content_4_serviceImg.png);
 }
 
-.hint_pic > img{
-    width:330px;
-    height:150px;
-}
-.serviceImg > .hint{
-    display: flex;
-    flex-direction: column;
-}
+
 
 /* 信用卡熱門顯示資訊 end*/
 
@@ -830,7 +896,7 @@ html, body {
     background-color: #00FFFF;
     color:#013397;
     border:#013397 solid 2px;
-    filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+    /* filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50)); */
 }
 .card_Service.active[data-bg="service1"] > span.bt_l,
 .card_Service.active[data-bg="service2"] > span.bt_l,
@@ -938,6 +1004,30 @@ html, body {
     width:612px;
     height:816px;
 }
+.service_loan > .right > .loan_sub{
+    width:383px;
+    height:142px;
+    position: absolute;
+    right:83px;
+    top:337px;
+}
+.service_loan > .right > .loan_sub > .loan_title{
+    width:199.97px;
+    height:48px;
+    background-image:url(../images/common/loan_sub_title.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1));
+    margin-bottom: 24px;
+}
+.service_loan > .right > .loan_sub > .loan_content{
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+}
+.loan_sub > .loan_content > .line-break{
+    display: inline;
+}
 .service_loan > .left > .button_slideService{
     position: relative;
     transform: translateX(0%);
@@ -990,11 +1080,25 @@ html, body {
 }
 .top-left{
     width:425px;
-    height:142.08px;
+    height:151.08px;
 }
-.top-left > img{
-    width:425px;
-    height:142.08px;
+.top-left > .invest_pic{
+    width: 207.92px;
+    height: 57.08px;
+    background-image: url(../images/common/invest_sub_title.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1));
+    margin-bottom: 24px;
+}
+.top-left > .invest_text,
+.top-left > .invest_text_2{
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 35px;
+}
+.top-left > .invest_text_2{
+    display: none;
 }
 .container_invest {
     /* background-image: url(../images/common/bg_invest_1024a.png); */
@@ -1041,7 +1145,8 @@ html, body {
     height: 745px;
     margin-left: 64px;
     background-image: url(../images/common/invest_A.png);
-    background-size: contain;
+    background-size: cover;
+    background-repeat: no-repeat;
     position: absolute;
     bottom:160.77px;
     right:98px;
@@ -1065,7 +1170,16 @@ html, body {
 .bottomSubBlock:nth-child(1),
 .bottomSubBlock:nth-child(2),
 .bottomSubBlock:nth-child(3){
+    background-repeat: no-repeat;
+}
+.bottomSubBlock:nth-child(1){
     background-image: url(../images/common/bg_invest_1024_A_bottom_1.svg);
+}
+.bottomSubBlock:nth-child(2){
+    background-image: url(../images/common/bg_invest_1024_A_bottom_2.svg);
+}
+.bottomSubBlock:nth-child(3){
+    background-image: url(../images/common/bg_invest_1024_A_bottom_3.svg);
 }
 /* 投資理財區塊設定 end */
 .cube{
@@ -1347,12 +1461,46 @@ html, body {
     background-image:url(../images/button/callAgent_hover_265x62.svg);
 }
 .agentFooterPic{
-  background-image:url(../images/common/agent.png);
-  background-size: cover;
-  background-repeat: no-repeat;
   width:778px;
   height:256px;
   margin-top:100px;
+  position: relative;
+}
+.agent_pic{
+    width:184.811px;
+    height: 270px;
+    background-image:url(../images/common/agent_A.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+}
+.agent_content{
+    width:538px;
+    height:112.144px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right:0;
+    top:78.93px;
+}
+.agent_block_title{
+    width:353.895px;
+    height:72.144px;
+    background-image:url(../images/common/agent_title_A.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.agent_text{
+    font-size: 28px;
+    line-height: 35px;
+    font-weight: 500;
+    position: absolute;
+    left: 34px;
+    top:88.14px;
+}
+.agent_content > .line-break{
+    display: contents;
 }
 /* slider end */
 
@@ -1797,12 +1945,7 @@ html, body {
     }
     .top-left{
         width:425px;
-        height:142.08px;
-    }
-    .top-left > img{
-        width:100%;
-        height:auto;
-        content: url('../images/common/hint_invest_A.png');
+        height:151.08px;
     }
     .button_slideService{
         bottom:13px;
@@ -2069,9 +2212,6 @@ html, body {
         margin-top:35px;
         opacity: 0.5;
     }
-    .container_invest > .main > .bottom-left > .creditCard_button{
-        margin-left:12px;
-    }
     /* footerInf */
     .block_place_inf{
         display: flex;
@@ -2277,13 +2417,6 @@ html, body {
         font-size: 24px;
         line-height: 30px;
     }
-    .custom-button:hover{
-        background-color: #00FFFF;
-        color:#013397;
-        border:#013397 solid 2px;
-        /* filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50)); */
-        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
-    }
     .Block_service{
         height:575px;
     }
@@ -2318,6 +2451,15 @@ html, body {
         height:822px;
     }
     /* 貸款業務Slider */
+    .service_loan > .right > .loan_sub{
+        width:308px;
+        height:142px;
+        right:40px;
+        top:340px;
+    }
+    .loan_sub > .loan_content > .line-break{
+        display: block;
+    }
     .slick-slider-loan{
         width:358px;
         height:660px;
@@ -2474,8 +2616,10 @@ html, body {
         height:238px;
         background-size: contain;
     }
+    .main > .top-left > .invest_text > .line-break{
+        display: block;
+    }
     .container_invest > .main > .bottom-left > .creditCard_button{
-        margin-left:14px;
         box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .button_slideService{
@@ -2483,7 +2627,7 @@ html, body {
     }
     .top-left{
         width:308px;
-        height:142.08px;
+        height:151.08px;
     }
     .top-left > img{
         width:308px;
@@ -2612,24 +2756,17 @@ html, body {
         max-width: 1200px;
         height: 40vw;
     } */
-    #content1 > .serviceImg,
-    #content2 > .serviceImg,
-    #content3 > .serviceImg,
-    #content4 > .serviceImg{
-        background-image: url(../images/background/card_A.svg);
+    .serviceImg > .hint_title{
+        width:340px;
+        height:242px;
     }
-    /* #content1 > .serviceImg{
-        background-image: url(../images/background/card_1a.png);
+    .serviceImg > .hint_title > .hint_pic{
+        width:340px;
+        height:146.04px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-bottom: 32.1px;
     }
-    #content2 > .serviceImg{
-        background-image: url(../images/background/card_2a.png);
-    }
-    #content3 > .serviceImg{
-        background-image: url(../images/background/card_3a.png);
-    }
-    #content4 > .serviceImg{
-        background-image: url(../images/background/card_4a.png);
-    } */
     
     .serviceImg > .hint{
         display: flex;
@@ -2762,6 +2899,11 @@ html, body {
         margin: 0 auto;
         margin-bottom:80px;
         gap:40px;
+    }
+    .agent_pic{
+        width:175.99px;
+        height: 257.1px;
+        background-image:url(../images/common/agent_B.svg);
     }
     .block_sub{
         width:960px;
@@ -2954,7 +3096,65 @@ html, body {
         width:960px;
         height:822px;
     }
+    .connect_top{
+        height:54px;
+    }
+    .connect_buttom{
+        height:54px;
+        border-bottom: 5px #00ffff solid;
+    }
+    .background_Connect_buttom{
+        width:654px;
+        height:54px;
+        max-width: none;
+    }
+    /* .container_invest_bg{
+        width:960px;
+        height:760px;
+        background-image: url(../images/common/bg_inves.svg);
+    } */
+    .container_invest{
+        width:960px;
+        height:760px;
+    }
+    .container_invest_bg{
+        width:960px;
+        height:500px;
+        bottom:123px;
+    }
+    .investBottomBlock{
+        width:898.28px;
+        height:238px;
+        gap:19.18px;
+    }
+    .bottomSubBlock{
+        width:286.64px;
+        height:238px;
+        background-size: contain;
+    }
+    .main {
+        width: 308px;
+        height: 252px;
+        left: 95px;
+        bottom: 301.92px;
+    }
+    .rightBlock {
+        width: 410px;
+        height: 636px;
+        right: 107px;
+        bottom: 124px;
+    }
     /* 貸款業務Slider */
+    .service_loan > .right > .loan_sub {
+        width: 308px;
+        height: 142px;
+        position: absolute;
+        right: 40px;
+        top: 340px;
+    }
+    .loan_sub > .loan_content > .line-break{
+        display: block;
+    }
     .slick-slider-loan{
         width:358px;
         height:660px;
@@ -3071,18 +3271,8 @@ html, body {
         left: 50%;
         transform: translateX(-50%);
     }
-    .block_invest{
-        /* margin-top:10vw; */
-        /* margin-bottom: 10vw; */
-    }
-    .container_invest{
-        width:960px;
-        height:760px;
-    }
-    .main{
-        width:308px;
-        height:252px;
-    }
+    
+    
     .top-left{
         width:308px;
         height:142.08px;
@@ -3347,7 +3537,7 @@ html, body {
         background-image: url(../images/background/InfB_1_B.svg);
     }
     .placeB{
-        background-image: url(../images/background/InfB_2_B.svg);
+        background-image: url(../images/background/InfB_1_B.svg);
     }
     .placeC{
         background-image: url(../images/background/infB_3_B.svg);
@@ -3484,6 +3674,25 @@ html, body {
      {
         padding-bottom: 160px;
     }
+    .serviceImg > .hint_title >.hint_pic >.hintContent > .line-break{
+        display: inline;
+    }
+    .top-left > .invest_text{
+        display: none;
+    }
+    .top-left > .invest_text_2,
+    .top-left > .invest_text_2 > .line-break{
+        display: block;
+    }
+    .top-left > .invest_pic{
+        margin:0 auto;
+    }
+    .top-left > .invest_text_2{
+        margin-top:24px;
+        font-size: 24px;
+        line-height: 36px;
+        text-align: center;
+    }
     .creditInf {
         background-image: url('../images/background/bg_onlineService_C.svg'); /* 使用CSS content属性替换图片 */
         width:768px;
@@ -3581,10 +3790,14 @@ html, body {
         filter: none;
         box-shadow: 0px 0px 9.35px 0px rgba(0, 255, 255, 0.66);
     }
-    .bottomSubBlock:nth-child(1),
-    .bottomSubBlock:nth-child(2),
-    .bottomSubBlock:nth-child(3){
+    .bottomSubBlock:nth-child(1){
         background-image: url(../images/common/bg_invest_1023_bottom_1.svg);
+    }
+    .bottomSubBlock:nth-child(2){
+        background-image: url(../images/common/bg_invest_1023_bottom_2.svg);
+    }
+    .bottomSubBlock:nth-child(3){
+        background-image: url(../images/common/bg_invest_1023_bottom_3.svg);
     }
     .container_invest > .main{
         width: 504px;
@@ -3612,6 +3825,7 @@ html, body {
         height: auto;
     }
     .container_invest > .main > .bottom-left > a{
+        background-image:url(../images/button/callAgent_resume_265x62_A.svg);
         box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     .bottom-left{
@@ -3896,16 +4110,22 @@ html, body {
     .slick-track {
         top: 0px;
     }
+
     /* 背景 */
     #content1 > .serviceImg,
     #content2 > .serviceImg,
     #content3 > .serviceImg,
     #content4 > .serviceImg{
-        background-image: url(../images/background/serviceImg_C.svg);
+        /* background-image: url(../images/background/serviceImg_C.svg); */
         width:704px;
         height:856px;
     }
-    
+    .creditBG{
+        bottom:30px;
+        width:704px;
+        height:783px;
+        background-image: url(../images/background/serviceImg_C.svg);
+    }
     /* 手機圖示 */
     #content1 > .serviceImg > .space_service,
     #content2 > .serviceImg > .space_service,
@@ -3915,6 +4135,27 @@ html, body {
         height:619px;
         background-repeat: no-repeat;
         background-size: contain;
+        z-index: 2;
+        left:152px;
+        bottom: 207px;
+        margin-bottom: 33px;
+    }
+    .hint_pic > .hintSubTitle{
+        left:136px;
+        font-size: 32px;
+        line-height: 46.34px;
+        top:0px;
+    }
+    .hint_title > .hintSet{
+        left:123px;
+        top:-7px;
+    }
+    .hint_pic >.hintContent{
+        width:100%;
+        text-align: center;
+        font-size: 23px;
+        line-height: 33.3px;
+        top:62px;
     }
     #content1 > .serviceImg > .space_service{
         background-image: url(../images/background/content_1_serviceImg.png);
@@ -3935,6 +4176,7 @@ html, body {
         width:400px;
         height:197px;
         gap:40px;
+        left:152px;
     }
 
     #content1 > .serviceImg > .hint_title > .hint_pic,
@@ -3943,28 +4185,15 @@ html, body {
     #content4 > .serviceImg > .hint_title > .hint_pic{
         width:400px;
         height:95px;
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        margin-bottom: 0px;
     }
-    #content1 > .serviceImg > .hint_title > .hint_pic > img,
-    #content2 > .serviceImg > .hint_title > .hint_pic > img,
-    #content3 > .serviceImg > .hint_title > .hint_pic > img,
-    #content4 > .serviceImg > .hint_title > .hint_pic > img{
-        width:400px;
-        height:auto;
-    }
-    #content1 > .serviceImg > .hint_title > .hint_pic > img{
-        content: url('../images/background/content_1_hint_serviceImg.png'); /* 使用CSS content属性替换图片 */
-    }
-    #content2 > .serviceImg > .hint_title > .hint_pic > img{
-        content: url('../images/background/content_2_hint_serviceImg.png'); /* 使用CSS content属性替换图片 */
-    }
-    #content3 > .serviceImg > .hint_title > .hint_pic > img{
-        content: url('../images/background/content_3_hint_serviceImg.png'); /* 使用CSS content属性替换图片 */
-    }
-    #content4 > .serviceImg > .hint_title > .hint_pic > img{
-        content: url('../images/background/content_4_hint_serviceImg.png'); /* 使用CSS content属性替换图片 */
-    }
+   
     .serviceImg > .hint_title > .creditCard_button{
         margin: 0 0px;
+        background-image: url(../images/button/callAgent_resume_265x62_A.svg);
     }
     .serviceImg {
         display: flex;
@@ -4034,6 +4263,26 @@ html, body {
         margin-top:-60px;
         margin-bottom: 92px;
     }
+    .agent_pic{
+        width:153px;
+        height: 242px;
+        left:30.26px;
+        background-image:url(../images/common/agent_C.svg);
+    }
+    .agent_block_title {
+        width: 361px;
+        height: 81px;
+        background-image: url(../images/common/agent_title_C.png);
+    }
+    .agent_content{
+        width:466px;
+        height:129px;
+        right:30.26px;
+    }
+    .agent_text{
+        font-size: 24px;
+        line-height: 36px;
+    }
     .block_sub{
         padding-top: 60px;
         padding-bottom: 40px;
@@ -4089,7 +4338,6 @@ html, body {
     .service_loan > .block_title > .title {
         font-size:32px;
     }
-
     .right{
         display: none;
     }
@@ -4112,6 +4360,13 @@ html, body {
 @media screen and (max-width: 767px){
     .yuantaman{
         display: none;
+    }
+    .linePic {
+        margin-top: 950px;
+    }
+    .linePic > .line_right {
+        opacity: 1;
+        margin-top: 300px;
     }
     .bgSet01{
         margin-top:20px;
@@ -4295,13 +4550,49 @@ html, body {
     .block_invest {
         background-image: url(../images/background/invest_360.png);
     }
-    #content1 > .serviceImg,
-    #content2 > .serviceImg,
-    #content3 > .serviceImg,
-    #content4 > .serviceImg{
-        background-image: url(../images/background/serviceImg_D.svg);
+    .top-left > .invest_pic{
+        width: 117px;
+        height: 31.7px;
+        filter: drop-shadow(0px 0px 5px rgba(185, 255, 255, 1));
     }
-    
+    .top-left > .invest_text_2{
+        font-size: 18px;
+        line-height: 27px;
+        margin-top: 16px;
+    }
+    .creditBG{
+        width:312px;
+        height:492px;
+        background-image: url(../images/background/serviceImg_D.svg);
+        background-size: contain;
+        background-repeat: no-repeat;
+        top:38.37px;
+        bottom:22.63px;
+    }
+    .hint_pic > .hintSubTitle{
+        left:88px;
+        font-size: 20px;
+        line-height: 28.96px;
+        top:0px;
+        padding-bottom: 0px;
+    }
+    .hint_title > .hintSet{
+        left:75.98px;
+        top:-7px;
+    }
+    .hint_pic >.hintContent,
+    .hint_pic >.hintContent_768{
+        width:100%;
+        text-align: center;
+        font-size: 16px;
+        line-height: 23.17px;
+        top:45px;
+        left:0px;
+        padding-bottom: 0px;
+    }
+    .hint_pic >.hintContent_768 > .line-break{
+        display: block;
+    }
     #content1 > .serviceImg, 
     #content2 > .serviceImg, 
     #content3 > .serviceImg, 
@@ -4316,34 +4607,48 @@ html, body {
     #content4 > .serviceImg > .space_service {
         width: 237px;
         height: 366px;
+        left:37.5px;
+        top:0;
+        margin-bottom: 24px;
     }
-    
+    .serviceImg > .hint_title >.hint_pic >.hintContent > .line-break {
+        display: block;
+    }
     #content1 > .serviceImg > .hint_title, 
     #content2 > .serviceImg > .hint_title, 
     #content3 > .serviceImg > .hint_title, 
     #content4 > .serviceImg > .hint_title {
         width: 256px;
-        height: 132px;
+        height: 168px;
         gap: 24px;
-        margin-bottom: 31px;
+        margin-bottom: 0px;
+        left:28px;
     }
     #content1 > .serviceImg > .hint_title > .hint_pic, 
     #content2 > .serviceImg > .hint_title > .hint_pic, 
     #content3 > .serviceImg > .hint_title > .hint_pic, 
     #content4 > .serviceImg > .hint_title > .hint_pic {
         width: 256px;
-        height: 60px;
+        height: 91px;
     }
     #content1 > .serviceImg > .hint_title > .hint_pic > img, 
     #content2 > .serviceImg > .hint_title > .hint_pic > img, 
     #content3 > .serviceImg > .hint_title > .hint_pic > img, 
     #content4 > .serviceImg > .hint_title > .hint_pic > img{
-        width:256px;
-        height:60px;
+        width:100%;
+        height:auto;
+    }
+    #content4 >.serviceImg > .hint_title > .hint_pic > .hintContent{
+        display: none;
+    }
+    #content4 >.serviceImg > .hint_title > .hint_pic > .hintContent_768{
+        display: block;
     }
     .serviceImg > .hint_title > .creditCard_button {
+        width: 217px;
+        height:48px;
         background-size: cover;
-        background-image: url(../images/button/callAgent_resume_217x48.png);
+        background-image: url(../images/button/callAgent_resume_217x48_D.svg);
     }
     #content1 > .serviceImg > .hint_title > .hint_pic > img{
         content: url('../images/background/content_1_hint_serviceImg_s.png'); /* 使用CSS content属性替换图片 */
@@ -4392,10 +4697,14 @@ html, body {
         filter: none;
         box-shadow: 0px 0px 4.16px 0px rgba(0, 255, 255, 0.66);
     }
-    .bottomSubBlock:nth-child(1),
-    .bottomSubBlock:nth-child(2),
-    .bottomSubBlock:nth-child(3){
+    .bottomSubBlock:nth-child(1){
         background-image: url(../images/common/bg_invest_767_bottom_1.svg);
+    }
+    .bottomSubBlock:nth-child(2){
+        background-image: url(../images/common/bg_invest_767_bottom_2.svg);
+    }
+    .bottomSubBlock:nth-child(3){
+        background-image: url(../images/common/bg_invest_767_bottom_3.svg);
     }
     .container_invest > .main > .top-left{
         width:280px;
@@ -4413,6 +4722,7 @@ html, body {
         width: 217px;
         height: 48px;
         background-size:cover;
+        background-image: url(../images/button/callAgent_resume_217x48_D.svg);
     }
     #service02{
         padding-bottom: 96px;
@@ -4506,7 +4816,7 @@ html, body {
         margin-bottom: -4px;
     }
     .service_creditCard_hot > .content{
-        margin-top:40px;
+        margin-top:38.89px;
     }
     /* end Block_banner */
 
@@ -4749,21 +5059,45 @@ html, body {
         flex-direction: column;
         gap:8px;
         margin-top:-60px;
+        padding-bottom: 32px;
     }
     .Block_footerInf {
         background-image: url(../images/background/footer_bg_C.svg);
         height:1532px;
-        padding-bottom: 50px;
-        margin-bottom: 30px;
+        padding-bottom: 0px;
+        margin-bottom: 20px;
         display: block;
         padding-top:48px;
     }
     .Block_footerInf > .agentFooterPic{
-        width:312px;
-        height:97px;
+        width:313px;
+        height:123px;
         margin-top: 0px;
-        background-image: url(../images/common/agent_D.png);
-        background-size: contain;
+    }
+    .agent_pic{
+        width:71px;
+        height: 123px;
+        left:0px;
+        background-image:url(../images/common/agent_D.png);
+    }
+    .agent_block_title {
+        width: 217px;
+        height: 47px;
+        background-image: url(../images/common/agent_title_D.png);
+    }
+    .agent_content{
+        width:233px;
+        height:92.57px;
+        right:0px;
+        top:0px;
+    }
+    .agent_content > .agent_text > .line-break{
+        display: block;
+    }
+    .agent_text{
+        font-size: 18px;
+        line-height: 27px;
+        top:50px;
     }
     .block_place_inf{
         gap:0px;
@@ -4775,7 +5109,7 @@ html, body {
     }
     .placeA > .inBPic, 
     .placeB > .inBPic {
-        width: 153px;
+        width: 156px;
         height: 276px;
         margin-bottom: 24px;
     }
@@ -4788,6 +5122,7 @@ html, body {
     .placeC > .button_slideService_footerInf{
         width:204px;
         height:48px;
+        background-image: url(../images/button/callAgent_resume_204x48.svg);
     }
     /* .placeA > .button_slideService, 
     .placeB > .button_slideService, 
@@ -4819,7 +5154,7 @@ html, body {
         width:313px;
         height: 367px;
         /* margin-top: 32px; */
-        margin-top: -30px;
+        margin-top: 0px;
     }
     .placeC > .inBPic{
         width:292px;
