@@ -1080,7 +1080,7 @@ html, body {
     margin:0 auto;
     bottom: 163.23px;
     filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
-    background-image: url(../images/common/bg_invest_1024_A_3.svg);
+    background-image: url(../images/common/bg_invest_1024_A.svg);
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -1385,16 +1385,16 @@ html, body {
     margin-bottom: 24px;
 }
 .placeA > .button_slideService_footerInf{
-    background-image: url(../images/common/placA_download_1024_a.svg);
+    background-image: url(../images/common/placA_download_1024_a.png);
 }
 .placeA >  .button_slideService_footerInf:hover{
-    background-image: url(../images/common/placA_download_1024_b.svg);
+    background-image: url(../images/common/placA_download_1024_b.png);
 }
 .placeB > .button_slideService_footerInf{
-    background-image: url(../images/common/placB_open_1024_a.svg);
+    background-image: url(../images/common/placB_open_1024_a.png);
 }
 .placeB > .button_slideService_footerInf:hover{
-    background-image: url(../images/common/placB_open_1024_b.svg);
+    background-image: url(../images/common/placB_open_1024_b.png);
 }
 .placeC > .button_slideService_footerInf{
     background-image: url(../images/common/placC_go_1024_a.svg);
@@ -1410,7 +1410,7 @@ html, body {
 }
 .button_slideService_footerInf{
     width: 328px;
-    height: 65px;
+    height: 64px;
     margin: 0 auto;
     display: block;
     /* position: absolute; */
@@ -2740,6 +2740,7 @@ html, body {
         width:960px;
         height:500px;
         bottom:123px;
+        background-image: url(../images/common/bg_invest_1024_B.svg);
     }
     .rightBlock {
         width:410px;
@@ -4191,7 +4192,6 @@ html, body {
         width: 100%;
         font-size: 24px;
         box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
-
     }
     .bt_l,.bt_r{
         width: 26px;
@@ -4214,16 +4214,16 @@ html, body {
     }
     
     .custom-button:hover{
-        background-color: #00FFFF;
-        color:#013397;
-        border:#013397 solid 2px;
-        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+        background-color: #013397;
+        color: #fff;
+        text-decoration: none;
+        border: #00FFFF solid 2px;
     }
     .serviceA_MenuButton button:hover > span.bt_l {
-        background-image: url(../images/button/bt_l_hover.png);
+        background-image: url(../images/button/bt_l.png);
     }
     .serviceA_MenuButton button:hover > span.bt_r {
-        background-image: url(../images/button/bt_r_hover.png);
+        background-image: url(../images/button/bt_r.png);
     }
 
     .slick-dots {
@@ -5163,7 +5163,7 @@ html, body {
         width: 264px;
         font-size: 18px;
         line-height: 24px;
-        filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50));
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
     
     .content {
