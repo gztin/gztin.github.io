@@ -44,7 +44,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="assets/css/common.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="assets/css/aos.css">
-        <link href="assets/css/style.css?v=100" rel="stylesheet" type="text/css" />
+        <link href="assets/css/style.css?v=111" rel="stylesheet" type="text/css" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
@@ -95,13 +95,10 @@
             </div>
 			
 			<!-- 內容區 -->
-			<!-- <div style="height: 1800px; padding: 200px 0; text-align: center; color: #888888;">空白區域<br>空白區域<br>空白區域</div> -->
-			<section class="section mainSection">
                 <div class="banner">
                     <div class="pc_view">
                         <div class="agentLink"data-aos="fade-right" data-aos-duration="1500" data-aos-delay="500">
                             <img class="brand" src="img/common/brand_A.png" alt="">
-                            <!-- <div class="brand"></div> -->
                             <a href="https://ytbk.tw/Unu6z2" target="_blank" class="agentButton_1024"></a>
                         </div>
                         <div class="animation_1024">
@@ -170,14 +167,12 @@
                     <span></span>
                     <span></span>
                 </div>
-                
                 <div class="container" style="margin:-1px auto">
                     <section id="service01">
                         <div class="container">
                             <div>
                                 <div class="block_title_Pic" id="jumpPlaceA">
                                     <div class="title_onlineSerivce_pic title_pic" id="title"></div>
-                                    <!-- <div class="outlined-text title_pic" data-title="線上申辦">線上申辦</div> -->
                                     <p class="subTitle">無需排隊，線上申辦超便利<span class="line-break"></span>，元先生助您一臂之力！</p>
                                 </div>
                                 <div class="container-fluid full-height d-flex justify-content-center align-items-center sliderGroup">
@@ -226,7 +221,7 @@
                     <div id="service02" class="service_creditCard_hot" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="250">
                         <div class="block_title_Pic" id="jumpPlaceB">
                             <h2 class="title_creditCard_pic title_pic" id="title"></h2>
-                            <p class="subTitle">信用卡問題，元先生通通為您解答！</p> 
+                            <p class="subTitle">信用卡相關問題，元先生通通為您解答！</p> 
                         </div>
                         <div class="creditCard_menu">
                             <a href="#" onclick="showContent(event, 1, this)" class="card_Service active" data-bg="service1">
@@ -308,7 +303,6 @@
                     <!-- 投資理財 -->
                     <div id="service03" class="row block_invest_1024" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="250">
                         <div class="container_invest" id="jumpPlaceC">
-                            <!-- <img src="img/common/bg_invest_1024a.png" alt="" class="img-fluid"> -->
                             <div class="container_invest_bg"></div>
                             <div class="main">
                                 <div class="top-left">
@@ -421,6 +415,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 測試輪播 -->
                 </div>
             </div>
             <section class="section connect_buttom">
@@ -452,7 +448,7 @@
                                 </div>
                             </div>
                             <div class="inBPic"></div>
-                            <a href="#" id="os-specific-link" target="_blank" class="button_slideService_footerInf"></a>
+                            <a href="https://www.yuantabank.com.tw/bankwebIMG/event/Bank_Act2019/MobileBankingAPP/index.html" target="_blank" class="button_slideService_footerInf"></a>
                         </div>
                         <div class="placeB" data-aos="fade-left" data-aos-duration="1500" data-aos-delay="250">
                             <div class="block_title">
@@ -583,24 +579,6 @@
             AOS.init({
                 once: true,
             });
-           
-
-            function updateFlexWrap() {
-                if ($(window).width() < 1200) {
-                    $('.full-width-container').addClass('flex-wrap');
-                } else {
-                    $('.full-width-container').removeClass('flex-wrap');
-                }
-            }
-            function updateAll() {
-                // updateImageInvest();
-                updateFlexWrap();
-                // updateAOSAttributes();
-            }
-
-            // 當視窗大小改變或載入時，更新所有內容
-            window.addEventListener('resize', updateAll);
-            window.addEventListener('load', updateAll);
         </script>
         <script>
             //錨點功能
@@ -619,18 +597,151 @@
                                 }, 800); // 設置回彈速度
                             });
                         }
-                    // if (target.length) {
-                    //     event.preventDefault();
-                    //     $("html, body").animate({
-                    //         scrollTop: $(target).offset().top
-                    //     }, 800, function() {
-                    //         window.location.hash = hash;
-                    //     });
-                    // }
+                    
                 });
             });
         </script>
         <script>
+            // 測試用輪播
+            $(document).ready(function() {
+            const links = [
+                'https://ytbk.tw/QjURz2',
+                'https://ytbk.tw/InUzaa',
+                'https://ytbk.tw/eqeayy',
+                'https://ytbk.tw/22ueIz'
+            ];
+            $('.slick-slider-AAA').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: true,
+                prevArrow: $('.slick-prev'),
+                nextArrow: $('.slick-next'),
+                customPaging: function(slider, i) {
+                    return '<button></button>';
+                },
+                centerMode: true,
+                centerPadding: '100'
+            }).on('afterChange', function(event, slick, currentSlide) {
+                let titles = ['貸款申請', '繳款方式', '帳務查詢', '進度查詢'];
+                $('.title').text(titles[currentSlide % titles.length]);
+                $('#serviceButton').attr('href', links[currentSlide % links.length]);
+            });
+        });
+        </script>
+        <!-- 線上服務輪播 -->
+        <script>
+            $(document).ready(function() {
+                const linksOnline = [
+                    'https://ytbk.tw/2UvYbe',
+                    'https://ytbk.tw/BFBJn2',
+                    'https://ytbk.tw/n6vMJb',
+                    'https://ytbk.tw/uuIfMf'
+                ];
+                // 初始化 線上申辦 Slider
+                $('.slide_onlineService').slick({
+                    infinite: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    dots: true,
+                    centerMode: true,
+                    centerPadding: '10px',
+                    prevArrow: '#service01 .slick-prev',
+                    nextArrow: '#service01 .slick-next',
+                    customPaging: function(slider, i) {
+                        return '<button>' + (i + 1) + '</button>';
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                }).on('afterChange', function(event, slick, currentSlide){
+                    let titles = ['線上開戶', '申辦信用卡', '自動扣繳', '刷卡分期'];
+                    $('#service01 .title').text(titles[currentSlide % titles.length]);
+                    $('#serviceOnline').attr('href', linksOnline[currentSlide % linksOnline.length]);
+                });
+            });
+        </script>
+
+        <!-- 數位服務輪播 -->
+        <script>
+            $(document).ready(function() {
+                const linksDigital = [
+                    'https://ytbk.tw/2IJ73a',
+                    'https://ytbk.tw/zqiEF3',
+                    'https://ytbk.tw/fMv2Mv',
+                    'https://ytbk.tw/7vEzui'
+                ];
+                // 初始化 數位服務 Slider
+                $('.slide_digital').slick({
+                    infinite: true,
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    dots: true,
+                    centerMode: true,
+                    centerPadding: '10px',
+                    prevArrow: '#service04 .slick-prev',
+                    nextArrow: '#service04 .slick-next',
+                    customPaging: function(slider, i) {
+                        return '<button>' + (i + 1) + '</button>';
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                }).on('afterChange', function(event, slick, currentSlide){
+                    let titles = ['個人網銀', 'LINE個人化', '行動支付', '匯率查詢'];
+                    $('#service04 .title').text(titles[currentSlide % titles.length]);
+                    $('#serviceDigital').attr('href', linksDigital[currentSlide % linksDigital.length]);
+                });
+            });
+        </script>
+
+        <!-- 貸款服務輪播 -->
+        <script>
+            $(document).ready(function() {
+                const linksLoan = [
+                    'https://ytbk.tw/QjURz2',
+                    'https://ytbk.tw/InUzaa',
+                    'https://ytbk.tw/eqeayy',
+                    'https://ytbk.tw/22ueIz'
+                ];
+                $('#service05 .slick-slider-loan').slick({
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    dots: true,
+                    centerMode: true,
+                    centerPadding: '0',
+                    prevArrow: '#service05 .slick-prev',
+                    nextArrow: '#service05 .slick-next',
+                    customPaging: function(slider, i) {
+                        return '<button>' + (i + 1) + '</button>';
+                    },
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                }).on('afterChange', function(event, slick, currentSlide){
+                    let titles = ['貸款申請','繳款方式', '帳務查詢', '進度查詢' ];
+                    $('#service05 .title').text(titles[currentSlide % titles.length]);
+                    $('#serviceLoan').attr('href', linksLoan[currentSlide % linksLoan.length]);
+                });
+            });
+        </script>
+        <!-- <script>
             $(document).ready(function() {
                 const linksOnline = [
                     'https://ytbk.tw/2UvYbe',
@@ -691,7 +802,7 @@
                     }
         ]
                 }).on('afterChange', function(event, slick, currentSlide){
-                    let titles = ['個人網銀', 'Line個人化', '行動支付', '匯率查詢'];
+                    let titles = ['個人網銀', 'LINE個人化', '行動支付', '匯率查詢'];
                     $('#service04 .title').text(titles[currentSlide % titles.length]);
                     $('#serviceDigital').attr('href', linksDigital[currentSlide % linksDigital.length]);
                 });
@@ -709,7 +820,7 @@
                     slidesToScroll: 1,
                     dots: true,
                     centerMode: true,
-                    centerPadding: '0px',
+                    centerPadding: '0',
                     prevArrow: '#service05 .slick-prev',
                     nextArrow: '#service05 .slick-next',
                     customPaging: function(slider, i) {
@@ -729,8 +840,8 @@
                     $('#serviceLoan').attr('href', linksLoan[currentSlide % linksLoan.length]);
                 });
             });
-        </script>
-        <script>
+        </script> -->
+        <!-- <script>
             function getOS() {
                 var userAgent = window.navigator.userAgent,
                     platform = window.navigator.platform,
@@ -758,30 +869,6 @@
                     linkElement.href = '#'; // 默认链接，或者处理其他系统
                 }
             });
-        </script>
-        <script>
-            function openAppOrRedirect(openUrl, storeUrl) {
-                var timeout;
-                var t1 = Date.now();
-    
-                var iframe = document.createElement('iframe');
-                iframe.style.border = 'none';
-                iframe.style.width = '1px';
-                iframe.style.height = '1px';
-                iframe.onload = function() {
-                    document.body.removeChild(iframe);
-                    clearTimeout(timeout);
-                };
-                iframe.src = openUrl;
-                document.body.appendChild(iframe);
-    
-                timeout = setTimeout(function() {
-                    if (Date.now() - t1 < 1500) {
-                        window.location.href = storeUrl;
-                    }
-                }, 1500);
-            }
-        </script>
-        
+        </script> -->
     </body>
 </html>

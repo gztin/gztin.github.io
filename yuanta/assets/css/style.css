@@ -199,7 +199,7 @@ html, body {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    width:208px;
+    width:100%;
     height:78px;
     margin: 0 auto;
 }
@@ -433,6 +433,7 @@ html, body {
     background-image:url(../images/button/agentButton_resume_286x62.svg);
     background-size: cover;
     background-repeat: no-repeat ;
+    box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
 }
 
 /* .bossRighthand{
@@ -993,16 +994,19 @@ html, body {
     justify-content: center;
     width:1200px;
     height:816px;
+    position: relative;
     filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
 }
 .service_loan > .left{
-    width:588px;
+    width:600px;
     height:816px;
-    margin-left:82px;
+    position: relative;
+    /* margin-left:82px; */
 }
 .service_loan > .right{
-    width:612px;
+    width:600px;
     height:816px;
+    position: relative;
 }
 .service_loan > .right > .loan_sub{
     width:383px;
@@ -1012,13 +1016,14 @@ html, body {
     top:337px;
 }
 .service_loan > .right > .loan_sub > .loan_title{
-    width:199.97px;
-    height:48px;
-    background-image:url(../images/common/loan_sub_title.svg);
+    width:100%;
+    height:78px;
+    background-image:url(../images/background/title_service_D.png);
     background-size: contain;
     background-repeat: no-repeat;
-    filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1));
+    /* filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1)); */
     margin-bottom: 24px;
+    margin-left:-6px;
 }
 .service_loan > .right > .loan_sub > .loan_content{
     font-weight: 500;
@@ -1033,6 +1038,7 @@ html, body {
     transform: translateX(0%);
     left: 0%;
 }
+
 .slider_loan > .sliderButton{
     bottom: 52%;
 }
@@ -1083,12 +1089,14 @@ html, body {
     height:151.08px;
 }
 .top-left > .invest_pic{
-    width: 207.92px;
-    height: 57.08px;
+    width: 100%;
+    height: 78px;
+    margin-left:-12px;
     background-image: url(../images/common/invest_sub_title.png);
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
-    filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1));
+
+    /* filter: drop-shadow(0px 0px 9px rgba(185, 255, 255, 1)); */
     margin-bottom: 24px;
 }
 .top-left > .invest_text,
@@ -1165,12 +1173,13 @@ html, body {
 .bottomSubBlock{
     width:359px;
     height:297.89px;
-    filter: drop-shadow(0px 0px 20px rgba(185, 255, 255, 0.950));
+    filter: drop-shadow(0px 0px 20px rgba(12, 242, 255, 0.950));
 }
 .bottomSubBlock:nth-child(1),
 .bottomSubBlock:nth-child(2),
 .bottomSubBlock:nth-child(3){
     background-repeat: no-repeat;
+    background-size: contain;
 }
 .bottomSubBlock:nth-child(1){
     background-image: url(../images/common/bg_invest_1024_A_bottom_1.svg);
@@ -1364,7 +1373,7 @@ html, body {
     background-image: url(../images/background/infB_01.png);
     width:282px;
     height:511px;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     margin-bottom: 32px;
     background-position-x: center;
@@ -1504,6 +1513,120 @@ html, body {
 }
 /* slider end */
 
+/* 測試輪播 */
+.container-AAA {
+    display: flex;
+    width: 1000px; /* 固定宽度 */
+    height: 700px; /* 固定高度 */
+    margin: 0 auto; /* 居中对齐 */
+}
+.slider_AAA {
+    background-color: #333;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+.slider_AAA > .slick-slider {
+    width: 90%;
+    margin: auto;
+}
+.slider_AAA > .slick-prev, .slick-next {
+    background-color: #15FFD5;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.slider_AAA > .slick-prev:before, .slick-next:before {
+    background-color: #15FFD5;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    color: #033689;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.slider_AAA > .slick-prev {
+    left: 10px;
+}
+.slider_AAA > .slick-next {
+    right: 10px;
+}
+.slider_AAA > .slick-dots {
+    text-align: center;
+    margin-top: 20px;
+}
+.slider_AAA > .slick-slider > .slick-dots li button {
+    background: url('../sample04/assets/images/common/dot_normal.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    width: 15px;
+    height: 15px;
+    display: block;
+    cursor: pointer;
+}
+.slider_AAA > .slick-slider > .slick-dots > li.slick-active button {
+    background: url('../sample04/assets/images/common/dot_active.png') no-repeat center center;
+    background-size: contain;
+}
+.slider_AAA > .slick-slider > .slick-dots li button:before {
+    content: none;
+}
+.slider_AAA > .button_slideService {
+    width: 200px;
+    height: 60px;
+    background-image: url('../sample04/assets/images/common/button_agent.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin: 0 auto;
+}
+.slider_AAA > .slick-slider > .slick-list > .slick-track > .slick-slide img {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    scale: 0.9;
+}
+.slider_AAA > .title {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 2em;
+    color: white;
+}
+.slider_AAA > .block_title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+.slider_AAA > .block_title > .cube > span {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 5px;
+}
+.slider_AAA > .block_title > .cube > span.title_span1 {
+    background-color: #15FFD5;
+    opacity: 0.3;
+}
+.slider_AAA > .block_title > .cube > span.title_span2 {
+    background-color: #15FFD5;
+}
+
 /* 貸款業務Slider */
 .slider_loan {
     width: 45%;
@@ -1532,7 +1655,19 @@ html, body {
     height: 12px;
     margin: 0 6px;
 }
-
+.slick-slider-loan > .slick-list >.slick-track > .slick-slide > img{
+    margin-top:1px;
+}
+.slick-slider-loan > .slick-list >.slick-track > .slick-slide{
+    transform: scale(0.8);
+    margin-top: 3vw;
+    opacity: 0.5;
+}
+.slick-slider-loan > .slick-list >.slick-track > .slick-active{
+    transform: scale(1);
+    margin-top: 0vw;
+    opacity: 1;
+}
 .right {
     /* background-color: #fff; */
     width: 36%;
@@ -1816,10 +1951,15 @@ html, body {
     .slick-slider-loan > ul.slick-dots{
         bottom:50px;
     }
-    .service_loan > .left{
+    /* .service_loan > .left{
         width:454px;
-        height:822px;
+        height:816px;
         margin-left:0px;
+    } */
+    .service_loan > .left{
+        width:540px;
+        height:816px;
+        margin-left:108px;
     }
     .service_loan > .left > .block_title{
         margin-top: 32px;
@@ -1830,9 +1970,13 @@ html, body {
         transform: translateX(0%);
         left: 0%;
     }
-    .service_loan > .right{
+    /* .service_loan > .right{
         width:442px;
-        height:822px;
+        height:816px;
+    } */
+    .service_loan > .right{
+        width:552px;
+        height:816px;
     }
 
     .creditInf > .sliderAAA,
@@ -1852,9 +1996,9 @@ html, body {
     .sliderButton{
         max-width: 1400px;
     }
-    .service_loan > .left > .sliderButton{
-        max-width: 454px;
-    }
+    /* .service_loan > .left > .sliderButton{
+        max-width: 358px;
+    } */
     .slick-prev{
         left: 155px;
     }
@@ -1862,13 +2006,13 @@ html, body {
         right: 155px;
     }
     .service_loan > .left > .sliderButton{
-        bottom:60%;
+        bottom:53%;
     }
     .service_loan > .left > .sliderButton > .slick-prev{
-        left: -70px;
+        left: -27px;
     }
     .service_loan > .left > .sliderButton > .slick-next{
-        right: -70px;
+        right: -27px;
     }
 
     .linkBlock{
@@ -1993,7 +2137,7 @@ html, body {
         display: none;
     }
     .Block_service{
-        background-color: #EBF9FF;
+        background-color: #F4FFFF;
         width: 100%;
         z-index: 1;
     }
@@ -2276,11 +2420,14 @@ html, body {
     /* slider end */
     
     
-    
+    .creditCard_button, .button_slideService{
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+    }
    .agentButton_1024{
         display: block;
         margin:0 auto;
         margin-top:64px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
    }
    .agentButton_1024:hover{
         background-image: url('../images/common/button_agent_hover.svg');
@@ -2354,7 +2501,7 @@ html, body {
     
     .agentLink{
         width:341.1px;
-        height:387px;
+        height:392px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -2479,7 +2626,7 @@ html, body {
     }
     .service_loan > .left > .sliderButton{
         max-width: 454px;
-        bottom:60%;
+        bottom:53%;
     }
     .service_loan > .left > .button_slideService{
         position: relative;
@@ -2615,6 +2762,7 @@ html, body {
         width:286.64px;
         height:238px;
         background-size: contain;
+        filter: drop-shadow(0px 0px 15.98px rgba(12, 242, 255, 0.950));
     }
     .main > .top-left > .invest_text > .line-break{
         display: block;
@@ -2675,7 +2823,7 @@ html, body {
         display: none;
     }
     .Block_service{
-        background-color: #EBF9FF;
+        background-color: #F4FFFF;
         width: 100%;
         z-index: 1;
     }
@@ -2931,7 +3079,7 @@ html, body {
       }
     .placeA > .inBPic,
     .placeB > .inBPic {
-        width:240px;
+        width:246px;
         height:435px;
     }
     .placeC > .inBPic {
@@ -2961,6 +3109,7 @@ html, body {
         display: block;
         margin:0 auto;
         margin-top:64px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
    }
    .agentButton_1024:hover{
         background-image: url('../images/common/button_agent_hover.svg');
@@ -2979,20 +3128,22 @@ html, body {
         padding-right:0px;
     }
     .animation_1024 {
-        width: 468px;
-        height: 639px;
+        width: 400px;
+        height: 540px;
         margin-top: -70px
     }
     .bossRighthand{
         width:98.79px;
         height:68.55px;
-        margin-top:270px;
+        margin-top:226px;
+        scale:0.8;
     }
     .bossLefthand{
         width:113px;
         height:80px;
-        margin-left: 247px;
-        margin-top: 340px;
+        margin-left: 180px;
+        margin-top: 280px;
+        scale:0.8;
     }
     .agentLink{
         width:341.1px;
@@ -3004,7 +3155,7 @@ html, body {
         align-items: center;
         top:0px;
         /* left:20vw; */
-        margin-top:92px;
+        margin-top:46px;
         margin-left:0px;
     }
     .pc_view{
@@ -3021,7 +3172,7 @@ html, body {
     }
     .banner{
         width:100%;
-        height:800px;
+        height:576px;
         background-size: contain;
         background-repeat: no-repeat;
         display: flex;
@@ -3131,6 +3282,16 @@ html, body {
         width:286.64px;
         height:238px;
         background-size: contain;
+        filter: drop-shadow(0px 0px 15.98px rgba(12, 242, 255, 0.950));
+    }
+    .bottomSubBlock:nth-child(1){
+        background-image: url(../images/common/bg_invest_1024_B_1.svg);
+    }
+    .bottomSubBlock:nth-child(2){
+        background-image: url(../images/common/bg_invest_1024_B_2.svg);
+    }
+    .bottomSubBlock:nth-child(3){
+        background-image: url(../images/common/bg_invest_1024_B_3.svg);
     }
     .main {
         width: 308px;
@@ -3323,7 +3484,7 @@ html, body {
         display: none;
     }
     .Block_service{
-        background-color: #EBF9FF;
+        background-color: #F4FFFF;
         width: 100%;
         z-index: 1;
     }
@@ -3546,7 +3707,7 @@ html, body {
       }
     .placeA > .inBPic,
     .placeB > .inBPic {
-        width:240px;
+        width:245px;
         height:435px;
     }
     .placeC > .inBPic {
@@ -3567,6 +3728,12 @@ html, body {
         display: block;
         margin:0 auto;
         margin-top:64px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+   }
+   .creditCard_button, 
+   .button_slideService{
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+        bottom:11px;
    }
    .agentButton_1024:hover{
         background-image: url('../images/common/button_agent_hover.svg');
@@ -3631,7 +3798,7 @@ html, body {
         opacity: 1;
         margin-top: 0px;
     }
-    .custom-button:hover {
+    /* .custom-button:hover {
         background-color: #013397;
         color: #fff;
         text-decoration: none;
@@ -3642,7 +3809,7 @@ html, body {
     }
     .serviceA_MenuButton button:hover > span.bt_r {
         background-image: url(../images/button/bt_r.png);
-    }
+    } */
     .block_title_Pic > .subTitle{
         font-size: 24px;
         line-height: 27px;
@@ -3684,21 +3851,28 @@ html, body {
     .top-left > .invest_text_2 > .line-break{
         display: block;
     }
+    .title_pic{
+        height:70px;
+    }
     .top-left > .invest_pic{
+        width:100%;
+        height:70px;
         margin:0 auto;
+        background-position: center;
     }
     .top-left > .invest_text_2{
-        margin-top:24px;
+        margin-top:6px;
         font-size: 24px;
         line-height: 36px;
         text-align: center;
     }
     .creditInf {
         background-image: url('../images/background/bg_onlineService_C.svg'); /* 使用CSS content属性替换图片 */
-        width:768px;
+        width:695px;
         height:846px;
-        background-size: cover;
+        background-size: contain;
         background-position: center;
+        background-repeat: no-repeat;
     }
     .service_Digital {
         background-image: url('../images/background/bg_digitalService_C.svg'); /* 使用CSS content属性替换图片 */
@@ -3830,6 +4004,7 @@ html, body {
     }
     .bottom-left{
         text-align: center;
+        margin-top:40px;
     }
     .bottom-left > .creditCard_button{
         /* width: 37vw;
@@ -3939,13 +4114,15 @@ html, body {
         height:415px;
     }
     .bossRighthand{
-        margin-right: 0px;
+        margin-right: 117px;
         margin-bottom: 40px;
         margin-top: 35px;
+        scale: 1;
     }
     .bossLefthand{
         margin-right: 50px;
         margin-top: 150px;
+        scale: 1;
     }
     .bossRighthand,
     .bossLefthand{
@@ -4036,20 +4213,19 @@ html, body {
         background-image:url(../images/common/sectionA_768.svg);
     }
     
-    /* .block_invest > .linkBlock{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 56vw;
+    .custom-button:hover{
+        background-color: #00FFFF;
+        color:#013397;
+        border:#013397 solid 2px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
     }
-    .block_invest > .linkBlock > .creditCard_button{
-        margin-top: 0vw;
-        margin-left: 0vw;
-        width: 36vw;
-        height: 10vw;
-        margin:0 auto;
-        margin-top:20vw;
-    } */
+    .serviceA_MenuButton button:hover > span.bt_l {
+        background-image: url(../images/button/bt_l_hover.png);
+    }
+    .serviceA_MenuButton button:hover > span.bt_r {
+        background-image: url(../images/button/bt_r_hover.png);
+    }
+
     .slick-dots {
         bottom:20px;
     }
@@ -4102,10 +4278,10 @@ html, body {
     }
     .slide_digital > .slick-dots, 
     .slide_onlineService > .slick-dots {
-        bottom: -28px;
+        bottom: -24px;
     }
     .creditInf > .sliderAAA > .button_slideService {
-        bottom: 24px;
+        bottom: 32.1px;
     }
     .slick-track {
         top: 0px;
@@ -4321,7 +4497,7 @@ html, body {
     }
     .placeA > .inBPic,
     .placeB > .inBPic{
-        width:282px;
+        width:288px;
         height:511px;
     }
     .placeC > .inBPic{
@@ -4551,15 +4727,29 @@ html, body {
         background-image: url(../images/background/invest_360.png);
     }
     .top-left > .invest_pic{
-        width: 117px;
-        height: 31.7px;
-        filter: drop-shadow(0px 0px 5px rgba(185, 255, 255, 1));
+        width: 180px;
+        height: 50px;
+        background-position: center;
+        /* filter: drop-shadow(0px 0px 5px rgba(185, 255, 255, 1)); */
     }
     .top-left > .invest_text_2{
         font-size: 18px;
         line-height: 27px;
-        margin-top: 16px;
+        margin-top: 6px;
+        padding-bottom: 0px;
     }
+    /* .custom-button:hover{
+        background-color: #00FFFF;
+        color:#013397;
+        border:#013397 solid 2px;
+        box-shadow: 0px 0px 8px 0px rgba(0, 255, 255, 0.8);
+    }
+    .serviceA_MenuButton button:hover > span.bt_l {
+        background-image: url(../images/button/bt_l_hover.png);
+    }
+    .serviceA_MenuButton button:hover > span.bt_r {
+        background-image: url(../images/button/bt_r_hover.png);
+    } */
     .creditBG{
         width:312px;
         height:492px;
@@ -4619,7 +4809,7 @@ html, body {
     #content3 > .serviceImg > .hint_title, 
     #content4 > .serviceImg > .hint_title {
         width: 256px;
-        height: 168px;
+        height: 163px;
         gap: 24px;
         margin-bottom: 0px;
         left:28px;
@@ -4678,33 +4868,35 @@ html, body {
         height:359px;
         margin-left:0px;
         right:36px;
-        bottom:48px;
+        bottom:49px;
     }
     .container_invest > .main{
         width:280px;
         height:182px;
         left: 16px;
-        top:42px;
+        top:35px;
     }
     .investBottomBlock{
         width:312px;
         height:94px;
         gap:10.5px;
+        bottom:49px;
     }
     .bottomSubBlock{
         width:97px;
         height:94px;
+        background-size: contain;
         filter: none;
         box-shadow: 0px 0px 4.16px 0px rgba(0, 255, 255, 0.66);
     }
     .bottomSubBlock:nth-child(1){
-        background-image: url(../images/common/bg_invest_767_bottom_1.svg);
+        background-image: url(../images/common/bg_invest_767_bottom_1.png);
     }
     .bottomSubBlock:nth-child(2){
-        background-image: url(../images/common/bg_invest_767_bottom_2.svg);
+        background-image: url(../images/common/bg_invest_767_bottom_2.png);
     }
     .bottomSubBlock:nth-child(3){
-        background-image: url(../images/common/bg_invest_767_bottom_3.svg);
+        background-image: url(../images/common/bg_invest_767_bottom_3.png);
     }
     .container_invest > .main > .top-left{
         width:280px;
@@ -4845,7 +5037,7 @@ html, body {
     }
     .block_title_Pic > .title_pic{
         width:180px;
-        height:50.63px;
+        height:50px;
     }
     .outlined-text{
         font-size: 34px;
@@ -4971,7 +5163,7 @@ html, body {
         width: 264px;
         font-size: 18px;
         line-height: 24px;
-        filter: drop-shadow(0px 0px 30px rgba(185, 255, 255, 0.50));
+        filter: drop-shadow(0px 0px 8px rgba(185, 255, 255, 0.50));
     }
     
     .content {
@@ -5018,8 +5210,22 @@ html, body {
         height: 449px;
         margin-top:24px;
     }
+    .slide_digital > .slick-dots, 
+    .slide_onlineService > .slick-dots {
+        bottom: -35px;
+    }
+    .service_loan > .left{
+        margin-top:0px;
+    }
+    .slick-slider-loan > ul.slick-dots {
+        bottom: 17px;
+    }
+    .service_loan > .left > .button_slideService {
+        bottom: 9px;
+    }
     .slick-slide img{
         margin-top:1px;
+        height:399px;
     }
     .service_loan > .left > .button_slideService{
         width:217px;
@@ -5160,6 +5366,7 @@ html, body {
         width:292px;
         height:178px;
         margin-left: 28px;
+        margin-bottom: 24px;
         background-image: url(../images/background/infB_03_s.png);
     }
     .placeA > .button_slideService_footerInf,
