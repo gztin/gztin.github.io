@@ -310,9 +310,17 @@
 
     .mobile-mode-switch button.active,
     .mobile-lang-switch button.active {
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
+      background: var(--accent) !important;
+      color: #000 !important;
+      border-color: var(--accent) !important;
+      font-weight: 600;
+    }
+
+    /* For lang switch, high contrast is better */
+    .mobile-lang-switch button.active {
+      background: var(--ink) !important;
+      color: var(--bg) !important;
+      border-color: var(--ink) !important;
     }
 
     nav.top .nav-cta {
@@ -2133,35 +2141,36 @@
     <div class="mobile-menu-divider"></div>
     <div class="mobile-menu-controls">
       <div class="mobile-control-group">
-        <span class="control-label">主題</span>
+        <span class="control-label" data-i18n="control_appearance">主題</span>
         <div class="mobile-mode-switch" id="mobileModeSwitch">
-          <button data-mode="auto" aria-label="Auto">
+          <button data-mode="auto" class="active" aria-label="Auto">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="9" />
               <path d="M12 3v18" />
               <path d="M12 3a9 9 0 0 1 0 18" />
             </svg>
-            自動
+            <span data-i18n="mode_auto">自動</span>
           </button>
           <button data-mode="light" aria-label="Light">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4" />
               <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
             </svg>
-            亮
+            <span data-i18n="mode_light">亮</span>
           </button>
           <button data-mode="dark" aria-label="Dark">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
-            暗
+            <span data-i18n="mode_dark">暗</span>
           </button>
         </div>
       </div>
       <div class="mobile-control-group">
-        <span class="control-label">語言</span>
+        <span class="control-label" data-i18n="control_lang">語言</span>
         <div class="mobile-lang-switch" id="mobileLangSwitch">
-          <button data-lang="zh">中文</button>
+          <button data-lang="zh" class="active">中文</button>
           <button data-lang="en">English</button>
         </div>
       </div>
@@ -2451,20 +2460,8 @@
       { q: { zh: "我從沒上台講過,真的可以投稿嗎?", en: "I've never spoken publicly before. Can I still submit?" }, a: { zh: "非常可以——而且我們歡迎。新講者有專屬 mentor 陪你從 proposal 打磨到上台前的最後一次彩排。很多歷屆講者的第一次,都是從 iPlayground 開始的。", en: "Absolutely — and we encourage it. First-time speakers get a dedicated mentor who'll help you from proposal to your final rehearsal. Many of our past speakers gave their first ever talk at iPlayground." } },
       { q: { zh: "主題太小眾/太技術/太冷門,會被收嗎?", en: "My topic is niche / too technical / obscure. Will it get accepted?" }, a: { zh: "我們更擔心太主流。只要你能讓觀眾帶走一點什麼——不管是一個工具、一個觀點、一次踩坑的啟發——對我們就是有料。", en: "We're more worried about topics being too mainstream. As long as your audience walks away with something — a tool, a perspective, a lesson learned — it's a great talk for us." } },
       { q: { zh: "可以用英文投稿與上台嗎?", en: "Can I submit and speak in English?" }, a: { zh: "可以。投稿表單與現場都可接受中文或英文,只要告訴我們你偏好的語言即可,不會影響評選。", en: "Yes. Both the submission form and the conference accept Chinese or English. Just let us know your preferred language — it won't affect the review." } },
-bmit the same topic in different lengths (20/30/45 min), or submit multiple different topics separately — we'll discuss the best fit with you." } },
+      { q: { zh: "投稿次數有限制嗎?", en: "Is there a limit on submissions?" }, a: { zh: "沒有限制。你可以針對同一個主題投稿不同長度 (20/30/45 min),也可以分別投稿多個不同主題——我們會與你討論最適合的安排。", en: "No limit. You can submit the same topic in different lengths (20/30/45 min), or submit multiple different topics separately — we'll discuss the best fit with you." } },
       { q: { zh: "徵稿結果什麼時候公布?會回覆我為什麼沒被選嗎?", en: "When will CFP results be announced? Will I hear why I wasn't selected?" }, a: { zh: "預計 7 月初以 email 逐位回覆。若你希望、我們願意提供簡短的 feedback——請在表單中勾選「希望收到審查意見」。", en: "We plan to notify everyone by email in early July. If you'd like brief feedback, check the 'Request review comments' option in the form — we're happy to share." } },
-    ];
-
-    const AGENDA = [
-      { time: "範例", track: "ios", tag: "iOS", title: "SwiftUI 在大型產品的落地經驗", sub: "架構選擇、效能挑戰、踩過的坑都歡迎", speaker: { name: "20 / 30 / 45 分", avatar: "iOS" } },
-      { time: "範例", track: "ios", tag: "iOS", title: "Swift 6 Concurrency、visionOS、App Intents…", sub: "WWDC 沒說、或用了之後才發現的真相", speaker: { name: "20 / 30 / 45 分", avatar: "iOS" } },
-      { time: "範例", track: "ai", tag: "AI", title: "LLM / RAG / Agent 在真實產品的應用", sub: "不是 Demo,是上線之後的故事", speaker: { name: "20 / 30 / 45 分", avatar: "AI" } },
-      { time: "範例", track: "ai", tag: "AI", title: "On-device ML、Core ML、MLX 的實作", sub: "把模型塞進 iPhone 後發生了什麼事", speaker: { name: "20 / 30 / 45 分", avatar: "AI" } },
-      { time: "範例", track: "product", tag: "產品", title: "從 0 到 1 的建立,或從 1 到 100 的擴張", sub: "產品決策、成長實驗、商業模式轉彎", speaker: { name: "20 / 30 / 45 分", avatar: "產" } },
-      { time: "範例", track: "product", tag: "產品", title: "設計與工程的協作方法論", sub: "Design Token、Design System、Handoff", speaker: { name: "20 / 30 / 45 分", avatar: "產" } },
-      { time: "範例", track: "other", tag: "Lightning", title: "有故事講不完?5 分鐘也可以。", sub: "Lightning Talk 歡迎短而快、任性、真誠", speaker: { name: "5 分鐘", avatar: "⚡" } },
-      { time: "範例", track: "other", tag: "Panel", title: "想和其他人一起聊的話題?", sub: "Panel 圓桌 · 歡迎投稿提案與人選", speaker: { name: "60 分", avatar: "🗣" } },
-      { time: "範例", track: "other", tag: "Workshop", title: "帶著電腦一起動手寫程式", sub: "Workshop · 限定人數、深度上手", speaker: { name: "180 分", avatar: "🛠" } },
     ];
 
     // ===== Render =====
@@ -2565,14 +2562,6 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
       });
     }
 
-    // ===== Interactions =====
-    document.getElementById("agendaTabs")?.addEventListener("click", (e) => {
-      if (e.target.tagName !== "BUTTON") return;
-      [...e.currentTarget.children].forEach(b => b.classList.remove("active"));
-      e.target.classList.add("active");
-      renderAgenda(e.target.dataset.track);
-    });
-
     // Countdown
     function flipSet(id, val) {
       var span = document.getElementById("cd-" + id);
@@ -2594,13 +2583,64 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
       flipSet("s", Math.floor((diff % 60000) / 1000));
     }
 
-    // ===== Tweaks =====
+    // ===== Interaction Utilities =====
+    function syncThemeButtons(pref) {
+      const btns = document.querySelectorAll('button[data-mode], button[data-m]');
+      btns.forEach(b => {
+        const m = b.getAttribute('data-mode') || b.getAttribute('data-m');
+        if (m) b.classList.toggle("active", m === pref);
+      });
+    }
+
+    function syncLangButtons(lang) {
+      const btns = document.querySelectorAll('button[data-lang]');
+      btns.forEach(b => {
+        const l = b.getAttribute('data-lang');
+        if (l) b.classList.toggle("active", l === lang);
+      });
+    }
+
+    // ===== Hamburger Menu =====
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hamburgerBtn.classList.toggle("active");
+        mobileMenu.classList.toggle("active");
+      });
+
+      // Close mobile menu when a link is clicked
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          hamburgerBtn.classList.remove("active");
+          mobileMenu.classList.remove("active");
+        });
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!hamburgerBtn.classList.contains("active")) return;
+        const isNav = e.target.closest("nav.top");
+        const isMenu = e.target.closest(".mobile-menu");
+        if (!isNav && !isMenu) {
+          hamburgerBtn.classList.remove("active");
+          mobileMenu.classList.remove("active");
+        }
+      });
+    }
+
+    // ===== Tweaks & Edit Mode =====
     let tweaksOn = false;
     let state = { ...TWEAKS };
 
     function applyTweaks(t) {
       document.documentElement.style.setProperty("--hue", t.hue);
-      document.getElementById("hueLabel") && (document.getElementById("hueLabel").textContent = t.hue + "°");
+      const hueLabel = document.getElementById("hueLabel");
+      if (hueLabel) hueLabel.textContent = t.hue + "°";
+      try { localStorage.setItem("hue", t.hue); } catch (e) { }
+      
       document.documentElement.dataset.mode = t.mode;
 
       // Hero art
@@ -2614,7 +2654,7 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
         }
       }
 
-      // Wordmark stacked vs inline
+      // Hero Title Style
       const h1 = document.querySelector("h1.hero-title");
       if (h1) {
         if (t.wordmarkStyle === "stacked") {
@@ -2623,19 +2663,18 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
           h1.innerHTML = '<span class="gradient">iPlayground</span><span class="gradient">' + tagline + '</span>';
         }
+        
+        // Recalculate Chinese subtitle alignment
+        requestAnimationFrame(() => {
+          const gradientSpan = h1.querySelector(".gradient");
+          const zhSpan = h1.querySelector(".hero-sub-zh");
+          if (gradientSpan && zhSpan) {
+            zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
+          }
+        });
       }
 
-      // Align Chinese subtitle width to match English headline width
-      requestAnimationFrame(() => {
-        const gradientSpan = document.querySelector("h1.hero-title .gradient");
-        const zhSpan = document.querySelector("h1.hero-title .hero-sub-zh");
-        if (gradientSpan && zhSpan) {
-          const enWidth = gradientSpan.getBoundingClientRect().width;
-          zhSpan.style.width = enWidth + "px";
-        }
-      });
-
-      // update control highlights
+      // Update Tweak Panel UI
       document.querySelectorAll("#segMode button").forEach(b => b.classList.toggle("active", b.dataset.m === t.mode));
       document.querySelectorAll("#segArt button").forEach(b => b.classList.toggle("active", b.dataset.k === t.keyArt));
       document.querySelectorAll("#segMark button").forEach(b => b.classList.toggle("active", b.dataset.w === t.wordmarkStyle));
@@ -2649,91 +2688,42 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
       try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*'); } catch (e) { }
     }
 
-    document.getElementById("hueSlider").addEventListener("input", (e) => updateTweak({ hue: Number(e.target.value) }));
-    document.getElementById("segMode").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") { updateTweak({ mode: e.target.dataset.m }); applyAppearance(e.target.dataset.m); } });
-    document.getElementById("segArt").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") updateTweak({ keyArt: e.target.dataset.k }); });
-    document.getElementById("segMark").addEventListener("click", (e) => { if (e.target.tagName === "BUTTON") updateTweak({ wordmarkStyle: e.target.dataset.w }); });
+    document.getElementById("hueSlider")?.addEventListener("input", (e) => updateTweak({ hue: Number(e.target.value) }));
+    document.getElementById("segMode")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) { updateTweak({ mode: btn.dataset.m }); applyAppearance(btn.dataset.m); }
+    });
+    document.getElementById("segArt")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) updateTweak({ keyArt: btn.dataset.k });
+    });
+    document.getElementById("segMark")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) updateTweak({ wordmarkStyle: btn.dataset.w });
+    });
 
-    // Edit mode listener BEFORE announcing
     window.addEventListener("resize", () => {
-      const gradientSpan = document.querySelector("h1.hero-title .gradient");
-      const zhSpan = document.querySelector("h1.hero-title .hero-sub-zh");
-      if (gradientSpan && zhSpan) {
-        zhSpan.style.width = "";
-        zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
+      const h1 = document.querySelector("h1.hero-title");
+      if (h1) {
+        const gradientSpan = h1.querySelector(".gradient");
+        const zhSpan = h1.querySelector(".hero-sub-zh");
+        if (gradientSpan && zhSpan) {
+          zhSpan.style.width = "";
+          zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
+        }
       }
     });
+
     window.addEventListener("message", (e) => {
       if (!e.data || typeof e.data !== "object") return;
       if (e.data.type === "__activate_edit_mode") {
         tweaksOn = true;
-        document.getElementById("tweaksPanel").classList.add("on");
+        document.getElementById("tweaksPanel")?.classList.add("on");
       } else if (e.data.type === "__deactivate_edit_mode") {
         tweaksOn = false;
-        document.getElementById("tweaksPanel").classList.remove("on");
+        document.getElementById("tweaksPanel")?.classList.remove("on");
       }
     });
-    try { window.parent.postMessage({ type: '__edit_mode_available' }, '*'); } catch (e) { }
-
-    // ===== Hamburger Menu =====
-    const hamburgerBtn = document.getElementById("hamburgerBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-
-    hamburgerBtn.addEventListener("click", () => {
-      hamburgerBtn.classList.toggle("active");
-      mobileMenu.classList.toggle("active");
-    });
-
-    // Close mobile menu when a link is clicked
-    document.querySelectorAll(".mobile-menu a").forEach(link => {
-      link.addEventListener("click", () => {
-        hamburgerBtn.classList.remove("active");
-        mobileMenu.classList.remove("active");
-      });
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!e.target.closest("nav.top") && !e.target.closest(".mobile-menu")) {
-        hamburgerBtn.classList.remove("active");
-        mobileMenu.classList.remove("active");
-      }
-    });
-
-    // Mobile menu controls - Mode switch
-    const mobileModeSwitch = document.getElementById("mobileModeSwitch");
-    if (mobileModeSwitch) {
-      mobileModeSwitch.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-mode]");
-        if (btn) {
-          applyAppearance(btn.dataset.mode);
-          // Sync active state on both desktop and mobile mode switches
-          document.querySelectorAll("#modeSwitch button, #mobileModeSwitch button").forEach(b => {
-            b.classList.toggle("active", b.dataset.mode === btn.dataset.mode);
-          });
-        }
-      });
-    }
-
-    // Mobile menu controls - Language switch
-    const mobileLangSwitch = document.getElementById("mobileLangSwitch");
-    if (mobileLangSwitch) {
-      mobileLangSwitch.addEventListener("click", (e) => {
-        const btn = e.target.closest("button[data-lang]");
-        if (btn) {
-          applyLang(btn.dataset.lang);
-        }
-      });
-    }
-
-    // ===== Init =====
-    renderNews();
-    renderAgenda("all");
-    renderSpeakers();
-    renderFaq();
-    applyTweaks(state);
-    tickCountdown();
-    setInterval(tickCountdown, 1000);
 
     // ===== i18n =====
     const I18N = {
@@ -2766,6 +2756,8 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
         footer_event: "活動", footer_news: "消息", footer_register: "報名",
         footer_community: "社群", footer_contact: "聯絡",
         footer_support: "一般支援", footer_cfp: "講者投稿", footer_sponsor: "贊助合作", footer_coc: "行為準則",
+        control_appearance: "主題", control_lang: "語言",
+        mode_auto: "自動", mode_light: "亮", mode_dark: "暗",
       },
       en: {
         nav_news: "News", nav_about: "Why Submit", nav_agenda: "Agenda", nav_speakers: "Speakers",
@@ -2796,8 +2788,11 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
         footer_event: "Event", footer_news: "News", footer_register: "Register",
         footer_community: "Community", footer_contact: "Contact",
         footer_support: "General Support", footer_cfp: "Speaker Submissions", footer_sponsor: "Sponsorship", footer_coc: "Code of Conduct",
+        control_appearance: "Appearance", control_lang: "Language",
+        mode_auto: "Auto", mode_light: "Light", mode_dark: "Dark",
       },
     };
+
     function applyLang(lang) {
       currentLang = lang;
       const dict = I18N[lang] || I18N.zh;
@@ -2806,41 +2801,82 @@ bmit the same topic in different lengths (20/30/45 min), or submit multiple diff
         if (dict[k]) el.innerHTML = dict[k];
       });
       document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
-      document.querySelectorAll("#langSwitch button").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
-      document.querySelectorAll("#mobileLangSwitch button").forEach(b => b.classList.toggle("active", b.dataset.lang === lang));
+      syncLangButtons(lang);
       renderNews(lang);
       renderSpeakers(lang);
       renderFaq(lang);
       applyTweaks(state);
       try { localStorage.setItem("lang", lang); } catch (e) { }
     }
-    document.getElementById("langSwitch").addEventListener("click", (e) => {
-      if (e.target.tagName === "BUTTON") applyLang(e.target.dataset.lang);
-    });
-    const savedLang = (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })();
-    applyLang(savedLang || "zh");
 
-    // ===== Appearance (Auto / Light / Dark) =====
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     function resolveMode(pref) {
       if (pref === "light" || pref === "dark") return pref;
       return mql.matches ? "dark" : "light";
     }
+
     function applyAppearance(pref) {
       const effective = resolveMode(pref);
       document.documentElement.dataset.mode = effective;
-      document.querySelectorAll("#modeSwitch button, #mobileModeSwitch button").forEach(b => b.classList.toggle("active", b.dataset.mode === pref));
-      // keep Tweaks state in sync (so the segmented control reflects reality)
+      syncThemeButtons(pref);
       state.mode = effective;
       document.querySelectorAll("#segMode button").forEach(b => b.classList.toggle("active", b.dataset.m === effective));
       try { localStorage.setItem("appearance", pref); } catch (e) { }
     }
-    const savedPref = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return null; } })() || "auto";
-    applyAppearance(savedPref);
-    document.getElementById("modeSwitch").addEventListener("click", (e) => {
+
+    // ===== Event Listeners =====
+    document.getElementById("langSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-lang]");
+      if (btn) applyLang(btn.dataset.lang);
+    });
+
+    document.getElementById("mobileLangSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-lang]");
+      if (btn) applyLang(btn.dataset.lang);
+    });
+
+    document.getElementById("modeSwitch")?.addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-mode]");
       if (btn) applyAppearance(btn.dataset.mode);
     });
+
+    document.getElementById("mobileModeSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-mode]");
+      if (btn) applyAppearance(btn.dataset.mode);
+    });
+
+    document.getElementById("agendaTabs")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      [...btn.parentElement.children].forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderAgenda(btn.dataset.track);
+    });
+
+    // ===== Init =====
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedLang = (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })() || "zh";
+      const savedPref = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return null; } })() || "auto";
+
+      renderNews();
+      renderAgenda("all");
+      renderSpeakers();
+      renderFaq();
+      
+      // Use requestAnimationFrame to ensure DOM is painted
+      requestAnimationFrame(() => {
+        applyLang(savedLang);
+        applyAppearance(savedPref);
+        // Force one more time after a short delay for mobile browsers
+        setTimeout(() => {
+          syncLangButtons(savedLang);
+          syncThemeButtons(savedPref);
+        }, 100);
+        tickCountdown();
+        setInterval(tickCountdown, 1000);
+      });
+    });
+
     mql.addEventListener("change", () => {
       const cur = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return "auto"; } })() || "auto";
       if (cur === "auto") applyAppearance("auto");

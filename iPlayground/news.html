@@ -378,20 +378,29 @@ const I18N = {
 const NEWS_DATA = [
   {
     date: "2026.04.22",
-    title: "iPlayground 2026 徵稿正式開啟！",
-    content: "我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。",
+    title: { zh: "iPlayground 2026 徵稿正式開啟！", en: "iPlayground 2026 Call for Proposals is Now Open!" },
+    content: { 
+      zh: "我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。", 
+      en: "We warmly invite speakers passionate about iOS, AI, product development, or any exciting technology. Whether you're a seasoned expert or an emerging developer, iPlayground is the best stage to share your knowledge." 
+    },
     url: "#"
   },
   {
     date: "2026.04.15",
-    title: "大會官網正式上線，更多精彩內容陸續揭曉中。",
-    content: "籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。",
+    title: { zh: "大會官網正式上線，更多精彩內容陸續揭曉中。", en: "Conference Website Officially Launched — More Updates Coming Soon." },
+    content: { 
+      zh: "籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。", 
+      en: "The long-awaited iPlayground 2026 website is live! This year we've embraced a fresh visual language representing the collision of technology and creativity. Stay tuned as we reveal the agenda, co-organizers, and sponsors in the coming weeks." 
+    },
     url: "#"
   },
   {
     date: "2026.04.10",
-    title: "iPlayground 工作夥伴招募中",
-    content: "熱愛 Apple 技術與開發者社群的你，別錯過這場年度盛會！我們正在尋找充滿熱情的夥伴加入。無論是議程規劃、行銷宣傳或活動執行，這裡都有你發揮的舞台。立刻報名，與我們一同打造最酷的技術饗宴！",
+    title: { zh: "iPlayground 工作夥伴招募中", en: "We're Recruiting iPlayground Volunteers" },
+    content: { 
+      zh: "熱愛 Apple 技術與開發者社群的你，別錯過這場年度盛會！我們正在尋找充滿熱情的夥伴加入。無論是議程規劃、行銷宣傳或活動執行，這裡都有你發揮的舞台。立刻報名，與我們一同打造最酷的技術饗宴！", 
+      en: "Love Apple technology and the developer community? Don't miss this annual event! We're looking for passionate volunteers to join us. Whether it's program planning, marketing, or event coordination — there's a role for you. Sign up now and help us build the coolest tech event of the year!" 
+    },
     url: "#"
   },
 ];
@@ -401,6 +410,11 @@ let currentLang = "zh";
 
 function t(key) {
   return (I18N[currentLang] || I18N.zh)[key] || key;
+}
+
+function getVal(obj) {
+  if (typeof obj === 'string') return obj;
+  return obj[currentLang] || obj.zh || "";
 }
 
 // ===== Appearance (Auto / Light / Dark) =====
@@ -463,7 +477,7 @@ function renderPage() {
           ${NEWS_DATA.map((n, i) => `
             <a class="listing-row" href="news.html?id=${i}">
               <div class="l-date">${n.date}</div>
-              <div class="l-title">${n.title}</div>
+              <div class="l-title">${getVal(n.title)}</div>
               <div class="l-arrow">→</div>
             </a>
           `).join("")}
@@ -481,17 +495,18 @@ function renderPage() {
   }
 
   const n = NEWS_DATA[id];
-  document.title = `${n.title} · iPlayground 2026`;
+  const titleStr = getVal(n.title);
+  document.title = `${titleStr} · iPlayground 2026`;
 
   const sidebar = NEWS_DATA.map((item, i) => `
     <a class="sidebar-item ${i === id ? 'active' : ''}" href="news.html?id=${i}">
       <div class="s-date">${item.date}</div>
-      <div class="s-title">${item.title}</div>
+      <div class="s-title">${getVal(item.title)}</div>
     </a>
   `).join("");
 
   const options = NEWS_DATA.map((item, i) =>
-    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title}</option>`
+    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${getVal(item.title)}</option>`
   ).join("");
 
   root.innerHTML = `
@@ -509,10 +524,10 @@ function renderPage() {
       <main class="news-main">
         <header class="article-header" id="artHeader">
           <div class="article-date">${n.date}</div>
-          <h1 class="article-title">${n.title}</h1>
+          <h1 class="article-title">${titleStr}</h1>
         </header>
         <article class="article-body" id="artBody">
-          ${n.content}
+          ${getVal(n.content)}
         </article>
       </main>
     </div>
@@ -524,12 +539,13 @@ function renderPage() {
     sel.addEventListener("change", function() {
       const newId = parseInt(this.value, 10);
       const item = NEWS_DATA[newId];
+      const iTitle = getVal(item.title);
       document.getElementById("artHeader").innerHTML = `
         <div class="article-date">${item.date}</div>
-        <h1 class="article-title">${item.title}</h1>
+        <h1 class="article-title">${iTitle}</h1>
       `;
-      document.getElementById("artBody").innerHTML = item.content;
-      document.title = `${item.title} · iPlayground 2026`;
+      document.getElementById("artBody").innerHTML = getVal(item.content);
+      document.title = `${iTitle} · iPlayground 2026`;
       history.replaceState(null, "", `news.html?id=${newId}`);
     });
   }
@@ -537,6 +553,8 @@ function renderPage() {
 
 // ===== Init =====
 const savedLang = (() => { try { return localStorage.getItem("lang"); } catch(e) { return null; } })() || "zh";
+const savedHue = (() => { try { return localStorage.getItem("hue"); } catch(e) { return null; } })() || 230;
+document.documentElement.style.setProperty("--hue", savedHue);
 applyLang(savedLang);
 </script>
 </body>
