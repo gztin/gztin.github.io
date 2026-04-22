@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>最新消息 · iPlayground 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --hue: 28;
+    --accent: oklch(0.72 0.19 var(--hue));
+    --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
+    --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
+
+    --bg: #000;
+    --surface: #0a0a0a;
+    --surface-2: #131313;
+    --ink: #f5f5f7;
+    --ink-2: #a1a1a6;
+    --ink-3: #6e6e73;
+    --rule: rgba(255,255,255,0.12);
+    --rule-2: rgba(255,255,255,0.06);
+
+    --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --maxw: 1280px;
+    --gutter: 48px;
+  }
+  html[data-mode="light"] {
+    --bg: #fbfbfd;
+    --surface: #fff;
+    --surface-2: #f5f5f7;
+    --ink: #1d1d1f;
+    --ink-2: #515154;
+    --ink-3: #86868b;
+    --rule: rgba(0,0,0,0.12);
+    --rule-2: rgba(0,0,0,0.06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--f-sans);
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent); color: #000; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* ============ Nav ============ */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--rule-2);
+  }
+  nav.top .row {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 52px; font-size: 13px;
+  }
+  nav.top .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; text-decoration: none; }
+  nav.top .brand .mark {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  }
+  .back-link {
+    font-family: var(--f-mono); font-size: 12px;
+    color: var(--accent); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: opacity .2s;
+  }
+  .back-link:hover { opacity: 0.7; }
+
+  /* ============ Two-column Layout ============ */
+  .news-page-layout {
+    display: grid; grid-template-columns: 300px 1fr; gap: 0;
+    min-height: calc(100vh - 53px);
+  }
+
+  /* ---- Sidebar ---- */
+  .news-sidebar {
+    border-right: 1px solid var(--rule-2);
+    padding: 32px 0;
+    position: sticky; top: 53px;
+    height: calc(100vh - 53px);
+    overflow-y: auto;
+  }
+  .news-sidebar .sidebar-heading {
+    padding: 0 24px 20px;
+    font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+    color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .news-sidebar .sidebar-item {
+    display: block; text-decoration: none; color: inherit;
+    padding: 16px 24px; border-bottom: 1px solid var(--rule-2);
+    transition: background .2s;
+  }
+  .news-sidebar .sidebar-item:first-of-type { border-top: 1px solid var(--rule-2); }
+  .news-sidebar .sidebar-item:hover { background: var(--surface-2); }
+  .news-sidebar .sidebar-item.active {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+  }
+  .news-sidebar .sidebar-item .s-date {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 600;
+    color: var(--accent); margin-bottom: 4px;
+  }
+  .news-sidebar .sidebar-item .s-title {
+    font-size: 14px; font-weight: 500; color: var(--ink);
+    line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .news-sidebar .sidebar-item.active .s-title { color: var(--accent); }
+
+  /* ---- Main content ---- */
+  .news-main { padding: 0 var(--gutter); }
+  .article-header {
+    padding: 80px 0 48px; text-align: center;
+    border-bottom: 1px solid var(--rule-2);
+    max-width: 720px; margin: 0 auto;
+  }
+  .article-date {
+    font-family: var(--f-mono); font-size: 13px; font-weight: 600;
+    background: linear-gradient(110deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    letter-spacing: 0.04em; margin-bottom: 20px;
+  }
+  .article-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700; letter-spacing: -0.03em; line-height: 1.15;
+    margin: 0;
+  }
+  .article-body {
+    padding: 48px 0 100px;
+    font-size: 17px; line-height: 1.75; color: var(--ink-2);
+    max-width: 720px; margin: 0 auto;
+  }
+  .article-body p { margin: 0 0 24px; }
+
+  /* ---- News listing (no ?id) ---- */
+  .listing-header {
+    padding: 80px 0 40px; text-align: center;
+    max-width: 720px; margin: 0 auto;
+  }
+  .listing-header h1 {
+    font-size: clamp(32px, 5vw, 52px); font-weight: 700;
+    letter-spacing: -0.03em; margin: 0;
+    background: linear-gradient(110deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .listing-header p { color: var(--ink-2); margin: 16px 0 0; font-size: 17px; }
+  .listing-grid {
+    max-width: 720px; margin: 0 auto; padding-bottom: 100px;
+  }
+  .listing-row {
+    display: grid; grid-template-columns: 120px 1fr 40px;
+    align-items: center; padding: 24px 0;
+    border-bottom: 1px solid var(--rule-2);
+    text-decoration: none; color: inherit; transition: background .2s;
+  }
+  .listing-row:hover { background: var(--surface-2); border-radius: 12px; padding-left: 16px; padding-right: 16px; }
+  .listing-row .l-date {
+    font-family: var(--f-mono); font-size: 13px; font-weight: 600;
+    background: linear-gradient(110deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .listing-row .l-title { font-size: 16px; color: var(--ink); }
+  .listing-row .l-arrow { color: var(--ink-3); text-align: right; font-size: 16px; }
+
+  /* ============ Footer ============ */
+  footer {
+    padding: 40px 0;
+    border-top: 1px solid var(--rule-2);
+    text-align: center;
+    font-family: var(--f-mono); font-size: 11px;
+    color: var(--ink-3); letter-spacing: 0.04em;
+  }
+
+  .msg {
+    padding: 200px 0; text-align: center;
+    color: var(--ink-3); font-size: 18px;
+  }
+
+  /* ============ Mobile dropdown ============ */
+  .mobile-picker {
+    display: none;
+    position: sticky; top: 53px; z-index: 40;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: saturate(180%) blur(16px);
+    -webkit-backdrop-filter: saturate(180%) blur(16px);
+    border-bottom: 1px solid var(--rule-2);
+    padding: 12px var(--gutter);
+  }
+  .mobile-picker label {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+    color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em;
+    display: block; margin-bottom: 8px;
+  }
+  .mobile-picker select {
+    width: 100%; padding: 12px 16px;
+    font-family: var(--f-sans); font-size: 15px; font-weight: 500;
+    color: var(--ink); background: var(--surface);
+    border: 1px solid var(--rule); border-radius: 12px;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236e6e73' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color .2s;
+  }
+  .mobile-picker select:focus { outline: none; border-color: var(--accent); }
+
+  @media (max-width: 900px) {
+    .news-page-layout { grid-template-columns: 1fr; }
+    .news-sidebar { display: none; }
+    .mobile-picker { display: block; }
+    .news-main { padding: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="top">
+  <div class="wrap row">
+    <a class="brand" href="iOS Meetup.html">
+      <div class="mark"></div>
+      <span>iPlayground 2026</span>
+    </a>
+    <a class="back-link" href="iOS Meetup.html">← 回到主頁</a>
+  </div>
+</nav>
+
+<!-- Content (rendered by JS) -->
+<div id="pageRoot"></div>
+
+<footer>
+  <div class="wrap">© 2026 iPlayground · Swift in the Wild</div>
+</footer>
+
+<script>
+// ===== News data (keep in sync with main page) =====
+const NEWS_DATA = [
+  {
+    date: "2026.04.22",
+    title: "iPlayground 2026 徵稿正式開啟!歡迎各位開發者踴躍投稿。",
+    content: `<p>我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。</p>
+<p>今年的投稿主題不設限——SwiftUI 架構、on-device ML、App Intents、visionOS、甚至是您在工作中累積的踩坑故事，都非常歡迎。</p>
+<p>立即前往投稿頁面，提交您的提案吧！我們的審稿團隊將在 7 月初以 email 逐位回覆每一份投稿。</p>`
+  },
+  {
+    date: "2026.04.15",
+    title: "大會官網正式上線，更多精彩內容陸續揭曉中。",
+    content: `<p>籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。</p>
+<p>接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。</p>
+<p>如果您有任何疑問或建議，歡迎透過社群管道與我們聯繫。讓我們一起打造最有溫度的開發者聚會！</p>`
+  },
+  {
+    date: "2026.04.10",
+    title: "今年我們將聚焦在 Swift 與 AI 的結合，帶來全新的技術饗宴。",
+    content: `<p>AI 浪潮正席捲全球，iOS 開發者該如何應對？今年的主題講座將深入探討 Core ML、Apple Intelligence 以及如何利用 LLM 提升行動載體的體驗。</p>
+<p>這不僅是一場開發者大會，更是一次對未來生活方式的共同想像。我們期待透過不同角度的分享，讓每位與會者都能帶走可立即應用的知識與靈感。</p>
+<p>無論您是想了解最新的 on-device inference 技術，還是想知道如何在產品中落地 RAG 架構，iPlayground 2026 都將為您準備最前沿的內容。</p>`
+  },
+];
+
+// ===== Routing =====
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const root = document.getElementById("pageRoot");
+  const idParam = params.get("id");
+
+  // Auto dark/light mode
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.setAttribute('data-mode', 'light');
+  }
+
+  // ---- No ?id → show full listing ----
+  if (idParam === null) {
+    document.title = "全部消息 · iPlayground 2026";
+    root.innerHTML = `
+      <div class="wrap">
+        <div class="listing-header">
+          <h1>全部消息</h1>
+          <p>iPlayground 2026 的所有公告與最新動態。</p>
+        </div>
+        <div class="listing-grid">
+          ${NEWS_DATA.map((n, i) => `
+            <a class="listing-row" href="news.html?id=${i}">
+              <div class="l-date">${n.date}</div>
+              <div class="l-title">${n.title}</div>
+              <div class="l-arrow">→</div>
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // ---- Has ?id → show article with sidebar ----
+  const id = parseInt(idParam, 10);
+  if (isNaN(id) || id < 0 || id >= NEWS_DATA.length) {
+    root.innerHTML = `<div class="msg">找不到這則消息。<br><a href="iOS Meetup.html" style="color:var(--accent);">回到主頁</a></div>`;
+    return;
+  }
+
+  const n = NEWS_DATA[id];
+  document.title = `${n.title} · iPlayground 2026`;
+
+  // Build sidebar
+  const sidebar = NEWS_DATA.map((item, i) => `
+    <a class="sidebar-item ${i === id ? 'active' : ''}" href="news.html?id=${i}">
+      <div class="s-date">${item.date}</div>
+      <div class="s-title">${item.title}</div>
+    </a>
+  `).join("");
+
+  // Build mobile dropdown options
+  const options = NEWS_DATA.map((item, i) =>
+    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title}</option>`
+  ).join("");
+
+  root.innerHTML = `
+    <div class="mobile-picker" id="mobilePicker">
+      <label>選擇消息</label>
+      <select id="newsSelect">
+        ${options}
+      </select>
+    </div>
+    <div class="news-page-layout">
+      <aside class="news-sidebar">
+        <div class="sidebar-heading">所有消息</div>
+        ${sidebar}
+      </aside>
+      <main class="news-main">
+        <header class="article-header" id="artHeader">
+          <div class="article-date">${n.date}</div>
+          <h1 class="article-title">${n.title}</h1>
+        </header>
+        <article class="article-body" id="artBody">
+          ${n.content}
+        </article>
+      </main>
+    </div>
+  `;
+
+  // Handle dropdown change — swap content inline
+  const sel = document.getElementById('newsSelect');
+  if (sel) {
+    sel.addEventListener('change', function() {
+      const newId = parseInt(this.value, 10);
+      const item = NEWS_DATA[newId];
+      document.getElementById('artHeader').innerHTML = `
+        <div class="article-date">${item.date}</div>
+        <h1 class="article-title">${item.title}</h1>
+      `;
+      document.getElementById('artBody').innerHTML = item.content;
+      document.title = `${item.title} · iPlayground 2026`;
+      history.replaceState(null, '', `news.html?id=${newId}`);
+    });
+  }
+})();
+</script>
+</body>
+</html>
