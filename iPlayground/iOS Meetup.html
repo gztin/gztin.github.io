@@ -156,6 +156,19 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   h1.hero-title .thin { font-weight: 300; color: var(--ink-2); }
+  h1.hero-title .hero-cfp-badge {
+    display: inline-block;
+    font-size: clamp(18px, 2.5vw, 36px);
+    font-weight: 500;
+    font-family: var(--f-mono);
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    padding: 4px 20px;
+    margin: 12px 0 8px;
+    vertical-align: middle;
+  }
   h1.hero-title .hero-sub-zh {
     font-size: clamp(24px, 3.8vw, 60px);
     display: block;
@@ -833,9 +846,9 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     <div class="blob b3"></div>
   </div>
   <div class="wrap">
-    <div class="hero-eyebrow"><span class="dot"></span> 🎤 CALL FOR PROPOSALS · 徵稿正式開跑</div>
     <h1 class="hero-title">
       <span class="gradient">iPlayground 2026</span><br/>
+      <span class="hero-cfp-badge">徵稿中</span><br/>
       <span class="thin">站上舞台的時候到了。</span>
     </h1>
     <p class="hero-sub" data-i18n="hero_sub">

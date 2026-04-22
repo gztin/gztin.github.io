@@ -10,7 +10,7 @@
 
 <style>
   :root {
-    --hue: 28;
+    --hue: 230;
     --accent: oklch(0.72 0.19 var(--hue));
     --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
     --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
@@ -74,6 +74,7 @@
     width: 22px; height: 22px; border-radius: 6px;
     background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
   }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .back-link {
     font-family: var(--f-mono); font-size: 12px;
     color: var(--accent); text-decoration: none;
@@ -81,6 +82,19 @@
     transition: opacity .2s;
   }
   .back-link:hover { opacity: 0.7; }
+  .lang-switch {
+    display: inline-flex;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-radius: 999px; padding: 3px;
+    font-family: var(--f-mono); font-size: 11px;
+  }
+  .lang-switch button {
+    padding: 6px 10px; border-radius: 999px;
+    color: var(--ink-2); background: none; border: 0;
+    cursor: pointer; font: inherit; transition: color .15s;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .lang-switch button.active { background: var(--ink); color: var(--bg) !important; }
 
   /* ============ Two-column Layout ============ */
   .news-page-layout {
@@ -227,6 +241,7 @@
     .news-sidebar { display: none; }
     .mobile-picker { display: block; }
     .news-main { padding: 0 24px; }
+    .nav-right .back-link { display: none; }
   }
 </style>
 </head>
@@ -239,7 +254,27 @@
       <div class="mark"></div>
       <span>iPlayground 2026</span>
     </a>
-    <a class="back-link" href="iOS Meetup.html">← 回到主頁</a>
+    <div class="nav-right">
+      <!-- Mode toggle -->
+      <div class="lang-switch" id="modeSwitch" title="Appearance">
+        <button data-mode="auto" aria-label="Auto" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
+          <span>A</span>
+        </button>
+        <button data-mode="light" aria-label="Light" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button data-mode="dark" aria-label="Dark" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+      <!-- Lang toggle -->
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="zh">中</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <a class="back-link" href="iOS Meetup.html" id="backLink">← 回到主頁</a>
+    </div>
   </div>
 </nav>
 
@@ -247,60 +282,152 @@
 <div id="pageRoot"></div>
 
 <footer>
-  <div class="wrap">© 2026 iPlayground · Swift in the Wild</div>
+  <div class="wrap" id="footerText">© 2026 iPlayground · Swift in the Wild</div>
 </footer>
 
 <script>
-// ===== News data (keep in sync with main page) =====
+// ===== i18n strings =====
+const I18N = {
+  zh: {
+    back: "← 回到主頁",
+    all_news: "全部消息",
+    all_news_sub: "iPlayground 2026 的所有公告與最新動態。",
+    sidebar_heading: "所有消息",
+    mobile_label: "選擇消息",
+    not_found: "找不到這則消息。",
+    back_home: "回到主頁",
+    footer: "© 2026 iPlayground · Swift in the Wild",
+  },
+  en: {
+    back: "← Back to Home",
+    all_news: "All News",
+    all_news_sub: "All announcements and updates for iPlayground 2026.",
+    sidebar_heading: "All Posts",
+    mobile_label: "Select Post",
+    not_found: "Post not found.",
+    back_home: "Back to Home",
+    footer: "© 2026 iPlayground · Swift in the Wild",
+  },
+};
+
+// ===== News data (bilingual) =====
 const NEWS_DATA = [
   {
     date: "2026.04.22",
-    title: "iPlayground 2026 徵稿正式開啟!歡迎各位開發者踴躍投稿。",
-    content: `<p>我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。</p>
+    title: {
+      zh: "iPlayground 2026 徵稿正式開啟！歡迎各位開發者踴躍投稿。",
+      en: "iPlayground 2026 Call for Proposals is Now Open!",
+    },
+    content: {
+      zh: `<p>我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。</p>
 <p>今年的投稿主題不設限——SwiftUI 架構、on-device ML、App Intents、visionOS、甚至是您在工作中累積的踩坑故事，都非常歡迎。</p>
-<p>立即前往投稿頁面，提交您的提案吧！我們的審稿團隊將在 7 月初以 email 逐位回覆每一份投稿。</p>`
+<p>立即前往投稿頁面，提交您的提案吧！我們的審稿團隊將在 7 月初以 email 逐位回覆每一份投稿。</p>`,
+      en: `<p>We warmly invite speakers passionate about iOS, AI, product development, or any trending technology. Whether you're a seasoned expert or an emerging developer, iPlayground is the perfect stage to share your knowledge and experience.</p>
+<p>This year's topics are wide open — SwiftUI architecture, on-device ML, App Intents, visionOS, or even hard-won lessons from the trenches. All submissions are welcome.</p>
+<p>Head to the submission page and send us your proposal! Our review team will reply to every submission by email in early July.</p>`,
+    },
   },
   {
     date: "2026.04.15",
-    title: "大會官網正式上線，更多精彩內容陸續揭曉中。",
-    content: `<p>籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。</p>
+    title: {
+      zh: "大會官網正式上線，更多精彩內容陸續揭曉中。",
+      en: "Official Website Launched — More Exciting Content Coming Soon.",
+    },
+    content: {
+      zh: `<p>籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。</p>
 <p>接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。</p>
-<p>如果您有任何疑問或建議，歡迎透過社群管道與我們聯繫。讓我們一起打造最有溫度的開發者聚會！</p>`
+<p>如果您有任何疑問或建議，歡迎透過社群管道與我們聯繫。讓我們一起打造最有溫度的開發者聚會！</p>`,
+      en: `<p>The long-awaited iPlayground 2026 website is officially live! This year we've adopted a fresh visual language that embodies the collision of technology and creativity.</p>
+<p>Over the coming weeks, we'll be announcing the schedule, co-organizers, and some exciting sponsors — stay tuned.</p>
+<p>If you have any questions or suggestions, feel free to reach out through our community channels. Let's build the warmest developer gathering together!</p>`,
+    },
   },
   {
     date: "2026.04.10",
-    title: "今年我們將聚焦在 Swift 與 AI 的結合，帶來全新的技術饗宴。",
-    content: `<p>AI 浪潮正席捲全球，iOS 開發者該如何應對？今年的主題講座將深入探討 Core ML、Apple Intelligence 以及如何利用 LLM 提升行動載體的體驗。</p>
+    title: {
+      zh: "今年我們將聚焦在 Swift 與 AI 的結合，帶來全新的技術饗宴。",
+      en: "This Year We Focus on Swift Meets AI — A Brand-New Tech Feast.",
+    },
+    content: {
+      zh: `<p>AI 浪潮正席捲全球，iOS 開發者該如何應對？今年的主題講座將深入探討 Core ML、Apple Intelligence 以及如何利用 LLM 提升行動載體的體驗。</p>
 <p>這不僅是一場開發者大會，更是一次對未來生活方式的共同想像。我們期待透過不同角度的分享，讓每位與會者都能帶走可立即應用的知識與靈感。</p>
-<p>無論您是想了解最新的 on-device inference 技術，還是想知道如何在產品中落地 RAG 架構，iPlayground 2026 都將為您準備最前沿的內容。</p>`
+<p>無論您是想了解最新的 on-device inference 技術，還是想知道如何在產品中落地 RAG 架構，iPlayground 2026 都將為您準備最前沿的內容。</p>`,
+      en: `<p>The AI wave is sweeping the globe — how should iOS developers respond? This year's keynote sessions will dive deep into Core ML, Apple Intelligence, and how to leverage LLMs to elevate mobile experiences.</p>
+<p>This is more than a developer conference; it's a shared vision of the future. We hope every attendee leaves with knowledge and inspiration they can apply immediately.</p>
+<p>Whether you want to explore the latest on-device inference techniques or learn how to ship a RAG architecture in production, iPlayground 2026 has you covered.</p>`,
+    },
   },
 ];
 
-// ===== Routing =====
-(function() {
+// ===== State =====
+let currentLang = "zh";
+
+function t(key) {
+  return (I18N[currentLang] || I18N.zh)[key] || key;
+}
+
+// ===== Appearance (Auto / Light / Dark) =====
+const mql = window.matchMedia("(prefers-color-scheme: dark)");
+function resolveMode(pref) {
+  if (pref === "light" || pref === "dark") return pref;
+  return mql.matches ? "dark" : "light";
+}
+function applyAppearance(pref) {
+  const effective = resolveMode(pref);
+  document.documentElement.dataset.mode = effective;
+  document.querySelectorAll("#modeSwitch button").forEach(b =>
+    b.classList.toggle("active", b.dataset.mode === pref)
+  );
+  try { localStorage.setItem("appearance", pref); } catch(e) {}
+}
+document.getElementById("modeSwitch").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-mode]");
+  if (btn) applyAppearance(btn.dataset.mode);
+});
+mql.addEventListener("change", () => {
+  const saved = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })() || "auto";
+  if (saved === "auto") applyAppearance("auto");
+});
+const savedAppearance = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })() || "auto";
+applyAppearance(savedAppearance);
+
+// ===== i18n apply =====
+function applyLang(lang) {
+  currentLang = lang;
+  document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+  document.querySelectorAll("#langSwitch button").forEach(b =>
+    b.classList.toggle("active", b.dataset.lang === lang)
+  );
+  document.getElementById("backLink").textContent = t("back");
+  document.getElementById("footerText").textContent = t("footer");
+  try { localStorage.setItem("lang", lang); } catch(e) {}
+  renderPage();
+}
+document.getElementById("langSwitch").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-lang]");
+  if (btn) applyLang(btn.dataset.lang);
+});
+
+// ===== Routing & Render =====
+function renderPage() {
   const params = new URLSearchParams(window.location.search);
   const root = document.getElementById("pageRoot");
   const idParam = params.get("id");
 
-  // Auto dark/light mode
-  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-    document.documentElement.setAttribute('data-mode', 'light');
-  }
-
-  // ---- No ?id → show full listing ----
   if (idParam === null) {
-    document.title = "全部消息 · iPlayground 2026";
+    // ---- Listing view ----
+    document.title = `${t("all_news")} · iPlayground 2026`;
     root.innerHTML = `
       <div class="wrap">
         <div class="listing-header">
-          <h1>全部消息</h1>
-          <p>iPlayground 2026 的所有公告與最新動態。</p>
+          <h1>${t("all_news")}</h1>
+          <p>${t("all_news_sub")}</p>
         </div>
         <div class="listing-grid">
           ${NEWS_DATA.map((n, i) => `
             <a class="listing-row" href="news.html?id=${i}">
               <div class="l-date">${n.date}</div>
-              <div class="l-title">${n.title}</div>
+              <div class="l-title">${n.title[currentLang]}</div>
               <div class="l-arrow">→</div>
             </a>
           `).join("")}
@@ -310,69 +437,71 @@ const NEWS_DATA = [
     return;
   }
 
-  // ---- Has ?id → show article with sidebar ----
+  // ---- Article view ----
   const id = parseInt(idParam, 10);
   if (isNaN(id) || id < 0 || id >= NEWS_DATA.length) {
-    root.innerHTML = `<div class="msg">找不到這則消息。<br><a href="iOS Meetup.html" style="color:var(--accent);">回到主頁</a></div>`;
+    root.innerHTML = `<div class="msg">${t("not_found")}<br><a href="iOS Meetup.html" style="color:var(--accent);">${t("back_home")}</a></div>`;
     return;
   }
 
   const n = NEWS_DATA[id];
-  document.title = `${n.title} · iPlayground 2026`;
+  document.title = `${n.title[currentLang]} · iPlayground 2026`;
 
-  // Build sidebar
   const sidebar = NEWS_DATA.map((item, i) => `
     <a class="sidebar-item ${i === id ? 'active' : ''}" href="news.html?id=${i}">
       <div class="s-date">${item.date}</div>
-      <div class="s-title">${item.title}</div>
+      <div class="s-title">${item.title[currentLang]}</div>
     </a>
   `).join("");
 
-  // Build mobile dropdown options
   const options = NEWS_DATA.map((item, i) =>
-    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title}</option>`
+    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title[currentLang]}</option>`
   ).join("");
 
   root.innerHTML = `
     <div class="mobile-picker" id="mobilePicker">
-      <label>選擇消息</label>
+      <label>${t("mobile_label")}</label>
       <select id="newsSelect">
         ${options}
       </select>
     </div>
     <div class="news-page-layout">
       <aside class="news-sidebar">
-        <div class="sidebar-heading">所有消息</div>
+        <div class="sidebar-heading">${t("sidebar_heading")}</div>
         ${sidebar}
       </aside>
       <main class="news-main">
         <header class="article-header" id="artHeader">
           <div class="article-date">${n.date}</div>
-          <h1 class="article-title">${n.title}</h1>
+          <h1 class="article-title">${n.title[currentLang]}</h1>
         </header>
         <article class="article-body" id="artBody">
-          ${n.content}
+          ${n.content[currentLang]}
         </article>
       </main>
     </div>
   `;
 
-  // Handle dropdown change — swap content inline
-  const sel = document.getElementById('newsSelect');
+  // Mobile dropdown — swap content inline without full re-render
+  const sel = document.getElementById("newsSelect");
   if (sel) {
-    sel.addEventListener('change', function() {
+    sel.addEventListener("change", function() {
       const newId = parseInt(this.value, 10);
       const item = NEWS_DATA[newId];
-      document.getElementById('artHeader').innerHTML = `
+      document.getElementById("artHeader").innerHTML = `
         <div class="article-date">${item.date}</div>
-        <h1 class="article-title">${item.title}</h1>
+        <h1 class="article-title">${item.title[currentLang]}</h1>
       `;
-      document.getElementById('artBody').innerHTML = item.content;
-      document.title = `${item.title} · iPlayground 2026`;
-      history.replaceState(null, '', `news.html?id=${newId}`);
+      document.getElementById("artBody").innerHTML = item.content[currentLang];
+      document.title = `${item.title[currentLang]} · iPlayground 2026`;
+      history.replaceState(null, "", `news.html?id=${newId}`);
     });
   }
-})();
+}
+
+// ===== Init =====
+const savedLang = (() => { try { return localStorage.getItem("lang"); } catch(e) { return null; } })() || "zh";
+applyLang(savedLang);
 </script>
 </body>
 </html>
