@@ -10,7 +10,7 @@
 
 <script>
 const TWEAKS = /*EDITMODE-BEGIN*/{
-  "hue": 23,
+  "hue": 230,
   "mode": "light",
   "keyArt": "grid",
   "wordmarkStyle": "inline"
@@ -19,7 +19,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
 <style>
   :root {
-    --hue: 28;
+    --hue: 230;
     --accent: oklch(0.72 0.19 var(--hue));
     --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
     --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
@@ -52,6 +52,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
     font-family: var(--f-sans);
     background: var(--bg);
@@ -203,29 +204,44 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   .btn-ghost:hover { border-color: var(--ink); background: var(--surface); }
 
   /* Countdown banner beneath hero */
-  .countdown-banner {
-    display: flex; justify-content: center; gap: 0;
-    padding: 48px 0 0; border-top: 1px solid var(--rule-2);
-    margin-top: 96px;
+  /* ============ Flip Clock ============ */
+  .flip-clock {
+    display: flex; align-items: flex-start; justify-content: center;
+    gap: 10px; padding: 40px 0 0; flex-wrap: nowrap;
   }
-  .countdown-cell {
-    flex: 0 0 auto; padding: 0 44px;
-    text-align: center; border-right: 1px solid var(--rule-2);
+  .fc-unit { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .fc-card {
+    position: relative; width: 80px; height: 96px;
+    background: var(--surface-2); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04);
   }
-  .countdown-cell:last-child { border-right: 0; }
-  .countdown-cell .num {
-    font-size: 64px; font-weight: 300; letter-spacing: -0.03em; line-height: 1;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
+  .fc-card::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    height: 1px; background: var(--bg); opacity: 0.35; z-index: 3; pointer-events: none;
   }
-  .countdown-cell .lab {
-    margin-top: 10px;
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
-    letter-spacing: 0.12em; text-transform: uppercase;
+  html[data-mode="light"] .fc-card { background: #e8e8ed; box-shadow: 0 2px 8px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.8); }
+  .fc-num {
+    font-size: 54px; font-weight: 300; letter-spacing: -0.03em; line-height: 1;
+    color: var(--ink); font-variant-numeric: tabular-nums; position: relative; z-index: 2;
+  }
+  .fc-card.flip .fc-num { animation: fcFlip 0.38s cubic-bezier(0.23, 1, 0.32, 1); }
+  @keyframes fcFlip {
+    0%   { transform: rotateX(75deg) scaleY(0.4); opacity: 0.3; }
+    60%  { transform: rotateX(-6deg) scaleY(1.02); opacity: 1; }
+    100% { transform: rotateX(0deg) scaleY(1); opacity: 1; }
+  }
+  .fc-label { font-family: var(--f-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.14em; text-transform: uppercase; }
+  .fc-sep { font-size: 48px; font-weight: 300; color: var(--ink-3); line-height: 96px; padding: 0 2px; margin-bottom: 20px; user-select: none; }
+  @media (max-width: 520px) {
+    .fc-card { width: 58px; height: 70px; border-radius: 8px; }
+    .fc-num { font-size: 38px; }
+    .fc-sep { font-size: 32px; line-height: 70px; }
   }
 
   /* ============ Section shell ============ */
-  section { padding: 140px 0; }
+  section { padding: 80px 0; border-top: 1px solid var(--rule-2); }
   .sec-eyebrow {
     font-family: var(--f-mono); font-size: 12px;
     color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em;
@@ -652,50 +668,80 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     .news-wrap { border-left: 0; border-top: 1px solid var(--rule-2); }
   }
 
-  /* ============ Visual Timeline (Speakers) ============ */
-  .v-timeline { position: relative; margin: 80px auto 0; max-width: 1200px; padding: 0; display: flex; flex-direction: column; align-items: center; }
-  .v-timeline::before {
-    content: ""; position: absolute; left: 50%; top: 0; bottom: 0;
-    width: 2px; background: var(--rule-2); transform: translateX(-50%); z-index: 1;
+  /* ============ Horizontal Process Timeline ============ */
+  .h-timeline {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 56px 0 0;
+    padding-top: 11px;
   }
-  .v-item { position: relative; width: 100%; margin-bottom: 40px; display: flex; justify-content: center; }
-  .v-item:last-child { margin-bottom: 0; }
-  
-  .v-dot {
-    position: absolute; left: 50%; top: 12px; width: 22px; height: 22px; border-radius: 50%;
-    background: var(--bg); border: 2px solid var(--accent); z-index: 5;
-    transform: translateX(-50%); box-shadow: 0 0 0 6px var(--bg);
+  .h-timeline::before {
+    content: ""; position: absolute; top: 21px;
+    left: calc(100% / 12); right: calc(100% / 12);
+    height: 2px; background: var(--rule-2); z-index: 0;
   }
-  .v-dot::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: var(--accent); opacity: 0; transition: opacity .3s;
+  .h-item {
+    position: relative; flex: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 10px;
   }
-  .v-item:hover .v-dot::after { opacity: 1; box-shadow: 0 0 25px var(--accent); }
-  
-  .v-body { width: 46%; transition: transform .3s, border-color .3s; }
-  .v-item:nth-child(odd) { justify-content: flex-end; padding-right: 50%; }
-  .v-item:nth-child(even) { justify-content: flex-start; padding-left: 50%; }
+  .h-dot {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    background: var(--bg); border: 2px solid var(--accent);
+    box-shadow: 0 0 0 5px var(--bg); z-index: 2; position: relative;
+    transition: background .25s;
+  }
+  .h-item:hover .h-dot { background: var(--accent); }
+  .h-dot.passed  { background: var(--accent); }
+  .h-dot.current { background: var(--accent); box-shadow: 0 0 0 5px var(--bg), 0 0 0 8px color-mix(in oklch, var(--accent) 35%, transparent); }
+  .h-card.current { border-color: var(--accent); }
+  .h-card {
+    margin-top: 20px; width: 100%;
+    background: var(--surface); border: 1px solid var(--rule-2); border-radius: 16px; padding: 18px 14px;
+    text-align: center; transition: transform .3s, border-color .3s, box-shadow .3s;
+  }
+  .h-item:hover .h-card { transform: translateY(-4px); border-color: var(--rule); box-shadow: 0 12px 32px rgba(0,0,0,0.12); }
+  .h-date { font-family: var(--f-mono); font-size: 11px; color: var(--accent); margin-bottom: 6px; font-weight: 600; }
+  .h-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; color: var(--ink); line-height: 1.35; }
+  .h-desc { font-size: 12px; color: var(--ink-2); line-height: 1.5; }
 
-  .v-item:nth-child(odd) .v-body { text-align: right; margin-right: 32px; }
-  .v-item:nth-child(even) .v-body { text-align: left; margin-left: 32px; }
-
-  .v-card {
-    background: var(--surface); border: 1px solid var(--rule-2); border-radius: 24px; padding: 32px;
-    transition: transform .3s, border-color .3s, box-shadow .3s;
+  @media (max-width: 768px) {
+    .h-timeline {
+      flex-direction: column; align-items: flex-start;
+      padding-top: 0; padding-left: 30px; margin-top: 40px;
+    }
+    .h-timeline::before {
+      top: 11px; bottom: 11px; left: 10px; right: auto; width: 2px; height: auto;
+    }
+    .h-item { flex-direction: row; align-items: flex-start; padding: 0 0 28px 0; width: 100%; }
+    .h-item:last-child { padding-bottom: 0; }
+    .h-dot { flex-shrink: 0; margin-top: 2px; }
+    .h-card { margin-top: 0; margin-left: 20px; text-align: left; }
   }
-  .v-item:hover .v-card { transform: translateY(-5px); border-color: var(--rule); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
-  
-  .v-date { font-family: var(--f-mono); font-size: 13px; color: var(--accent); margin-bottom: 12px; font-weight: 500; }
-  .v-title { font-size: 21px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; color: var(--ink); }
-  .v-desc { font-size: 15px; color: var(--ink-2); line-height: 1.6; }
 
-  @media (max-width: 960px) {
-    .v-timeline { align-items: flex-start; padding-left: 10px; }
-    .v-timeline::before { left: 30px; transform: none; }
-    .v-item { justify-content: flex-start !important; padding: 0 0 40px 60px !important; }
-    .v-item:nth-child(odd) .v-body, .v-item:nth-child(even) .v-body { margin: 0; text-align: left; width: 100%; }
-    .v-body { width: 100% !important; max-width: none; }
-    .v-dot { left: 30px !important; transform: translateX(-50%); }
+  /* ============ Submit Card ============ */
+  .submit-card {
+    margin: 48px 0 0; background: var(--surface); border: 1px solid var(--rule-2);
+    border-radius: 24px; padding: 40px; text-align: left;
+  }
+  .submit-card-info { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 32px; }
+  .submit-col-label { font-family: var(--f-mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 14px; letter-spacing: 0.03em; }
+  .submit-card ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+  .submit-card ul li { font-size: 14px; color: var(--ink-2); line-height: 1.5; padding-left: 18px; position: relative; }
+  .submit-card ul li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-size: 12px; top: 1px; }
+  .submit-card-cta {
+    display: block; width: 100%; padding: 16px; border-radius: 14px;
+    background: var(--accent); color: #fff; text-align: center;
+    font-size: 16px; font-weight: 700; text-decoration: none;
+    transition: opacity .2s, transform .2s;
+  }
+  .submit-card-cta:hover { opacity: .88; transform: translateY(-1px); }
+  .submit-card-deadline { margin-top: 14px; text-align: center; font-family: var(--f-mono); font-size: 12px; color: var(--ink-3); }
+  @media (max-width: 640px) {
+    .submit-card { padding: 24px; }
+    .submit-card-info { grid-template-columns: 1fr; gap: 24px; }
   }
 
   /* ============ Construction Placeholder ============ */
@@ -718,6 +764,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
 
   @media (max-width: 980px) {
     :root { --gutter: 24px; }
+    section { padding: 56px 0; }
     nav.top ul { display: none; }
     .highlights { grid-template-columns: 1fr; }
     .agenda-row { grid-template-columns: 72px 1fr; gap: 16px; padding: 20px 12px; }
@@ -795,6 +842,28 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       如果你對 iOS、AI、產品開發,或任何讓人眼睛一亮的主題有想法——技術分享、實戰經驗、踩坑故事,還是對未來的觀察,都非常歡迎來投稿 🙌
     </p>
 
+    <div class="flip-clock" id="countdown">
+      <div class="fc-unit">
+        <div class="fc-card" id="fc-d"><span class="fc-num" id="cd-d">00</span></div>
+        <div class="fc-label">Days</div>
+      </div>
+      <div class="fc-sep">:</div>
+      <div class="fc-unit">
+        <div class="fc-card" id="fc-h"><span class="fc-num" id="cd-h">00</span></div>
+        <div class="fc-label">Hours</div>
+      </div>
+      <div class="fc-sep">:</div>
+      <div class="fc-unit">
+        <div class="fc-card" id="fc-m"><span class="fc-num" id="cd-m">00</span></div>
+        <div class="fc-label">Minutes</div>
+      </div>
+      <div class="fc-sep">:</div>
+      <div class="fc-unit">
+        <div class="fc-card" id="fc-s"><span class="fc-num" id="cd-s">00</span></div>
+        <div class="fc-label">Seconds</div>
+      </div>
+    </div>
+
     <div class="hero-date-stripe">
       <span><span class="label">Deadline</span><strong>2026.06.19 24:00</strong></span>
       <span class="sep"></span>
@@ -804,13 +873,6 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
     <div class="hero-cta-row">
       <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit">🔗 前往投稿表單 →</a>
       <a class="btn-ghost" href="#topics" data-i18n="cta_topics">看看主題範圍</a>
-    </div>
-
-    <div class="countdown-banner" id="countdown">
-      <div class="countdown-cell"><div class="num" id="cd-d">32</div><div class="lab">Days</div></div>
-      <div class="countdown-cell"><div class="num" id="cd-h">08</div><div class="lab">Hours</div></div>
-      <div class="countdown-cell"><div class="num" id="cd-m">44</div><div class="lab">Minutes</div></div>
-      <div class="countdown-cell"><div class="num" id="cd-s">12</div><div class="lab">Seconds</div></div>
     </div>
   </div>
 </header>
@@ -842,28 +904,30 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       不用等到很厲害才分享。你踩過的坑、寫過的爛 code、做過的實驗——都可能是別人今晚需要的答案。
     </p>
 
-    <div class="highlights">
-      <div class="hl">
-        <div>
-          <div class="glyph">01</div>
-          <h3>你也有舞台</h3>
-          <p>無論你是第一次上台、或是年年都講,我們都歡迎。新講者還有專屬的練習場與 mentor 支援,陪你把故事講好。</p>
+    <!-- Submit Card -->
+    <div class="submit-card">
+      <div class="submit-card-info">
+        <div class="submit-col">
+          <div class="submit-col-label">📋 表單資訊</div>
+          <ul>
+            <li>預計填寫時間 5–10 分鐘</li>
+            <li>場次時長：20 / 30 / 45 分鐘任選</li>
+            <li>可以部分保存、多次修改</li>
+            <li>徵稿結束後 14 天內逐位回覆</li>
+          </ul>
+        </div>
+        <div class="submit-col">
+          <div class="submit-col-label">💬 投稿支援</div>
+          <ul>
+            <li>新講者有 mentor 全程陪跑</li>
+            <li>Panel、Lightning Talk 皆可</li>
+            <li>中文、英文都歡迎</li>
+            <li>有問題來信：session@iplayground.io</li>
+          </ul>
         </div>
       </div>
-      <div class="hl">
-        <div>
-          <div class="glyph">02</div>
-          <h3>主題不設限</h3>
-          <p>iOS、AI、產品開發,或任何讓人眼睛一亮的主題都可以。沒有「太冷門」這件事,只有還沒被看見的光。</p>
-        </div>
-      </div>
-      <div class="hl">
-        <div>
-          <div class="glyph">03</div>
-          <h3>真話優先</h3>
-          <p>技術分享、實戰經驗、踩坑故事、對未來的觀察——我們更愛真實的過程,而不是完美的結論。</p>
-        </div>
-      </div>
+      <a class="submit-card-cta" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener">前往投稿表單 →</a>
+      <div class="submit-card-deadline">● 投稿截止 · 06.19 24:00</div>
     </div>
 
     <!-- Session Topic Tags -->
@@ -909,20 +973,12 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       <span class="topic-pill">StoreKit</span>
       <span class="topic-pill">Protocol</span>
     </div>
+
+    <!-- Process Timeline -->
+    <div id="processTimeline"></div>
   </div>
 </section>
 
-<!-- Speakers -->
-<section id="speakers" data-screen-label="04 Speakers">
-  <div class="wrap center">
-    <div class="sec-eyebrow">— 講者介紹 Speakers</div>
-    <h2 class="sec-title"><span class="gradient">重量級講者</span><span class="thin">與實戰開發者。</span></h2>
-    <p class="sec-desc">來自各界的技術專家將在此分享他們的洞見。</p>
-  </div>
-  <div class="wrap">
-    <div class="speakers" id="speakersGrid"></div>
-  </div>
-</section>
 
 <!-- Agenda -->
 <section id="agenda" data-screen-label="03 Agenda">
@@ -952,6 +1008,19 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   </div>
 </section>
 
+<!-- Speakers -->
+<section id="speakers" data-screen-label="04 Speakers">
+  <div class="wrap center">
+    <div class="sec-eyebrow">— 講者介紹 Speakers</div>
+    <h2 class="sec-title"><span class="gradient">重量級講者</span><span class="thin">與實戰開發者。</span></h2>
+    <div class="construction">
+      <h3>建構中 · UNDER CONSTRUCTION</h3>
+      <p>講者陣容確認後即將公布，敬請期待</p>
+      <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" style="display:inline-block;margin-top:28px;">🔗 立即投稿 →</a>
+    </div>
+  </div>
+</section>
+
 <!-- Staff -->
 <section id="staff" data-screen-label="06 Staff">
   <div class="wrap center">
@@ -964,41 +1033,7 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
   </div>
 </section>
 
-<!-- Submit -->
-<section id="register" data-screen-label="05 Submit">
-  <div class="wrap">
-    <div class="register-hero">
-      <div class="rh-eyebrow">● 投稿截止 · 06.19 24:00</div>
-      <h2>站上舞台,<span class="gradient">就在一個投稿表單之間</span>。</h2>
-      <p>不用完整高岩簡報、不用漂亮標題。一句話講你的主題、三五行記錄你想分享的故事,我們就收到了。</p>
-      <div class="tickets">
-        <div class="ticket featured">
-          <span class="ticket-badge">Submit Now</span>
-          <div class="t-type">🔗 Google Forms · 投稿連結</div>
-          <div class="t-price" style="font-size:26px;line-height:1.3;word-break:break-all;letter-spacing:-0.01em;">forms.gle/<br/>rocYKo7zQuKiGvTx9</div>
-          <ul>
-            <li>預計填寫時間 5–10 分鐘</li>
-            <li>場次時長:20 / 30 / 45 分鐘任選</li>
-            <li>可以部分保存、多次修改</li>
-            <li>徵稿結束後 14 天內逐位回覆</li>
-          </ul>
-          <a class="t-buy" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" style="text-decoration:none;">前往投稿表單 →</a>
-        </div>
-        <div class="ticket">
-          <div class="t-type">💬 還在猶豫?</div>
-          <div class="t-price" style="font-size:40px;line-height:1.1;">認真考慮了,<br/>就去投吧。</div>
-          <ul>
-            <li>新講者有 mentor 陪跑</li>
-            <li>Panel、Lightning Talk 皆可</li>
-            <li>中文、英文都歡迎</li>
-            <li>有問題來信:hi@iplayground.io</li>
-          </ul>
-          <a class="t-buy" href="mailto:hi@iplayground.io" style="text-decoration:none;">寄信問問看 →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div id="register"></div>
 
 <!-- FAQ -->
 <section id="faq" data-screen-label="07 FAQ">
@@ -1033,19 +1068,19 @@ const TWEAKS = /*EDITMODE-BEGIN*/{
       <div>
         <h4>社群</h4>
         <ul>
-          <li><a href="#">Discord</a></li>
-          <li><a href="#">Twitter / X</a></li>
-          <li><a href="#">YouTube</a></li>
-          <li><a href="#">電子報</a></li>
+          <li><a href="https://discord.gg/xS8yMKbbjB" target="_blank" rel="noopener">Discord</a></li>
+          <li><a href="https://www.facebook.com/theiPlayground/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://twitter.com/theiPlayground" target="_blank" rel="noopener">Twitter / X</a></li>
+          <li><a href="https://youtube.com/@iplaygroundtaiwan" target="_blank" rel="noopener">YouTube</a></li>
         </ul>
       </div>
       <div>
         <h4>聯絡</h4>
         <ul>
-          <li><a href="mailto:hi@ios-tpe.dev">hi@ios-tpe.dev</a></li>
-          <li><a href="#">贊助合作</a></li>
-          <li><a href="#">講者投稿</a></li>
-          <li><a href="#">行為準則</a></li>
+          <li><a href="mailto:support@iplayground.io">一般支援</a></li>
+          <li><a href="mailto:session@iplayground.io">講者投稿</a></li>
+          <li><a href="mailto:support@iplayground.io">贊助合作</a></li>
+          <li><a href="https://github.com/iplayground/code_of_conduct" target="_blank" rel="noopener">行為準則</a></li>
         </ul>
       </div>
     </div>
@@ -1125,12 +1160,12 @@ const AGENDA = [
 ];
 
 const SPEAKERS = [
-  { name: "04/22 今天", role: "Step 01 · 獲得靈感", topic: "看完這個網頁、腦中有個想聊的主題——這就是投稿的起點。", pic: "Idea" },
-  { name: "5 月上旬", role: "Step 02 · 組織想法", topic: "寫一段 200 字的摘要、試著用一句話說出你想讓觀眾帶走的東西。", pic: "Outline" },
-  { name: "6/12 前建議", role: "Step 03 · 投表單", topic: "提前一週投達、避開最後一秒的主機未達悲劇。隨時可回頭修改。", pic: "Submit" },
-  { name: "06/19 24:00", role: "Step 04 · 徵稿截止", topic: "這是硬限。過了這個點就等下一年了——我們會很惋惜與你錯身。", pic: "Deadline" },
-  { name: "7 月初回覆", role: "Step 05 · 審核結果", topic: "無論採用與否、我們都會以 email 逐位回覆。未被採用不代表不好。", pic: "Review" },
-  { name: "7–8 月 準備期", role: "Step 06 · 上台前", topic: "被採用後、mentor 將與你共同練習與細磨 slides。站上舞台不孤單。", pic: "Rehearse" },
+  { name: "4 月底",     role: "Step 01 · 獲得靈感", topic: "看完這個網頁、腦中有個想聊的主題——這就是投稿的起點。", pic: "Idea",     threshold: "2026-04-30" },
+  { name: "5 月上旬",   role: "Step 02 · 組織想法", topic: "寫一段 200 字的摘要、試著用一句話說出你想讓觀眾帶走的東西。",         pic: "Outline",  threshold: "2026-05-10" },
+  { name: "6/12 前建議", role: "Step 03 · 投表單",  topic: "提前一週投達、避開最後一秒的主機未達悲劇。隨時可回頭修改。",         pic: "Submit",   threshold: "2026-06-12" },
+  { name: "06/19 24:00", role: "Step 04 · 徵稿截止", topic: "這是硬限。過了這個點就等下一年了——我們會很惋惜與你錯身。",          pic: "Deadline", threshold: "2026-06-20" },
+  { name: "7 月初回覆",  role: "Step 05 · 審核結果", topic: "無論採用與否、我們都會以 email 逐位回覆。未被採用不代表不好。",       pic: "Review",   threshold: "2026-07-07" },
+  { name: "7/25(六)～7/26(日)", role: "Step 06 · 大會當天", topic: "政大公企中心。帶著精心準備的分享，和數百位開發者一起把 iPlayground 2026 打造成最有料的一次。", pic: "Event", threshold: "2026-07-25" },
 ];
 
 const FAQS = [
@@ -1191,25 +1226,27 @@ function renderNews() {
 }
 
 function renderSpeakers() {
-  const grid = document.getElementById("speakersGrid");
-  if (!grid) return;
-  // Chronological order for the process timeline (Today -> Future)
-  grid.innerHTML = `
-    <div class="v-timeline">
-      ${SPEAKERS.map(s => `
-        <div class="v-item">
-          <div class="v-dot"></div>
-          <div class="v-body">
-            <div class="v-card">
-              <div class="v-date">${s.name}</div>
-              <div class="v-title">${s.role}</div>
-              <div class="v-desc">${s.topic}</div>
-            </div>
-          </div>
-        </div>
-      `).join("")}
-    </div>
-  `;
+  const container = document.getElementById("processTimeline");
+  if (!container) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  function parseDate(str) { const p = str.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  let currentIdx = 0;
+  SPEAKERS.forEach(function(s, i) { if (parseDate(s.threshold) <= today) currentIdx = i; });
+  let items = "";
+  SPEAKERS.forEach(function(s, i) {
+    const passed  = i === 0 || parseDate(s.threshold) <= today;
+    const current = i === currentIdx;
+    const dotCls  = "h-dot"  + (passed ? " passed" : "") + (current ? " current" : "");
+    const cardCls = "h-card" + (current ? " current" : "");
+    items += '<div class="h-item">'
+           + '<div class="' + dotCls + '"></div>'
+           + '<div class="' + cardCls + '">'
+           + '<div class="h-date">'  + s.name  + '</div>'
+           + '<div class="h-title">' + s.role  + '</div>'
+           + '<div class="h-desc">'  + s.topic + '</div>'
+           + '</div></div>';
+  });
+  container.innerHTML = '<div class="h-timeline">' + items + '</div>';
 }
 
 function renderFaq() {
@@ -1226,7 +1263,7 @@ function renderFaq() {
 }
 
 // ===== Interactions =====
-document.getElementById("agendaTabs").addEventListener("click", (e) => {
+document.getElementById("agendaTabs")?.addEventListener("click", (e) => {
   if (e.target.tagName !== "BUTTON") return;
   [...e.currentTarget.children].forEach(b => b.classList.remove("active"));
   e.target.classList.add("active");
@@ -1234,18 +1271,24 @@ document.getElementById("agendaTabs").addEventListener("click", (e) => {
 });
 
 // Countdown
+function flipSet(id, val) {
+  var span = document.getElementById("cd-" + id);
+  var card = document.getElementById("fc-" + id);
+  if (!span || !card) return;
+  var str = String(val).padStart(2, "0");
+  if (span.textContent === str) return;
+  span.textContent = str;
+  card.classList.remove("flip");
+  void card.offsetWidth;
+  card.classList.add("flip");
+}
 function tickCountdown() {
-  const target = new Date("2026-05-24T10:00:00+08:00").getTime();
-  const diff = Math.max(0, target - Date.now());
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff % 86400000) / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  const pad = (n) => String(n).padStart(2, "0");
-  document.getElementById("cd-d").textContent = pad(d);
-  document.getElementById("cd-h").textContent = pad(h);
-  document.getElementById("cd-m").textContent = pad(m);
-  document.getElementById("cd-s").textContent = pad(s);
+  var target = new Date("2026-05-24T10:00:00+08:00").getTime();
+  var diff = Math.max(0, target - Date.now());
+  flipSet("d", Math.floor(diff / 86400000));
+  flipSet("h", Math.floor((diff % 86400000) / 3600000));
+  flipSet("m", Math.floor((diff % 3600000) / 60000));
+  flipSet("s", Math.floor((diff % 60000) / 1000));
 }
 
 // ===== Tweaks =====
@@ -1272,9 +1315,9 @@ function applyTweaks(t) {
   const h1 = document.querySelector("h1.hero-title");
   if (h1) {
     if (t.wordmarkStyle === "stacked") {
-      h1.innerHTML = '<span class="gradient">iPlay</span><br/><span class="gradient">ground.</span>';
+      h1.innerHTML = '<span class="gradient">iPlayground</span><br/><span class="gradient">2026</span>';
     } else {
-      h1.innerHTML = '<span class="gradient">iPlayground.</span>';
+      h1.innerHTML = '<span class="gradient">iPlayground 2026</span>';
     }
   }
 
