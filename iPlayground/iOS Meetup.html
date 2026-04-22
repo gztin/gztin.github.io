@@ -1336,22 +1336,37 @@
       padding: 0 0 28px;
     }
 
-    /* ============ Footer ============ */
     footer {
-      padding: 80px 0 48px;
-      border-top: 1px solid var(--rule-2);
-      margin-top: 80px;
-    }
-
-    footer {
+      background: var(--ink);
+      color: var(--bg);
+      padding: 100px 0 60px;
       position: relative;
-      padding-top: 80px;
-      border-top: 1px solid var(--rule-2);
-      background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%);
     }
 
-    html[data-mode="light"] footer {
-      background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.01) 100%);
+    footer a {
+      color: color-mix(in srgb, var(--bg) 70%, transparent);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    footer a:hover {
+      color: var(--bg);
+    }
+
+    footer h4 {
+      color: var(--bg) !important;
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    footer .footer-tagline {
+      color: color-mix(in srgb, var(--bg) 60%, transparent);
+    }
+
+    footer .footer-bottom {
+      border-top: 1px solid var(--rule-2);
+      color: color-mix(in srgb, var(--bg) 40%, transparent);
+      padding-top: 32px;
     }
 
     .footer-grid {

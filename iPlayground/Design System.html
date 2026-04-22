@@ -712,7 +712,7 @@
     </div>
 
     <!-- Hero pattern mini -->
-    <div style="border:1px solid var(--rule);border-radius:16px;background:var(--surface-2);padding:80px 40px;text-align:center;position:relative;overflow:hidden;isolation:isolate;">
+    <div style="border:1px solid var(--rule);border-radius:16px;background:var(--surface-2);padding:80px 40px;text-align:center;position:relative;overflow:hidden;isolation:isolate;margin-bottom:32px;">
       <div style="position:absolute;inset:-100px;z-index:-1;background:radial-gradient(circle at 30% 30%,var(--accent) 0%,transparent 50%),radial-gradient(circle at 70% 60%,var(--accent-2) 0%,transparent 50%),radial-gradient(circle at 50% 90%,var(--accent-3) 0%,transparent 50%);filter:blur(60px);opacity:.35;"></div>
       <div class="eyebrow-pill" style="margin-bottom:24px;"><span class="dot"></span> HERO PATTERN</div>
       <div style="font-size:clamp(36px,6vw,72px);font-weight:700;letter-spacing:-0.04em;line-height:0.95;max-width:16ch;margin:0 auto;">
@@ -723,6 +723,31 @@
       <div style="margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
         <button class="btn-primary">Primary CTA →</button>
         <button class="btn-ghost">Learn more</button>
+      </div>
+    </div>
+
+    <!-- Footer pattern mini -->
+    <div style="background:var(--ink);color:var(--bg);padding:80px 40px;border-radius:16px;position:relative;overflow:hidden;">
+      <div class="eyebrow-pill" style="margin-bottom:24px;border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);"><span class="dot"></span> FOOTER PATTERN · HIGH CONTRAST</div>
+      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;">
+        <div>
+          <div style="font-size:20px;font-weight:600;margin-bottom:12px;">iPlayground</div>
+          <p style="color:color-mix(in srgb, var(--bg) 60%, transparent);font-size:14px;line-height:1.6;">High contrast finish using inverted roles. The footer always uses a heavy weight compared to the main content.</p>
+        </div>
+        <div>
+          <h4 style="font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--bg);opacity:0.9;">Links</h4>
+          <ul style="list-style:none;padding:0;margin:12px 0 0;font-size:14px;color:color-mix(in srgb, var(--bg) 70%, transparent);display:flex;flex-direction:column;gap:8px;">
+            <li>Link item</li>
+            <li>Link item</li>
+          </ul>
+        </div>
+        <div>
+          <h4 style="font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--bg);opacity:0.9;">Social</h4>
+          <ul style="list-style:none;padding:0;margin:12px 0 0;font-size:14px;color:color-mix(in srgb, var(--bg) 70%, transparent);display:flex;flex-direction:column;gap:8px;">
+            <li>Twitter</li>
+            <li>Discord</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -752,27 +777,35 @@
 </footer>
 
 <script>
-  // Mode switch
-  const mqlDS = window.matchMedia("(prefers-color-scheme: dark)");
-  function setDSMode(m) {
-    document.documentElement.dataset.mode = m;
-    document.querySelectorAll("#modeSwitch button").forEach(b => b.classList.toggle("active", b.dataset.mode === m));
-    try { localStorage.setItem("ds-mode", m); } catch(e) {}
-  }
-  const savedDSMode = (() => { try { return localStorage.getItem("ds-mode"); } catch(e) { return null; } })();
-  setDSMode(savedDSMode || (mqlDS.matches ? "dark" : "light"));
-  document.getElementById("modeSwitch").addEventListener("click", (e) => {
-    if (e.target.tagName === "BUTTON") setDSMode(e.target.dataset.mode);
-  });
+// ===== Init =====
+const mqlDS = window.matchMedia("(prefers-color-scheme: dark)");
+function setDSMode(m) {
+  document.documentElement.dataset.mode = m;
+  document.querySelectorAll("#modeSwitch button").forEach(b => b.classList.toggle("active", b.dataset.mode === m));
+  try { localStorage.setItem("appearance", m); } catch(e) {}
+}
 
-  // Hue slider
-  const slider = document.getElementById("hueSlider");
-  const hueVal = document.getElementById("hueVal");
-  slider.addEventListener("input", (e) => {
-    const h = Number(e.target.value);
-    document.documentElement.style.setProperty("--hue", h);
-    hueVal.textContent = h + "°";
-  });
+const savedDSMode = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })();
+const savedHue = (() => { try { return localStorage.getItem("hue"); } catch(e) { return null; } })() || 28;
+
+setDSMode(savedDSMode || (mqlDS.matches ? "dark" : "light"));
+document.documentElement.style.setProperty("--hue", savedHue);
+document.getElementById("hueSlider").value = savedHue;
+document.getElementById("hueVal").textContent = savedHue + "°";
+
+document.getElementById("modeSwitch").addEventListener("click", (e) => {
+  if (e.target.tagName === "BUTTON") setDSMode(e.target.dataset.mode);
+});
+
+// Hue slider
+const slider = document.getElementById("hueSlider");
+const hueVal = document.getElementById("hueVal");
+slider.addEventListener("input", (e) => {
+  const h = Number(e.target.value);
+  document.documentElement.style.setProperty("--hue", h);
+  hueVal.textContent = h + "°";
+  try { localStorage.setItem("hue", h); } catch(e) {}
+});
 </script>
 
 </body>
