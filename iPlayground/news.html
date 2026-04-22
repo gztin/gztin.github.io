@@ -195,9 +195,31 @@
 
   /* ============ Footer ============ */
   footer {
-    padding: 40px 0;
+    padding: 80px 0 48px;
     border-top: 1px solid var(--rule-2);
-    text-align: center;
+    margin-top: 80px;
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer-lock { display: flex; align-items: center; gap: 14px; font-weight: 500; }
+  .footer-lock .mark {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
+  }
+  .footer-tagline { margin-top: 24px; font-size: 14px; color: var(--ink-3); max-width: 320px; line-height: 1.55; }
+  footer h4 {
+    font-family: var(--f-mono); font-size: 11px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--ink-3); margin: 0 0 16px;
+  }
+  footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  footer ul a { text-decoration: none; color: var(--ink-2); }
+  footer ul a:hover { color: var(--ink); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    padding-top: 32px; border-top: 1px solid var(--rule-2);
     font-family: var(--f-mono); font-size: 11px;
     color: var(--ink-3); letter-spacing: 0.04em;
   }
@@ -282,7 +304,49 @@
 <div id="pageRoot"></div>
 
 <footer>
-  <div class="wrap" id="footerText">© 2026 iPlayground · Swift in the Wild</div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-lock">
+          <div class="mark"></div>iPlayground
+        </div>
+        <p class="footer-tagline">由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。</p>
+      </div>
+      <div>
+        <h4>活動</h4>
+        <ul>
+          <li><a href="iOS Meetup.html#news">消息</a></li>
+          <li><a href="iOS Meetup.html#agenda">議程</a></li>
+          <li><a href="iOS Meetup.html#speakers">講者</a></li>
+          <li><a href="iOS Meetup.html#sponsors">贊助商</a></li>
+          <li><a href="iOS Meetup.html#staff">工作人員</a></li>
+          <li><a href="iOS Meetup.html#register">報名</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>社群</h4>
+        <ul>
+          <li><a href="https://discord.gg/xS8yMKbbjB" target="_blank" rel="noopener">Discord</a></li>
+          <li><a href="https://www.facebook.com/theiPlayground/" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="https://twitter.com/theiPlayground" target="_blank" rel="noopener">Twitter / X</a></li>
+          <li><a href="https://youtube.com/@iplaygroundtaiwan" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>聯絡</h4>
+        <ul>
+          <li><a href="mailto:support@iplayground.io">一般支援</a></li>
+          <li><a href="mailto:session@iplayground.io">講者投稿</a></li>
+          <li><a href="mailto:support@iplayground.io">贊助合作</a></li>
+          <li><a href="https://github.com/iplayground/code_of_conduct" target="_blank" rel="noopener">行為準則</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 iOS Taipei Community · Independent, Non-Commercial</div>
+      <div>Made with HTML, Swift & coffee ☕</div>
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -310,52 +374,25 @@ const I18N = {
   },
 };
 
-// ===== News data (bilingual) =====
+// ===== News data (synced from iOS Meetup.html) =====
 const NEWS_DATA = [
   {
     date: "2026.04.22",
-    title: {
-      zh: "iPlayground 2026 徵稿正式開啟！歡迎各位開發者踴躍投稿。",
-      en: "iPlayground 2026 Call for Proposals is Now Open!",
-    },
-    content: {
-      zh: `<p>我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。</p>
-<p>今年的投稿主題不設限——SwiftUI 架構、on-device ML、App Intents、visionOS、甚至是您在工作中累積的踩坑故事，都非常歡迎。</p>
-<p>立即前往投稿頁面，提交您的提案吧！我們的審稿團隊將在 7 月初以 email 逐位回覆每一份投稿。</p>`,
-      en: `<p>We warmly invite speakers passionate about iOS, AI, product development, or any trending technology. Whether you're a seasoned expert or an emerging developer, iPlayground is the perfect stage to share your knowledge and experience.</p>
-<p>This year's topics are wide open — SwiftUI architecture, on-device ML, App Intents, visionOS, or even hard-won lessons from the trenches. All submissions are welcome.</p>
-<p>Head to the submission page and send us your proposal! Our review team will reply to every submission by email in early July.</p>`,
-    },
+    title: "iPlayground 2026 徵稿正式開啟！",
+    content: "我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。",
+    url: "#"
   },
   {
     date: "2026.04.15",
-    title: {
-      zh: "大會官網正式上線，更多精彩內容陸續揭曉中。",
-      en: "Official Website Launched — More Exciting Content Coming Soon.",
-    },
-    content: {
-      zh: `<p>籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。</p>
-<p>接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。</p>
-<p>如果您有任何疑問或建議，歡迎透過社群管道與我們聯繫。讓我們一起打造最有溫度的開發者聚會！</p>`,
-      en: `<p>The long-awaited iPlayground 2026 website is officially live! This year we've adopted a fresh visual language that embodies the collision of technology and creativity.</p>
-<p>Over the coming weeks, we'll be announcing the schedule, co-organizers, and some exciting sponsors — stay tuned.</p>
-<p>If you have any questions or suggestions, feel free to reach out through our community channels. Let's build the warmest developer gathering together!</p>`,
-    },
+    title: "大會官網正式上線，更多精彩內容陸續揭曉中。",
+    content: "籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。",
+    url: "#"
   },
   {
     date: "2026.04.10",
-    title: {
-      zh: "今年我們將聚焦在 Swift 與 AI 的結合，帶來全新的技術饗宴。",
-      en: "This Year We Focus on Swift Meets AI — A Brand-New Tech Feast.",
-    },
-    content: {
-      zh: `<p>AI 浪潮正席捲全球，iOS 開發者該如何應對？今年的主題講座將深入探討 Core ML、Apple Intelligence 以及如何利用 LLM 提升行動載體的體驗。</p>
-<p>這不僅是一場開發者大會，更是一次對未來生活方式的共同想像。我們期待透過不同角度的分享，讓每位與會者都能帶走可立即應用的知識與靈感。</p>
-<p>無論您是想了解最新的 on-device inference 技術，還是想知道如何在產品中落地 RAG 架構，iPlayground 2026 都將為您準備最前沿的內容。</p>`,
-      en: `<p>The AI wave is sweeping the globe — how should iOS developers respond? This year's keynote sessions will dive deep into Core ML, Apple Intelligence, and how to leverage LLMs to elevate mobile experiences.</p>
-<p>This is more than a developer conference; it's a shared vision of the future. We hope every attendee leaves with knowledge and inspiration they can apply immediately.</p>
-<p>Whether you want to explore the latest on-device inference techniques or learn how to ship a RAG architecture in production, iPlayground 2026 has you covered.</p>`,
-    },
+    title: "iPlayground 工作夥伴招募中",
+    content: "熱愛 Apple 技術與開發者社群的你，別錯過這場年度盛會！我們正在尋找充滿熱情的夥伴加入。無論是議程規劃、行銷宣傳或活動執行，這裡都有你發揮的舞台。立刻報名，與我們一同打造最酷的技術饗宴！",
+    url: "#"
   },
 ];
 
@@ -399,7 +436,6 @@ function applyLang(lang) {
     b.classList.toggle("active", b.dataset.lang === lang)
   );
   document.getElementById("backLink").textContent = t("back");
-  document.getElementById("footerText").textContent = t("footer");
   try { localStorage.setItem("lang", lang); } catch(e) {}
   renderPage();
 }
@@ -427,7 +463,7 @@ function renderPage() {
           ${NEWS_DATA.map((n, i) => `
             <a class="listing-row" href="news.html?id=${i}">
               <div class="l-date">${n.date}</div>
-              <div class="l-title">${n.title[currentLang]}</div>
+              <div class="l-title">${n.title}</div>
               <div class="l-arrow">→</div>
             </a>
           `).join("")}
@@ -445,17 +481,17 @@ function renderPage() {
   }
 
   const n = NEWS_DATA[id];
-  document.title = `${n.title[currentLang]} · iPlayground 2026`;
+  document.title = `${n.title} · iPlayground 2026`;
 
   const sidebar = NEWS_DATA.map((item, i) => `
     <a class="sidebar-item ${i === id ? 'active' : ''}" href="news.html?id=${i}">
       <div class="s-date">${item.date}</div>
-      <div class="s-title">${item.title[currentLang]}</div>
+      <div class="s-title">${item.title}</div>
     </a>
   `).join("");
 
   const options = NEWS_DATA.map((item, i) =>
-    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title[currentLang]}</option>`
+    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${item.title}</option>`
   ).join("");
 
   root.innerHTML = `
@@ -473,10 +509,10 @@ function renderPage() {
       <main class="news-main">
         <header class="article-header" id="artHeader">
           <div class="article-date">${n.date}</div>
-          <h1 class="article-title">${n.title[currentLang]}</h1>
+          <h1 class="article-title">${n.title}</h1>
         </header>
         <article class="article-body" id="artBody">
-          ${n.content[currentLang]}
+          ${n.content}
         </article>
       </main>
     </div>
@@ -490,10 +526,10 @@ function renderPage() {
       const item = NEWS_DATA[newId];
       document.getElementById("artHeader").innerHTML = `
         <div class="article-date">${item.date}</div>
-        <h1 class="article-title">${item.title[currentLang]}</h1>
+        <h1 class="article-title">${item.title}</h1>
       `;
-      document.getElementById("artBody").innerHTML = item.content[currentLang];
-      document.title = `${item.title[currentLang]} · iPlayground 2026`;
+      document.getElementById("artBody").innerHTML = item.content;
+      document.title = `${item.title} · iPlayground 2026`;
       history.replaceState(null, "", `news.html?id=${newId}`);
     });
   }
