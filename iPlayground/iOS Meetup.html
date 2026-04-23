@@ -342,6 +342,21 @@
       background: linear-gradient(to bottom, var(--accent), var(--accent-2) 45%, var(--accent-3));
     }
 
+    /* ============ Wave Canvas ============ */
+    .wave-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero .wrap {
+      position: relative;
+      z-index: 2;
+    }
+
     .key-art {
       position: absolute;
       inset: 0;
@@ -455,12 +470,52 @@
       margin-inline: auto;
     }
 
-    h1.hero-title .gradient {
+    h1.hero-title .hero-tagline {
       display: block;
-      color: #000;
-      background: none;
-      -webkit-background-clip: initial;
-      background-clip: initial;
+      /* Dark mode: shimmer loading effect */
+      background: linear-gradient(
+        90deg,
+        #aaaaaa 0%,
+        #ffffff 30%,
+        #aaaaaa 60%,
+        #888888 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      animation: taglineShimmer 2.4s linear infinite;
+    }
+
+    @keyframes taglineShimmer {
+      0%   { background-position: 200% center; }
+      100% { background-position: -200% center; }
+    }
+
+    html[data-mode="light"] h1.hero-title .hero-tagline {
+      /* Light mode: #7557f8 with breathing glow */
+      background: none !important;
+      -webkit-background-clip: initial !important;
+      background-clip: initial !important;
+      -webkit-text-fill-color: #7557f8 !important;
+      color: #7557f8 !important;
+      animation: taglineBreathe 2.6s ease-in-out infinite;
+      text-shadow: 0 0 24px rgba(117, 87, 248, 0.7);
+    }
+
+    @keyframes taglineBreathe {
+      0%, 100% {
+        text-shadow: 0 0 16px rgba(117, 87, 248, 0.5),
+                     0 0 40px rgba(117, 87, 248, 0.2);
+        opacity: 1;
+      }
+      50% {
+        text-shadow: 0 0 32px rgba(117, 87, 248, 0.95),
+                     0 0 80px rgba(117, 87, 248, 0.5),
+                     0 0 120px rgba(117, 87, 248, 0.2);
+        opacity: 0.85;
+      }
     }
 
     h1.hero-title .gradient:first-child {
@@ -690,6 +745,24 @@
       padding: 0 2px;
       margin-bottom: 20px;
       user-select: none;
+    }
+
+    html[data-mode="light"] .fc-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f0f0f5 100%);
+      color: #000;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    html[data-mode="light"] .fc-num {
+      color: #1d1d1f;
+    }
+
+    html[data-mode="light"] .fc-sep {
+      color: #1d1d1f;
+    }
+
+    html[data-mode="light"] .fc-label {
+      color: #1d1d1f;
     }
 
     @media (max-width: 520px) {
@@ -2337,6 +2410,7 @@
 
   <!-- Hero -->
   <header class="hero" data-screen-label="01 Hero">
+    <canvas class="wave-canvas" id="waveCanvas"></canvas>
     <div class="key-art">
       <div class="blob b1"></div>
       <div class="blob b2"></div>
@@ -2345,7 +2419,7 @@
     <div class="wrap">
       <h1 class="hero-title">
         <img src="svg/logo.svg" alt="iPlayground" class="hero-logo">
-        <span class="gradient">徵稿中</span>
+        <span class="hero-tagline">徵稿中</span>
       </h1>
 
       <div data-i18n="countdown_label"
@@ -2644,6 +2718,167 @@
   </div>
 
   <script>
+    // ===== Code Rain Animation =====
+    (function initCodeRain() {
+      const canvas = document.getElementById('waveCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let animId = null;
+      let cols = [];
+      let w = 0, h = 0;
+
+      // Characters: mix of katakana, digits, Swift/code symbols
+      const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789{}[]()<>=/\\|;:.,!?@#$%^&*+-~`';
+
+      const FONT_SIZE = 15;
+
+      function getMode() {
+        return document.documentElement.dataset.mode === 'light' ? 'light' : 'dark';
+      }
+
+      // Colour palette per mode
+      // dark  → classic Matrix green glow
+      // light → indigo / violet on pale background
+      const PALETTE = {
+        dark: {
+          bg: 'rgba(13,13,15,0.18)',       // trail fade (matches --bg dark)
+          head: '#ccffcc',                  // brightest leading char
+          bright: '#00ff88',                // near-head chars
+          mid: '#00cc55',                   // mid-stream
+          dim: '#006622',                   // tail
+        },
+        light: {
+          bg: 'rgba(20,10,60,0.20)',        // trail fade — deep indigo
+          head: '#e0d7ff',                  // brightest leading char (pale lavender)
+          bright: '#b39dff',                // near-head
+          mid: '#7c6fcd',                   // mid-stream
+          dim: '#3a2a7a',                   // tail
+        }
+      };
+
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        w = rect.width;
+        h = rect.height;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+
+        // Re-init columns
+        const numCols = Math.floor(w / FONT_SIZE);
+        cols = [];
+        for (let i = 0; i < numCols; i++) {
+          cols.push({
+            y: Math.random() * -h,          // start above viewport (staggered)
+            speed: 0.6 + Math.random() * 1.2,
+            length: 8 + Math.floor(Math.random() * 20),
+            chars: [],
+            nextSwap: 0,
+          });
+          // Pre-fill chars
+          for (let j = 0; j < 32; j++) {
+            cols[i].chars.push(CHARS[Math.floor(Math.random() * CHARS.length)]);
+          }
+        }
+      }
+
+      let frame = 0;
+      function render() {
+        animId = requestAnimationFrame(render);
+        frame++;
+
+        const mode = getMode();
+        const pal = PALETTE[mode];
+
+        // Fade trail — in light mode first paint a solid dark base so rain is visible
+        if (mode === 'light') {
+          ctx.fillStyle = 'rgba(15,8,50,0.85)';
+          ctx.fillRect(0, 0, w, h);
+        }
+        ctx.fillStyle = pal.bg;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+        ctx.textAlign = 'center';
+
+        for (let i = 0; i < cols.length; i++) {
+          const col = cols[i];
+          const x = i * FONT_SIZE + FONT_SIZE / 2;
+
+          // Randomly swap a char in the stream
+          if (frame >= col.nextSwap) {
+            const idx = Math.floor(Math.random() * col.chars.length);
+            col.chars[idx] = CHARS[Math.floor(Math.random() * CHARS.length)];
+            col.nextSwap = frame + 2 + Math.floor(Math.random() * 6);
+          }
+
+          // Draw each character in the stream
+          for (let j = 0; j < col.length; j++) {
+            const cy = col.y - j * FONT_SIZE;
+            if (cy < -FONT_SIZE || cy > h + FONT_SIZE) continue;
+
+            const charIdx = (Math.floor(col.y / FONT_SIZE) + j) & (col.chars.length - 1);
+            const ch = col.chars[Math.abs(charIdx) % col.chars.length];
+
+            // j=0 is the head (brightest), higher j = deeper in trail (dimmer)
+            let color;
+            if (j === 0) {
+              color = pal.head;
+              ctx.shadowColor = pal.bright;
+              ctx.shadowBlur = 8;
+            } else if (j < 3) {
+              color = pal.bright;
+              ctx.shadowColor = pal.bright;
+              ctx.shadowBlur = 4;
+            } else if (j < col.length * 0.5) {
+              color = pal.mid;
+              ctx.shadowBlur = 0;
+            } else {
+              // Fade tail with alpha
+              const alpha = 1 - (j - col.length * 0.5) / (col.length * 0.5);
+              color = pal.dim;
+              ctx.globalAlpha = Math.max(0.05, alpha);
+              ctx.shadowBlur = 0;
+            }
+
+            ctx.fillStyle = color;
+            ctx.fillText(ch, x, cy);
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+          }
+
+          // Advance column
+          col.y += col.speed;
+
+          // Reset when stream has fully passed the bottom
+          if (col.y - col.length * FONT_SIZE > h) {
+            col.y = -FONT_SIZE * (2 + Math.random() * 10);
+            col.speed = 0.6 + Math.random() * 1.2;
+            col.length = 8 + Math.floor(Math.random() * 20);
+          }
+        }
+      }
+
+      // Pause when hero is off-screen
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!animId) render();
+          } else {
+            if (animId) { cancelAnimationFrame(animId); animId = null; }
+          }
+        });
+      }, { threshold: 0.05 });
+
+      window.addEventListener('resize', () => { resize(); });
+      resize();
+      observer.observe(canvas.parentElement);
+      render();
+    })();
+
     // ===== State =====
     let currentLang = "zh";
 
@@ -2850,7 +3085,7 @@
       if (hueLabel) hueLabel.textContent = t.hue + "°";
       try { localStorage.setItem("hue", t.hue); } catch (e) { }
 
-      document.documentElement.dataset.mode = t.mode;
+      // NOTE: do NOT set data-mode here — applyAppearance owns that
 
       // Hero art
       const art = document.querySelector(".key-art");
@@ -2866,16 +3101,17 @@
       // Hero Title Style
       const h1 = document.querySelector("h1.hero-title");
       if (h1) {
+        // Use the actual applied mode from the DOM, not t.mode (which may lag behind)
         if (t.wordmarkStyle === "stacked") {
-          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="gradient" style="color:#000;background:none;-webkit-background-clip:initial;">2026</span>';
+          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
         } else {
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
-          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="gradient" style="color:#000;background:none;-webkit-background-clip:initial;">' + tagline + '</span>';
+          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="hero-tagline">' + tagline + '</span>';
         }
 
         // Recalculate Chinese subtitle alignment
         requestAnimationFrame(() => {
-          const gradientSpan = h1.querySelector(".gradient");
+          const gradientSpan = h1.querySelector(".hero-tagline");
           const zhSpan = h1.querySelector(".hero-sub-zh");
           if (gradientSpan && zhSpan) {
             zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
@@ -3077,6 +3313,7 @@
       state.mode = effective;
       document.querySelectorAll("#segMode button").forEach(b => b.classList.toggle("active", b.dataset.m === effective));
       try { localStorage.setItem("appearance", pref); } catch (e) { }
+      applyTweaks(state);
     }
 
     // ===== Event Listeners =====
