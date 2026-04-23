@@ -1275,67 +1275,6 @@
       font-weight: 500;
     }
 
-    /* ============ FAQ ============ */
-    .faq-list {
-      margin-top: 64px;
-      max-width: 820px;
-      margin-inline: auto;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid var(--rule-2);
-    }
-
-    .faq-q {
-      width: 100%;
-      padding: 28px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-      font-size: 20px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      line-height: 1.3;
-    }
-
-    .faq-q .plus {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--surface);
-      border: 1px solid var(--rule);
-      display: grid;
-      place-items: center;
-      font-size: 14px;
-      color: var(--ink-2);
-      transition: transform .3s, background .2s, color .2s;
-      flex-shrink: 0;
-    }
-
-    .faq-item.open .faq-q .plus {
-      transform: rotate(45deg);
-      background: var(--accent);
-      color: #000;
-      border-color: var(--accent);
-    }
-
-    .faq-a {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height .4s ease, padding .3s ease;
-      color: var(--ink-2);
-      font-size: 15px;
-      line-height: 1.65;
-      padding: 0;
-      max-width: 680px;
-    }
-
-    .faq-item.open .faq-a {
-      max-height: 400px;
-      padding: 0 0 28px;
-    }
-
     footer {
       background: var(--ink);
       color: var(--bg);
@@ -2093,7 +2032,7 @@
         <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
         <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
         <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-        <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+        <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank" rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
       </ul>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
         <span></span>
@@ -2151,7 +2090,7 @@
       <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
       <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
       <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-      <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
+      <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank" rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
     </ul>
     <div class="mobile-menu-divider"></div>
     <div class="mobile-menu-controls">
@@ -2272,6 +2211,13 @@
 
       <!-- Process Timeline -->
       <div id="processTimeline"></div>
+
+      <div class="venue-wrap" style="margin-top: 80px;">
+        <div class="sec-eyebrow" data-i18n="venue_eyebrow">— 地點 Venue</div>
+        <div class="map-card" style="margin-top: 48px; border-radius: 24px; overflow: hidden; border: 1px solid var(--rule); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--surface);">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.71!2d121.5276213!3d25.0301042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a98364e9ea0f%3A0xc1736c6258ca4f72!2z5pS_5aSn5YWs5LyB5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1713840000000" width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2332,16 +2278,6 @@
   </section>
 
   <div id="register"></div>
-
-  <!-- FAQ -->
-  <section id="faq" data-screen-label="07 FAQ">
-    <div class="wrap center">
-      <div class="sec-eyebrow" data-i18n="faq_eyebrow">— 常見問題 FAQ</div>
-    </div>
-    <div class="wrap">
-      <div class="faq-list" id="faqList"></div>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer data-screen-label="08 Footer">
@@ -2470,15 +2406,6 @@
       { name: { zh: "7/25(六)～7/26(日)", en: "Jul 25(Sat)～26(Sun)" }, role: { zh: "Step 06 · 大會當天", en: "Step 06 · Conference Day" }, topic: { zh: "政大公企中心。帶著精心準備的分享，和數百位開發者一起把 iPlayground 2026 打造成最有料的一次。", en: "NCCU Enterprise Development Center. Bring your talk and join hundreds of developers to make iPlayground 2026 the best one yet." }, pic: "Event", threshold: "2026-07-25" },
     ];
 
-    const FAQS = [
-      { q: { zh: "這場活動與 Apple 官方有關嗎?", en: "Is this event officially affiliated with Apple?" }, a: { zh: "沒有。iPlayground 是由社群志工自主發起的獨立活動,名稱中使用 iOS 僅為描述開發技術範圍,與 Apple Inc. 無關、亦未受任何官方認可。", en: "No. iPlayground is an independent event organized by community volunteers. The name references iOS only to describe the technical focus — it has no affiliation with or endorsement from Apple Inc." } },
-      { q: { zh: "我從沒上台講過,真的可以投稿嗎?", en: "I've never spoken publicly before. Can I still submit?" }, a: { zh: "非常可以——而且我們歡迎。新講者有專屬 mentor 陪你從 proposal 打磨到上台前的最後一次彩排。很多歷屆講者的第一次,都是從 iPlayground 開始的。", en: "Absolutely — and we encourage it. First-time speakers get a dedicated mentor who'll help you from proposal to your final rehearsal. Many of our past speakers gave their first ever talk at iPlayground." } },
-      { q: { zh: "主題太小眾/太技術/太冷門,會被收嗎?", en: "My topic is niche / too technical / obscure. Will it get accepted?" }, a: { zh: "我們更擔心太主流。只要你能讓觀眾帶走一點什麼——不管是一個工具、一個觀點、一次踩坑的啟發——對我們就是有料。", en: "We're more worried about topics being too mainstream. As long as your audience walks away with something — a tool, a perspective, a lesson learned — it's a great talk for us." } },
-      { q: { zh: "可以用英文投稿與上台嗎?", en: "Can I submit and speak in English?" }, a: { zh: "可以。投稿表單與現場都可接受中文或英文,只要告訴我們你偏好的語言即可,不會影響評選。", en: "Yes. Both the submission form and the conference accept Chinese or English. Just let us know your preferred language — it won't affect the review." } },
-      { q: { zh: "投稿次數有限制嗎?", en: "Is there a limit on submissions?" }, a: { zh: "沒有限制。你可以針對同一個主題投稿不同長度 (20/30/45 min),也可以分別投稿多個不同主題——我們會與你討論最適合的安排。", en: "No limit. You can submit the same topic in different lengths (20/30/45 min), or submit multiple different topics separately — we'll discuss the best fit with you." } },
-      { q: { zh: "徵稿結果什麼時候公布?會回覆我為什麼沒被選嗎?", en: "When will CFP results be announced? Will I hear why I wasn't selected?" }, a: { zh: "預計 7 月初以 email 逐位回覆。若你希望、我們願意提供簡短的 feedback——請在表單中勾選「希望收到審查意見」。", en: "We plan to notify everyone by email in early July. If you'd like brief feedback, check the 'Request review comments' option in the form — we're happy to share." } },
-    ];
-
     // ===== Render =====
     function renderAgenda(track = "all") {
       const list = document.getElementById("agendaList");
@@ -2558,23 +2485,6 @@
           + '</div></div>';
       });
       container.innerHTML = '<div class="h-timeline">' + items + '</div>';
-    }
-
-    function renderFaq(lang) {
-      const list = document.getElementById("faqList");
-      const l = lang || currentLang || "zh";
-      list.innerHTML = FAQS.map((f, i) => {
-        const q = typeof f.q === "object" ? (f.q[l] || f.q.zh) : f.q;
-        const a = typeof f.a === "object" ? (f.a[l] || f.a.zh) : f.a;
-        return `
-    <div class="faq-item" data-i="${i}">
-      <button class="faq-q">${q}<span class="plus">+</span></button>
-      <div class="faq-a">${a}</div>
-    </div>`;
-      }).join("");
-      list.querySelectorAll(".faq-item").forEach(item => {
-        item.querySelector(".faq-q").addEventListener("click", () => item.classList.toggle("open"));
-      });
     }
 
     // Countdown
@@ -2745,7 +2655,7 @@
       zh: {
         nav_news: "最新消息", nav_about: "時間表", nav_agenda: "議程", nav_speakers: "講者群",
         nav_sponsors: "贊助廠商", nav_staff: "工作人員", nav_topics: "主題範圍", nav_timeline: "時程",
-        nav_faq: "FAQ", nav_cta: "立即投稿",
+        nav_hackmd: "HackMD共筆", nav_cta: "立即投稿",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · 徵稿正式開跑",
         hero_sub: "如果你對 iOS、AI、產品開發,或任何讓人眼睛一亮的主題有想法——技術分享、實戰經驗、踩坑故事,還是對未來的觀察,都非常歡迎來投稿 🙌",
         cta_submit: "🔗 前往投稿表單 →", cta_topics: "看看主題範圍",
@@ -2753,6 +2663,7 @@
         news_eyebrow: "— 最新消息 Latest News",
         news_heading: '掌握 <span class="gradient">iPlayground</span> <span style="white-space:nowrap;">的第一手動態</span><span class="thin">。</span>',
         about_eyebrow: "— 活動時程表",
+        venue_eyebrow: "— 活動地點",
         agenda_eyebrow: "— 議程 Agenda",
         agenda_title: '大會議程<span class="thin">,</span><span class="gradient">精彩內容</span><span class="thin">。</span>',
         agenda_desc: "我們正在安排最豐富的開發者內容,敬請期待。",
@@ -2766,7 +2677,6 @@
         staff_eyebrow: "— 工作人員 Staff",
         staff_title: '<span class="gradient">熱血志工</span><span class="thin">成就卓越。</span>',
         staff_wip: "每一位背後的無名英雄",
-        faq_eyebrow: "— 常見問題 FAQ",
         footer_tagline: "由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。",
         footer_event: "活動", footer_news: "消息", footer_register: "報名",
         footer_community: "社群", footer_contact: "聯絡",
@@ -2777,7 +2687,7 @@
       en: {
         nav_news: "Latest News", nav_about: "Timeline", nav_agenda: "Agenda", nav_speakers: "Speakers",
         nav_sponsors: "Sponsors", nav_staff: "Staff", nav_topics: "Topics", nav_timeline: "Timeline",
-        nav_faq: "FAQ", nav_cta: "Submit Now",
+        nav_hackmd: "HackMD Notes", nav_cta: "Submit Now",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · Now Open",
         hero_sub: "Got ideas on iOS, AI, product, or anything worth sharing? Tech talks, war stories, lessons learned, or glimpses of the future — we'd love to hear it 🙌",
         cta_submit: "🔗 Submit Your Talk →", cta_topics: "Browse Topics",
@@ -2785,6 +2695,7 @@
         news_eyebrow: "— Latest News",
         news_heading: 'Stay up to date with <span class="gradient">iPlayground</span><span class="thin">.</span>',
         about_eyebrow: "— Conference Timeline",
+        venue_eyebrow: "— Event Venue",
         agenda_eyebrow: "— Agenda",
         agenda_title: 'Conference Agenda<span class="thin">,</span> <span class="gradient">Great Content</span><span class="thin">.</span>',
         agenda_desc: "We're curating the richest developer content — stay tuned.",
@@ -2798,7 +2709,6 @@
         staff_eyebrow: "— Staff",
         staff_title: '<span class="gradient">Passionate Volunteers</span><span class="thin">, Outstanding Results.</span>',
         staff_wip: "The unsung heroes behind the scenes",
-        faq_eyebrow: "— FAQ",
         footer_tagline: "An annual developer conference independently organized by iOS Taipei community volunteers. Not affiliated with Apple Inc.",
         footer_event: "Event", footer_news: "News", footer_register: "Register",
         footer_community: "Community", footer_contact: "Contact",
@@ -2819,7 +2729,6 @@
       syncLangButtons(lang);
       renderNews(lang);
       renderSpeakers(lang);
-      renderFaq(lang);
       applyTweaks(state);
       try { localStorage.setItem("lang", lang); } catch (e) { }
     }
@@ -2876,7 +2785,6 @@
       renderNews();
       renderAgenda("all");
       renderSpeakers();
-      renderFaq();
       
       // Use requestAnimationFrame to ensure DOM is painted
       requestAnimationFrame(() => {
