@@ -12,18 +12,18 @@
   --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
 
   /* ---------- Surface (dark default) ---------- */
-  --bg:        #000;
-  --surface:   #0a0a0a;
-  --surface-2: #131313;
+  --bg:        #0d0d0f;
+  --surface:   #1c1c1e;
+  --surface-2: #2c2c2e;
 
   /* ---------- Ink ---------- */
   --ink:   #f5f5f7;        /* primary text */
   --ink-2: #a1a1a6;        /* secondary text */
-  --ink-3: #6e6e73;        /* tertiary / labels */
+  --ink-3: #86868b;        /* tertiary / labels */
 
   /* ---------- Rules & dividers ---------- */
-  --rule:   rgba(255,255,255,0.12);
-  --rule-2: rgba(255,255,255,0.06);
+  --rule:   rgba(255,255,255,0.15);
+  --rule-2: rgba(255,255,255,0.08);
 
   /* ---------- Typography ---------- */
   --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;

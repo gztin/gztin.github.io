@@ -27,14 +27,14 @@
       --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
       --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
 
-      --bg: #000;
-      --surface: #0a0a0a;
-      --surface-2: #131313;
+      --bg: #0d0d0f;
+      --surface: #1c1c1e;
+      --surface-2: #2c2c2e;
       --ink: #f5f5f7;
       --ink-2: #a1a1a6;
-      --ink-3: #6e6e73;
-      --rule: rgba(255, 255, 255, 0.12);
-      --rule-2: rgba(255, 255, 255, 0.06);
+      --ink-3: #86868b;
+      --rule: rgba(255, 255, 255, 0.15);
+      --rule-2: rgba(255, 255, 255, 0.08);
 
       --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       --f-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -212,6 +212,7 @@
         opacity: 0;
         transform: translateY(-20px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -1334,9 +1335,9 @@
     .bus-tag:hover {
       background: var(--accent);
       border-color: var(--accent);
-      color: #000;
+      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .transport-link-btn {
@@ -1359,10 +1360,11 @@
     }
 
     .transport-link-btn:hover {
-      background: var(--surface-3);
+      background: var(--accent);
       border-color: var(--accent);
+      color: #fff;
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     }
 
     .transport-link-btn::after {
@@ -1378,13 +1380,14 @@
     .transport-link-btn:hover::after {
       opacity: 1;
       right: 12px;
+      color: #fff;
     }
 
     .transport-card p {
       margin: 0;
     }
-    
-    .transport-card p + p {
+
+    .transport-card p+p {
       margin-top: 12px;
     }
 
@@ -1629,10 +1632,6 @@
     .news-side-title .label-heading .thin {
       font-weight: 300;
       opacity: 0.5;
-    }
-
-    .news-wrap {
-      border-left: 1px solid var(--rule-2);
     }
 
     .news-row {
@@ -2041,7 +2040,7 @@
         display: flex !important;
       }
 
-      nav.top .row > div:last-child {
+      nav.top .row>div:last-child {
         display: none !important;
       }
 
@@ -2145,7 +2144,8 @@
         <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
         <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
         <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-        <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank" rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
+        <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank"
+            rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
       </ul>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
         <span></span>
@@ -2203,7 +2203,8 @@
       <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
       <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
       <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-      <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank" rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
+      <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank"
+          rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
     </ul>
     <div class="mobile-menu-divider"></div>
     <div class="mobile-menu-controls">
@@ -2211,7 +2212,8 @@
         <span class="control-label" data-i18n="control_appearance">主題</span>
         <div class="mobile-mode-switch" id="mobileModeSwitch">
           <button data-mode="auto" class="active" aria-label="Auto">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="9" />
               <path d="M12 3v18" />
               <path d="M12 3a9 9 0 0 1 0 18" />
@@ -2219,14 +2221,17 @@
             <span data-i18n="mode_auto">自動</span>
           </button>
           <button data-mode="light" aria-label="Light">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
             </svg>
             <span data-i18n="mode_light">亮</span>
           </button>
           <button data-mode="dark" aria-label="Dark">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4" />
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
@@ -2305,7 +2310,8 @@
         <div class="news-section-layout">
           <div class="news-side-title">
             <span class="label-eyebrow" data-i18n="news_eyebrow">— 最新消息 Latest News</span>
-            <h2 class="label-heading" data-i18n="news_heading">掌握 <span class="gradient">iPlayground</span> <span style="white-space: nowrap;">的第一手動態</span><span class="thin">。</span>
+            <h2 class="label-heading" data-i18n="news_heading">掌握 <span class="gradient">iPlayground</span> <span
+                style="white-space: nowrap;">的第一手動態</span><span class="thin">。</span>
             </h2>
           </div>
           <div class="news-wrap">
@@ -2327,17 +2333,26 @@
 
       <div class="venue-wrap" style="margin-top: 100px;">
         <div class="sec-eyebrow" data-i18n="venue_eyebrow">— 活動地點</div>
-        <div class="map-card" style="margin-top: 48px; border-radius: 24px; overflow: hidden; border: 1px solid var(--rule); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--surface);">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.71!2d121.5276213!3d25.0301042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a98364e9ea0f%3A0xc1736c6258ca4f72!2z5pS_5aSn5YWs5LyB5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1713840000000" width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-card"
+          style="margin-top: 48px; border-radius: 24px; overflow: hidden; border: 1px solid var(--rule); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--surface);">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.71!2d121.5276213!3d25.0301042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a98364e9ea0f%3A0xc1736c6258ca4f72!2z5pS_5aSn5YWs5LyB5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1713840000000"
+            width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
 
-        <div class="transport-grid" style="margin-top: 104px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; text-align: left;">
+        <div class="transport-grid"
+          style="margin-top: 104px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; text-align: left;">
           <div class="transport-card">
             <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
               <div class="transport-icon" style="margin-bottom: 0;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M12 18h.01M4 14h16M8 6h8"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <rect x="4" y="2" width="16" height="20" rx="2" />
+                  <path d="M12 18h.01M4 14h16M8 6h8" />
+                </svg>
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;" data-i18n="trans_mrt_title">捷運資訊</h3>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_mrt_title">捷運資訊</h3>
             </div>
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_mrt_desc">
               <button class="transport-link-btn" onclick="openNavigation('東門站 3 號出口', '政大公企中心')">
@@ -2354,9 +2369,12 @@
           <div class="transport-card">
             <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
               <div class="transport-icon" style="margin-bottom: 0;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 6v6M15 6v6M4 18h16M18 6l2 2-2 2M6 6l-2 2 2 2"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M8 6v6M15 6v6M4 18h16M18 6l2 2-2 2M6 6l-2 2 2 2" />
+                </svg>
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;" data-i18n="trans_bus_title">公車資訊</h3>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_bus_title">公車資訊</h3>
             </div>
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_bus_desc">
               <p>0南、214、214直、237、253、606、670、671</p>
@@ -2365,14 +2383,27 @@
           <div class="transport-card">
             <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
               <div class="transport-icon" style="margin-bottom: 0;">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;" data-i18n="trans_other_title">其他資訊</h3>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_other_title">其他資訊</h3>
             </div>
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);">
-              <p><strong style="color: var(--ink);" data-i18n="trans_addr_label">地址：</strong><span data-i18n="venue_address">106 台北市大安區金華街 187 號</span></p>
+              <p><strong style="color: var(--ink);" data-i18n="trans_addr_label">地址：</strong><span
+                  data-i18n="venue_address">106 台北市大安區金華街 187 號</span></p>
               <p><strong style="color: var(--ink);" data-i18n="trans_phone_label">電話：</strong>02-23419151</p>
-              <p style="margin-top: 24px !important;"><a href="https://cpbae.nccu.edu.tw/cpbae-service-nx2/traffic?random=1751004674691" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'" data-i18n="trans_link">交通詳細網址 <svg style="margin-left:6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></p>
+              <p style="margin-top: 24px !important;"><a
+                  href="https://cpbae.nccu.edu.tw/cpbae-service-nx2/traffic?random=1751004674691" target="_blank"
+                  rel="noopener"
+                  style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s;"
+                  onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'"
+                  data-i18n="trans_link">交通詳細網址 <svg style="margin-left:6px;" width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></a></p>
             </div>
           </div>
         </div>
@@ -2385,7 +2416,8 @@
   <section id="agenda" data-screen-label="03 Agenda">
     <div class="wrap center">
       <div class="sec-eyebrow" data-i18n="agenda_eyebrow">— 議程 Agenda</div>
-      <h2 class="sec-title" data-i18n="agenda_title">大會議程<span class="thin">,</span><span class="gradient">精彩內容</span><span class="thin">。</span>
+      <h2 class="sec-title" data-i18n="agenda_title">大會議程<span class="thin">,</span><span
+          class="gradient">精彩內容</span><span class="thin">。</span>
       </h2>
       <p class="sec-desc" data-i18n="agenda_desc">我們正在安排最豐富的開發者內容,敬請期待。</p>
     </div>
@@ -2402,7 +2434,8 @@
   <section id="speakers" data-screen-label="04 Speakers">
     <div class="wrap center">
       <div class="sec-eyebrow" data-i18n="speakers_eyebrow">— 講者群 Speakers</div>
-      <h2 class="sec-title" data-i18n="speakers_title"><span class="gradient">重量級講者</span><span class="thin">與實戰開發者。</span></h2>
+      <h2 class="sec-title" data-i18n="speakers_title"><span class="gradient">重量級講者</span><span
+          class="thin">與實戰開發者。</span></h2>
       <div class="construction">
         <h3>建構中 · UNDER CONSTRUCTION</h3>
         <p data-i18n="speakers_wip">講者陣容確認後即將公布，敬請期待</p>
@@ -2416,7 +2449,8 @@
   <section id="staff" data-screen-label="05 Staff">
     <div class="wrap center">
       <div class="sec-eyebrow" data-i18n="staff_eyebrow">— 工作人員 Staff</div>
-      <h2 class="sec-title" data-i18n="staff_title"><span class="gradient">熱血志工</span><span class="thin">成就卓越。</span></h2>
+      <h2 class="sec-title" data-i18n="staff_title"><span class="gradient">熱血志工</span><span class="thin">成就卓越。</span>
+      </h2>
       <div class="construction">
         <h3>建構中 · UNDER CONSTRUCTION</h3>
         <p data-i18n="staff_wip">每一位背後的無名英雄</p>
@@ -2428,7 +2462,8 @@
   <section id="sponsors" data-screen-label="06 Sponsors">
     <div class="wrap center">
       <div class="sec-eyebrow" data-i18n="sponsors_eyebrow">— 贊助廠商 Sponsors</div>
-      <h2 class="sec-title" data-i18n="sponsors_title"><span class="gradient">支持開發者社群</span><span class="thin">的力量。</span></h2>
+      <h2 class="sec-title" data-i18n="sponsors_title"><span class="gradient">支持開發者社群</span><span
+          class="thin">的力量。</span></h2>
       <div class="construction">
         <h3>建構中 · UNDER CONSTRUCTION</h3>
         <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
@@ -2474,7 +2509,8 @@
             <li><a href="mailto:support@iplayground.io" data-i18n="footer_support">一般支援</a></li>
             <li><a href="mailto:session@iplayground.io" data-i18n="footer_cfp">講者投稿</a></li>
             <li><a href="mailto:support@iplayground.io" data-i18n="footer_sponsor">贊助合作</a></li>
-            <li><a href="https://github.com/iplayground/code_of_conduct" target="_blank" rel="noopener" data-i18n="footer_coc">行為準則</a></li>
+            <li><a href="https://github.com/iplayground/code_of_conduct" target="_blank" rel="noopener"
+                data-i18n="footer_coc">行為準則</a></li>
           </ul>
         </div>
       </div>
@@ -2632,8 +2668,8 @@
         const current = i === currentIdx;
         const dotCls = "h-dot" + (passed ? " passed" : "") + (current ? " current" : "");
         const cardCls = "h-card" + (current ? " current" : "");
-        const name  = typeof s.name  === "object" ? (s.name[l]  || s.name.zh)  : s.name;
-        const role  = typeof s.role  === "object" ? (s.role[l]  || s.role.zh)  : s.role;
+        const name = typeof s.name === "object" ? (s.name[l] || s.name.zh) : s.name;
+        const role = typeof s.role === "object" ? (s.role[l] || s.role.zh) : s.role;
         const topic = typeof s.topic === "object" ? (s.topic[l] || s.topic.zh) : s.topic;
         items += '<div class="h-item">'
           + '<div class="' + dotCls + '"></div>'
@@ -2724,7 +2760,7 @@
       const hueLabel = document.getElementById("hueLabel");
       if (hueLabel) hueLabel.textContent = t.hue + "°";
       try { localStorage.setItem("hue", t.hue); } catch (e) { }
-      
+
       document.documentElement.dataset.mode = t.mode;
 
       // Hero art
@@ -2747,7 +2783,7 @@
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
           h1.innerHTML = '<span class="gradient">iPlayground</span><span class="gradient">' + tagline + '</span>';
         }
-        
+
         // Recalculate Chinese subtitle alignment
         requestAnimationFrame(() => {
           const gradientSpan = h1.querySelector(".gradient");
@@ -2991,7 +3027,7 @@
       renderNews();
       renderAgenda("all");
       renderSpeakers();
-      
+
       // Use requestAnimationFrame to ensure DOM is painted
       requestAnimationFrame(() => {
         applyLang(savedLang);
