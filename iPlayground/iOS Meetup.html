@@ -1306,14 +1306,15 @@
     }
 
     .bus-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px;
+      margin-top: 0;
+      width: 100%;
     }
 
     .bus-tag {
-      padding: 6px 14px;
+      padding: 10px 4px;
       border-radius: 10px;
       background: var(--surface-2);
       border: 1px solid var(--rule);
@@ -1325,6 +1326,9 @@
       text-decoration: none;
       vertical-align: middle;
       line-height: 1;
+      width: 100%;
+      text-align: center;
+      display: block;
     }
 
     .bus-tag:hover {
@@ -1333,6 +1337,55 @@
       color: #000;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .transport-link-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--rule);
+      color: var(--ink-2);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      cursor: pointer;
+      transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .transport-link-btn:hover {
+      background: var(--surface-3);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .transport-link-btn::after {
+      content: '→';
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.5;
+      transition: all .3s ease;
+    }
+
+    .transport-link-btn:hover::after {
+      opacity: 1;
+      right: 12px;
+    }
+
+    .transport-card p {
+      margin: 0;
+    }
+    
+    .transport-card p + p {
+      margin-top: 12px;
     }
 
     footer {
@@ -2287,8 +2340,15 @@
               <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;" data-i18n="trans_mrt_title">捷運資訊</h3>
             </div>
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_mrt_desc">
-              <p>淡水線(紅線) / 蘆洲線(橘線) → 東門站 3 號出口：步行約 6-8 分鐘</p>
-              <p>新店線(綠線) / 蘆洲線(橘線) → 古亭站 4 號出口：至和平東路轉搭 214、606 公車至公企中心站。</p>
+              <button class="transport-link-btn" onclick="openNavigation('東門站 3 號出口', '政大公企中心')">
+                從東門站步行
+              </button>
+              <button class="transport-link-btn" onclick="openBusSearch('214')">
+                從古亭站 4 號出口搭乘 214 公車
+              </button>
+              <button class="transport-link-btn" onclick="openBusSearch('606')">
+                從古亭站 4 號出口搭乘 606 公車
+              </button>
             </div>
           </div>
           <div class="transport-card">
@@ -2312,7 +2372,7 @@
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);">
               <p><strong style="color: var(--ink);" data-i18n="trans_addr_label">地址：</strong><span data-i18n="venue_address">106 台北市大安區金華街 187 號</span></p>
               <p><strong style="color: var(--ink);" data-i18n="trans_phone_label">電話：</strong>02-23419151</p>
-              <p style="margin-top: 24px;"><a href="https://cpbae.nccu.edu.tw/cpbae-service-nx2/traffic?random=1751004674691" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'" data-i18n="trans_link">交通詳細網址 <svg style="margin-left:6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></p>
+              <p style="margin-top: 24px !important;"><a href="https://cpbae.nccu.edu.tw/cpbae-service-nx2/traffic?random=1751004674691" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s;" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'" data-i18n="trans_link">交通詳細網址 <svg style="margin-left:6px;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a></p>
             </div>
           </div>
         </div>
@@ -2764,7 +2824,7 @@
         about_eyebrow: "— 活動時程表",
         venue_eyebrow: "— 活動地點",
         trans_mrt_title: "捷運資訊",
-        trans_mrt_desc: "<p style='margin:0;'>淡水線(<span style='color:#E3002C;font-weight:600;'>紅線</span>) / 蘆洲線(<span style='color:#FFA300;font-weight:600;'>橘線</span>) → 東門站 3 號出口：步行約 6-8 分鐘</p><p style='margin:12px 0 0 0;'>新店線(<span style='color:#008659;font-weight:600;'>綠線</span>) / 蘆洲線(<span style='color:#FFA300;font-weight:600;'>橘線</span>) → 古亭站 4 號出口：至和平東路轉搭 214、606 公車至公企中心站。</p>",
+        trans_mrt_desc: "<button class='transport-link-btn' onclick='openNavigation(\"東門站 3 號出口\", \"政大公企中心\")'>從東門站步行</button><button class='transport-link-btn' onclick='openBusSearch(\"214\")'>從古亭站 4 號出口搭乘 214 公車</button><button class='transport-link-btn' onclick='openBusSearch(\"606\")'>從古亭站 4 號出口搭乘 606 公車</button>",
         trans_bus_title: "公車資訊",
         trans_bus_desc: `<div class="bus-tags">
           <button class="bus-tag" onclick="openBusSearch('0南')">0南</button>
@@ -2814,7 +2874,7 @@
         about_eyebrow: "— Conference Timeline",
         venue_eyebrow: "— Event Venue",
         trans_mrt_title: "MRT Info",
-        trans_mrt_desc: "<p style='margin:0;'>Tamsui-Xinyi Line (<span style='color:#E3002C;font-weight:600;'>Red</span>) / Zhonghe-Xinlu Line (<span style='color:#FFA300;font-weight:600;'>Orange</span>) → Dongmen Station Exit 3: 6-8 min walk.</p><p style='margin:16px 0 0 0;'>Songshan-Xindian Line (<span style='color:#008659;font-weight:600;'>Green</span>) / Zhonghe-Xinlu Line (<span style='color:#FFA300;font-weight:600;'>Orange</span>) → Guting Station Exit 4: Transfer to bus 214, 606 to 'NCCU CPBAE' stop.</p>",
+        trans_mrt_desc: "<button class='transport-link-btn' onclick='openNavigation(\"Dongmen Station Exit 3\", \"政大公企中心\")'>Walk from Dongmen Station</button><button class='transport-link-btn' onclick='openBusSearch(\"214\")'>Take Bus 214 from Guting Exit 4</button><button class='transport-link-btn' onclick='openBusSearch(\"606\")'>Take Bus 606 from Guting Exit 4</button>",
         trans_bus_title: "Bus Info",
         trans_bus_desc: `<div class="bus-tags">
           <button class="bus-tag" onclick="openBusSearch('0 South')">0 South</button>
@@ -2857,6 +2917,11 @@
       const query = encodeURIComponent(bus + '公車 路線');
       const webUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
       window.open(webUrl, '_blank');
+    }
+
+    function openNavigation(origin, destination) {
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=walking`;
+      window.open(url, '_blank');
     }
 
     function applyLang(lang) {
