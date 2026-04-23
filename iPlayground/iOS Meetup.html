@@ -335,10 +335,11 @@
     /* ============ Hero ============ */
     .hero {
       position: relative;
-      overflow: hidden;
-      padding: 120px 0 140px;
+      padding: 120px 0 160px;
       text-align: center;
-      isolation: isolate;
+      overflow: hidden;
+      z-index: 1;
+      background: linear-gradient(to bottom, var(--accent), var(--accent-2) 45%, var(--accent-3));
     }
 
     .key-art {
@@ -402,12 +403,7 @@
     }
 
     .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: radial-gradient(ellipse 80% 60% at 50% 0%, transparent, var(--bg) 75%);
-      pointer-events: none;
+      display: none;
     }
 
     .hero-eyebrow {
@@ -461,10 +457,10 @@
 
     h1.hero-title .gradient {
       display: block;
-      background: linear-gradient(110deg, var(--accent), var(--accent-2) 45%, var(--accent-3));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: #000;
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
     }
 
     h1.hero-title .gradient:first-child {
@@ -474,6 +470,14 @@
     h1.hero-title .thin {
       font-weight: 300;
       color: var(--ink-2);
+    }
+
+    h1.hero-title .hero-logo {
+      display: block;
+      margin: 0 auto 32px;
+      width: clamp(280px, 45vw, 720px);
+      height: auto;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.1));
     }
 
     h1.hero-title .hero-cfp-badge {
@@ -614,13 +618,14 @@
       position: relative;
       width: 80px;
       height: 96px;
-      background: var(--surface-2);
+      background: linear-gradient(180deg, #3a3a3c 0%, #1c1c1e 100%);
+      color: #fff;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
     .fc-card::after {
@@ -636,10 +641,6 @@
       pointer-events: none;
     }
 
-    html[data-mode="light"] .fc-card {
-      background: #e8e8ed;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
 
     .fc-num {
       font-size: 54px;
@@ -1581,13 +1582,68 @@
       color: var(--bg);
     }
 
+    /* ============ Striped Header ============ */
+    .striped-header-wrap {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      margin-bottom: 64px;
+      width: 100%;
+    }
+
+    .striped-line {
+      flex: 1;
+      height: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .striped-line::before { background: #FF8EBF; }
+    .striped-line-mid { background: #A688FF; }
+    .striped-line::after { background: #FF8EBF; }
+
+    .striped-line::before,
+    .striped-line::after,
+    .striped-line-mid {
+      content: "";
+      display: block;
+      height: 6px;
+      border-radius: 3px;
+    }
+
+    .striped-text-group {
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .striped-title {
+      font-family: var(--f-mono);
+      font-size: 48px;
+      font-weight: 900;
+      line-height: 1;
+      margin: 0;
+      background: linear-gradient(to right, #FF5C35, #FF8EBF, #A688FF, #4895FF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 0.05em;
+    }
+
+    .striped-subtitle {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink-2);
+      margin-top: 8px;
+      letter-spacing: 0.2em;
+    }
+
     /* ============ News Board ============ */
     .news-card {
       background: var(--surface);
       border: 1px solid var(--rule-2);
       border-radius: 28px;
       overflow: hidden;
-      margin-top: 48px;
     }
 
     .news-section-layout {
@@ -1655,10 +1711,26 @@
     }
 
     .news-row:hover {
-      background: var(--surface-2);
-      border-color: var(--rule);
-      box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 15%, transparent);
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 30%, transparent);
       transform: translateY(-2px);
+    }
+
+    .news-row:hover .date {
+      background: none;
+      -webkit-background-clip: initial;
+      background-clip: initial;
+      color: #fff;
+    }
+
+    .news-row:hover .summary {
+      color: #fff;
+    }
+
+    .news-row:hover .arrow-circle svg {
+      stroke: #fff;
     }
 
     .news-row-header {
@@ -1700,6 +1772,8 @@
     .news-row:hover .arrow-circle {
       transform: translateX(4px);
       box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
+      background: var(--accent);
+      border-color: #fff;
     }
 
     .news-row .arrow-circle svg {
@@ -2270,7 +2344,7 @@
     </div>
     <div class="wrap">
       <h1 class="hero-title">
-        <span class="gradient">iPlayground</span>
+        <img src="svg/logo.svg" alt="iPlayground" class="hero-logo">
         <span class="gradient">徵稿中</span>
       </h1>
 
@@ -2331,7 +2405,17 @@
   <!-- About -->
   <section id="about" data-screen-label="02 About">
     <div class="wrap center">
-      <div class="sec-eyebrow" data-i18n="about_eyebrow">— 活動時程表</div>
+      <div class="striped-header-wrap">
+        <div class="striped-line">
+          <div class="striped-line-mid"></div>
+        </div>
+        <div class="striped-text-group">
+          <h2 class="striped-title" data-i18n="about_eyebrow">活動時程表</h2>
+        </div>
+        <div class="striped-line">
+          <div class="striped-line-mid"></div>
+        </div>
+      </div>
 
       <!-- Process Timeline -->
       <div id="processTimeline"></div>
@@ -2700,7 +2784,7 @@
       card.classList.add("flip");
     }
     function tickCountdown() {
-      var target = new Date("2026-05-24T10:00:00+08:00").getTime();
+      var target = new Date("2026-06-20T00:00:00+08:00").getTime();
       var diff = Math.max(0, target - Date.now());
       flipSet("d", Math.floor(diff / 86400000));
       flipSet("h", Math.floor((diff % 86400000) / 3600000));
@@ -2783,10 +2867,10 @@
       const h1 = document.querySelector("h1.hero-title");
       if (h1) {
         if (t.wordmarkStyle === "stacked") {
-          h1.innerHTML = '<span class="gradient">iPlayground</span><span class="gradient">2026</span>';
+          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="gradient" style="color:#000;background:none;-webkit-background-clip:initial;">2026</span>';
         } else {
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
-          h1.innerHTML = '<span class="gradient">iPlayground</span><span class="gradient">' + tagline + '</span>';
+          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="gradient" style="color:#000;background:none;-webkit-background-clip:initial;">' + tagline + '</span>';
         }
 
         // Recalculate Chinese subtitle alignment
@@ -2862,7 +2946,7 @@
         countdown_label: "截止倒數",
         news_eyebrow: "— 最新消息 Latest News",
         news_heading: '掌握 <span class="gradient">iPlayground</span> <span style="white-space:nowrap;">的第一手動態</span><span class="thin">。</span>',
-        about_eyebrow: "— 活動時程表",
+        about_eyebrow: "活動時程表",
         venue_eyebrow: "— 活動地點",
         trans_mrt_title: "捷運資訊",
         trans_mrt_desc: "<button class='transport-link-btn' onclick='openNavigation(\"東門站 3 號出口\", \"政大公企中心\")'>從東門站步行</button><button class='transport-link-btn' onclick='openBusSearch(\"214\")'>從古亭站 4 號出口搭乘 214 公車</button><button class='transport-link-btn' onclick='openBusSearch(\"606\")'>從古亭站 4 號出口搭乘 606 公車</button>",
