@@ -2087,13 +2087,13 @@
         <span>iPlayground</span>
       </div>
       <ul class="nav-menu">
-        <li><a href="#news">佈告欄</a></li>
-        <li><a href="#about">徵稿重點</a></li>
-        <li><a href="#agenda">議程</a></li>
-        <li><a href="#speakers">講者</a></li>
-        <li><a href="#sponsors">贊助商</a></li>
-        <li><a href="#staff">工作人員</a></li>
-        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
+        <li><a href="#about" data-i18n="nav_about">時間表</a></li>
+        <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+        <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
+        <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
+        <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
+        <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
       </ul>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
         <span></span>
@@ -2145,12 +2145,12 @@
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="#news" data-i18n="nav_news">佈告欄</a></li>
-      <li><a href="#about" data-i18n="nav_about">徵稿重點</a></li>
+      <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
+      <li><a href="#about" data-i18n="nav_about">時間表</a></li>
       <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
-      <li><a href="#speakers" data-i18n="nav_speakers">講者</a></li>
-      <li><a href="#sponsors" data-i18n="nav_sponsors">贊助商</a></li>
+      <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
       <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
+      <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
       <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
     </ul>
     <div class="mobile-menu-divider"></div>
@@ -2293,22 +2293,10 @@
   </section>
 
 
-  <!-- Sponsors -->
-  <section id="sponsors" data-screen-label="05 Sponsors">
-    <div class="wrap center">
-      <div class="sec-eyebrow" data-i18n="sponsors_eyebrow">— 贊助商 Sponsors</div>
-      <h2 class="sec-title" data-i18n="sponsors_title"><span class="gradient">支持開發者社群</span><span class="thin">的力量。</span></h2>
-      <div class="construction">
-        <h3>建構中 · UNDER CONSTRUCTION</h3>
-        <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
-      </div>
-    </div>
-  </section>
-
   <!-- Speakers -->
   <section id="speakers" data-screen-label="04 Speakers">
     <div class="wrap center">
-      <div class="sec-eyebrow" data-i18n="speakers_eyebrow">— 講者介紹 Speakers</div>
+      <div class="sec-eyebrow" data-i18n="speakers_eyebrow">— 講者群 Speakers</div>
       <h2 class="sec-title" data-i18n="speakers_title"><span class="gradient">重量級講者</span><span class="thin">與實戰開發者。</span></h2>
       <div class="construction">
         <h3>建構中 · UNDER CONSTRUCTION</h3>
@@ -2320,13 +2308,25 @@
   </section>
 
   <!-- Staff -->
-  <section id="staff" data-screen-label="06 Staff">
+  <section id="staff" data-screen-label="05 Staff">
     <div class="wrap center">
       <div class="sec-eyebrow" data-i18n="staff_eyebrow">— 工作人員 Staff</div>
       <h2 class="sec-title" data-i18n="staff_title"><span class="gradient">熱血志工</span><span class="thin">成就卓越。</span></h2>
       <div class="construction">
         <h3>建構中 · UNDER CONSTRUCTION</h3>
         <p data-i18n="staff_wip">每一位背後的無名英雄</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section id="sponsors" data-screen-label="06 Sponsors">
+    <div class="wrap center">
+      <div class="sec-eyebrow" data-i18n="sponsors_eyebrow">— 贊助廠商 Sponsors</div>
+      <h2 class="sec-title" data-i18n="sponsors_title"><span class="gradient">支持開發者社群</span><span class="thin">的力量。</span></h2>
+      <div class="construction">
+        <h3>建構中 · UNDER CONSTRUCTION</h3>
+        <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
       </div>
     </div>
   </section>
@@ -2743,8 +2743,8 @@
     // ===== i18n =====
     const I18N = {
       zh: {
-        nav_news: "佈告欄", nav_about: "徵稿重點", nav_agenda: "議程", nav_speakers: "講者",
-        nav_sponsors: "贊助商", nav_staff: "工作人員", nav_topics: "主題範圍", nav_timeline: "時程",
+        nav_news: "最新消息", nav_about: "時間表", nav_agenda: "議程", nav_speakers: "講者群",
+        nav_sponsors: "贊助廠商", nav_staff: "工作人員", nav_topics: "主題範圍", nav_timeline: "時程",
         nav_faq: "FAQ", nav_cta: "立即投稿",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · 徵稿正式開跑",
         hero_sub: "如果你對 iOS、AI、產品開發,或任何讓人眼睛一亮的主題有想法——技術分享、實戰經驗、踩坑故事,還是對未來的觀察,都非常歡迎來投稿 🙌",
@@ -2757,10 +2757,10 @@
         agenda_title: '大會議程<span class="thin">,</span><span class="gradient">精彩內容</span><span class="thin">。</span>',
         agenda_desc: "我們正在安排最豐富的開發者內容,敬請期待。",
         agenda_wip: "議程內容確認後即將公布",
-        sponsors_eyebrow: "— 贊助商 Sponsors",
+        sponsors_eyebrow: "— 贊助廠商 Sponsors",
         sponsors_title: '<span class="gradient">支持開發者社群</span><span class="thin">的力量。</span>',
         sponsors_wip: "正在邀請優秀的夥伴加入我們",
-        speakers_eyebrow: "— 講者介紹 Speakers",
+        speakers_eyebrow: "— 講者群 Speakers",
         speakers_title: '<span class="gradient">重量級講者</span><span class="thin">與實戰開發者。</span>',
         speakers_wip: "講者陣容確認後即將公布，敬請期待",
         staff_eyebrow: "— 工作人員 Staff",
@@ -2775,7 +2775,7 @@
         mode_auto: "自動", mode_light: "亮", mode_dark: "暗",
       },
       en: {
-        nav_news: "News", nav_about: "Why Submit", nav_agenda: "Agenda", nav_speakers: "Speakers",
+        nav_news: "Latest News", nav_about: "Timeline", nav_agenda: "Agenda", nav_speakers: "Speakers",
         nav_sponsors: "Sponsors", nav_staff: "Staff", nav_topics: "Topics", nav_timeline: "Timeline",
         nav_faq: "FAQ", nav_cta: "Submit Now",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · Now Open",
