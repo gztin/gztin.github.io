@@ -335,22 +335,63 @@
     /* ============ Hero ============ */
     .hero {
       position: relative;
-      padding: 50px 0 160px;
+      padding: 80px 0 160px;
       text-align: center;
       overflow: hidden;
       z-index: 1;
-      background: linear-gradient(to bottom, var(--accent), var(--accent-2) 45%, var(--accent-3));
+      background: #000;
     }
 
-    /* ============ Wave Canvas ============ */
-    .wave-canvas {
+    .photo-wall {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      display: flex;
+      gap: 12px;
+      padding: 12px;
       z-index: 0;
-      pointer-events: none;
+      opacity: 0.6;
+      transform: scale(1.05);
+      filter: saturate(0.8) contrast(1.1);
     }
+
+    .photo-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: wallScroll 60s linear infinite;
+    }
+
+    .photo-col:nth-child(even) {
+      animation-direction: reverse;
+      margin-top: -200px;
+    }
+
+    .photo-col img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes wallScroll {
+      0% {
+        transform: translateY(0);
+      }
+
+      100% {
+        transform: translateY(-300px);
+      }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 60%, rgba(0, 0, 0, 0.8) 100%);
+      z-index: 1;
+    }
+
 
     .hero .wrap {
       position: relative;
@@ -491,6 +532,7 @@
       -webkit-text-fill-color: transparent;
       color: transparent;
       animation: taglineShimmer 2.4s linear infinite;
+      letter-spacing: 0.05em;
     }
 
     @keyframes taglineShimmer {
@@ -504,14 +546,9 @@
     }
 
     html[data-mode="light"] h1.hero-title .hero-tagline {
-      /* Light mode: standardized dark color */
-      background: none !important;
-      -webkit-background-clip: initial !important;
-      background-clip: initial !important;
-      -webkit-text-fill-color: #1d1d1f !important;
-      color: #1d1d1f !important;
-      animation: none;
-      text-shadow: none;
+      /* Now always on dark background */
+      -webkit-text-fill-color: #ffffff !important;
+      color: #ffffff !important;
     }
 
     @keyframes taglineBreathe {
@@ -542,7 +579,7 @@
 
     h1.hero-title .hero-logo {
       display: block;
-      margin: 0 auto 16px;
+      margin: 0 auto 32px;
       width: clamp(157px, 25.2vw, 403px);
       height: auto;
       filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
@@ -554,14 +591,14 @@
       font-weight: 500;
       font-family: var(--f-mono);
       color: #ffffff !important;
-      margin-bottom: 24px;
-      letter-spacing: 0.05em;
+      margin-bottom: 48px;
+      letter-spacing: 0.1em;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     }
 
     html[data-mode="light"] h1.hero-title .hero-date {
-      color: #1d1d1f !important;
-      text-shadow: none;
+      color: #ffffff !important;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
     }
 
     h1.hero-title .hero-cfp-badge {
@@ -2499,12 +2536,45 @@
 
   <!-- Hero -->
   <header class="hero" data-screen-label="01 Hero">
-    <canvas class="wave-canvas" id="waveCanvas"></canvas>
-    <div class="key-art">
-      <div class="blob b1"></div>
-      <div class="blob b2"></div>
-      <div class="blob b3"></div>
+    <div class="photo-wall">
+      <div class="photo-col">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_1.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_10.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_11.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_12.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_13.jpg" alt="">
+      </div>
+      <div class="photo-col">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_14.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_15.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_16.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_17.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_18.jpg" alt="">
+      </div>
+      <div class="photo-col">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_19.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_2.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_20.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_24.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_25.jpg" alt="">
+      </div>
+      <div class="photo-col">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_26.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_27.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_28.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_3.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_30.jpg" alt="">
+      </div>
+      <div class="photo-col">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_4.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_5.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_6.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_7.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_8.jpg" alt="">
+        <img src="img/slider/LINE_ALBUM_23042026_260424_9.jpg" alt="">
+      </div>
     </div>
+    <div class="hero-overlay"></div>
     <div class="wrap">
       <h1 class="hero-title">
         <img src="svg/logo.svg" alt="iPlayground" class="hero-logo">
