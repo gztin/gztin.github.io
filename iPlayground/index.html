@@ -22,19 +22,26 @@
 
   <style>
     :root {
-      --hue: 230;
-      --accent: oklch(0.72 0.19 var(--hue));
-      --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
-      --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
+      --hue: 28;
 
-      --bg: #0d0d0f;
-      --surface: #1c1c1e;
-      --surface-2: #2c2c2e;
-      --ink: #f5f5f7;
-      --ink-2: #a1a1a6;
-      --ink-3: #86868b;
-      --rule: rgba(255, 255, 255, 0.15);
-      --rule-2: rgba(255, 255, 255, 0.08);
+      /* Dark mode accents — vivid orange on space gray */
+      --accent:   oklch(0.76 0.19 var(--hue));
+      --accent-2: oklch(0.82 0.17 calc(var(--hue) + 30));
+      --accent-3: oklch(0.68 0.20 calc(var(--hue) - 40));
+
+      /* Dark mode surfaces — Mac Space Gray */
+      --bg:        #1e1e1e;
+      --surface:   #2a2a2a;
+      --surface-2: #333333;
+
+      /* Dark mode text */
+      --ink:   #f0f0f0;
+      --ink-2: #a0a0a0;
+      --ink-3: #6e6e6e;
+
+      /* Dark mode rules */
+      --rule:   rgba(255, 255, 255, 0.12);
+      --rule-2: rgba(255, 255, 255, 0.06);
 
       --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       --f-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -44,14 +51,24 @@
     }
 
     html[data-mode="light"] {
-      --bg: #fbfbfd;
-      --surface: #fff;
-      --surface-2: #f5f5f7;
-      --ink: #1d1d1f;
-      --ink-2: #515154;
+      /* Light mode accents — deeper orange for readability on light bg */
+      --accent:   oklch(0.58 0.20 var(--hue));
+      --accent-2: oklch(0.64 0.18 calc(var(--hue) + 30));
+      --accent-3: oklch(0.54 0.20 calc(var(--hue) - 40));
+
+      /* Light mode surfaces */
+      --bg:        #f5f5f7;
+      --surface:   #ffffff;
+      --surface-2: #ebebed;
+
+      /* Light mode text */
+      --ink:   #1d1d1f;
+      --ink-2: #48484a;
       --ink-3: #86868b;
-      --rule: rgba(0, 0, 0, 0.12);
-      --rule-2: rgba(0, 0, 0, 0.06);
+
+      /* Light mode rules */
+      --rule:   rgba(0, 0, 0, 0.10);
+      --rule-2: rgba(0, 0, 0, 0.05);
     }
 
     * {
