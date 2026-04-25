@@ -151,6 +151,20 @@
       font-weight: 500;
     }
 
+    /* Logo switching by mode */
+    .nav-logo { height: 28px; width: auto; }
+    .nav-logo--dark  { display: none; }
+    .nav-logo--light { display: block; }
+    html[data-mode="dark"] .nav-logo--light { display: none; }
+    html[data-mode="dark"] .nav-logo--dark  { display: block; }
+
+    /* Footer logo — inverted (footer bg is always dark) */
+    .footer-logo { width: auto; }
+    .footer-logo--dark  { display: none; }
+    .footer-logo--light { display: block; }
+    html[data-mode="dark"] .footer-logo--light { display: none; }
+    html[data-mode="dark"] .footer-logo--dark  { display: block; }
+
     nav.top .brand .mark {
       width: 22px;
       height: 22px;
@@ -221,6 +235,7 @@
       background: var(--bg);
       z-index: 99;
       overflow-y: auto;
+      overflow-x: hidden;
       animation: slideDown .3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -274,7 +289,7 @@
     }
 
     .mobile-menu-controls {
-      padding: 16px 28px;
+      padding: 16px 20px;
     }
 
     .mobile-control-group {
@@ -300,12 +315,14 @@
     .mobile-lang-switch {
       display: flex;
       gap: 8px;
+      width: 100%;
     }
 
     .mobile-mode-switch button,
     .mobile-lang-switch button {
       flex: 1;
-      padding: 12px 16px;
+      min-width: 0;
+      padding: 12px 8px;
       border: 1px solid var(--rule-2);
       border-radius: 12px;
       background: var(--surface);
@@ -1962,7 +1979,6 @@
       border-color: var(--accent);
       color: #fff;
       box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 30%, transparent);
-      transform: translateY(-2px);
     }
 
     .news-row:hover .date {
@@ -1970,6 +1986,7 @@
       -webkit-background-clip: initial;
       background-clip: initial;
       color: #fff;
+      -webkit-text-fill-color: #fff;
     }
 
     .news-row:hover .summary {
@@ -2019,8 +2036,8 @@
     .news-row:hover .arrow-circle {
       transform: translateX(4px);
       box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent);
-      background: var(--accent);
-      border-color: #fff;
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.6);
     }
 
     .news-row .arrow-circle svg {
@@ -2071,6 +2088,43 @@
       .news-wrap {
         border-left: 0;
         border-top: 1px solid var(--rule-2);
+        padding: 24px 16px;
+      }
+
+      .striped-title,
+      .sec-title {
+        font-size: 28px;
+      }
+
+      .news-row-header {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 16px 20px;
+        position: relative;
+      }
+
+      .news-row .date {
+        font-size: 12px;
+        order: -1;
+      }
+
+      .news-row .summary {
+        font-size: 15px;
+        padding-right: 40px;
+      }
+
+      .news-row .arrow-circle {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+
+      .news-row:hover .arrow-circle {
+        transform: translateY(-50%) translateX(4px);
       }
     }
 
@@ -2506,8 +2560,8 @@
   <nav class="top">
     <div class="wrap row">
       <div class="brand">
-        <div class="mark"></div>
-        <span>iPlayground</span>
+        <img src="svg/logo_header_light.svg" alt="iPlayground 2026" class="nav-logo nav-logo--light">
+        <img src="svg/logo_header_dark.svg" alt="iPlayground 2026" class="nav-logo nav-logo--dark">
       </div>
       <ul class="nav-menu">
         <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
@@ -2876,12 +2930,12 @@
           <img src="svg/title_sub.svg" alt="">
         </div>
       </div>
-      <p class="sec-desc" data-i18n="agenda_desc">我們正在安排最豐富的開發者內容,敬請期待。</p>
     </div>
     <div class="wrap">
       <div class="construction">
-        <h3>建構中 · UNDER CONSTRUCTION</h3>
+        <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="agenda_wip">議程內容確認後即將公布</p>
+        <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往投稿表單 →</a>
       </div>
     </div>
   </section>
@@ -2902,7 +2956,7 @@
         </div>
       </div>
       <div class="construction">
-        <h3>建構中 · UNDER CONSTRUCTION</h3>
+        <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="speakers_wip">講者陣容確認後即將公布，敬請期待</p>
         <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener"
           data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往投稿 →</a>
@@ -2925,7 +2979,7 @@
         </div>
       </div>
       <div class="construction">
-        <h3>建構中 · UNDER CONSTRUCTION</h3>
+        <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="staff_wip">每一位背後的無名英雄</p>
       </div>
     </div>
@@ -2946,7 +3000,7 @@
         </div>
       </div>
       <div class="construction">
-        <h3>建構中 · UNDER CONSTRUCTION</h3>
+        <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
       </div>
     </div>
@@ -2959,9 +3013,10 @@
     <div class="wrap">
       <div class="footer-grid">
         <div>
-          <div class="footer-lock">
-            <div class="mark"></div>iPlayground
-          </div>
+        <div class="footer-lock">
+          <img src="svg/logo_header_dark.svg" alt="iPlayground" class="footer-logo footer-logo--light" style="height:32px;width:auto;">
+          <img src="svg/logo_header_light.svg" alt="iPlayground" class="footer-logo footer-logo--dark" style="height:32px;width:auto;">
+        </div>
           <p class="footer-tagline" data-i18n="footer_tagline">由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。</p>
         </div>
         <div>
@@ -2996,8 +3051,9 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <div>© 2026 iOS Taipei Community · Independent, Non-Commercial</div>
-        <div>Made with HTML, Swift & coffee ☕</div>
+      </div>
+      <div style="padding-top:16px;text-align:center;font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb, var(--bg) 35%, transparent);letter-spacing:0.02em;">
+        iPlayground 2026 is organized by Taipei Elite Software Developer Association (77212283). All rights reserved.
       </div>
     </div>
   </footer>
@@ -3655,7 +3711,7 @@
           h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
         } else {
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
-          const date = currentLang === "en" ? "July 25-26" : "7/25(六)～7/26(日)";
+          const date = currentLang === "en" ? "July 25 (Sat) – 26 (Sun)" : "7/25(六)～7/26(日)";
           h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><div class="hero-date">' + date + '</div><span class="hero-tagline">' + tagline + '</span>';
         }
 
@@ -3758,8 +3814,8 @@
         trans_parking_btn: "尋找附近停車場",
         agenda_eyebrow: "— 議程 Agenda",
         agenda_title: '議程',
-        agenda_desc: "我們正在安排最豐富的開發者內容,敬請期待。",
-        agenda_wip: "議程內容確認後即將公布",
+        agenda_desc: "我們正在招募講者，分享有趣的主題內容。",
+        agenda_wip: "我們正在招募講者，分享有趣的主題內容，歡迎報名投稿！",
         sponsors_eyebrow: "— 贊助廠商 Sponsors",
         sponsors_title: '贊助廠商',
         sponsors_wip: "正在邀請優秀的夥伴加入我們",
@@ -3769,7 +3825,8 @@
         staff_eyebrow: "— 工作人員 Staff",
         staff_title: '工作人員',
         staff_wip: "每一位背後的無名英雄",
-        footer_tagline: "由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。",
+        construction: "建構中",
+        footer_tagline: "2026 年的 iPlayground，我們帶八年來的累積與進化，以全新面貌回歸！不只是研討會，更像一場技術人的嘉年華。你會看到熟悉的熱情，也會體驗從未出現過的創新企劃。",
         footer_event: "活動", footer_news: "消息", footer_register: "報名",
         footer_community: "社群", footer_contact: "聯絡",
         footer_support: "一般支援", footer_cfp: "講者投稿", footer_sponsor: "贊助合作", footer_coc: "行為準則",
@@ -3805,15 +3862,15 @@
         trans_addr_label: "Address",
         venue_address: "No. 187, Jinhua St., Da’an Dist., Taipei City 106",
         trans_phone_label: "Phone",
-        hero_date: "July 25-26",
+        hero_date: "July 25 (Sat) – 26 (Sun)",
         trans_link: "Detailed Traffic Info",
         venue_title: "Venue",
         trans_parking_title: "Parking",
         trans_parking_btn: "Find Nearby Parking",
         agenda_eyebrow: "— Agenda",
         agenda_title: 'Agenda',
-        agenda_desc: "We're curating the richest developer content — stay tuned.",
-        agenda_wip: "Agenda will be announced once confirmed",
+        agenda_desc: "We're looking for speakers to share interesting topics.",
+        agenda_wip: "We're looking for speakers to share interesting topics — submit your proposal now!",
         sponsors_eyebrow: "— Sponsors",
         sponsors_title: 'Sponsors',
         sponsors_wip: "We're inviting great partners to join us",
@@ -3823,7 +3880,8 @@
         staff_eyebrow: "— Staff",
         staff_title: 'Staff',
         staff_wip: "The unsung heroes behind the scenes",
-        footer_tagline: "An annual developer conference independently organized by iOS Taipei community volunteers. Not affiliated with Apple Inc.",
+        construction: "Under Construction",
+        footer_tagline: "iPlayground 2026 returns with eight years of growth and evolution — reimagined. More than a conference, it's a festival for developers. Expect the passion you know, and innovations you've never seen.",
         footer_event: "Event", footer_news: "News", footer_register: "Register",
         footer_community: "Community", footer_contact: "Contact",
         footer_support: "General Support", footer_cfp: "Speaker Submissions", footer_sponsor: "Sponsorship", footer_coc: "Code of Conduct",

@@ -99,6 +99,20 @@
     transition: opacity .2s;
   }
   .back-link:hover { opacity: 0.7; }
+
+  /* Logo switching by mode */
+  .nav-logo { height: 28px; width: auto; }
+  .nav-logo--dark  { display: none; }
+  .nav-logo--light { display: block; }
+  html[data-mode="dark"] .nav-logo--light { display: none; }
+  html[data-mode="dark"] .nav-logo--dark  { display: block; }
+
+  /* Footer logo — inverted (footer bg is always dark) */
+  .footer-logo { width: auto; }
+  .footer-logo--dark  { display: none; }
+  .footer-logo--light { display: block; }
+  html[data-mode="dark"] .footer-logo--light { display: none; }
+  html[data-mode="dark"] .footer-logo--dark  { display: block; }
   .lang-switch {
     display: inline-flex;
     background: var(--surface); border: 1px solid var(--rule);
@@ -310,9 +324,9 @@
 <!-- Nav -->
 <nav class="top">
   <div class="wrap row">
-    <a class="brand" href="iOS Meetup.html">
-      <div class="mark"></div>
-      <span>iPlayground 2026</span>
+    <a class="brand" href="index.html">
+      <img src="svg/logo_header_light.svg" alt="iPlayground 2026" class="nav-logo nav-logo--light">
+      <img src="svg/logo_header_dark.svg" alt="iPlayground 2026" class="nav-logo nav-logo--dark">
     </a>
     <div class="nav-right">
       <!-- Mode toggle -->
@@ -333,7 +347,7 @@
         <button data-lang="zh">中</button>
         <button data-lang="en">EN</button>
       </div>
-      <a class="back-link" href="iOS Meetup.html" id="backLink">← 回到主頁</a>
+      <a class="back-link" href="index.html" id="backLink">← 回到主頁</a>
     </div>
   </div>
 </nav>
@@ -346,19 +360,20 @@
     <div class="footer-grid">
       <div>
         <div class="footer-lock">
-          <div class="mark"></div>iPlayground
+          <img src="svg/logo_header_dark.svg" alt="iPlayground" class="footer-logo footer-logo--light" style="height:32px;width:auto;">
+          <img src="svg/logo_header_light.svg" alt="iPlayground" class="footer-logo footer-logo--dark" style="height:32px;width:auto;">
         </div>
-        <p class="footer-tagline">由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。</p>
+        <p class="footer-tagline">2026 年的 iPlayground，我們帶八年來的累積與進化，以全新面貌回歸！不只是研討會，更像一場技術人的嘉年華。你會看到熟悉的熱情，也會體驗從未出現過的創新企劃。</p>
       </div>
       <div>
         <h4>活動</h4>
         <ul>
-          <li><a href="iOS Meetup.html#news">消息</a></li>
-          <li><a href="iOS Meetup.html#agenda">議程</a></li>
-          <li><a href="iOS Meetup.html#speakers">講者</a></li>
-          <li><a href="iOS Meetup.html#sponsors">贊助商</a></li>
-          <li><a href="iOS Meetup.html#staff">工作人員</a></li>
-          <li><a href="iOS Meetup.html#register">報名</a></li>
+          <li><a href="index.html#news">消息</a></li>
+          <li><a href="index.html#agenda">議程</a></li>
+          <li><a href="index.html#speakers">講者</a></li>
+          <li><a href="index.html#sponsors">贊助商</a></li>
+          <li><a href="index.html#staff">工作人員</a></li>
+          <li><a href="index.html#register">報名</a></li>
         </ul>
       </div>
       <div>
@@ -381,8 +396,9 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <div>© 2026 iOS Taipei Community · Independent, Non-Commercial</div>
-      <div>Made with HTML, Swift & coffee ☕</div>
+    </div>
+    <div style="padding-top:16px;text-align:center;font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb, var(--bg) 35%, transparent);letter-spacing:0.02em;">
+      iPlayground 2026 is organized by Taipei Elite Software Developer Association (77212283). All rights reserved.
     </div>
   </div>
 </footer>
@@ -528,7 +544,7 @@ function renderPage() {
   // ---- Article view ----
   const id = parseInt(idParam, 10);
   if (isNaN(id) || id < 0 || id >= NEWS_DATA.length) {
-    root.innerHTML = `<div class="msg">${t("not_found")}<br><a href="iOS Meetup.html" style="color:var(--accent);">${t("back_home")}</a></div>`;
+    root.innerHTML = `<div class="msg">${t("not_found")}<br><a href="index.html" style="color:var(--accent);">${t("back_home")}</a></div>`;
     return;
   }
 
