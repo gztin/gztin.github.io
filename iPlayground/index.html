@@ -79,6 +79,7 @@
     body {
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     html {
@@ -94,6 +95,7 @@
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
       letter-spacing: -0.01em;
+      overflow-x: hidden;
     }
 
     a {
@@ -2632,47 +2634,6 @@
       <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank"
           rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
     </ul>
-    <div class="mobile-menu-divider"></div>
-    <div class="mobile-menu-controls">
-      <div class="mobile-control-group">
-        <span class="control-label" data-i18n="control_appearance">主題</span>
-        <div class="mobile-mode-switch" id="mobileModeSwitch">
-          <button data-mode="auto" class="active" aria-label="Auto">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9" />
-              <path d="M12 3v18" />
-              <path d="M12 3a9 9 0 0 1 0 18" />
-            </svg>
-            <span data-i18n="mode_auto">自動</span>
-          </button>
-          <button data-mode="light" aria-label="Light">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4" />
-              <path
-                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-            </svg>
-            <span data-i18n="mode_light">亮</span>
-          </button>
-          <button data-mode="dark" aria-label="Dark">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-            <span data-i18n="mode_dark">暗</span>
-          </button>
-        </div>
-      </div>
-      <div class="mobile-control-group">
-        <span class="control-label" data-i18n="control_lang">語言</span>
-        <div class="mobile-lang-switch" id="mobileLangSwitch">
-          <button data-lang="zh" class="active">中文</button>
-          <button data-lang="en">English</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <style>
@@ -3916,6 +3877,21 @@
       try { localStorage.setItem("lang", lang); } catch (e) { }
     }
 
+    function syncLangButtons(lang) {
+      document.querySelectorAll("[data-lang]").forEach(b =>
+        b.classList.toggle("active", b.dataset.lang === lang)
+      );
+      if (typeof syncFabLang === "function") syncFabLang(lang);
+    }
+
+    function syncThemeButtons(pref) {
+      document.querySelectorAll("[data-mode]").forEach(b =>
+        b.classList.toggle("active", b.dataset.mode === pref)
+      );
+      const fg = document.getElementById("fabGroup");
+      if (fg) fg.dataset.fabMode = pref;
+    }
+
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     function resolveMode(pref) {
       if (pref === "light" || pref === "dark") return pref;
@@ -3988,6 +3964,121 @@
       const cur = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return "auto"; } })() || "auto";
       if (cur === "auto") applyAppearance("auto");
     });
+  </script>
+
+  <!-- Floating Action Buttons -->
+  <div class="fab-group" id="fabGroup">
+    <button class="fab" id="fabMode" aria-label="Toggle appearance">
+      <svg class="fab-icon fab-icon--auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
+      <svg class="fab-icon fab-icon--light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="fab-icon fab-icon--dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="fab" id="fabLang" aria-label="Toggle language">
+      <span class="fab-lang-label">中</span>
+    </button>
+    <button class="fab fab--top" id="fabTop" aria-label="Back to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+  </div>
+
+  <style>
+    /* ===== Floating Action Buttons ===== */
+    .fab-group {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .fab {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--rule);
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--ink-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      font-family: var(--f-mono);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .fab:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+    .fab--top {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+    }
+
+    .fab--top.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* Mode icon visibility */
+    .fab-icon { display: none; }
+    [data-fab-mode="auto"]  .fab-icon--auto  { display: block; }
+    [data-fab-mode="light"] .fab-icon--light { display: block; }
+    [data-fab-mode="dark"]  .fab-icon--dark  { display: block; }
+  </style>
+
+  <script>
+    // ===== FAB: Mode cycle (auto → light → dark → auto) =====
+    const modeOrder = ["auto", "light", "dark"];
+    const fabMode = document.getElementById("fabMode");
+    const fabLang = document.getElementById("fabLang");
+    const fabTop  = document.getElementById("fabTop");
+    const fabGroup = document.getElementById("fabGroup");
+
+    function updateFabMode(pref) {
+      fabGroup.dataset.fabMode = pref;
+    }
+
+    fabMode.addEventListener("click", () => {
+      const cur = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return "auto"; } })() || "auto";
+      const next = modeOrder[(modeOrder.indexOf(cur) + 1) % modeOrder.length];
+      applyAppearance(next);
+      updateFabMode(next);
+    });
+
+    fabLang.addEventListener("click", () => {
+      const next = currentLang === "zh" ? "en" : "zh";
+      applyLang(next);
+    });
+
+    fabTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Show/hide back-to-top
+    window.addEventListener("scroll", () => {
+      fabTop.classList.toggle("visible", window.scrollY > 300);
+    }, { passive: true });
+
+    // Sync fab lang label
+    function syncFabLang(lang) {
+      const label = fabLang.querySelector(".fab-lang-label");
+      if (label) label.textContent = lang === "zh" ? "中" : "EN";
+    }
   </script>
 </body>
 
