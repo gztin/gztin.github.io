@@ -382,33 +382,36 @@
       position: absolute;
       inset: 0;
       display: flex;
-      gap: 12px;
-      padding: 12px;
+      gap: 8px;
+      padding: 8px;
       z-index: 0;
       opacity: 0.6;
       transform: scale(1.05);
       filter: saturate(0.8) contrast(1.1);
+      overflow: hidden;
     }
 
     .photo-col {
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      animation: wallScroll 60s linear infinite;
+      gap: 8px;
+      animation: wallScroll 50s linear infinite;
+      min-width: 0;
     }
 
     .photo-col:nth-child(even) {
       animation-direction: reverse;
-      margin-top: -200px;
+      margin-top: -180px;
     }
 
     .photo-col img {
       width: 100%;
-      height: auto;
+      height: 220px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
     }
 
     @keyframes wallScroll {
@@ -2645,44 +2648,7 @@
 
   <!-- Hero -->
   <header class="hero" data-screen-label="01 Hero">
-    <div class="photo-wall">
-      <div class="photo-col">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_1.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_10.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_11.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_12.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_13.jpg" alt="">
-      </div>
-      <div class="photo-col">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_14.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_15.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_16.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_17.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_18.jpg" alt="">
-      </div>
-      <div class="photo-col">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_19.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_2.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_20.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_24.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_25.jpg" alt="">
-      </div>
-      <div class="photo-col">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_26.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_27.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_28.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_3.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_30.jpg" alt="">
-      </div>
-      <div class="photo-col">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_4.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_5.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_6.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_7.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_8.jpg" alt="">
-        <img src="img/slider/LINE_ALBUM_23042026_260424_9.jpg" alt="">
-      </div>
-    </div>
+    <div class="photo-wall" id="photoWall"></div>
     <div class="hero-overlay"></div>
     <div class="wrap">
       <h1 class="hero-title">
@@ -2896,7 +2862,7 @@
       <div class="construction">
         <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="agenda_wip">議程內容確認後即將公布</p>
-        <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往投稿表單 →</a>
+        <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往報名表單 →</a>
       </div>
     </div>
   </section>
@@ -3746,7 +3712,7 @@
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · 徵稿正式開跑",
         hero_date: "7/25(六)～7/26(日)",
         hero_sub: "如果你對 iOS、AI、產品開發,或任何讓人眼睛一亮的主題有想法——技術分享、實戰經驗、踩坑故事,還是對未來的觀察,都非常歡迎來投稿 🙌",
-        cta_submit: "🔗 前往投稿表單 →", cta_topics: "看看主題範圍",
+        cta_submit: "🔗 前往報名表單 →", cta_topics: "看看主題範圍",
         countdown_label: "截止倒數",
         news_eyebrow: "— 最新消息 Latest News",
         news_heading: '掌握 <span class="gradient">iPlayground</span> <span style="white-space:nowrap;">的第一手動態</span><span class="thin">。</span>',
@@ -3800,7 +3766,7 @@
         nav_hackmd: "HackMD Notes", nav_cta: "Submit Now",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · Now Open",
         hero_sub: "Got ideas on iOS, AI, product, or anything worth sharing? Tech talks, war stories, lessons learned, or glimpses of the future — we'd love to hear it 🙌",
-        cta_submit: "🔗 Submit Your Talk →", cta_topics: "Browse Topics",
+        cta_submit: "🔗 Register Now →", cta_topics: "Browse Topics",
         countdown_label: "Deadline Countdown",
         news_eyebrow: "— Latest News",
         news_heading: 'Stay up to date with <span class="gradient">iPlayground</span><span class="thin">.</span>',
@@ -3936,6 +3902,45 @@
       btn.classList.add("active");
       renderAgenda(btn.dataset.track);
     });
+
+    // ===== Photo Wall =====
+    (function buildPhotoWall() {
+      const imgs = [
+        "1","2","3","4","5","6","7","8","9","10",
+        "11","12","13","14","15","16","17","18","19","20",
+        "24","25","26","27","28","30"
+      ].map(n => `img/slider/LINE_ALBUM_23042026_260424_${n}.jpg`);
+
+      // Fisher-Yates shuffle
+      for (let i = imgs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+      }
+
+      const wall = document.getElementById("photoWall");
+      if (!wall) return;
+      const COLS = 5;
+      const perCol = Math.ceil(imgs.length / COLS);
+
+      for (let c = 0; c < COLS; c++) {
+        const col = document.createElement("div");
+        col.className = "photo-col";
+        // Each column gets a slice, then duplicated for seamless loop
+        const slice = [];
+        for (let r = 0; r < perCol + 2; r++) {
+          slice.push(imgs[(c * perCol + r) % imgs.length]);
+        }
+        // Duplicate for seamless infinite scroll
+        [...slice, ...slice].forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = "";
+          img.loading = "lazy";
+          col.appendChild(img);
+        });
+        wall.appendChild(col);
+      }
+    })();
 
     // ===== Init =====
     window.addEventListener("DOMContentLoaded", () => {
