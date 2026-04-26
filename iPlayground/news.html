@@ -140,8 +140,12 @@
 
   /* ============ Two-column Layout ============ */
   .news-page-layout {
-    display: grid; grid-template-columns: 300px 1fr; gap: 0;
+    display: grid; grid-template-columns: 300px minmax(0, 900px); gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
     min-height: calc(100vh - 53px);
+    border-left: 1px solid var(--rule-2);
+    border-right: 1px solid var(--rule-2);
   }
 
   /* ---- Sidebar ---- */
@@ -183,7 +187,7 @@
   /* ---- Main content ---- */
   .news-main { padding: 0 calc(var(--gutter) / 2); }
   .article-header {
-    padding: 80px 0 48px; text-align: center;
+    padding: 48px 0 32px; text-align: center;
     border-bottom: 1px solid var(--rule-2);
     max-width: 768px; margin: 0 auto;
   }
@@ -191,7 +195,7 @@
     font-family: var(--f-mono); font-size: 13px; font-weight: 600;
     background: linear-gradient(110deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    letter-spacing: 0.04em; margin-bottom: 20px;
+    letter-spacing: 0.04em; margin-bottom: 14px;
   }
   .article-title {
     font-size: clamp(28px, 4vw, 44px);
@@ -199,11 +203,11 @@
     margin: 0;
   }
   .article-body {
-    padding: 48px 0 100px;
+    padding: 32px 0 72px;
     font-size: 17px; line-height: 1.75; color: var(--ink-2);
     max-width: 768px; margin: 0 auto;
   }
-  .article-body p { margin: 0 0 24px; }
+  .article-body p { margin: 0 0 20px; }
   .article-cta {
     display: inline-flex;
     align-items: center;
@@ -224,8 +228,8 @@
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
   }
   .article-share {
-    margin-top: 40px;
-    padding-top: 28px;
+    margin-top: 28px;
+    padding-top: 22px;
     border-top: 1px solid var(--rule-2);
   }
   .article-share-title {
@@ -301,12 +305,14 @@
     border-top: 1px solid var(--rule-2);
   }
   footer a {
-    color: color-mix(in srgb, var(--bg) 70%, transparent);
+    color: var(--bg);
     text-decoration: none;
     transition: color .2s;
+    opacity: 0.8;
   }
   footer a:hover {
     color: var(--bg);
+    opacity: 1;
   }
   footer h4 {
     color: var(--bg) !important;
@@ -314,11 +320,13 @@
     opacity: 0.9;
   }
   footer .footer-tagline {
-    color: color-mix(in srgb, var(--bg) 60%, transparent);
+    color: var(--bg);
+    opacity: 0.7;
   }
   footer .footer-bottom {
     border-top: 1px solid var(--rule-2);
-    color: color-mix(in srgb, var(--bg) 40%, transparent);
+    color: var(--bg);
+    opacity: 0.5;
   }
   .footer-grid {
     display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
@@ -333,11 +341,12 @@
   footer h4 {
     font-family: var(--f-mono); font-size: 11px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.12em;
-    color: var(--ink-3); margin: 0 0 16px;
+    color: var(--bg) !important; margin: 0 0 16px;
+    opacity: 0.9;
   }
   footer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
-  footer ul a { text-decoration: none; color: var(--ink-2); }
-  footer ul a:hover { color: var(--ink); }
+  footer ul a { text-decoration: none; color: var(--bg); opacity: 0.75; transition: all .3s; }
+  footer ul a:hover { color: var(--bg); opacity: 1; }
   .footer-bottom {
     display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
     padding-top: 32px; border-top: 1px solid var(--rule-2);
@@ -452,17 +461,14 @@
           <img src="svg/logo_header_dark.svg" alt="iPlayground" class="footer-logo footer-logo--light" style="height:32px;width:auto;">
           <img src="svg/logo_header_light.svg" alt="iPlayground" class="footer-logo footer-logo--dark" style="height:32px;width:auto;">
         </div>
-        <p class="footer-tagline">iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C 、以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師創辦，目的是彌補台灣在 iOS 開發領域的研討會不足，並為開發者們提供更深入且多樣化的議程。</p>
+        <p class="footer-tagline" id="footerTagline"></p>
       </div>
       <div>
         <h4>活動</h4>
         <ul>
-          <li><a href="index.html#news">消息</a></li>
+          <li><a href="index.html#news">最新消息</a></li>
+          <li><a href="index.html#about">活動資訊</a></li>
           <li><a href="index.html#agenda">議程</a></li>
-          <li><a href="index.html#speakers">講者</a></li>
-          <li><a href="index.html#sponsors">贊助商</a></li>
-          <li><a href="index.html#staff">工作人員</a></li>
-          <li><a href="index.html#register">報名</a></li>
         </ul>
       </div>
       <div>
@@ -492,6 +498,7 @@
   </div>
 </footer>
 
+<script src="shared-content.js"></script>
 <script>
 // ===== i18n strings =====
 const I18N = {
@@ -518,44 +525,7 @@ const I18N = {
 };
 
 // ===== News data (synced from iOS Meetup.html) =====
-const NEWS_DATA = [
-  {
-    date: "2026.04.26",
-    title: { zh: "推薦贊助商 ,免費拿 iPlayground 門票 !", en: "Recommend a Sponsor and Get a Free iPlayground Ticket!" },
-    content: {
-      zh: `<p>iPlayground 2026 將於 7/25–26 在政大公企中心舉辦，預計聚集 300+ 位 iOS 工程師、產品人與設計師。身為台灣 iOS 社群一年一度的成果發表會，今年除了邀請多位台灣知名開發者與 KOL，也將帶來國外研討會中的熱門議程講者，並規劃一系列凝聚社群的活動。為了讓這些期待成真，我們需要一點贊助的力量。</p><p>我們知道社群夥伴來自不同公司與領域，誠摯邀請大家協助引薦相關窗口。即日起至 5/22，只要你願意推薦公司窗口，並順利促成洽談與贊助合作，我們將送上一份感謝小禮：iPlayground 2026 兩日門票一張，價值 4000 元，並含紀念衣服一件。舉辦活動需要大家一起努力，若你對贊助合作有任何想法，也歡迎留下資訊，我們會盡快與你聯繫。</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">前往推薦表單 →</a></p>`,
-      en: `<p>iPlayground 2026 will take place on July 25–26 at NCCU CPBAE, bringing together 300+ iOS engineers, product builders, and designers. As Taiwan's annual showcase for the iOS community, this year's event will feature well-known local developers, KOLs, invited speakers from international conferences, and community activities designed to bring people together.</p><p>To make all of this happen, we are looking for sponsor referrals from friends across the community. From now until May 22, if you recommend a company contact and the introduction leads to a sponsorship conversation and partnership, we will thank you with one two-day iPlayground 2026 ticket, valued at NT$4,000, including one commemorative shirt. If you have ideas for sponsorship collaboration, please leave your information and we will get in touch soon.</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">Open Referral Form →</a></p>`
-    },
-    url: "https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750"
-  },
-  {
-    date: "2026.04.22",
-    title: { zh: "iPlayground 2026 徵稿正式開啟！", en: "iPlayground 2026 Call for Proposals is Now Open!" },
-    content: { 
-      zh: "我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。", 
-      en: "We warmly invite speakers passionate about iOS, AI, product development, or any exciting technology. Whether you're a seasoned expert or an emerging developer, iPlayground is the best stage to share your knowledge." 
-    },
-    url: "#"
-  },
-  {
-    date: "2026.04.15",
-    title: { zh: "大會官網正式上線，更多精彩內容陸續揭曉中。", en: "Conference Website Officially Launched — More Updates Coming Soon." },
-    content: { 
-      zh: "籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。", 
-      en: "The long-awaited iPlayground 2026 website is live! This year we've embraced a fresh visual language representing the collision of technology and creativity. Stay tuned as we reveal the agenda, co-organizers, and sponsors in the coming weeks." 
-    },
-    url: "#"
-  },
-  {
-    date: "2026.04.10",
-    title: { zh: "iPlayground 工作夥伴招募中", en: "We're Recruiting iPlayground Volunteers" },
-    content: { 
-      zh: "熱愛 Apple 技術、開發者社群與大型活動的你，歡迎加入 iPlayground 2026 工作夥伴行列！這不只是協助活動進行，更是一起打造台灣 iOS 社群年度舞台的機會。無論你擅長議程規劃、講者聯繫、行銷宣傳、社群經營、設計攝影、現場接待、動線安排或活動執行，都能在這裡找到適合發揮的位置。我們期待願意主動溝通、喜歡解決問題、享受團隊合作的夥伴，一起把兩天活動變成讓參與者記得很久的美好體驗。即使你沒有籌辦研討會經驗，只要有熱情與責任感，我們都很歡迎。來和我們一起認識更多開發者，參與幕後決策，親手完成一場屬於社群的技術盛會。", 
-      en: "If you love Apple technologies, developer communities, and meaningful events, join the iPlayground 2026 volunteer team! This is more than helping on event day — it is a chance to build the annual stage for Taiwan's iOS community. Whether you are interested in program planning, speaker coordination, marketing, community management, design, photography, reception, venue flow, or on-site operations, there is a place for you to contribute. We are looking for teammates who communicate proactively, enjoy solving problems, and value collaboration. No conference organizing experience is required; passion and reliability matter most. Come meet more developers, take part behind the scenes, and help us create a two-day experience the community will remember." 
-    },
-    url: "#"
-  },
-];
+const NEWS_DATA = window.IPLAYGROUND_SHARED.newsData;
 
 // ===== State =====
 let currentLang = "zh";
@@ -657,6 +627,8 @@ function applyLang(lang) {
     b.classList.toggle("active", b.dataset.lang === lang)
   );
   document.getElementById("backLink").textContent = t("back");
+  const footerTagline = document.getElementById("footerTagline");
+  if (footerTagline) footerTagline.textContent = window.IPLAYGROUND_SHARED.footerTagline[lang] || window.IPLAYGROUND_SHARED.footerTagline.zh;
   try { localStorage.setItem("lang", lang); } catch(e) {}
   renderPage();
 }
