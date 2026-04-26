@@ -3,6 +3,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="推薦公司窗口並促成 iPlayground 2026 贊助合作，即可獲得兩日門票與紀念衣服。" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="iPlayground 2026" />
+<meta property="og:title" content="推薦贊助商 ,免費拿 iPlayground 門票 !" />
+<meta property="og:description" content="推薦公司窗口並促成 iPlayground 2026 贊助合作，即可獲得兩日門票與紀念衣服。" />
+<meta property="og:url" content="https://gztin.github.io/iPlayground/news.html?id=0" />
+<meta property="og:image" content="https://gztin.github.io/iPlayground/img/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="推薦贊助商 ,免費拿 iPlayground 門票 !" />
+<meta name="twitter:description" content="推薦公司窗口並促成 iPlayground 2026 贊助合作，即可獲得兩日門票與紀念衣服。" />
+<meta name="twitter:image" content="https://gztin.github.io/iPlayground/img/logo.png" />
 <title>最新消息 · iPlayground 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,11 +181,11 @@
   .news-sidebar .sidebar-item.active .s-title { color: var(--accent); }
 
   /* ---- Main content ---- */
-  .news-main { padding: 0 var(--gutter); }
+  .news-main { padding: 0 calc(var(--gutter) / 2); }
   .article-header {
     padding: 80px 0 48px; text-align: center;
     border-bottom: 1px solid var(--rule-2);
-    max-width: 720px; margin: 0 auto;
+    max-width: 768px; margin: 0 auto;
   }
   .article-date {
     font-family: var(--f-mono); font-size: 13px; font-weight: 600;
@@ -190,9 +201,67 @@
   .article-body {
     padding: 48px 0 100px;
     font-size: 17px; line-height: 1.75; color: var(--ink-2);
-    max-width: 720px; margin: 0 auto;
+    max-width: 768px; margin: 0 auto;
   }
   .article-body p { margin: 0 0 24px; }
+  .article-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .article-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  }
+  .article-share {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule-2);
+  }
+  .article-share-title {
+    margin-bottom: 14px;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .article-share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .share-btn {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink);
+    text-decoration: none;
+    font: 700 13px/1 var(--f-sans);
+    cursor: pointer;
+    transition: transform .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .share-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
 
   /* ---- News listing (no ?id) ---- */
   .listing-header {
@@ -260,7 +329,7 @@
     width: 28px; height: 28px; border-radius: 8px;
     background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
   }
-  .footer-tagline { margin-top: 24px; font-size: 14px; color: var(--ink-3); max-width: 320px; line-height: 1.55; }
+  .footer-tagline { margin-top: 24px; font-size: 14px; color: var(--ink-3); width: 100%; max-width: none; line-height: 1.55; }
   footer h4 {
     font-family: var(--f-mono); font-size: 11px; font-weight: 500;
     text-transform: uppercase; letter-spacing: 0.12em;
@@ -315,6 +384,26 @@
     .news-sidebar { display: none; }
     .mobile-picker { display: block; }
     .news-main { padding: 0 24px; }
+    footer .wrap {
+      max-width: none;
+      width: 100%;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 56px 40px;
+    }
+    .footer-grid > div:first-child {
+      grid-column: 1 / -1;
+    }
+    footer .footer-grid > div:first-child {
+      min-width: 0;
+    }
+    footer .footer-grid > div:first-child .footer-tagline {
+      max-width: 100%;
+      width: 100%;
+    }
     .nav-right .back-link { display: none; }
   }
 </style>
@@ -431,6 +520,15 @@ const I18N = {
 // ===== News data (synced from iOS Meetup.html) =====
 const NEWS_DATA = [
   {
+    date: "2026.04.26",
+    title: { zh: "推薦贊助商 ,免費拿 iPlayground 門票 !", en: "Recommend a Sponsor and Get a Free iPlayground Ticket!" },
+    content: {
+      zh: `<p>iPlayground 2026 將於 7/25–26 在政大公企中心舉辦，預計聚集 300+ 位 iOS 工程師、產品人與設計師。身為台灣 iOS 社群一年一度的成果發表會，今年除了邀請多位台灣知名開發者與 KOL，也將帶來國外研討會中的熱門議程講者，並規劃一系列凝聚社群的活動。為了讓這些期待成真，我們需要一點贊助的力量。</p><p>我們知道社群夥伴來自不同公司與領域，誠摯邀請大家協助引薦相關窗口。即日起至 5/22，只要你願意推薦公司窗口，並順利促成洽談與贊助合作，我們將送上一份感謝小禮：iPlayground 2026 兩日門票一張，價值 4000 元，並含紀念衣服一件。舉辦活動需要大家一起努力，若你對贊助合作有任何想法，也歡迎留下資訊，我們會盡快與你聯繫。</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">前往推薦表單 →</a></p>`,
+      en: `<p>iPlayground 2026 will take place on July 25–26 at NCCU CPBAE, bringing together 300+ iOS engineers, product builders, and designers. As Taiwan's annual showcase for the iOS community, this year's event will feature well-known local developers, KOLs, invited speakers from international conferences, and community activities designed to bring people together.</p><p>To make all of this happen, we are looking for sponsor referrals from friends across the community. From now until May 22, if you recommend a company contact and the introduction leads to a sponsorship conversation and partnership, we will thank you with one two-day iPlayground 2026 ticket, valued at NT$4,000, including one commemorative shirt. If you have ideas for sponsorship collaboration, please leave your information and we will get in touch soon.</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">Open Referral Form →</a></p>`
+    },
+    url: "https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750"
+  },
+  {
     date: "2026.04.22",
     title: { zh: "iPlayground 2026 徵稿正式開啟！", en: "iPlayground 2026 Call for Proposals is Now Open!" },
     content: { 
@@ -452,8 +550,8 @@ const NEWS_DATA = [
     date: "2026.04.10",
     title: { zh: "iPlayground 工作夥伴招募中", en: "We're Recruiting iPlayground Volunteers" },
     content: { 
-      zh: "熱愛 Apple 技術與開發者社群的你，別錯過這場年度盛會！我們正在尋找充滿熱情的夥伴加入。無論是議程規劃、行銷宣傳或活動執行，這裡都有你發揮的舞台。立刻報名，與我們一同打造最酷的技術饗宴！", 
-      en: "Love Apple technology and the developer community? Don't miss this annual event! We're looking for passionate volunteers to join us. Whether it's program planning, marketing, or event coordination — there's a role for you. Sign up now and help us build the coolest tech event of the year!" 
+      zh: "熱愛 Apple 技術、開發者社群與大型活動的你，歡迎加入 iPlayground 2026 工作夥伴行列！這不只是協助活動進行，更是一起打造台灣 iOS 社群年度舞台的機會。無論你擅長議程規劃、講者聯繫、行銷宣傳、社群經營、設計攝影、現場接待、動線安排或活動執行，都能在這裡找到適合發揮的位置。我們期待願意主動溝通、喜歡解決問題、享受團隊合作的夥伴，一起把兩天活動變成讓參與者記得很久的美好體驗。即使你沒有籌辦研討會經驗，只要有熱情與責任感，我們都很歡迎。來和我們一起認識更多開發者，參與幕後決策，親手完成一場屬於社群的技術盛會。", 
+      en: "If you love Apple technologies, developer communities, and meaningful events, join the iPlayground 2026 volunteer team! This is more than helping on event day — it is a chance to build the annual stage for Taiwan's iOS community. Whether you are interested in program planning, speaker coordination, marketing, community management, design, photography, reception, venue flow, or on-site operations, there is a place for you to contribute. We are looking for teammates who communicate proactively, enjoy solving problems, and value collaboration. No conference organizing experience is required; passion and reliability matter most. Come meet more developers, take part behind the scenes, and help us create a two-day experience the community will remember." 
     },
     url: "#"
   },
@@ -469,6 +567,61 @@ function t(key) {
 function getVal(obj) {
   if (typeof obj === 'string') return obj;
   return obj[currentLang] || obj.zh || "";
+}
+
+function setMeta(name, value, attr = "property") {
+  const selector = attr === "name" ? `meta[name="${name}"]` : `meta[property="${name}"]`;
+  const el = document.querySelector(selector);
+  if (el) el.setAttribute("content", value);
+}
+
+function articleUrl(id) {
+  return new URL(`news.html?id=${id}`, window.location.href).href;
+}
+
+function renderShareBlock(id, title) {
+  const url = articleUrl(id);
+  const encodedUrl = encodeURIComponent(url);
+  const encodedTitle = encodeURIComponent(title);
+  const shareLabel = currentLang === "en" ? "Share this post" : "分享這篇公告";
+  const copyLabel = currentLang === "en" ? "Copy Link" : "複製連結";
+  return `
+    <section class="article-share" aria-label="${shareLabel}">
+      <div class="article-share-title">${shareLabel}</div>
+      <div class="article-share-actions">
+        <button class="share-btn" type="button" data-copy-share="${url}">${copyLabel}</button>
+      </div>
+    </section>
+  `;
+}
+
+function bindShareButtons() {
+  document.querySelectorAll("[data-copy-share]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const url = btn.dataset.copyShare;
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = currentLang === "en" ? "Copied" : "已複製";
+      } catch (e) {
+        window.prompt(currentLang === "en" ? "Copy this link" : "請複製此連結", url);
+      }
+      setTimeout(() => { btn.textContent = original; }, 1600);
+    });
+  });
+}
+
+function updateArticleMeta(id, title) {
+  const url = articleUrl(id);
+  const desc = currentLang === "en"
+    ? "Recommend a company contact and help make iPlayground 2026 happen. Successful sponsorship referrals receive a two-day ticket and commemorative shirt."
+    : "推薦公司窗口並促成 iPlayground 2026 贊助合作，即可獲得兩日門票與紀念衣服。";
+  setMeta("description", desc, "name");
+  setMeta("og:title", title);
+  setMeta("og:description", desc);
+  setMeta("og:url", url);
+  setMeta("twitter:title", title, "name");
+  setMeta("twitter:description", desc, "name");
 }
 
 // ===== Appearance (Auto / Light / Dark) =====
@@ -550,6 +703,7 @@ function renderPage() {
 
   const n = NEWS_DATA[id];
   const titleStr = getVal(n.title);
+  updateArticleMeta(id, titleStr);
   document.title = `${titleStr} · iPlayground 2026`;
 
   const sidebar = NEWS_DATA.map((item, i) => `
@@ -579,13 +733,15 @@ function renderPage() {
         <header class="article-header" id="artHeader">
           <div class="article-date">${n.date}</div>
           <h1 class="article-title">${titleStr}</h1>
-        </header>
-        <article class="article-body" id="artBody">
-          ${getVal(n.content)}
-        </article>
-      </main>
-    </div>
-  `;
+          </header>
+          <article class="article-body" id="artBody">
+            ${getVal(n.content)}
+            ${renderShareBlock(id, titleStr)}
+          </article>
+        </main>
+      </div>
+    `;
+  bindShareButtons();
 
   // Mobile dropdown — swap content inline without full re-render
   const sel = document.getElementById("newsSelect");
@@ -598,8 +754,10 @@ function renderPage() {
         <div class="article-date">${item.date}</div>
         <h1 class="article-title">${iTitle}</h1>
       `;
-      document.getElementById("artBody").innerHTML = getVal(item.content);
+      document.getElementById("artBody").innerHTML = getVal(item.content) + renderShareBlock(newId, iTitle);
       document.title = `${iTitle} · iPlayground 2026`;
+      updateArticleMeta(newId, iTitle);
+      bindShareButtons();
       history.replaceState(null, "", `news.html?id=${newId}`);
     });
   }

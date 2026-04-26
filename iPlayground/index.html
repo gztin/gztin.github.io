@@ -139,9 +139,9 @@
     }
 
     nav.top .row {
-      display: flex !important;
+      display: grid !important;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
       height: 52px;
       font-size: 13px;
     }
@@ -151,6 +151,7 @@
       align-items: center;
       gap: 10px;
       font-weight: 500;
+      justify-self: start;
     }
 
     /* Logo switching by mode */
@@ -181,6 +182,7 @@
       display: flex;
       gap: 32px;
       color: var(--ink-3);
+      justify-self: center;
     }
 
     nav.top ul.nav-menu a {
@@ -360,12 +362,45 @@
       border-color: var(--ink) !important;
     }
 
-    nav.top .nav-cta {
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-self: end;
+    }
+
+    .nav-switch {
+      display: inline-flex;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      padding: 3px;
+      font-family: var(--f-mono);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .nav-switch button {
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: var(--ink-2);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-lang-switch button {
+      padding-inline: 10px;
+    }
+
+    nav.top .nav-sponsor-cta {
       background: var(--ink);
       color: var(--bg);
       padding: 8px 14px;
       border-radius: 999px;
       font-weight: 500;
+      white-space: nowrap;
+      text-decoration: none;
     }
 
     /* ============ Hero ============ */
@@ -877,6 +912,27 @@
       animation: none;
       transform: translateY(-4px) scale(1.04);
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-sponsor-btn {
+      background: linear-gradient(135deg, #00a7ff, #3b82f6);
+      color: #ffffff;
+      box-shadow: 0 8px 28px rgba(0, 122, 255, 0.34);
+    }
+
+    html[data-mode="light"] .hero-sponsor-btn {
+      background: linear-gradient(135deg, #ff7a59, #ff3d8b);
+      color: #ffffff;
+      box-shadow: 0 8px 28px rgba(255, 61, 139, 0.24);
+    }
+
+    .hero-sponsor-btn:hover {
+      transform: translateY(-4px) scale(1.04);
+      box-shadow: 0 12px 34px rgba(0, 122, 255, 0.42);
+    }
+
+    html[data-mode="light"] .hero-sponsor-btn:hover {
+      box-shadow: 0 12px 34px rgba(255, 61, 139, 0.32);
     }
 
     /* ===== Hero Social Row ===== */
@@ -1893,7 +1949,8 @@
       margin-top: 32px;
       font-size: 15px;
       color: var(--ink-2);
-      max-width: 320px;
+      width: 100%;
+      max-width: none;
       line-height: 1.65;
     }
 
@@ -2143,7 +2200,7 @@
     }
 
     .news-wrap {
-      padding: 0px 40px;
+      padding: 30px 40px;
     }
 
     .news-row {
@@ -2645,6 +2702,11 @@
         display: flex !important;
       }
 
+      nav.top .row {
+        display: flex !important;
+        justify-content: space-between;
+      }
+
       nav.top ul.nav-menu {
         display: none !important;
       }
@@ -2750,26 +2812,19 @@
         <img src="svg/logo_header_light.svg" alt="iPlayground 2026" class="nav-logo nav-logo--light">
         <img src="svg/logo_header_dark.svg" alt="iPlayground 2026" class="nav-logo nav-logo--dark">
       </div>
-      <ul class="nav-menu">
-        <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
-        <li><a href="#about" data-i18n="nav_about">時間表</a></li>
-        <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
-        <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
-        <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
-        <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-        <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank"
-            rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
-      </ul>
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div class="lang-switch" id="modeSwitch" title="Appearance"
-          style="display:inline-flex;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:3px;font-family:var(--f-mono);font-size:11px;">
-          <button data-mode="auto" class="active" aria-label="Auto"
-            style="padding:6px 9px;border-radius:999px;color:var(--ink-2);display:inline-flex;align-items:center;gap:4px;">
+      <ul class="nav-menu">
+        <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
+        <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
+        <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-switch nav-switch" id="modeSwitch" title="Appearance">
+          <button data-mode="auto" class="active" aria-label="Auto">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="9" />
@@ -2778,8 +2833,7 @@
             </svg>
             <span>A</span>
           </button>
-          <button data-mode="light" aria-label="Light"
-            style="padding:6px 9px;border-radius:999px;color:var(--ink-2);display:inline-flex;align-items:center;">
+          <button data-mode="light" aria-label="Light">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4" />
@@ -2787,22 +2841,19 @@
                 d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
             </svg>
           </button>
-          <button data-mode="dark" aria-label="Dark"
-            style="padding:6px 9px;border-radius:999px;color:var(--ink-2);display:inline-flex;align-items:center;">
+          <button data-mode="dark" aria-label="Dark">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
               stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
           </button>
         </div>
-        <div class="lang-switch" id="langSwitch"
-          style="display:inline-flex;background:var(--surface);border:1px solid var(--rule);border-radius:999px;padding:3px;font-family:var(--f-mono);font-size:11px;">
-          <button data-lang="zh" class="active"
-            style="padding:6px 10px;border-radius:999px;color:var(--ink-2);">中</button>
-          <button data-lang="en" style="padding:6px 10px;border-radius:999px;color:var(--ink-2);">EN</button>
+        <div class="lang-switch nav-switch nav-lang-switch" id="langSwitch">
+          <button data-lang="zh" class="active">中</button>
+          <button data-lang="en">EN</button>
         </div>
-        <a class="nav-cta" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener"
-          data-i18n="nav_cta">立即投稿</a>
+        <a class="nav-sponsor-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener"
+          data-i18n="nav_sponsor_cta">推薦贊助廠商</a>
       </div>
     </div>
   </nav>
@@ -2811,13 +2862,8 @@
   <div class="mobile-menu" id="mobileMenu">
     <ul>
       <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
-      <li><a href="#about" data-i18n="nav_about">時間表</a></li>
+      <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
       <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
-      <li><a href="#speakers" data-i18n="nav_speakers">講者群</a></li>
-      <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
-      <li><a href="#sponsors" data-i18n="nav_sponsors">贊助廠商</a></li>
-      <li><a href="https://hackmd.io/@iPlayground/2025/https%3A%2F%2Fiplayground.io%2F2025%2F" target="_blank"
-          rel="noopener" data-i18n="nav_hackmd">HackMD共筆</a></li>
     </ul>
   </div>
 
@@ -2870,11 +2916,13 @@
 
 
       <div class="hero-cta-row">
-        <div class="hero-cta-glow-wrap">
+          <div class="hero-cta-glow-wrap">
           <a class="btn-primary hero-cta-btn" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener"
-            data-i18n="cta_submit">🔗 前往報名表單 →</a>
+            data-i18n="cta_submit">🔗 講者投稿表單 →</a>
+          </div>
+          <a class="btn-primary hero-sponsor-btn" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener"
+            data-i18n="hero_sponsor_cta">推薦贊助廠商 →</a>
         </div>
-      </div>
 
       <div class="hero-social-row">
         <a class="hero-social-btn" href="https://discord.gg/xS8yMKbbjB" target="_blank" rel="noopener" aria-label="Discord">
@@ -3064,14 +3112,14 @@
       <div class="construction">
         <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="agenda_wip">議程內容確認後即將公布</p>
-        <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往報名表單 →</a>
+        <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener" data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 講者投稿表單 →</a>
       </div>
     </div>
   </section>
 
 
   <!-- Speakers -->
-  <section id="speakers" data-screen-label="04 Speakers">
+  <section id="speakers" data-screen-label="04 Speakers" hidden>
     <div class="wrap center">
       <div class="striped-header-wrap">
         <div class="header-decoration">
@@ -3088,13 +3136,13 @@
         <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="speakers_wip">講者陣容確認後即將公布，敬請期待</p>
         <a class="btn-primary" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener"
-          data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 前往投稿 →</a>
+          data-i18n="cta_submit" style="display:inline-block;margin-top:28px;">🔗 講者投稿表單 →</a>
       </div>
     </div>
   </section>
 
   <!-- Staff -->
-  <section id="staff" data-screen-label="05 Staff">
+  <section id="staff" data-screen-label="05 Staff" hidden>
     <div class="wrap center">
       <div class="striped-header-wrap">
         <div class="header-decoration">
@@ -3115,7 +3163,7 @@
   </section>
 
   <!-- Sponsors -->
-  <section id="sponsors" data-screen-label="06 Sponsors">
+  <section id="sponsors" data-screen-label="06 Sponsors" hidden>
     <div class="wrap center">
       <div class="striped-header-wrap">
         <div class="header-decoration">
@@ -3131,6 +3179,8 @@
       <div class="construction">
         <h3 data-i18n="construction">建構中</h3>
         <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
+        <a class="btn-primary" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener"
+          data-i18n="sponsors_cta" style="display:inline-block;margin-top:28px;">🔗 徵求贊助廠商 →</a>
       </div>
     </div>
   </section>
@@ -3149,15 +3199,12 @@
           <p class="footer-tagline" data-i18n="footer_tagline">由 iOS Taipei 社群志工自主舉辦的年度分享會。本活動與 Apple Inc. 無關。</p>
         </div>
         <div>
-          <h4 data-i18n="footer_event">活動</h4>
-          <ul>
-            <li><a href="#news" data-i18n="footer_news">消息</a></li>
-            <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
-            <li><a href="#speakers" data-i18n="nav_speakers">講者</a></li>
-            <li><a href="#sponsors" data-i18n="nav_sponsors">贊助商</a></li>
-            <li><a href="#staff" data-i18n="nav_staff">工作人員</a></li>
-            <li><a href="#register" data-i18n="footer_register">報名</a></li>
-          </ul>
+            <h4 data-i18n="footer_event">活動</h4>
+            <ul>
+              <li><a href="#news" data-i18n="footer_news">最新消息</a></li>
+              <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
+              <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+            </ul>
         </div>
         <div>
           <h4 data-i18n="footer_community">社群</h4>
@@ -3596,6 +3643,15 @@
     // ===== Data =====
     const NEWS_DATA = [
       {
+        date: "2026.04.26",
+        title: { zh: "推薦贊助商 ,免費拿 iPlayground 門票 !", en: "Recommend a Sponsor and Get a Free iPlayground Ticket!" },
+        content: {
+          zh: `<p>iPlayground 2026 將於 7/25–26 在政大公企中心舉辦，預計聚集 300+ 位 iOS 工程師、產品人與設計師。身為台灣 iOS 社群一年一度的成果發表會，今年除了邀請多位台灣知名開發者與 KOL，也將帶來國外研討會中的熱門議程講者，並規劃一系列凝聚社群的活動。為了讓這些期待成真，我們需要一點贊助的力量。</p><p>我們知道社群夥伴來自不同公司與領域，誠摯邀請大家協助引薦相關窗口。即日起至 5/22，只要你願意推薦公司窗口，並順利促成洽談與贊助合作，我們將送上一份感謝小禮：iPlayground 2026 兩日門票一張，價值 4000 元，並含紀念衣服一件。舉辦活動需要大家一起努力，若你對贊助合作有任何想法，也歡迎留下資訊，我們會盡快與你聯繫。</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">前往推薦表單 →</a></p>`,
+          en: `<p>iPlayground 2026 will take place on July 25–26 at NCCU CPBAE, bringing together 300+ iOS engineers, product builders, and designers. As Taiwan's annual showcase for the iOS community, this year's event will feature well-known local developers, KOLs, invited speakers from international conferences, and community activities designed to bring people together.</p><p>To make all of this happen, we are looking for sponsor referrals from friends across the community. From now until May 22, if you recommend a company contact and the introduction leads to a sponsorship conversation and partnership, we will thank you with one two-day iPlayground 2026 ticket, valued at NT$4,000, including one commemorative shirt. If you have ideas for sponsorship collaboration, please leave your information and we will get in touch soon.</p><p><a class="article-cta" href="https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750" target="_blank" rel="noopener">Open Referral Form →</a></p>`
+        },
+        url: "https://discord.com/channels/1256984270346649702/1492056108901204058/1497859375203614750"
+      },
+      {
         date: "2026.04.22",
         title: { zh: "iPlayground 2026 徵稿正式開啟！", en: "iPlayground 2026 Call for Proposals is Now Open!" },
         content: { zh: "我們誠摯邀請對 iOS、AI、產品開發或任何熱門技術有熱情的講者。不論您是資深專家還是新銳開發者，iPlayground 都是您分享知識、交流經驗的最佳舞台。", en: "We warmly invite speakers passionate about iOS, AI, product development, or any exciting technology. Whether you're a seasoned expert or an emerging developer, iPlayground is the best stage to share your knowledge." },
@@ -3607,12 +3663,12 @@
         content: { zh: "籌備多時的 iPlayground 2026 官網今天正式與大家見面了！今年我們採用了全新的視覺語言，象徵著技術與創意的碰撞。接下來幾週，我們將陸續公布議程訊息、合辦團隊以及令人驚喜的贊助商名單，敬請密切關注。", en: "The long-awaited iPlayground 2026 website is live! This year we've embraced a fresh visual language representing the collision of technology and creativity. Stay tuned as we reveal the agenda, co-organizers, and sponsors in the coming weeks." },
         url: "#"
       },
-      {
-        date: "2026.04.10",
-        title: { zh: "iPlayground 工作夥伴招募中", en: "We're Recruiting iPlayground Volunteers" },
-        content: { zh: "熱愛 Apple 技術與開發者社群的你，別錯過這場年度盛會！我們正在尋找充滿熱情的夥伴加入。無論是議程規劃、行銷宣傳或活動執行，這裡都有你發揮的舞台。立刻報名，與我們一同打造最酷的技術饗宴！", en: "Love Apple technology and the developer community? Don't miss this annual event! We're looking for passionate volunteers to join us. Whether it's program planning, marketing, or event coordination — there's a role for you. Sign up now and help us build the coolest tech event of the year!" },
-        url: "#"
-      },
+        {
+          date: "2026.04.10",
+          title: { zh: "iPlayground 工作夥伴招募中", en: "We're Recruiting iPlayground Volunteers" },
+          content: { zh: "熱愛 Apple 技術、開發者社群與大型活動的你，歡迎加入 iPlayground 2026 工作夥伴行列！這不只是協助活動進行，更是一起打造台灣 iOS 社群年度舞台的機會。無論你擅長議程規劃、講者聯繫、行銷宣傳、社群經營、設計攝影、現場接待、動線安排或活動執行，都能在這裡找到適合發揮的位置。我們期待願意主動溝通、喜歡解決問題、享受團隊合作的夥伴，一起把兩天活動變成讓參與者記得很久的美好體驗。即使你沒有籌辦研討會經驗，只要有熱情與責任感，我們都很歡迎。來和我們一起認識更多開發者，參與幕後決策，親手完成一場屬於社群的技術盛會。", en: "If you love Apple technologies, developer communities, and meaningful events, join the iPlayground 2026 volunteer team! This is more than helping on event day — it is a chance to build the annual stage for Taiwan's iOS community. Whether you are interested in program planning, speaker coordination, marketing, community management, design, photography, reception, venue flow, or on-site operations, there is a place for you to contribute. We are looking for teammates who communicate proactively, enjoy solving problems, and value collaboration. No conference organizing experience is required; passion and reliability matter most. Come meet more developers, take part behind the scenes, and help us create a two-day experience the community will remember." },
+          url: "#"
+        },
     ];
 
     const AGENDA = [
@@ -3910,13 +3966,13 @@
     // ===== i18n =====
     const I18N = {
       zh: {
-        nav_news: "最新消息", nav_about: "時間表", nav_agenda: "議程", nav_speakers: "講者群",
+        nav_news: "最新消息", nav_about: "活動資訊", nav_agenda: "議程", nav_speakers: "講者群",
         nav_sponsors: "贊助廠商", nav_staff: "工作人員", nav_topics: "主題範圍", nav_timeline: "時程",
-        nav_hackmd: "HackMD共筆", nav_cta: "立即投稿",
+        nav_hackmd: "HackMD共筆", nav_cta: "立即投稿", nav_sponsor_cta: "推薦贊助廠商",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · 徵稿正式開跑",
         hero_date: "7/25(六)～7/26(日)",
         hero_sub: "如果你對 iOS、AI、產品開發,或任何讓人眼睛一亮的主題有想法——技術分享、實戰經驗、踩坑故事,還是對未來的觀察,都非常歡迎來投稿 🙌",
-        cta_submit: "🔗 前往報名表單 →", cta_topics: "看看主題範圍",
+        cta_submit: "🔗 講者投稿表單 →", hero_sponsor_cta: "推薦贊助廠商 →", cta_topics: "看看主題範圍",
         countdown_label: "截止倒數",
         news_eyebrow: "— 最新消息 Latest News",
         news_heading: '掌握 <span class="gradient">iPlayground</span> <span style="white-space:nowrap;">的第一手動態</span><span class="thin">。</span>',
@@ -3950,6 +4006,7 @@
         sponsors_eyebrow: "— 贊助廠商 Sponsors",
         sponsors_title: '贊助廠商',
         sponsors_wip: "正在邀請優秀的夥伴加入我們",
+        sponsors_cta: "🔗 徵求贊助廠商 →",
         speakers_eyebrow: "— 講者群 Speakers",
         speakers_title: '講者群',
         speakers_wip: "講者陣容確認後即將公布，敬請期待",
@@ -3958,19 +4015,19 @@
         staff_wip: "每一位背後的無名英雄",
         construction: "建構中",
         footer_tagline: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C 、以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師創辦，目的是彌補台灣在 iOS 開發領域的研討會不足，並為開發者們提供更深入且多樣化的議程。",
-        footer_event: "活動", footer_news: "消息", footer_register: "報名",
+        footer_event: "活動", footer_news: "最新消息", footer_register: "報名",
         footer_community: "社群", footer_contact: "聯絡",
         footer_support: "一般支援", footer_cfp: "講者投稿", footer_sponsor: "贊助合作", footer_coc: "行為準則",
         control_appearance: "主題", control_lang: "語言",
         mode_auto: "自動", mode_light: "亮", mode_dark: "暗",
       },
       en: {
-        nav_news: "Latest News", nav_about: "Timeline", nav_agenda: "Agenda", nav_speakers: "Speakers",
+        nav_news: "Latest News", nav_about: "Event Info", nav_agenda: "Agenda", nav_speakers: "Speakers",
         nav_sponsors: "Sponsors", nav_staff: "Staff", nav_topics: "Topics", nav_timeline: "Timeline",
-        nav_hackmd: "HackMD Notes", nav_cta: "Submit Now",
+        nav_hackmd: "HackMD Notes", nav_cta: "Submit Now", nav_sponsor_cta: "Sponsor Us",
         hero_eyebrow: "🎤 CALL FOR PROPOSALS · Now Open",
         hero_sub: "Got ideas on iOS, AI, product, or anything worth sharing? Tech talks, war stories, lessons learned, or glimpses of the future — we'd love to hear it 🙌",
-        cta_submit: "🔗 Register Now →", cta_topics: "Browse Topics",
+        cta_submit: "🔗 Speaker Proposal Form →", hero_sponsor_cta: "Recommend a Sponsor →", cta_topics: "Browse Topics",
         countdown_label: "Deadline Countdown",
         news_eyebrow: "— Latest News",
         news_heading: 'Stay up to date with <span class="gradient">iPlayground</span><span class="thin">.</span>',
@@ -4005,6 +4062,7 @@
         sponsors_eyebrow: "— Sponsors",
         sponsors_title: 'Sponsors',
         sponsors_wip: "We're inviting great partners to join us",
+        sponsors_cta: "🔗 Sponsor Us →",
         speakers_eyebrow: "— Speakers",
         speakers_title: 'Speakers',
         speakers_wip: "Speaker lineup will be announced once confirmed — stay tuned",
@@ -4013,7 +4071,7 @@
         staff_wip: "The unsung heroes behind the scenes",
         construction: "Under Construction",
         footer_tagline: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, as well as app development and UI/UX design. Founded by a group of senior engineers to fill the gap in iOS-focused conferences in Taiwan.",
-        footer_event: "Event", footer_news: "News", footer_register: "Register",
+        footer_event: "Event", footer_news: "Latest News", footer_register: "Register",
         footer_community: "Community", footer_contact: "Contact",
         footer_support: "General Support", footer_cfp: "Speaker Submissions", footer_sponsor: "Sponsorship", footer_coc: "Code of Conduct",
         control_appearance: "Appearance", control_lang: "Language",
@@ -4259,16 +4317,16 @@
           [0,0,0,0,1,1,0,0,0,0,0],
         ], colorMap: { 1: '#ffffff', 2: '#f59e0b' }, color: '#ffffff' },  // daisy 5 petals
         { bitmap: [
-          // Crown — 11×8
-          [1,0,0,1,0,0,1,0,0,1,0],
-          [1,0,1,1,0,1,1,0,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [1,2,2,1,2,2,1,2,2,1,0],
-          [1,2,2,1,2,2,1,2,2,1,0],
-          [1,1,1,1,1,1,1,1,1,1,0],
-          [0,1,1,1,1,1,1,1,1,0,0],
-        ], colorMap: { 1: '#f59e0b', 2: '#fde68a' }, color: '#f59e0b', anim: 'sweep' },  // crown
+          // Crown — three-point silhouette with separated base
+          [0,1,0,0,0,1,0,0,0,1,0],
+          [0,1,1,0,1,1,1,0,1,1,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+          [1,1,1,1,2,1,2,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1],
+          [0,0,0,0,0,0,0,0,0,0,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+        ], colorMap: { 1: '#f59e0b', 2: '#fde68a' }, color: '#f59e0b', scale: 0.85, anim: 'sweep' },  // crown
       ];
 
       // Smile squint bitmap
@@ -4582,6 +4640,13 @@
     [data-fab-mode="auto"]  .fab-icon--auto  { display: block; }
     [data-fab-mode="light"] .fab-icon--light { display: block; }
     [data-fab-mode="dark"]  .fab-icon--dark  { display: block; }
+
+    @media (min-width: 981px) {
+      #fabMode,
+      #fabLang {
+        display: none;
+      }
+    }
   </style>
 
   <script>
