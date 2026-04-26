@@ -789,6 +789,46 @@
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
     }
 
+    /* ===== Hero Social Row ===== */
+    .hero-social-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-social-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      text-decoration: none;
+    }
+
+    .hero-social-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .hero-social-btn img {
+      width: 22px;
+      height: 22px;
+      display: block;
+      filter: brightness(0) invert(1);
+    }
+
     .btn-ghost {
       padding: 16px 32px;
       border-radius: 999px;
@@ -2705,13 +2745,13 @@
     <div class="hero-overlay"></div>
     <div class="wrap">
       <h1 class="hero-title">
-        <img src="svg/logo.svg" alt="iPlayground" class="hero-logo">
+        <img src="img/logo.png" alt="iPlayground" class="hero-logo">
         <div class="hero-date" data-i18n="hero_date">7/25(六)～7/26(日)</div>
         <span class="hero-tagline">徵稿中</span>
       </h1>
 
       <div data-i18n="countdown_label"
-        style="text-align: center; margin: 20px 0 0; font-family: var(--f-mono); font-size: 1em; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.12em; position: relative; z-index: 1;">
+        style="text-align: center; margin: 20px 0 0; font-family: var(--f-mono); font-size: 1em; color: #ffffff; text-transform: uppercase; letter-spacing: 0.12em; position: relative; z-index: 1; text-shadow: 0 0 12px rgba(255,255,255,0.8), 0 0 28px rgba(255,255,255,0.4);">
         截止倒數</div>
 
       <div class="flip-clock" id="countdown" style="margin-top: -8px;">
@@ -2742,6 +2782,21 @@
           <a class="btn-primary hero-cta-btn" href="https://forms.gle/rocYKo7zQuKiGvTx9" target="_blank" rel="noopener"
             data-i18n="cta_submit">🔗 前往報名表單 →</a>
         </div>
+      </div>
+
+      <div class="hero-social-row">
+        <a class="hero-social-btn" href="https://discord.gg/xS8yMKbbjB" target="_blank" rel="noopener" aria-label="Discord">
+          <img src="svg/media/discord.svg" alt="Discord" width="22" height="22">
+        </a>
+        <a class="hero-social-btn" href="https://www.facebook.com/theiPlayground/" target="_blank" rel="noopener" aria-label="Facebook">
+          <img src="svg/media/facebook.svg" alt="Facebook" width="22" height="22">
+        </a>
+        <a class="hero-social-btn" href="https://twitter.com/theiPlayground" target="_blank" rel="noopener" aria-label="Twitter / X">
+          <img src="svg/media/twitter.svg" alt="Twitter" width="22" height="22">
+        </a>
+        <a class="hero-social-btn" href="https://youtube.com/@iplaygroundtaiwan" target="_blank" rel="noopener" aria-label="YouTube">
+          <img src="svg/media/youtube.svg" alt="YouTube" width="22" height="22">
+        </a>
       </div>
     </div>
   </header>
@@ -3690,11 +3745,11 @@
       if (h1) {
         // Use the actual applied mode from the DOM, not t.mode (which may lag behind)
         if (t.wordmarkStyle === "stacked") {
-          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
+          h1.innerHTML = '<img src="img/logo.png" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
         } else {
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
           const date = currentLang === "en" ? "July 25 (Sat) – 26 (Sun)" : "7/25(六)～7/26(日)";
-          h1.innerHTML = '<img src="svg/logo.svg" alt="iPlayground" class="hero-logo"><div class="hero-date">' + date + '</div><span class="hero-tagline">' + tagline + '</span>';
+          h1.innerHTML = '<img src="img/logo.png" alt="iPlayground" class="hero-logo"><div class="hero-date">' + date + '</div><span class="hero-tagline">' + tagline + '</span>';
         }
 
         // Recalculate Chinese subtitle alignment
@@ -3808,7 +3863,7 @@
         staff_title: '工作人員',
         staff_wip: "每一位背後的無名英雄",
         construction: "建構中",
-        footer_tagline: "2026 年的 iPlayground，我們帶八年來的累積與進化，以全新面貌回歸！不只是研討會，更像一場技術人的嘉年華。你會看到熟悉的熱情，也會體驗從未出現過的創新企劃。",
+        footer_tagline: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C 、以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師創辦，目的是彌補台灣在 iOS 開發領域的研討會不足，並為開發者們提供更深入且多樣化的議程。",
         footer_event: "活動", footer_news: "消息", footer_register: "報名",
         footer_community: "社群", footer_contact: "聯絡",
         footer_support: "一般支援", footer_cfp: "講者投稿", footer_sponsor: "贊助合作", footer_coc: "行為準則",
@@ -3863,7 +3918,7 @@
         staff_title: 'Staff',
         staff_wip: "The unsung heroes behind the scenes",
         construction: "Under Construction",
-        footer_tagline: "iPlayground 2026 returns with eight years of growth and evolution — reimagined. More than a conference, it's a festival for developers. Expect the passion you know, and innovations you've never seen.",
+        footer_tagline: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, as well as app development and UI/UX design. Founded by a group of senior engineers to fill the gap in iOS-focused conferences in Taiwan.",
         footer_event: "Event", footer_news: "News", footer_register: "Register",
         footer_community: "Community", footer_contact: "Contact",
         footer_support: "General Support", footer_cfp: "Speaker Submissions", footer_sponsor: "Sponsorship", footer_coc: "Code of Conduct",
