@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="zh-Hant">
 
 <head>
@@ -22,26 +22,26 @@
 
   <style>
     :root {
-      --hue: 28;
+      --hue: 220;
 
-      /* Dark mode accents — vivid orange on space gray */
-      --accent:   oklch(0.76 0.19 var(--hue));
-      --accent-2: oklch(0.82 0.17 calc(var(--hue) + 30));
-      --accent-3: oklch(0.68 0.20 calc(var(--hue) - 40));
+      /* Dark mode accents — electric blue */
+      --accent:   oklch(0.68 0.22 var(--hue));
+      --accent-2: oklch(0.74 0.20 calc(var(--hue) + 20));
+      --accent-3: oklch(0.62 0.22 calc(var(--hue) - 30));
 
-      /* Dark mode surfaces — Mac Space Gray */
-      --bg:        #1e1e1e;
-      --surface:   #2a2a2a;
-      --surface-2: #333333;
+      /* Dark mode surfaces — deep blue-tinted dark */
+      --bg:        #0f1117;
+      --surface:   #1a1d27;
+      --surface-2: #22263a;
 
       /* Dark mode text */
-      --ink:   #f0f0f0;
-      --ink-2: #a0a0a0;
-      --ink-3: #6e6e6e;
+      --ink:   #eef0f8;
+      --ink-2: #8a94b8;
+      --ink-3: #4d5880;
 
       /* Dark mode rules */
-      --rule:   rgba(255, 255, 255, 0.12);
-      --rule-2: rgba(255, 255, 255, 0.06);
+      --rule:   rgba(120, 140, 220, 0.15);
+      --rule-2: rgba(120, 140, 220, 0.07);
 
       --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
       --f-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -51,24 +51,24 @@
     }
 
     html[data-mode="light"] {
-      /* Light mode accents — deeper orange for readability on light bg */
-      --accent:   oklch(0.58 0.20 var(--hue));
-      --accent-2: oklch(0.64 0.18 calc(var(--hue) + 30));
-      --accent-3: oklch(0.54 0.20 calc(var(--hue) - 40));
+      /* Light mode accents — deep blue for readability */
+      --accent:   oklch(0.48 0.22 var(--hue));
+      --accent-2: oklch(0.54 0.20 calc(var(--hue) + 20));
+      --accent-3: oklch(0.44 0.22 calc(var(--hue) - 30));
 
       /* Light mode surfaces */
-      --bg:        #f5f5f7;
+      --bg:        #f0f4ff;
       --surface:   #ffffff;
-      --surface-2: #ebebed;
+      --surface-2: #e8edf8;
 
       /* Light mode text */
-      --ink:   #1d1d1f;
-      --ink-2: #48484a;
-      --ink-3: #86868b;
+      --ink:   #0a0e1f;
+      --ink-2: #2d3a66;
+      --ink-3: #5a6896;
 
       /* Light mode rules */
-      --rule:   rgba(0, 0, 0, 0.10);
-      --rule-2: rgba(0, 0, 0, 0.05);
+      --rule:   rgba(0, 40, 120, 0.12);
+      --rule-2: rgba(0, 40, 120, 0.06);
     }
 
     * {
@@ -624,6 +624,95 @@
       filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.1));
     }
 
+    .hero-logo-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto 0;
+    }
+
+    .hero-logo-wrap .hero-logo {
+      margin-bottom: 0;
+    }
+
+    /* Pixel heart overlay */
+    .px-heart {
+      position: absolute;
+      top: 0;
+      left: calc(5% - 20px);
+      display: grid;
+      gap: 1px;
+      cursor: pointer;
+      transform: translateY(-60%) scale(0.68);
+      transform-origin: center;
+      filter: drop-shadow(0 0 6px rgba(255, 80, 120, 0.7));
+      transition: filter .2s;
+    }
+
+    @keyframes pxHeartBreathe {
+      0%, 100% { transform: translateY(-60%) scale(0.68); }
+      50%       { transform: translateY(-60%) scale(0.76); }
+    }
+
+    .px-heart .ph-row {
+      display: flex;
+      gap: 1px;
+    }
+
+    .ph-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 1px;
+    }
+
+    .hero-pixel-logo {
+      position: relative;
+      width: clamp(280px, 40vw, 560px);
+      aspect-ratio: 12544 / 6440;
+      margin: 0 auto 32px;
+      filter: none !important;
+      display: block !important;
+    }
+
+    .px-mask-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(80, 1fr);
+      gap: 1px;
+      -webkit-mask-image: url(img/logo.png);
+      mask-image: url(img/logo.png);
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+    }
+
+    .px-cell {
+      border-radius: 1px;
+      animation: pxFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes pxFloat {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.55; }
+    }
+
+    .px-icon-overlay {
+      position: absolute;
+      top: 2%;
+      left: 3%;
+      font-size: clamp(18px, 2.5vw, 32px);
+      cursor: pointer;
+      user-select: none;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+      transition: transform .2s;
+      z-index: 2;
+    }
+    .px-icon-overlay:hover { transform: scale(1.3); }
+
+    @media (max-width: 600px) {
+      .hero-pixel-logo { width: clamp(200px, 80vw, 320px); }
+    }
+
     h1.hero-title .hero-date {
       display: block;
       font-size: clamp(16px, 2.2vw, 28px);
@@ -740,6 +829,7 @@
     .hero-cta-glow-wrap {
       position: relative;
       display: inline-block;
+      isolation: isolate;
     }
 
     .hero-cta-glow-wrap::before {
@@ -2474,7 +2564,6 @@
       border-radius: 32px;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
     .map-btn {
@@ -2745,7 +2834,10 @@
     <div class="hero-overlay"></div>
     <div class="wrap">
       <h1 class="hero-title">
-        <img src="img/logo.png" alt="iPlayground" class="hero-logo">
+        <div class="hero-logo-wrap">
+          <img src="img/test.png" alt="iPlayground" class="hero-logo">
+          <div class="px-heart" id="pxHeart"></div>
+        </div>
         <div class="hero-date" data-i18n="hero_date">7/25(六)～7/26(日)</div>
         <span class="hero-tagline">徵稿中</span>
       </h1>
@@ -3743,13 +3835,15 @@
       // Hero Title Style
       const h1 = document.querySelector("h1.hero-title");
       if (h1) {
-        // Use the actual applied mode from the DOM, not t.mode (which may lag behind)
         if (t.wordmarkStyle === "stacked") {
-          h1.innerHTML = '<img src="img/logo.png" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
+          h1.innerHTML = '<img src="img/test.png" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
         } else {
           const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
           const date = currentLang === "en" ? "July 25 (Sat) – 26 (Sun)" : "7/25(六)～7/26(日)";
-          h1.innerHTML = '<img src="img/logo.png" alt="iPlayground" class="hero-logo"><div class="hero-date">' + date + '</div><span class="hero-tagline">' + tagline + '</span>';
+          const dateEl = h1.querySelector('.hero-date');
+          const taglineEl = h1.querySelector('.hero-tagline');
+          if (dateEl) dateEl.innerHTML = date;
+          if (taglineEl) taglineEl.innerHTML = tagline;
         }
 
         // Recalculate Chinese subtitle alignment
@@ -4013,6 +4107,340 @@
       renderAgenda(btn.dataset.track);
     });
 
+    // ===== Hero Pixel Logo =====
+    (function initPixelLogo() {
+      const sourceImg = document.getElementById('heroLogoImg');
+      const container = document.getElementById('heroPixelLogo');
+      if (!sourceImg || !container) return;
+
+      const ICONS = ['❤️','💎','💡','😄','⚡','��','🚀','🌟'];
+      let iconIdx = 0;
+      const DOT  = 5;
+      const STEP = 6;
+      const LEFT_OFFSET = 0.08;
+
+      function colColor(xRatio) {
+        if (xRatio < 0.10) return '#60a5fa';
+        if (xRatio < 0.58) return '#e2e8f0';
+        if (xRatio < 0.84) return '#93c5fd';
+        return '#7dd3fc';
+      }
+
+      function isHeartArea(xRatio, yRatio) {
+        return xRatio < 0.10 && yRatio < 0.35;
+      }
+
+      function build(img) {
+        const SAMPLE_W = 400;
+        const SAMPLE_H = Math.round(SAMPLE_W * img.naturalHeight / img.naturalWidth);
+        const oc = document.createElement('canvas');
+        oc.width  = SAMPLE_W;
+        oc.height = SAMPLE_H;
+        const ctx = oc.getContext('2d');
+        ctx.drawImage(img, 0, 0, SAMPLE_W, SAMPLE_H);
+        const data = ctx.getImageData(0, 0, SAMPLE_W, SAMPLE_H).data;
+
+        container.innerHTML = '';
+        const dispW = Math.min(480, Math.round(window.innerWidth * 0.42));
+        const dispH = Math.round(dispW * SAMPLE_H / SAMPLE_W);
+        const offsetPx = Math.round(dispW * LEFT_OFFSET);
+
+        const wrap = document.createElement('div');
+        wrap.style.cssText = `position:relative;width:${dispW}px;height:${dispH}px;margin:0 auto;`;
+
+        for (let sy = 0; sy < SAMPLE_H; sy += STEP) {
+          for (let sx = 0; sx < SAMPLE_W; sx += STEP) {
+            const idx = (sy * SAMPLE_W + sx) * 4;
+            if (data[idx + 3] < 80) continue;
+            const xRatio = sx / SAMPLE_W;
+            const yRatio = sy / SAMPLE_H;
+            if (isHeartArea(xRatio, yRatio)) continue;
+            const dx = Math.round(xRatio * dispW) - offsetPx;
+            const dy = Math.round(yRatio * dispH);
+            if (dx < 0 || dx > dispW) continue;
+            const dot = document.createElement('div');
+            dot.style.cssText = `position:absolute;left:${dx}px;top:${dy}px;width:${DOT}px;height:${DOT}px;border-radius:1px;background:${colColor(xRatio)};animation:pxFloat ${(2.5+Math.random()).toFixed(2)}s ease-in-out ${(Math.random()*2).toFixed(2)}s infinite;`;
+            wrap.appendChild(dot);
+          }
+        }
+
+        const iconEl = document.createElement('div');
+        iconEl.style.cssText = `position:absolute;left:2px;top:2px;font-size:${Math.round(dispH*0.30)}px;line-height:1;cursor:pointer;user-select:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));transition:transform .2s;z-index:2;`;
+        iconEl.textContent = ICONS[iconIdx];
+        iconEl.title = '點擊切換圖示';
+        iconEl.addEventListener('click', () => {
+          iconIdx = (iconIdx + 1) % ICONS.length;
+          iconEl.textContent = ICONS[iconIdx];
+        });
+        iconEl.addEventListener('mouseenter', () => iconEl.style.transform = 'scale(1.3)');
+        iconEl.addEventListener('mouseleave', () => iconEl.style.transform = '');
+        wrap.appendChild(iconEl);
+        container.appendChild(wrap);
+      }
+
+      if (sourceImg.complete && sourceImg.naturalWidth > 0) {
+        build(sourceImg);
+      } else {
+        sourceImg.addEventListener('load', () => build(sourceImg));
+      }
+    })();
+
+    // ===== Pixel Heart =====
+    (function initPixelHeart() {
+      const container = document.getElementById('pxHeart');
+      if (!container) return;
+
+      // 11×10 heart bitmap
+      const HEART = [
+        [0,1,1,0,0,0,1,1,0,0,0],
+        [1,1,1,1,0,1,1,1,1,0,0],
+        [1,1,1,1,1,1,1,1,1,0,0],
+        [1,1,1,1,1,1,1,1,1,0,0],
+        [0,1,1,1,1,1,1,1,0,0,0],
+        [0,0,1,1,1,1,1,0,0,0,0],
+        [0,0,0,1,1,1,0,0,0,0,0],
+        [0,0,0,0,1,0,0,0,0,0,0],
+      ];
+
+      const ICONS = [
+        { bitmap: HEART, color: '#ff5080' },
+        { bitmap: [
+          // Diamond outline — top crown + girdle + pavilion
+          [0,0,1,1,1,1,1,1,1,1,1,0,0],
+          [0,1,0,0,1,0,1,0,1,0,0,1,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [0,1,0,0,0,1,0,1,0,0,0,1,0],
+          [0,0,1,0,0,0,1,0,0,0,1,0,0],
+          [0,0,0,1,0,0,1,0,0,1,0,0,0],
+          [0,0,0,0,1,0,1,0,1,0,0,0,0],
+          [0,0,0,0,0,1,1,1,0,0,0,0,0],
+          [0,0,0,0,0,0,1,0,0,0,0,0,0],
+        ], color: '#60a5fa' },  // diamond outline
+        { bitmap: [
+          // Bulb with rays — 15×15
+          [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+          [0,0,1,0,0,0,0,1,0,0,0,0,1,0,0],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+          [0,1,0,1,1,0,0,0,0,0,1,1,0,1,0],
+          [0,1,0,1,0,0,0,0,0,0,0,1,0,1,0],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [1,1,0,1,0,0,0,0,0,0,0,1,0,1,1],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [0,1,0,1,1,0,0,0,0,0,1,1,0,1,0],
+          [0,0,0,0,1,1,0,0,0,1,1,0,0,0,0],
+          [0,0,1,0,0,1,1,1,1,1,0,0,1,0,0],
+          [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+          [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ], color: '#fbbf24', scale: 1.21 },  // bulb with rays
+        { bitmap: [
+          [0,1,1,0,0,0,1,1,0],
+          [0,1,1,0,0,0,1,1,0],
+          [0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,1],
+          [0,1,0,0,0,0,0,1,0],
+          [0,0,1,1,1,1,1,0,0],
+          [0,0,0,0,0,0,0,0,0],
+        ], color: '#facc15' },  // smile
+        { bitmap: [
+          // Daisy — 5 petals + yellow center
+          [0,0,0,0,1,1,0,0,0,0,0],
+          [0,0,0,1,1,1,1,0,0,0,0],
+          [0,1,1,0,1,1,0,0,1,1,0],
+          [1,1,1,0,2,2,0,0,1,1,1],
+          [1,1,0,2,2,2,2,0,0,1,1],
+          [0,0,0,2,2,2,2,0,0,0,0],
+          [1,1,0,2,2,2,2,0,0,1,1],
+          [1,1,1,0,2,2,0,0,1,1,1],
+          [0,1,1,0,0,0,0,0,1,1,0],
+          [0,0,0,1,1,1,1,0,0,0,0],
+          [0,0,0,0,1,1,0,0,0,0,0],
+        ], colorMap: { 1: '#ffffff', 2: '#f59e0b' }, color: '#ffffff' },  // daisy 5 petals
+        { bitmap: [
+          // Crown — 11×8
+          [1,0,0,1,0,0,1,0,0,1,0],
+          [1,0,1,1,0,1,1,0,1,1,0],
+          [1,1,1,1,1,1,1,1,1,1,0],
+          [1,1,1,1,1,1,1,1,1,1,0],
+          [1,2,2,1,2,2,1,2,2,1,0],
+          [1,2,2,1,2,2,1,2,2,1,0],
+          [1,1,1,1,1,1,1,1,1,1,0],
+          [0,1,1,1,1,1,1,1,1,0,0],
+        ], colorMap: { 1: '#f59e0b', 2: '#fde68a' }, color: '#f59e0b', anim: 'sweep' },  // crown
+      ];
+
+      // Smile squint bitmap
+      const SMILE_SQUINT = [
+        [0,1,0,0,0,0,0,1,0],
+        [1,1,1,0,0,0,1,1,1],
+        [0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,1],
+        [0,1,0,0,0,0,0,1,0],
+        [0,0,1,1,1,1,1,0,0],
+        [0,0,0,0,0,0,0,0,0],
+      ];
+
+      const TARGET_ROWS = 8;
+      const TARGET_COLS = 11;
+
+      // Responsive dot size by breakpoint
+      function getDotBase() {
+        const w = window.innerWidth;
+        if (w >= 1024) return 7;
+        if (w >= 768)  return 5;
+        return 4;
+      }
+
+      function getScale() {
+        const w = window.innerWidth;
+        if (w >= 1024) return 0.68;
+        if (w >= 768)  return 0.55;
+        return 0.45;
+      }
+
+      let idx = Math.floor(Math.random() * ICONS.length);
+      let animTimer = null;
+      let smileToggle = false;
+      let bulbOn = true;
+      let autoTimer = null;
+
+      function clearAnim() {
+        if (animTimer) { clearInterval(animTimer); animTimer = null; }
+        container.style.animation = '';
+        container.style.opacity = '';
+      }
+
+      function startAnim() {
+        clearAnim();
+        const icon = ICONS[idx];
+
+        if (idx === 0) {
+          // Heart — breathe via CSS
+          container.style.animation = 'pxHeartBreathe 1.2s ease-in-out infinite';
+
+        } else if (idx === 1) {
+          // Diamond — random dot flicker between blue and white
+          animTimer = setInterval(() => {
+            container.querySelectorAll('.ph-dot[data-on="1"]').forEach(dot => {
+              dot.style.background = Math.random() > 0.5 ? '#ffffff' : '#60a5fa';
+              dot.style.boxShadow = Math.random() > 0.5 ? '0 0 6px #ffffff' : '0 0 4px #60a5fa';
+            });
+          }, 120);
+
+        } else if (idx === 2) {
+          // Bulb — pulse glow on/off
+          animTimer = setInterval(() => {
+            bulbOn = !bulbOn;
+            container.querySelectorAll('.ph-dot[data-on="1"]').forEach(dot => {
+              dot.style.boxShadow = bulbOn
+                ? '0 0 10px #fbbf24, 0 0 20px #fbbf24'
+                : '0 0 2px #fbbf24';
+              dot.style.background = bulbOn ? '#fff7c0' : '#fbbf24';
+            });
+          }, 600);
+
+        } else if (idx === 3) {
+          // Smile — toggle squint
+          animTimer = setInterval(() => {
+            smileToggle = !smileToggle;
+            renderBitmap(smileToggle ? SMILE_SQUINT : ICONS[3].bitmap, ICONS[3].color, ICONS[3].scale);
+          }, 800);
+
+        } else if (icon.anim === 'sweep') {
+          // Crown — sweep light left to right, pause between cycles
+          const dots = Array.from(container.querySelectorAll('.ph-dot[data-on="1"]'));
+          const cols = ICONS[idx].bitmap[0].length;
+          let sweepCol = 0;
+          let pausing = false;
+
+          animTimer = setInterval(() => {
+            if (pausing) return;
+            dots.forEach(dot => {
+              const col = parseInt(dot.dataset.col || 0);
+              const dist = Math.abs(col - sweepCol);
+              if (dist === 0) {
+                dot.style.background = '#ffffff';
+                dot.style.boxShadow = '0 0 8px #ffffff, 0 0 16px #fde68a';
+              } else if (dist === 1) {
+                dot.style.background = '#fde68a';
+                dot.style.boxShadow = '0 0 4px #fde68a';
+              } else {
+                dot.style.background = dot.dataset.origColor || '#f59e0b';
+                dot.style.boxShadow = `0 0 3px ${dot.dataset.origColor || '#f59e0b'}`;
+              }
+            });
+            sweepCol++;
+            if (sweepCol >= cols) {
+              sweepCol = 0;
+              pausing = true;
+              setTimeout(() => { pausing = false; }, 3000);
+            }
+          }, 80);
+        }
+      }
+
+      function renderBitmap(bitmap, color, scale, color2, colorMap) {
+        container.innerHTML = '';
+        const rows = bitmap.length;
+        const cols = bitmap[0].length;
+        const dotW = Math.max(2, Math.floor((TARGET_COLS * getDotBase()) / cols));
+        const dotH = Math.max(2, Math.floor((TARGET_ROWS * getDotBase()) / rows));
+        const dotSize = Math.min(dotW, dotH) * (scale || 1);
+
+        bitmap.forEach(row => {
+          const rowEl = document.createElement('div');
+          rowEl.className = 'ph-row';
+          row.forEach((val, colIdx) => {
+            const dot = document.createElement('div');
+            dot.className = 'ph-dot';
+            dot.dataset.on = val ? '1' : '0';
+            dot.dataset.col = colIdx;
+            dot.style.width  = dotSize + 'px';
+            dot.style.height = dotSize + 'px';
+            let c = 'transparent';
+            if (val) {
+              if (colorMap && colorMap[val]) c = colorMap[val];
+              else if (val === 2) c = color2 || color;
+              else c = color;
+            }
+            dot.style.background = c;
+            if (val) {
+              dot.dataset.origColor = c;
+              dot.style.boxShadow = `0 0 3px ${c}`;
+            }
+            rowEl.appendChild(dot);
+          });
+          container.appendChild(rowEl);
+        });
+      }
+
+      function render() {
+        clearAnim();
+        bulbOn = true;
+        smileToggle = false;
+        container.style.opacity = '1';
+        const icon = ICONS[idx];
+        renderBitmap(icon.bitmap, icon.color, icon.scale, icon.color2, icon.colorMap);
+        startAnim();
+      }
+
+      container.addEventListener('click', () => {
+        idx = (idx + 1) % ICONS.length;
+        render();
+      });
+
+      render();
+
+      // Re-render on resize for responsiveness
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => render(), 200);
+      });
+    })();
+
     // ===== Photo Wall =====
     (function buildPhotoWall() {
       const imgs = [
@@ -4195,6 +4623,7 @@
       if (label) label.textContent = lang === "zh" ? "中" : "EN";
     }
   </script>
+
 </body>
 
 </html>
