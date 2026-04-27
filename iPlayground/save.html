@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>太空船維修模擬器 - 正確降落版</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+        }
+
+        /* 1. 場景容器 960x200 */
+        .game-container {
+            width: 960px;
+            height: 200px;
+            background: rgba(30, 41, 59, 0.5);
+            border: 2px solid #334155;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            /* 移除原本的 flex 佈局干擾，改用相對定位 */
+        }
+
+        /* 2. 維修舞台 */
+        .spaceship {
+            /* 👉 修改重點：強制定位在距離底部 20px */
+            position: absolute;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            /* 水平置中 */
+
+            font-size: 120px;
+            /* 2 倍大 */
+            z-index: 10;
+            filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.6));
+            animation: shake 0.1s infinite;
+            user-select: none;
+            line-height: 1;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            25% {
+                transform: translate(calc(-50% + 1px), 1px);
+            }
+
+            75% {
+                transform: translate(calc(-50% - 1px), -1px);
+            }
+        }
+
+        /* 3. 小精靈動畫 */
+        @keyframes grounded-hammer {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            45% {
+                transform: translateY(-18px);
+            }
+
+            55% {
+                transform: translateY(2px) scaleY(0.7);
+            }
+        }
+
+        .spirit {
+            position: absolute;
+            font-size: 32px;
+            z-index: 20;
+            animation: grounded-hammer var(--speed) infinite;
+            user-select: none;
+            /* 👉 讓精靈從底部往上算位置 */
+            bottom: 40px;
+            transition: left 0.4s ease-out;
+        }
+
+        .v-enter-active {
+            transition: all 0.5s ease-out;
+        }
+
+        .v-enter-from {
+            opacity: 0;
+            transform: translateY(-100px);
+        }
+
+        /* 4. 草地層 (底座) */
+        .grass-belt {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40px;
+            background: #064e3b;
+            border-top: 3px solid #059669;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            z-index: 30;
+        }
+
+        /* 5. 底部工具欄 */
+        .social-toolbar {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 20px;
+            color: white;
+            border: none;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+        }
+
+        .btn-fb {
+            background: #1877f2;
+        }
+
+        .btn-x {
+            background: #000000;
+        }
+
+        .btn-yt {
+            background: #ff0000;
+        }
+
+        .btn-ig {
+            background: #e4405f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app" style="display: contents;">
+        <div class="game-container">
+            <div class="spaceship">🛸</div>
+
+            <transition-group>
+                <div v-for="(s, i) in spirits" :key="s.id" class="spirit" :style="getGroundedPos(i)">
+                    {{ s.icon }}
+                </div>
+            </transition-group>
+
+            <div class="grass-belt">
+                🌿🌼🌱🌸🌿🌻🌱🌷🌿🌼🌱🌸🌿🌻🌱🌷🌿🌼🌱🌸🌿🌻🌱🌷🌿🌼🌱🌸🌿🌻🌱🌷🌿
+            </div>
+        </div>
+
+        <div class="social-toolbar">
+            <button @click="addSpirit('fb')" class="social-btn btn-fb">f</button>
+            <button @click="addSpirit('x')" class="social-btn btn-x">𝕏</button>
+            <button @click="addSpirit('yt')" class="social-btn btn-yt">▶</button>
+            <button @click="addSpirit('ig')" class="social-btn btn-ig">📸</button>
+        </div>
+    </div>
+
+    <script>
+        const { createApp, ref } = Vue;
+        createApp({
+            setup() {
+                const spirits = ref([]);
+                const max_display = 20;
+
+                const addSpirit = (type) => {
+                    const icons = { fb: '👽', x: '🤖', yt: '👨‍🏭', ig: '👾' };
+                    const s = {
+                        id: Date.now() + Math.random(),
+                        icon: icons[type],
+                        speed: (0.4 + Math.random() * 0.15).toFixed(2)
+                    };
+                    spirits.value.push(s);
+                    if (spirits.value.length > max_display) spirits.value.shift();
+                };
+
+                const getGroundedPos = (index) => {
+                    const total = Math.min(spirits.value.length, max_display);
+                    const sceneWidth = 850;
+                    const spacing = sceneWidth / (total - 1 || 1);
+
+                    const x = (index * spacing) - (sceneWidth / 2);
+
+                    // 讓精靈稍微錯開高度，看起來比較自然，但都在飛船下方
+                    const yOffset = (index % 3) * 5;
+
+                    return {
+                        left: `calc(50% + ${x}px - 16px)`,
+                        bottom: `${40 + yOffset}px`, // 從草地往上算
+                        '--speed': spirits.value[index]?.speed + 's',
+                    };
+                };
+
+                return { spirits, addSpirit, getGroundedPos };
+            }
+        }).mount('#app');
+    </script>
+</body>
+
+</html>

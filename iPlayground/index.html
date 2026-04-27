@@ -597,7 +597,7 @@
 
     h1.hero-title .hero-tagline {
       display: block;
-      font-size: 0.78em;
+      font-size: 0.546em;
       /* Dark mode: shimmer loading effect */
       background: linear-gradient(90deg,
           #eeeeee 0%,
@@ -670,13 +670,13 @@
     }
 
     .hero-logo-wrap .hero-logo {
-      margin-bottom: 0;
+      margin-bottom: 20px;
     }
 
     /* Pixel heart overlay */
     .px-heart {
       position: absolute;
-      top: 0;
+      top: 20px;
       left: calc(5% - 20px);
       display: grid;
       gap: 1px;
@@ -835,10 +835,10 @@
     .hero-cta-row {
       margin-top: 30px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
     .hero-cta-row > .hero-cta-glow-wrap,
@@ -2812,7 +2812,7 @@
     }
 
     h1.hero-title .hero-logo {
-      margin-bottom: 22px;
+      margin-bottom: 0;
       filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.28));
     }
 
@@ -3277,7 +3277,7 @@
       }
 
       h1.hero-title .hero-tagline {
-        font-size: 0.78em;
+        font-size: 0.546em;
       }
     }
 
@@ -3551,10 +3551,11 @@
   <header class="hero" data-screen-label="01 Hero">
     <div class="photo-wall" id="photoWall"></div>
     <div class="hero-overlay"></div>
+    <div id="heroInner" style="width:100%;transform-origin:top center;visibility:hidden;">
     <div class="wrap">
       <h1 class="hero-title">
         <div class="hero-logo-wrap">
-          <img src="img/test.png" alt="iPlayground" class="hero-logo">
+          <img src="img/logo.png" alt="iPlayground" class="hero-logo">
           <div class="px-heart" id="pxHeart"></div>
         </div>
         <div class="hero-date" data-i18n="hero_date">7/25(六)～7/26(日)</div>
@@ -3611,7 +3612,7 @@
           <img src="img/svg/media/youtube.svg" alt="YouTube" width="22" height="22">
         </a>
       </div>
-    </div>
+    </div><!-- /#heroInner -->
   </header>
 
   <!-- Latest News -->
@@ -5367,6 +5368,37 @@
 
 <!-- ===== Confetti / Party Popper ===== -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<!-- ===== Hero Auto-Scale ===== -->
+<script>
+(function() {
+  const NAV_H   = 56;
+  const PADDING = 30;
+
+  function scaleHero() {
+    const inner = document.getElementById('heroInner');
+    if (!inner) return;
+
+    // Reset first
+    inner.style.zoom = '';
+
+    const naturalH = inner.offsetHeight;
+    const availH   = window.innerHeight - NAV_H - PADDING;
+
+    if (naturalH > availH) {
+      inner.style.zoom = availH / naturalH;
+    }
+
+    // Reveal after scale is applied
+    inner.style.visibility = 'visible';
+  }
+
+  window.addEventListener('load', function() {
+    scaleHero();
+    window.addEventListener('resize', scaleHero);
+  });
+})();
+</script>
 <script>
 (function() {
   const COLORS = ['#FF6B35','#FFD700','#FF3D8B','#4895FF','#A688FF','#34C759','#FF9F0A','#64D2FF','#FF453A','#30D158'];
