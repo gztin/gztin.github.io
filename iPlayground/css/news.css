@@ -662,6 +662,18 @@
   }
 
   @media (max-width: 900px) {
+    nav.top .row {
+      display: flex !important;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    nav.top .brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
     .news-page-layout {
       display: block;
       padding: var(--ios-space-5);
