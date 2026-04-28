@@ -814,7 +814,7 @@
     .hl {
       background: var(--surface);
       border: 1px solid var(--rule-2);
-      border-radius: 28px;
+      border-radius: var(--r-lg);
       padding: 48px 40px;
       min-height: 320px;
       display: flex;
@@ -870,7 +870,7 @@
       margin-top: 72px;
       background: var(--surface);
       border: 1px solid var(--rule-2);
-      border-radius: 28px;
+      border-radius: var(--r-lg);
       padding: 12px;
     }
 
@@ -993,6 +993,10 @@
     .agenda-sort-btn.desc {
       background: color-mix(in srgb, var(--accent) 12%, transparent);
       color: var(--accent);
+    }
+
+    .agenda-sort-btn.desc svg {
+      transform: scaleY(-1);
     }
 
     .agenda-tabs button {
@@ -1404,7 +1408,7 @@
     .venue-card {
       margin-top: 72px;
       border: 1px solid var(--rule-2);
-      border-radius: 28px;
+      border-radius: var(--r-lg);
       overflow: hidden;
       display: grid;
       grid-template-columns: 1.2fr 1fr;
@@ -1575,7 +1579,7 @@
     .ticket {
       background: var(--bg);
       border: 1px solid var(--rule-2);
-      border-radius: 20px;
+      border-radius: var(--r-md);
       padding: 32px;
       display: flex;
       flex-direction: column;
@@ -2033,7 +2037,7 @@
     .news-card {
       background: var(--surface);
       border: 1px solid var(--rule-2);
-      border-radius: 28px;
+      border-radius: var(--r-lg);
       overflow: hidden;
     }
 
@@ -2070,9 +2074,7 @@
     }
 
     .news-side-title .label-heading .gradient {
-      background: linear-gradient(110deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      background-clip: text;
+      /* Use shared .text-gradient class */
       color: transparent;
     }
 
@@ -2135,6 +2137,8 @@
       font-family: var(--f-mono);
       font-size: 14px;
       font-weight: 700;
+    }
+    .news-row .date.text-gradient {
       background: linear-gradient(110deg, var(--accent), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
@@ -2408,7 +2412,7 @@
       margin: 48px 0 0;
       background: var(--surface);
       border: 1px solid var(--rule-2);
-      border-radius: 24px;
+      border-radius: var(--r-lg);
       padding: 40px;
       text-align: left;
     }

@@ -53,9 +53,11 @@
   }
   .article-date {
     font-family: var(--f-mono); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.04em; margin-bottom: 14px;
+  }
+  .article-date.text-gradient {
     background: linear-gradient(110deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
-    letter-spacing: 0.04em; margin-bottom: 14px;
   }
   .article-title {
     font-size: clamp(28px, 4vw, 44px);
@@ -142,6 +144,8 @@
   .listing-header h1 {
     font-size: clamp(32px, 5vw, 52px); font-weight: 700;
     letter-spacing: -0.03em; margin: 0;
+  }
+  .listing-header h1.text-gradient {
     background: linear-gradient(110deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
@@ -158,6 +162,8 @@
   .listing-row:hover { background: var(--surface-2); border-radius: 12px; padding-left: 16px; padding-right: 16px; }
   .listing-row .l-date {
     font-family: var(--f-mono); font-size: 13px; font-weight: 600;
+  }
+  .listing-row .l-date.text-gradient {
     background: linear-gradient(110deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
