@@ -2127,59 +2127,112 @@
 <script>
 (function() {
   const COLORS = ['#FF6B35','#FFD700','#FF3D8B','#4895FF','#A688FF','#34C759','#FF9F0A','#64D2FF','#FF453A','#30D158'];
+  const LS_KEY = 'confetti-enabled';
+  let confettiEnabled = true;
 
-  // ── 載入時的拉炮特效 ──────────────────────────────────────────
-  setTimeout(function() {
-    confetti({
-      particleCount: 320,
-      spread: 200,
-      startVelocity: 78,
-      decay: 0.87,
-      gravity: 0.75,
-      ticks: 420,
-      scalar: 1.4,
-      colors: COLORS,
-      shapes: ['square', 'circle'],
-      origin: { x: 0.5, y: 0.78 }
-    });
-  }, 250);
+  function normalizeSwitchValue(v) {
+    return String(v || '').trim().toLowerCase() === 'on' ? 'on' : 'off';
+  }
 
-  setTimeout(function() {
-    confetti({
-      particleCount: 180,
-      spread: 160,
-      startVelocity: 65,
-      decay: 0.88,
-      gravity: 0.8,
-      ticks: 380,
-      scalar: 1.2,
-      colors: COLORS,
-      shapes: ['square', 'circle'],
-      origin: { x: 0.3, y: 0.82 }
-    });
-    confetti({
-      particleCount: 180,
-      spread: 160,
-      startVelocity: 65,
-      decay: 0.88,
-      gravity: 0.8,
-      ticks: 380,
-      scalar: 1.2,
-      colors: COLORS,
-      shapes: ['square', 'circle'],
-      origin: { x: 0.7, y: 0.82 }
-    });
-  }, 500);
+  function createConfettiToggleInput() {
+    const wrap = document.createElement('div');
+    wrap.style.position = 'fixed';
+    wrap.style.right = '16px';
+    wrap.style.bottom = '88px';
+    wrap.style.zIndex = '9999';
+    wrap.style.display = 'flex';
+    wrap.style.alignItems = 'center';
+    wrap.style.gap = '8px';
+    wrap.style.padding = '8px 10px';
+    wrap.style.borderRadius = '10px';
+    wrap.style.background = 'rgba(0,0,0,0.72)';
+    wrap.style.color = '#fff';
+    wrap.style.font = '12px/1.2 ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif';
 
-  // ── 最新消息區塊：持續飄落粒子 ───────────────────────────────
-  const newsCanvas = document.getElementById('newsConfettiCanvas');
-  if (newsCanvas) {
+    const label = document.createElement('span');
+    label.textContent = 'Confetti';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.inputMode = 'text';
+    input.autocomplete = 'off';
+    input.spellcheck = false;
+    input.placeholder = 'on/off';
+    input.value = confettiEnabled ? 'on' : 'off';
+    input.style.width = '56px';
+    input.style.padding = '4px 6px';
+    input.style.borderRadius = '6px';
+    input.style.border = '1px solid rgba(255,255,255,0.35)';
+    input.style.background = '#fff';
+    input.style.color = '#111';
+
+    input.addEventListener('change', function() {
+      const v = normalizeSwitchValue(input.value);
+      confettiEnabled = v === 'on';
+      try { localStorage.setItem(LS_KEY, v); } catch (e) {}
+      input.value = v;
+    });
+
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    document.body.appendChild(wrap);
+  }
+
+  function playLaunchConfetti() {
+    if (!confettiEnabled) return;
+    setTimeout(function() {
+      confetti({
+        particleCount: 320,
+        spread: 200,
+        startVelocity: 78,
+        decay: 0.87,
+        gravity: 0.75,
+        ticks: 420,
+        scalar: 1.4,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.5, y: 0.78 }
+      });
+    }, 250);
+
+    setTimeout(function() {
+      confetti({
+        particleCount: 180,
+        spread: 160,
+        startVelocity: 65,
+        decay: 0.88,
+        gravity: 0.8,
+        ticks: 380,
+        scalar: 1.2,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.3, y: 0.82 }
+      });
+      confetti({
+        particleCount: 180,
+        spread: 160,
+        startVelocity: 65,
+        decay: 0.88,
+        gravity: 0.8,
+        ticks: 380,
+        scalar: 1.2,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.7, y: 0.82 }
+      });
+    }, 500);
+  }
+
+  function setupNewsConfetti(newsDriftEnabled) {
+    const newsCanvas = document.getElementById('newsConfettiCanvas');
+    if (!newsCanvas || !newsDriftEnabled) return;
+
     const newsConfetti = confetti.create(newsCanvas, { resize: true, useWorker: false });
     let animFrame = null;
     let isVisible = false;
 
     function drift() {
-      if (!isVisible) return;
+      if (!isVisible || !confettiEnabled) return;
       newsConfetti({
         particleCount: 3,
         spread: 80,
@@ -2190,7 +2243,7 @@
         scalar: window.innerWidth < 600 ? 0.5 : 0.85,
         colors: COLORS,
         shapes: ['square', 'circle'],
-        origin: { x: Math.random(), y: 0 }  // rain from top of the section
+        origin: { x: Math.random(), y: 0 }
       });
       animFrame = requestAnimationFrame(drift);
     }
@@ -2207,8 +2260,30 @@
       });
     }, { threshold: 0.1 });
 
-    observer.observe(document.getElementById('news'));
+    const newsSection = document.getElementById('news');
+    if (newsSection) observer.observe(newsSection);
   }
+
+  fetch('data/confetti-control.json')
+    .then(function(r) { return r.json(); })
+    .then(function(confettiConfig) {
+      const defaultSwitch = normalizeSwitchValue(confettiConfig.launchConfetti);
+      const savedSwitch = (() => {
+        try { return localStorage.getItem(LS_KEY); } catch (e) { return null; }
+      })();
+      const effectiveSwitch = savedSwitch ? normalizeSwitchValue(savedSwitch) : defaultSwitch;
+      confettiEnabled = effectiveSwitch === 'on';
+
+      createConfettiToggleInput();
+      playLaunchConfetti();
+      setupNewsConfetti(normalizeSwitchValue(confettiConfig.newsDrift) === 'on');
+    })
+    .catch(function() {
+      confettiEnabled = true;
+      createConfettiToggleInput();
+      playLaunchConfetti();
+      setupNewsConfetti(true);
+    });
 })();
 </script>
 
