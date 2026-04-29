@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/)",
+      "Bash(node_modules/.bin/vite --host localhost --port 1234 --strictPort)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:1234/)",
+      "Bash(node node_modules/vite/bin/vite.js --host localhost --port 1234 --strictPort)",
+      "Bash(curl -s http://localhost:1234/css/shared.css)",
+      "Bash(npx -y @lobehub/market-cli skills install seflless-dot-agents-impeccable --agent claude-code)",
+      "Bash(xargs wc *)",
+      "Bash(sed -i 's/border-radius: 24px;/border-radius: var\\(--r-lg\\);/g' css/main.css)",
+      "Bash(sed -i 's/border-radius: 20px;/border-radius: var\\(--r-md\\);/g' css/main.css)",
+      "Bash(sed -i 's/border-radius: 28px;/border-radius: var\\(--r-lg\\);/g' css/shared.css)",
+      "Bash(sed -i 's/border-radius: 24px;/border-radius: var\\(--r-lg\\);/g' css/shared.css)",
+      "Bash(sed -i 's/border-radius: 20px;/border-radius: var\\(--r-md\\);/g' css/shared.css)",
+      "Bash(pkill -f \"http.server\")"
+    ]
+  }
+}

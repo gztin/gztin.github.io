@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="iPlayground 2026 最新消息" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="iPlayground 2026" />
+<meta property="og:title" content="最新消息 · iPlayground 2026" />
+<meta property="og:description" content="iPlayground 2026 最新消息" />
+<meta property="og:url" content="https://gztin.github.io/iPlayground/news.html?id=0" />
+<meta property="og:image" content="https://gztin.github.io/iPlayground/img/logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="最新消息 · iPlayground 2026" />
+<meta name="twitter:description" content="iPlayground 2026 最新消息" />
+<meta name="twitter:image" content="https://gztin.github.io/iPlayground/img/logo.png" />
+<title>最新消息 · iPlayground 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Michroma&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/news.css?v=news-eyebrow-20260429">
+  <link rel="stylesheet" href="css/fab.css">
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="top">
+  <div class="wrap row" style="grid-template-columns: 1fr auto !important;">
+    <a class="brand" href="index.html">
+      <img src="img/svg/logo_header_light.svg" alt="iPlayground 2026" class="nav-logo nav-logo--light">
+      <img src="img/svg/logo_header_dark.svg" alt="iPlayground 2026" class="nav-logo nav-logo--dark">
+    </a>
+    <div class="nav-right">
+      <!-- Mode toggle -->
+      <div class="lang-switch" id="modeSwitch" title="Appearance">
+        <button data-mode="auto" aria-label="Auto" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
+          <span>A</span>
+        </button>
+        <button data-mode="light" aria-label="Light" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        </button>
+        <button data-mode="dark" aria-label="Dark" style="padding:6px 9px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+      <!-- Lang toggle -->
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="zh">中</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <a class="home-icon-link" href="index.html" aria-label="Home" title="Home">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 10.5L12 3l9 7.5"></path>
+          <path d="M5 9.5V21h14V9.5"></path>
+          <path d="M10 21v-6h4v6"></path>
+        </svg>
+      </a>
+      <a class="back-link" href="index.html" id="backLink">← 回到主頁</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Content (rendered by JS) -->
+<div id="pageRoot"></div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-lock">
+          <img src="img/svg/logo_header_dark.svg" alt="iPlayground" class="footer-logo footer-logo--light" style="height:32px;width:auto;">
+          <img src="img/svg/logo_header_light.svg" alt="iPlayground" class="footer-logo footer-logo--dark" style="height:32px;width:auto;">
+        </div>
+        <p class="footer-tagline" id="footerTagline"></p>
+      </div>
+      <div class="footer-event-links">
+        <h4 data-i18n="footer_event">活動</h4>
+        <ul>
+          <li><a href="index.html#news" data-i18n="footer_news">最新消息</a></li>
+          <li><a href="index.html#about" data-i18n="nav_about">活動資訊</a></li>
+          <li><a href="index.html#agenda" data-i18n="nav_agenda">議程</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_community">社群</h4>
+        <ul>
+          <li><a href="#" data-link="social_discord" target="_blank" rel="noopener">Discord</a></li>
+          <li><a href="#" data-link="social_facebook" target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href="#" data-link="social_twitter" target="_blank" rel="noopener">Twitter / X</a></li>
+          <li><a href="#" data-link="social_youtube" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_contact">聯絡</h4>
+        <ul>
+          <li><a href="#" data-link="contact_support" data-i18n="footer_support">一般支援</a></li>
+          <li><a href="#" data-link="contact_cfp" data-i18n="footer_cfp">講者投稿</a></li>
+          <li><a href="#" data-link="contact_sponsor" data-i18n="footer_sponsor">贊助合作</a></li>
+          <li><a href="#" data-link="coc" target="_blank" rel="noopener" data-i18n="footer_coc">行為準則</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+    </div>
+    <div style="padding-top:16px;text-align:center;font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb, var(--bg) 35%, transparent);letter-spacing:0.02em;">
+      iPlayground 2026 is organized by Taipei Elite Software Developer Association (77212283). All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== State =====
+let currentLang = "zh";
+let I18N_DATA = {};   // 從 data/iplayground_i18n.json 載入
+const NEWS_DATA_URLS = {
+  zh: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news.json",
+  en: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news_en.json",
+};
+let NEWS_DATA_BY_LANG = { zh: [], en: [] };
+let NEWS_DATA = [];   // 從 GitHub raw HTTPS 來源載入
+let CONFIG    = {};   // 從 data/iplayground_config.json 載入
+let LINKS     = {};
+
+// ===== i18n helpers =====
+function t(key) {
+  const entry = I18N_DATA[key];
+  if (!entry) return key;
+  if (key === 'footer_tagline') return CONFIG.footerTagline ? CONFIG.footerTagline[currentLang] : '';
+  return entry[currentLang] || entry['zh'] || key;
+}
+
+function getVal(obj) {
+  if (typeof obj === 'string') return obj;
+  return obj[currentLang] || obj.zh || "";
+}
+
+function getContentHtml(content) {
+  return getVal(content).replace(/\\n|\r\n|\r|\n/g, "<br>");
+}
+
+function escapeHtml(value) {
+  return String(value || "").replace(/[&<>"']/g, ch => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  }[ch]));
+}
+
+function applyLinks(links) {
+  if (!links) return;
+  const map = {};
+  Object.entries(links.important || {}).forEach(([key, value]) => { map[key] = value; });
+  Object.entries(links.contact || {}).forEach(([key, value]) => { map[`contact_${key}`] = value; });
+  (links.social || []).forEach(item => { map[`social_${item.id}`] = item.url; });
+
+  document.querySelectorAll("[data-link]").forEach(el => {
+    const url = map[el.dataset.link];
+    if (url) el.href = url;
+  });
+}
+
+function normalizeButtons(buttons) {
+  if (!buttons) return [];
+  if (Array.isArray(buttons)) return buttons;
+  if (Array.isArray(buttons[currentLang])) return buttons[currentLang];
+  if (buttons.url || buttons.href || buttons.link) return [buttons];
+  return [];
+}
+
+function renderArticleButtons(buttons) {
+  const links = normalizeButtons(buttons).map(button => {
+    if (!button || typeof button !== "object") return "";
+    const label = getVal(button.label || button.title || button.text || button.name || button.content || "");
+    const url = button.url || button.href || button.link || "";
+    if (!label || !url) return "";
+    return `<a class="article-cta" href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
+  }).filter(Boolean);
+
+  if (!links.length) return "";
+  return `<div class="article-actions">${links.join("")}</div>`;
+}
+
+function setMeta(name, value, attr = "property") {
+  const selector = attr === "name" ? `meta[name="${name}"]` : `meta[property="${name}"]`;
+  const el = document.querySelector(selector);
+  if (el) el.setAttribute("content", value);
+}
+
+function articleUrl(id) {
+  return new URL(`news.html?id=${id}`, window.location.href).href;
+}
+
+function bindShareButtons() {
+  document.querySelectorAll("[data-copy-share]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const url = btn.dataset.copyShare;
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = currentLang === "en" ? "Copied" : "已複製";
+      } catch (e) {
+        window.prompt(currentLang === "en" ? "Copy this link" : "請複製此連結", url);
+      }
+      setTimeout(() => { btn.textContent = original; }, 1600);
+    });
+  });
+}
+
+function plainTextFromHtml(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html || "";
+  return (div.textContent || div.innerText || "").replace(/\s+/g, " ").trim();
+}
+
+function articleDescription(article) {
+  const text = plainTextFromHtml(getContentHtml(article?.content || ""));
+  if (!text) return currentLang === "en" ? "Latest news from iPlayground 2026." : "iPlayground 2026 最新消息";
+  return text.length > 140 ? `${text.slice(0, 140)}…` : text;
+}
+
+function updateArticleMeta(id, title, article) {
+  const url = articleUrl(id);
+  const desc = articleDescription(article);
+  setMeta("description", desc, "name");
+  setMeta("og:title", title);
+  setMeta("og:description", desc);
+  setMeta("og:url", url);
+  setMeta("twitter:title", title, "name");
+  setMeta("twitter:description", desc, "name");
+}
+
+// ===== Appearance =====
+const mql = window.matchMedia("(prefers-color-scheme: dark)");
+function resolveMode(pref) {
+  return (pref === "light" || pref === "dark") ? pref : (mql.matches ? "dark" : "light");
+}
+function applyAppearance(pref) {
+  document.documentElement.dataset.mode = resolveMode(pref);
+  document.querySelectorAll("#modeSwitch button").forEach(b =>
+    b.classList.toggle("active", b.dataset.mode === pref)
+  );
+  if (typeof syncFabMode === "function") syncFabMode(pref);
+  try { localStorage.setItem("appearance", pref); } catch(e) {}
+}
+document.getElementById("modeSwitch").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-mode]");
+  if (btn) applyAppearance(btn.dataset.mode);
+});
+mql.addEventListener("change", () => {
+  const saved = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })() || "auto";
+  if (saved === "auto") applyAppearance("auto");
+});
+
+// ===== i18n apply =====
+function applyLang(lang) {
+  currentLang = lang;
+  NEWS_DATA = NEWS_DATA_BY_LANG[lang] || NEWS_DATA_BY_LANG.zh || [];
+  document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+  document.querySelectorAll("#langSwitch button").forEach(b =>
+    b.classList.toggle("active", b.dataset.lang === lang)
+  );
+  document.getElementById("backLink").textContent = t("news_back");
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  const footerTagline = document.getElementById("footerTagline");
+  if (footerTagline) footerTagline.textContent = t("footer_tagline");
+  if (typeof syncFabLang === "function") syncFabLang(lang);
+  try { localStorage.setItem("lang", lang); } catch(e) {}
+  renderPage();
+}
+document.getElementById("langSwitch").addEventListener("click", (e) => {
+  const btn = e.target.closest("button[data-lang]");
+  if (btn) applyLang(btn.dataset.lang);
+});
+
+// ===== Routing & Render =====
+function renderPage() {
+  const params = new URLSearchParams(window.location.search);
+  const root = document.getElementById("pageRoot");
+  const idParam = params.get("id");
+
+  if (idParam === null) {
+    document.title = `${t("news_all_news")} · iPlayground 2026`;
+    root.innerHTML = `
+      <div class="wrap">
+        <div class="listing-header">
+          <h1>${t("news_all_news")}</h1>
+          <p>${t("news_all_news_sub")}</p>
+        </div>
+        <div class="listing-grid">
+          ${NEWS_DATA.map((n, i) => `
+            <a class="listing-row" href="news.html?id=${i}">
+              <div class="l-date">${n.date}</div>
+              <div class="l-title">${getVal(n.title)}</div>
+              <div class="l-arrow">→</div>
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  const id = parseInt(idParam, 10);
+  if (isNaN(id) || id < 0 || id >= NEWS_DATA.length) {
+    root.innerHTML = `<div class="msg">${t("news_not_found")}<br><a href="index.html" style="color:var(--accent);">${t("news_back_home")}</a></div>`;
+    return;
+  }
+
+  const n = NEWS_DATA[id];
+  const titleStr = getVal(n.title);
+  updateArticleMeta(id, titleStr, n);
+  document.title = `${titleStr} · iPlayground 2026`;
+
+  const sidebar = NEWS_DATA.map((item, i) => `
+    <a class="sidebar-item ${i === id ? 'active' : ''}" href="news.html?id=${i}">
+      <div class="s-date">${item.date}</div>
+      <div class="s-title">${getVal(item.title)}</div>
+    </a>
+  `).join("");
+
+  const options = NEWS_DATA.map((item, i) =>
+    `<option value="${i}" ${i === id ? 'selected' : ''}>${item.date}　${getVal(item.title)}</option>`
+  ).join("");
+
+  root.innerHTML = `
+    <div class="mobile-picker" id="mobilePicker">
+      <label>${t("news_mobile_label")}</label>
+      <select id="newsSelect">${options}</select>
+    </div>
+    <div class="news-page-layout">
+      <aside class="news-sidebar">
+        <div class="sidebar-heading">${t("news_sidebar_heading")}</div>
+        ${sidebar}
+      </aside>
+      <main class="news-main">
+        <header class="article-header" id="artHeader">
+          <div class="article-date">${n.date}</div>
+          <h1 class="article-title">${titleStr}</h1>
+        </header>
+        <article class="article-body" id="artBody">
+          ${getContentHtml(n.content)}
+          ${renderArticleButtons(n.buttons)}
+        </article>
+      </main>
+    </div>
+  `;
+  bindShareButtons();
+
+  document.querySelectorAll(".sidebar-item").forEach(link => {
+    link.addEventListener("click", (event) => {
+      const target = new URL(link.href, window.location.href);
+      event.preventDefault();
+      history.pushState(null, "", target.pathname + target.search);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      renderPage();
+    });
+  });
+
+  const sel = document.getElementById("newsSelect");
+  if (sel) {
+    sel.addEventListener("change", function() {
+      const newId = parseInt(this.value, 10);
+      const item = NEWS_DATA[newId];
+      const iTitle = getVal(item.title);
+      document.getElementById("artHeader").innerHTML = `
+        <div class="article-date">${item.date}</div>
+        <h1 class="article-title">${iTitle}</h1>
+      `;
+      document.getElementById("artBody").innerHTML = `
+        ${getContentHtml(item.content)}
+        ${renderArticleButtons(item.buttons)}
+      `;
+      document.title = `${iTitle} · iPlayground 2026`;
+      updateArticleMeta(newId, iTitle, item);
+      bindShareButtons();
+      history.replaceState(null, "", `news.html?id=${newId}`);
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+  }
+}
+
+// ===== Init — 並行載入所有資料後初始化 =====
+const savedLang = (() => { try { return localStorage.getItem("lang"); } catch(e) { return null; } })() || "zh";
+const savedAppearance = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })() || "auto";
+const savedHue = (() => { try { return localStorage.getItem("hue"); } catch(e) { return null; } })() || 230;
+document.documentElement.style.setProperty("--hue", savedHue);
+applyAppearance(savedAppearance);
+
+Promise.all([
+  fetch("data/iplayground_i18n.json").then(r => r.json()),
+  fetch(NEWS_DATA_URLS.zh).then(r => r.json()),
+  fetch(NEWS_DATA_URLS.en).then(r => r.json()),
+  fetch("data/iplayground_config.json").then(r => r.json()),
+  fetch("data/iplayground_links.json").then(r => r.json()),
+]).then(([i18n, newsZh, newsEn, config, links]) => {
+  I18N_DATA = i18n;
+  NEWS_DATA_BY_LANG = { zh: newsZh, en: newsEn };
+  CONFIG     = config;
+  LINKS      = links;
+  applyLinks(LINKS);
+  applyLang(savedLang);
+}).catch(e => {
+  console.warn("資料載入失敗", e);
+  applyLang(savedLang);
+});
+</script>
+
+<!-- Floating Action Buttons -->
+<div class="fab-group" id="fabGroup">
+  <a class="fab" href="index.html" aria-label="Back to home" title="Back to home">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 10.5L12 3l9 7.5"></path>
+      <path d="M5 9.5V21h14V9.5"></path>
+      <path d="M10 21v-6h4v6"></path>
+    </svg>
+  </a>
+  <button class="fab" id="fabMode" aria-label="Toggle appearance">
+    <svg class="fab-icon fab-icon--auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
+    <svg class="fab-icon fab-icon--light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    <svg class="fab-icon fab-icon--dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button class="fab" id="fabLang" aria-label="Toggle language">
+    <span class="fab-lang-label">中</span>
+  </button>
+  <button class="fab fab--top" id="fabTop" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+</div>
+
+<script>
+const modeOrder = ["auto", "light", "dark"];
+const fabMode = document.getElementById("fabMode");
+const fabLang = document.getElementById("fabLang");
+const fabTop  = document.getElementById("fabTop");
+const fabGroup = document.getElementById("fabGroup");
+
+function syncFabMode(pref) {
+  if (fabGroup) fabGroup.dataset.fabMode = pref;
+}
+
+function syncFabLang(lang) {
+  const label = fabLang?.querySelector(".fab-lang-label");
+  if (label) label.textContent = lang === "zh" ? "中" : "EN";
+}
+
+fabMode?.addEventListener("click", () => {
+  const cur = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return "auto"; } })() || "auto";
+  const next = modeOrder[(modeOrder.indexOf(cur) + 1) % modeOrder.length];
+  applyAppearance(next);
+  syncFabMode(next);
+});
+
+fabLang?.addEventListener("click", () => {
+  applyLang(currentLang === "zh" ? "en" : "zh");
+});
+
+fabTop?.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+window.addEventListener("scroll", () => {
+  fabTop?.classList.toggle("visible", window.scrollY > 300);
+}, { passive: true });
+
+syncFabMode((() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })() || "auto");
+syncFabLang(currentLang);
+</script>
+</body>
+</html>

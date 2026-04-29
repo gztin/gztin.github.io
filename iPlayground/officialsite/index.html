@@ -1,0 +1,3073 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>iPlayground · iOS Taipei Meetup 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Michroma&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <script src="shared-content.js"></script>
+  <script>
+    const TWEAKS = /*EDITMODE-BEGIN*/{
+      "hue": 230,
+      "mode": "light",
+      "keyArt": "grid",
+      "wordmarkStyle": "inline"
+    }/*EDITMODE-END*/;
+  </script>
+
+  <link rel="stylesheet" href="css/shared.css">
+  <link rel="stylesheet" href="css/main.css?v=agenda-search-20260429">
+</head>
+
+<body>
+
+  <!-- Nav -->
+  <nav class="top">
+    <div class="wrap row">
+      <div class="brand">
+        <img src="img/svg/logo_header_light.svg" alt="iPlayground 2026" class="nav-logo nav-logo--light">
+        <img src="img/svg/logo_header_dark.svg" alt="iPlayground 2026" class="nav-logo nav-logo--dark">
+      </div>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-menu">
+        <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
+        <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
+        <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+      </ul>
+      <div class="nav-actions">
+        <div class="lang-switch nav-switch" id="modeSwitch" title="Appearance">
+          <button data-mode="auto" class="active" aria-label="Auto">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 3v18" />
+              <path d="M12 3a9 9 0 0 1 0 18" />
+            </svg>
+            <span>A</span>
+          </button>
+          <button data-mode="light" aria-label="Light">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+            </svg>
+          </button>
+          <button data-mode="dark" aria-label="Dark">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+          </button>
+        </div>
+        <div class="lang-switch nav-switch nav-lang-switch" id="langSwitch">
+          <button data-lang="zh" class="active">中</button>
+          <button data-lang="en">EN</button>
+        </div>
+        <a class="nav-sponsor-cta" href="#" data-link="sponsor_referral" target="_blank" rel="noopener"
+          data-i18n="nav_sponsor_cta">推薦贊助廠商</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#news" data-i18n="nav_news">最新消息</a></li>
+      <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
+      <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+    </ul>
+  </div>
+
+  <link rel="stylesheet" href="css/confetti.css">
+  <!-- Hero -->
+  <header class="hero" id="hero" data-screen-label="01 Hero" data-state="open">
+
+    <div class="photo-wall" id="photoWall" aria-hidden="true"></div>
+    <div class="hero-curtain" aria-hidden="true"></div>
+    <svg class="wave-grid" id="waveGrid" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+    <div class="hero-frame" aria-hidden="true">
+      <span class="corner corner--tl"></span>
+      <span class="corner corner--tr"></span>
+      <span class="corner corner--bl"></span>
+      <span class="corner corner--br"></span>
+    </div>
+
+    <div class="wordmark-banner">
+      <svg class="dot-field" id="dotField" preserveAspectRatio="none" viewBox="0 0 1200 400" aria-hidden="true"></svg>
+
+      <div class="hero-brand-row">
+        <a class="hero-brand-mark" href="#hero" aria-label="iPlayground 2026">
+          <img src="img/svg/logo_header_light.svg" alt="iPlayground" class="hero-brand-img hero-brand-img--light">
+          <img src="img/svg/logo_header_dark.svg" alt="iPlayground" class="hero-brand-img hero-brand-img--dark">
+        </a>
+        <span class="status-pill" role="status">
+          <span class="dot" aria-hidden="true"></span>
+          <span data-i18n="hero_status_pill">開放投稿中</span>
+        </span>
+      </div>
+
+      <div class="eyebrow">
+        <span class="eyebrow-bracket">[</span>
+        <span data-i18n="hero_eyebrow_taipei">TAIPEI</span>
+        <span class="eyebrow-sep">·</span>
+        <span data-i18n="hero_eyebrow_dates">2026.07.25–26</span>
+        <span class="eyebrow-sep">·</span>
+        <span data-i18n="hero_eyebrow_cfp">徵稿中</span>
+        <span class="eyebrow-bracket">]</span>
+      </div>
+
+      <div class="brand-crest" aria-label="iPlayground brand mark">
+        <svg class="crest-cir" viewBox="0 0 24 24" aria-hidden="true" style="--i:0">
+          <circle class="shape-stroke" cx="12" cy="12" r="9.5"/>
+        </svg>
+        <svg class="crest-tri" viewBox="0 0 24 24" aria-hidden="true" style="--i:1">
+          <polygon class="shape-fill" points="2,2 2,22 22,22"/>
+        </svg>
+        <svg class="crest-dia" viewBox="0 0 24 24" aria-hidden="true" style="--i:2">
+          <polygon class="shape-fill" points="12,2 22,12 12,22 2,12"/>
+        </svg>
+      </div>
+
+      <h1 class="wordmark" id="wordmark" tabindex="0" aria-label="iPlayground 2026">
+        <span class="wm-mark" data-text="IPLAYGROUND">IPLAYGROUND</span>
+        <span class="wm-year">2026</span>
+      </h1>
+    </div>
+
+    <div class="hero-grid">
+
+      <div class="hero-main">
+        <p class="lede" data-i18n="hero_lede">為 Apple 開發者準備的兩天，由社群志工策劃。技術分享、深度交流、與一群在乎品質的人。</p>
+
+        <div class="cta-stack">
+          <a class="cta cta-signal" id="ctaSubmit" href="#" data-link="cfp_form" target="_blank" rel="noopener">
+            <span data-i18n="cta_submit">投稿議程</span>
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="cta cta-signal" id="ctaSponsor" href="#" data-link="sponsor_referral" target="_blank" rel="noopener">
+            <span data-i18n="cta_sponsor">推薦贊助商</span>
+            <span class="cta-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <div class="hero-social-row" id="heroSocialRow">
+          <!-- 由 data/iplayground_links.json 動態產生 -->
+        </div>
+      </div>
+
+      <aside class="countdown-panel" aria-label="CFP deadline countdown">
+        <div class="cd-meta">
+          <span class="cd-mono" data-i18n="cd_meta_label">// 投稿截止</span>
+          <span class="cd-mono cd-zh" data-i18n="cd_meta_zh">投稿截止</span>
+        </div>
+
+        <div class="cd-grid" id="cdGrid">
+          <div class="cd-cell" data-unit="d">
+            <div class="cd-digits" id="cdD">00</div>
+            <div class="cd-label" data-i18n="cd_unit_d">天</div>
+          </div>
+          <div class="cd-sep" aria-hidden="true">:</div>
+          <div class="cd-cell" data-unit="h">
+            <div class="cd-digits" id="cdH">00</div>
+            <div class="cd-label" data-i18n="cd_unit_h">時</div>
+          </div>
+          <div class="cd-sep" aria-hidden="true">:</div>
+          <div class="cd-cell" data-unit="m">
+            <div class="cd-digits" id="cdM">00</div>
+            <div class="cd-label" data-i18n="cd_unit_m">分</div>
+          </div>
+          <div class="cd-sep" aria-hidden="true">:</div>
+          <div class="cd-cell" data-unit="s">
+            <div class="cd-digits" id="cdS">00</div>
+            <div class="cd-label" data-i18n="cd_unit_s">秒</div>
+          </div>
+        </div>
+
+        <div class="cd-deadline">
+          <span class="cd-mono" data-i18n="cd_deadline_stamp">2026-06-19 · 23:59 UTC+8</span>
+          <span class="cd-deadline-meta">
+            <span class="cd-mono cd-ms" id="cdMs" aria-hidden="true">.000</span>
+            <span class="cd-deadline-arrow" aria-hidden="true">↗</span>
+          </span>
+        </div>
+      </aside>
+
+    </div>
+  </header>
+
+  <!-- Latest News -->
+  <section class="section section-news" id="news" data-screen-label="01.5 News" style="position:relative;">
+    <canvas id="newsConfettiCanvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;"></canvas>
+    <div class="section-inner">
+      <header class="section-head">
+        <span class="section-eyebrow" id="newsEyebrow">// 01</span>
+        <h2 class="section-title section-title--zh" data-i18n="nav_news">最新消息</h2>
+        <span class="section-meta" id="newsMeta"></span>
+      </header>
+      <ol class="news-list" id="newsList"></ol>
+      <div id="newsMore"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section section-about" id="about" data-screen-label="02 About">
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 02</span>
+        <h2 class="section-title section-title--zh" data-i18n="nav_about">活動資訊</h2>
+        <span class="section-meta"></span>
+      </header>
+
+      <!-- Process Timeline -->
+      <div id="processTimeline" style="display: none;"></div>
+
+      <div class="about-stats">
+        <div class="stat">
+          <span class="stat-label">// DATES</span>
+          <span class="stat-value" data-i18n="stat_dates_value">7.25–26</span>
+          <span class="stat-sub" data-i18n="stat_dates_sub">2026 · 週六–週日</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">// VENUE</span>
+          <span class="stat-value" data-i18n="stat_venue_value">CPBAE</span>
+          <span class="stat-sub" data-i18n="stat_venue_sub">政大公企中心 · 台北</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">// FORMAT</span>
+          <span class="stat-value" data-i18n="stat_format_value">2 DAYS</span>
+          <span class="stat-sub" data-i18n="stat_format_sub">MULTI-TRACK · IOS / SWIFT / UX</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">// TICKETS</span>
+          <span class="stat-value" data-i18n="stat_tickets_value">SOON</span>
+          <span class="stat-sub" data-i18n="stat_tickets_sub">早鳥票即將開賣</span>
+        </div>
+      </div>
+
+      <div class="venue-wrap" style="margin-top: 100px;">
+        <div class="map-card"
+          style="margin-top: 48px; border-radius: 6px; overflow: hidden; border: 1px solid var(--rule); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--surface); position: relative;">
+          <iframe id="venueMap"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3614.71!2d121.5276213!3d25.0301042!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a98364e9ea0f%3A0xc1736c6258ca4f72!2z5pS_5aSn5YWs5LyB5Lit5b-D!5e0!3m2!1szh-TW!2stw!4v1713840000000"
+            width="100%" height="450" style="border:0; display: block;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <button id="parkingToggleBtn" class="map-btn" onclick="toggleParking()" data-i18n="trans_parking_btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M9 17V7h4a3 3 0 010 6H9" />
+              <rect x="3" y="3" width="18" height="18" rx="2" />
+            </svg>
+            <span>尋找附近停車場</span>
+          </button>
+        </div>
+
+        <div class="transport-grid"
+          style="margin-top: 104px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; text-align: left;">
+          <div class="transport-card">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+              <div class="transport-icon">
+                <svg viewBox="0 0 152 152" xmlns="http://www.w3.org/2000/svg">
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="_18.train" data-name="18.train">
+                      <path
+                        d="m65.59 44.27h10.41 10.48c1.84 0 3-1 2.94-2.61s-1.14-2.5-2.93-2.51h-20.89c-1.88 0-3 1-3 2.57s1.12 2.55 2.99 2.55z" />
+                      <path d="m56.89 79.8a5.06 5.06 0 0 0 -5 5 5 5 0 0 0 4.9 4.86 4.89 4.89 0 0 0 4.94-4.93 5 5 0 0 0 -4.84-4.93z" />
+                      <path
+                        d="m97.91 69c-1-5.36-2.1-10.7-3.22-16-.46-2.2-1.28-2.9-3.51-2.95-3.92-.09-7.84-.1-11.76-.1-6.23 0-12.45 0-18.68.1-2.23 0-3 .79-3.47 3-.72 3.38-1.39 6.76-2.07 10.14-.4 2-.86 4-1.18 6-.48 3.11.79 4.71 3.9 5 .93.09 1.87.13 2.81.13h15.35 4c4.61 0 9.22 0 13.81-.13 3.3-.1 4.64-1.88 4.02-5.19z" />
+                      <path
+                        d="m76 0a76 76 0 1 0 76 76 76 76 0 0 0 -76-76zm31 117.92v.43c-.32 0-.65.12-1 .12-3.58 0-7.16 0-10.74 0a1.34 1.34 0 0 1 -.88-.25l-6.19-16.63-.07-.2-1.43-4-10.69.03c-3.57 0-7.15-.06-10.73-.06-.51 1.45-1 2.82-1.49 4.22l-.05.1-6.26 16.72h-12.76l4.13-8.35c2.09-4.21 4.2-8.41 6.26-12.65a.54.54 0 0 1 .07-.13c-8.08-1.27-13.52-8.44-11.64-17.84 2.47-12.11 4.63-24.27 6.89-36.43a11.17 11.17 0 0 1 10.95-9.46q14.58-.12 29.16 0a11.08 11.08 0 0 1 11 9.13q3.55 18.7 7 37.42c.9 4.84 0 9.24-3.47 12.94a13.22 13.22 0 0 1 -8.29 4.22q5.15 10.31 10.23 20.67z" />
+                      <path d="m95.21 79.81a4.95 4.95 0 1 0 4.89 5 5 5 0 0 0 -4.89-5z" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_mrt_title">捷運資訊</h3>
+            </div>
+            <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_mrt_desc">
+              <button class="transport-link-btn" onclick="openNavigation('東門站 3 號出口', '政大公企中心')">
+                從東門站步行
+              </button>
+              <button class="transport-link-btn" onclick="openBusSearch('214')">
+                從古亭站 4 號出口搭乘 214 公車
+              </button>
+              <button class="transport-link-btn" onclick="openBusSearch('606')">
+                從古亭站 4 號出口搭乘 606 公車
+              </button>
+            </div>
+          </div>
+          <div class="transport-card">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+              <div class="transport-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="m15.5 7h-7a.50034.50034 0 0 0 -.5.5v3.091a22.81158 22.81158 0 0 0 4 .409 22.81158 22.81158 0 0 0 4-.409v-3.091a.50034.50034 0 0 0 -.5-.5z" />
+                  <circle cx="14" cy="14" r="1" />
+                  <circle cx="10" cy="14" r="1" />
+                  <path d="m12 0a12 12 0 1 0 12 12 12.01375 12.01375 0 0 0 -12-12zm6 10.5a.5.5 0 0 1 -1 0v5a1.49758 1.49758 0 0 1 -1 1.4079v.5921a.49971.49971 0 0 1 -.5.5h-1a.49971.49971 0 0 1 -.5-.5v-.5h-4v.5a.49971.49971 0 0 1 -.5.5h-1a.49971.49971 0 0 1 -.5-.5v-.5921a1.49758 1.49758 0 0 1 -1-1.4079v-5a.5.5 0 0 1 -1 0v-1a.49971.49971 0 0 1 .5-.5h.5v-1.5a1.50164 1.50164 0 0 1 1.5-1.5h7a1.50164 1.50164 0 0 1 1.5 1.5v1.5h.5a.49971.49971 0 0 1 .5.5z" />
+                </svg>
+              </div>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_bus_title">公車資訊</h3>
+            </div>
+            <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_bus_desc">
+              <div class="bus-tags">
+                <span class="bus-tag">0南</span>
+                <span class="bus-tag">214</span>
+                <span class="bus-tag">214直</span>
+                <span class="bus-tag">237</span>
+                <span class="bus-tag">253</span>
+                <span class="bus-tag">606</span>
+                <span class="bus-tag">670</span>
+                <span class="bus-tag">671</span>
+              </div>
+            </div>
+          </div>
+          <div class="transport-card">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
+              <div class="transport-icon">
+                <svg clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality"
+                  shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 254000 254000"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <g id="图层_x0020_1">
+                    <path
+                      d="m127000 254000c-70129 0-127000-56871-127000-127000s56871-127000 127000-127000 127000 56871 127000 127000-56871 127000-127000 127000zm0-209606c34742 0 62905 28163 62905 62905 0 34741-62905 102306-62905 102306s-62905-67565-62905-102306c0-34742 28163-62905 62905-62905zm0 37912c13172 0 23854 10682 23854 23855 0 13172-10682 23854-23854 23854s-23854-10682-23854-23854c0-13173 10682-23855 23854-23855z" />
+                  </g>
+                </svg>
+              </div>
+              <h3 style="font-size: 20px; font-weight: 700; margin: 0; color: var(--ink); letter-spacing: -0.01em;"
+                data-i18n="trans_other_title">其他資訊</h3>
+            </div>
+            <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);">
+              <p><strong style="color: var(--ink);" data-i18n="trans_addr_label">地址：</strong><span
+                  data-i18n="venue_address">106 台北市大安區金華街 187 號</span></p>
+              <p><strong style="color: var(--ink);" data-i18n="trans_phone_label">電話：</strong>02-23419151</p>
+              <p style="margin-top: 24px !important;"><a
+                  href="#" data-link="venue_traffic" target="_blank"
+                  rel="noopener"
+                  style="color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; border-bottom: 1px solid transparent; transition: border-color .3s;"
+                  onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='transparent'"
+                  data-i18n="trans_link">交通詳細網址 <svg style="margin-left:6px;" width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- Agenda -->
+  <section class="section section-agenda" id="agenda" data-screen-label="03 Agenda">
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 03</span>
+        <h2 class="section-title section-title--zh" data-i18n="agenda_title">議程</h2>
+        <span class="section-meta" data-i18n="agenda_meta">議程公布後即時更新</span>
+      </header>
+    </div>
+    <div class="wrap">
+      <div class="agenda-wrap">
+        <div class="agenda-toolbar">
+          <div class="agenda-tabs" role="tablist" id="agendaTabs">
+            <button class="agenda-tab is-active" data-day="1" role="tab" aria-selected="true">
+              <span class="tab-label">DAY 01</span>
+              <span class="tab-date">07.25</span>
+            </button>
+            <button class="agenda-tab" data-day="2" role="tab" aria-selected="false">
+              <span class="tab-label">DAY 02</span>
+              <span class="tab-date">07.26</span>
+            </button>
+          </div>
+          <div class="agenda-controls">
+            <label class="agenda-search" aria-label="搜尋議程">
+              <input id="agendaSearchInput" type="search" autocomplete="off" placeholder="搜尋議題或標籤" aria-label="搜尋議程">
+            </label>
+            <button class="agenda-sort-btn" id="agendaSortBtn" type="button" aria-label="切換議程排序" title="切換議程排序">
+              <svg class="sort-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 5v14"></path>
+                <path d="M4 8l3-3 3 3"></path>
+                <path d="M14 19h6"></path>
+                <path d="M14 13h4"></path>
+                <path d="M14 7h2"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="agenda-list" id="agendaList"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Speakers -->
+  <section class="section section-speakers" id="speakers" data-screen-label="04 Speakers">
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 04</span>
+        <h2 class="section-title section-title--zh" data-i18n="speakers_title">講者群</h2>
+        <span class="section-meta"></span>
+      </header>
+
+      <div class="speaker-grid" id="speakerGrid">
+        <!-- 由 data/iplayground_speakers.json 動態產生 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Staff -->
+  <section class="section section-staff" id="staff" data-screen-label="05 Staff">
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 05</span>
+        <h2 class="section-title section-title--zh" data-i18n="staff_title">工作人員</h2>
+        <span class="section-meta"></span>
+      </header>
+
+      <div class="staff-grid" id="staffGrid">
+        <!-- 由 data/staff.json 動態產生 -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="section section-sponsors" id="sponsors" data-screen-label="06 Sponsors" hidden>
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 06</span>
+        <h2 class="section-title section-title--zh" data-i18n="sponsors_title">贊助廠商</h2>
+        <span class="section-meta"></span>
+      </header>
+      <div class="construction">
+        <h3 data-i18n="construction">建構中</h3>
+        <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
+        <a class="btn-primary" href="#" data-link="sponsor_referral" target="_blank" rel="noopener"
+          data-i18n="sponsors_cta" style="display:inline-block;margin-top:28px;">🔗 徵求贊助廠商 →</a>
+      </div>
+    </div>
+  </section>
+
+  <div id="register"></div>
+
+  <!-- Footer -->
+  <footer data-screen-label="08 Footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+        <div class="footer-lock">
+          <img src="img/svg/logo_header_dark.svg" alt="iPlayground" class="footer-logo footer-logo--light" style="height:32px;width:auto;">
+          <img src="img/svg/logo_header_light.svg" alt="iPlayground" class="footer-logo footer-logo--dark" style="height:32px;width:auto;">
+        </div>
+          <p class="footer-tagline" data-i18n="footer_tagline"></p>
+        </div>
+        <div>
+            <h4 data-i18n="footer_event">活動</h4>
+            <ul>
+              <li><a href="#news" data-i18n="footer_news">最新消息</a></li>
+              <li><a href="#about" data-i18n="nav_about">活動資訊</a></li>
+              <li><a href="#agenda" data-i18n="nav_agenda">議程</a></li>
+            </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer_community">社群</h4>
+          <ul>
+            <li><a href="#" data-link="social_discord" target="_blank" rel="noopener">Discord</a></li>
+            <li><a href="#" data-link="social_facebook" target="_blank" rel="noopener">Facebook</a></li>
+            <li><a href="#" data-link="social_twitter" target="_blank" rel="noopener">Twitter / X</a></li>
+            <li><a href="#" data-link="social_youtube" target="_blank" rel="noopener">YouTube</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-i18n="footer_contact">聯絡</h4>
+          <ul>
+            <li><a href="#" data-link="contact_support" data-i18n="footer_support">一般支援</a></li>
+            <li><a href="#" data-link="contact_cfp" data-i18n="footer_cfp">講者投稿</a></li>
+            <li><a href="#" data-link="contact_sponsor" data-i18n="footer_sponsor">贊助合作</a></li>
+            <li><a href="#" data-link="coc" target="_blank" rel="noopener"
+                data-i18n="footer_coc">行為準則</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+      </div>
+      <div style="padding-top:16px;text-align:center;font-family:var(--f-mono);font-size:11px;color:color-mix(in srgb, var(--bg) 35%, transparent);letter-spacing:0.02em;">
+        iPlayground 2026 is organized by Taipei Elite Software Developer Association (77212283). All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Tweaks panel -->
+  <div class="tweaks-panel" id="tweaksPanel">
+    <h5>Tweaks <span class="badge">LIVE</span></h5>
+    <div class="tweak-row">
+      <label>主色相 Hue — <span id="hueLabel">28°</span></label>
+      <div class="tweak-slider">
+        <input type="range" min="0" max="360" step="1" id="hueSlider" value="28">
+      </div>
+    </div>
+    <div class="tweak-row">
+      <label>明暗模式</label>
+      <div class="tweak-segmented" id="segMode">
+        <button data-m="dark">Dark</button>
+        <button data-m="light">Light</button>
+      </div>
+    </div>
+    <div class="tweak-row">
+      <label>Hero 主視覺</label>
+      <div class="tweak-segmented" id="segArt">
+        <button data-k="aurora">極光</button>
+        <button data-k="grid">網格</button>
+        <button data-k="none">純色</button>
+      </div>
+    </div>
+    <div class="tweak-row">
+      <label>標題風格</label>
+      <div class="tweak-segmented" id="segMark">
+        <button data-w="inline">Inline</button>
+        <button data-w="stacked">Stacked</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bus Modal -->
+  <div id="busModal" class="modal-overlay" onclick="closeBusModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modalTitle" style="margin: 0; font-size: 22px; font-weight: 800; color: var(--ink);">公車指引</h3>
+        <div class="modal-close-btn" onclick="closeBusModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div id="modalDesc" style="font-size: 16px; line-height: 1.8; color: var(--ink-2);"></div>
+        <div id="modalAction" style="margin-top: 32px; display: flex; justify-content: center;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Agenda Modal -->
+  <div id="agendaModal" class="modal-overlay" onclick="closeAgendaModal()">
+    <div class="agenda-modal-content" id="agendaModalContent" data-modal-label="// 議程" onclick="event.stopPropagation()">
+      <button class="agenda-modal-close" onclick="closeAgendaModal()" aria-label="關閉">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- 時間 -->
+      <div class="am-time" id="amTime"></div>
+
+      <!-- 標題 -->
+      <h2 class="am-title" id="amTitle"></h2>
+
+      <!-- 標籤 -->
+      <div class="am-tags" id="amTags"></div>
+
+      <!-- 講者 -->
+      <div class="am-speaker" id="amSpeaker"></div>
+
+      <!-- 說明 -->
+      <p class="am-desc" id="amDesc"></p>
+
+      <!-- HackMD -->
+      <a class="am-hackmd" id="amHackmd" href="#" target="_blank" rel="noopener" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        HackMD 共筆
+      </a>
+
+      <!-- 社群連結 -->
+      <div class="am-social" id="amSocial"></div>
+    </div>
+  </div>
+
+  <!-- Speaker Modal -->
+  <div id="speakerModal" class="modal-overlay" onclick="closeSpeakerModal()">
+    <div class="speaker-modal-content" onclick="event.stopPropagation()">
+      <button class="agenda-modal-close" onclick="closeSpeakerModal()" aria-label="關閉">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- 方案 B：左右分欄 header -->
+      <div class="sm-header">
+        <img class="sm-photo" id="smPhoto" src="" alt="">
+        <div class="sm-info">
+          <h2 class="sm-name" id="smName"></h2>
+          <p class="sm-role" id="smRole"></p>
+          <p class="sm-company" id="smCompany"></p>
+          <div class="sm-social" id="smSocial"></div>
+        </div>
+      </div>
+
+      <!-- 分隔線 -->
+      <div class="sm-divider"></div>
+
+      <!-- 自介 -->
+      <p class="sm-bio" id="smBio"></p>
+    </div>
+  </div>
+
+  <script>
+    const BUS_GUIDES = {
+      '0南': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '班次約 15-20 分鐘。', en: 'Intervals: 15-20 mins.' }
+      },
+      '214': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '班次密集，約 8-12 分鐘。', en: 'Frequent, every 8-12 mins.' }
+      },
+      '214直': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '班次較少，建議查閱即時動態。', en: 'Limited service, check real-time dynamic.' }
+      },
+      '237': {
+        from: { zh: '捷運東門站 3 號出口', en: 'Dongmen Station Exit 3' },
+        stop: { zh: '「捷運東門站(金山)」', en: '"MRT Dongmen Station (Jinshan)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '班次固定，請留意時刻表。', en: 'Fixed schedule, check timetable.' }
+      },
+      '253': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '此路線為循環線。', en: 'This is a circular route.' }
+      },
+      '606': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '班次密集，熱門通勤路線。', en: 'High frequency, popular route.' }
+      },
+      '670': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '約 15-20 分鐘。', en: 'Approx. 15-20 mins.' }
+      },
+      '671': {
+        from: { zh: '捷運古亭站 4 號出口', en: 'Guting Station Exit 4' },
+        stop: { zh: '「捷運古亭站(和平)」', en: '"MRT Guting Station (Heping)"' },
+        dest: { zh: '「政大公企中心」', en: '"NCCU CPBAE"' },
+        desc: { zh: '約 15-20 分鐘。', en: 'Approx. 15-20 mins.' }
+      }
+    };
+
+    // Predefined coordinates for 0 South stops (Experiment)
+    const BUS_STOPS_DB = {
+      '0南': [
+        { name: { zh: '捷運公館站', en: 'MRT Gongguan Station' }, lat: 25.0129, lon: 121.5350 },
+        { name: { zh: '捷運古亭站(和平)', en: 'MRT Guting Station (Heping)' }, lat: 25.0263, lon: 121.5228 },
+        { name: { zh: '捷運東門站(金山)', en: 'MRT Dongmen Station (Jinshan)' }, lat: 25.0338, lon: 121.5284 },
+        { name: { zh: '萬芳醫院', en: 'Wanfang Hospital' }, lat: 24.9997, lon: 121.5582 },
+        { name: { zh: '興隆路口', en: 'Xinglong Rd. Intersection' }, lat: 25.0064, lon: 121.5487 }
+      ]
+    };
+
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      return Math.sqrt(Math.pow(lat1 - lat2, 2) + Math.pow(lon1 - lon2, 2));
+    }
+
+    function showBusModal(busNum) {
+      const modal = document.getElementById('busModal');
+      const title = document.getElementById('modalTitle');
+      const desc = document.getElementById('modalDesc');
+      const action = document.getElementById('modalAction');
+      const l = currentLang || 'zh';
+
+      const data = BUS_GUIDES[busNum];
+      if (!data) return;
+
+      title.innerText = l === 'en' ? `${busNum} Bus Guide` : `${busNum} 公車搭乘指引`;
+      const labelSteps = l === 'en' ? 'Directions:' : '乘車步驟：';
+      const labelTip = l === 'en' ? 'Tips:' : '溫馨提示：';
+
+      let content = `
+        <div id="smartGuidance" style="background: var(--surface-2); padding: 20px; border-radius: 6px; margin-bottom: 0px;">
+          <p style="font-weight: 700; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            ${labelSteps}
+          </p>
+          <ul id="stepList" style="margin: 0; padding-left: 0; list-style: none;">
+            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
+              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">1</span>
+              <span id="step1">${l === 'en' ? 'Take ' : '從'} <strong>${data.from[l]}</strong> ${l === 'en' ? 'and walk straight.' : '出站後直行。'}</span>
+            </li>
+            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
+              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">2</span>
+              <span id="step2">${l === 'en' ? 'Board the bus at ' : '至'} <strong>${data.stop[l]}</strong> ${l === 'en' ? 'stop.' : '站牌搭車。'}</span>
+            </li>
+            <li style="display: flex; gap: 12px;">
+              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">3</span>
+              <span>${l === 'en' ? 'Get off at ' : '在'} <strong>${data.dest[l]}</strong> ${l === 'en' ? 'stop.' : '站下車，下車後即抵達活動場地。'}</span>
+            </li>
+          </ul>
+        </div>
+        <p style="font-size: 14px; color: var(--ink-3); margin-top: 16px;">※ ${labelTip}${data.desc[l]}</p>
+      `;
+
+      desc.innerHTML = content;
+
+      // Smart Detection for 0 South
+      if (busNum === '0南' && navigator.geolocation) {
+        const step1 = document.getElementById('step1');
+        const step2 = document.getElementById('step2');
+        const originalStep1 = step1.innerHTML;
+        const originalStep2 = step2.innerHTML;
+        
+        step1.innerHTML = l === 'en' ? '🔍 Detecting nearest stop...' : '🔍 正在偵測距離您最近的 0南 站牌...';
+        step2.style.opacity = '0.5';
+
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const uLat = pos.coords.latitude;
+          const uLon = pos.coords.longitude;
+          const stops = BUS_STOPS_DB['0南'];
+          let nearest = stops[0];
+          let minDist = calculateDistance(uLat, uLon, nearest.lat, nearest.lon);
+
+          stops.forEach(s => {
+            const d = calculateDistance(uLat, uLon, s.lat, s.lon);
+            if (d < minDist) {
+              minDist = d;
+              nearest = s;
+            }
+          });
+
+          // Update UI with nearest stop
+          step1.innerHTML = l === 'en' ? `Board the <strong>0 South</strong> bus from <strong>${nearest.name[l]}</strong> stop.` : `從 <strong>${nearest.name[l]}</strong> 搭乘 <strong>0南</strong> 公車。`;
+          step2.innerHTML = l === 'en' ? `Get off at <strong>NCCU CPBAE</strong> stop.` : `在 <strong>「政大公企中心」</strong> 站下車，下車後即抵達活動場地。`;
+          step2.style.opacity = '1';
+          // Since we found a specific stop, we remove the "walk to stop" step and replace with direct boarding info
+          // Actually let's just make it simpler as per user request: "從 OO站搭成0南公車。在 「政大公企中心」 站下車"
+          const list = document.getElementById('stepList');
+          list.innerHTML = `
+            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
+              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">1</span>
+              <span>${l === 'en' ? `Board <strong>0 South</strong> from <strong>${nearest.name[l]}</strong>.` : `從 <strong>${nearest.name[l]}</strong> 搭乘 <strong>0南</strong> 公車。`}</span>
+            </li>
+            <li style="display: flex; gap: 12px;">
+              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">2</span>
+              <span>${l === 'en' ? `Get off at <strong>NCCU CPBAE</strong> stop.` : `在 <strong>「政大公企中心」</strong> 站下車，下車後即抵達活動場地。`}</span>
+            </li>
+          `;
+        }, (err) => {
+          step1.innerHTML = originalStep1;
+          step2.style.opacity = '1';
+        });
+      }
+
+      const navLabel = l === 'en' ? 'View Navigation' : '查看導航';
+      const statusLabel = l === 'en' ? 'Live Status' : '即時動態';
+      const dest = encodeURIComponent("政大公企中心");
+      const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=transit`;
+      const statusUrl = `https://ebus.gov.taipei/EBus/Route/RouteByRouteName?routeName=${encodeURIComponent(busNum)}`;
+      
+      action.innerHTML = `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;">
+          <a href="${navUrl}" target="_blank" class="btn-primary" style="padding: 14px 20px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; justify-content: center; background: var(--surface); color: var(--accent); border: 2.5px solid var(--accent); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18"></line>
+              <line x1="16" y1="6" x2="16" y2="22"></line>
+            </svg>
+            <span style="font-size: 15px;">${navLabel}</span>
+          </a>
+          <a href="${statusUrl}" target="_blank" class="btn-primary" style="padding: 14px 20px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; justify-content: center; background: var(--surface); color: var(--accent); border: 2.5px solid var(--accent); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              <path d="M12 8v4l3 3"></path>
+            </svg>
+            <span style="font-size: 15px;">${statusLabel}</span>
+          </a>
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeBusModal() {
+      const modal = document.getElementById('busModal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // ===== Code Rain Animation =====
+    (function initCodeRain() {
+      const canvas = document.getElementById('waveCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let animId = null;
+      let cols = [];
+      let w = 0, h = 0;
+
+      // Characters: mix of katakana, digits, Swift/code symbols
+      const CHARS = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789{}[]()<>=/\\|;:.,!?@#$%^&*+-~`';
+
+      const FONT_SIZE = 15;
+
+      function getMode() {
+        return document.documentElement.dataset.mode === 'light' ? 'light' : 'dark';
+      }
+
+      // Colour palette per mode
+      // dark  → classic Matrix green glow
+      // light → indigo / violet on pale background
+      const PALETTE = {
+        dark: {
+          bg: 'rgba(13,13,15,0.18)',       // trail fade (matches --bg dark)
+          head: '#ccffcc',                  // brightest leading char
+          bright: '#00ff88',                // near-head chars
+          mid: '#00cc55',                   // mid-stream
+          dim: '#006622',                   // tail
+        },
+        light: {
+          bg: 'rgba(20,10,60,0.20)',        // trail fade — deep indigo
+          head: '#e0d7ff',                  // brightest leading char (pale lavender)
+          bright: '#b39dff',                // near-head
+          mid: '#7c6fcd',                   // mid-stream
+          dim: '#3a2a7a',                   // tail
+        }
+      };
+
+      function resize() {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        w = rect.width;
+        h = rect.height;
+        canvas.width = w * dpr;
+        canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+
+        // Re-init columns
+        const numCols = Math.floor(w / FONT_SIZE);
+        cols = [];
+        for (let i = 0; i < numCols; i++) {
+          cols.push({
+            y: Math.random() * -h,          // start above viewport (staggered)
+            speed: 0.6 + Math.random() * 1.2,
+            length: 8 + Math.floor(Math.random() * 20),
+            chars: [],
+            nextSwap: 0,
+          });
+          // Pre-fill chars
+          for (let j = 0; j < 32; j++) {
+            cols[i].chars.push(CHARS[Math.floor(Math.random() * CHARS.length)]);
+          }
+        }
+      }
+
+      let frame = 0;
+      function render() {
+        animId = requestAnimationFrame(render);
+        frame++;
+
+        const mode = getMode();
+        const pal = PALETTE[mode];
+
+        // Fade trail — in light mode first paint a solid dark base so rain is visible
+        if (mode === 'light') {
+          ctx.fillStyle = 'rgba(15,8,50,0.85)';
+          ctx.fillRect(0, 0, w, h);
+        }
+        ctx.fillStyle = pal.bg;
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.font = `${FONT_SIZE}px 'JetBrains Mono', monospace`;
+        ctx.textAlign = 'center';
+
+        for (let i = 0; i < cols.length; i++) {
+          const col = cols[i];
+          const x = i * FONT_SIZE + FONT_SIZE / 2;
+
+          // Randomly swap a char in the stream
+          if (frame >= col.nextSwap) {
+            const idx = Math.floor(Math.random() * col.chars.length);
+            col.chars[idx] = CHARS[Math.floor(Math.random() * CHARS.length)];
+            col.nextSwap = frame + 2 + Math.floor(Math.random() * 6);
+          }
+
+          // Draw each character in the stream
+          for (let j = 0; j < col.length; j++) {
+            const cy = col.y - j * FONT_SIZE;
+            if (cy < -FONT_SIZE || cy > h + FONT_SIZE) continue;
+
+            const charIdx = (Math.floor(col.y / FONT_SIZE) + j) & (col.chars.length - 1);
+            const ch = col.chars[Math.abs(charIdx) % col.chars.length];
+
+            // j=0 is the head (brightest), higher j = deeper in trail (dimmer)
+            let color;
+            if (j === 0) {
+              color = pal.head;
+              ctx.shadowColor = pal.bright;
+              ctx.shadowBlur = 8;
+            } else if (j < 3) {
+              color = pal.bright;
+              ctx.shadowColor = pal.bright;
+              ctx.shadowBlur = 4;
+            } else if (j < col.length * 0.5) {
+              color = pal.mid;
+              ctx.shadowBlur = 0;
+            } else {
+              // Fade tail with alpha
+              const alpha = 1 - (j - col.length * 0.5) / (col.length * 0.5);
+              color = pal.dim;
+              ctx.globalAlpha = Math.max(0.05, alpha);
+              ctx.shadowBlur = 0;
+            }
+
+            ctx.fillStyle = color;
+            ctx.fillText(ch, x, cy);
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+          }
+
+          // Advance column
+          col.y += col.speed;
+
+          // Reset when stream has fully passed the bottom
+          if (col.y - col.length * FONT_SIZE > h) {
+            col.y = -FONT_SIZE * (2 + Math.random() * 10);
+            col.speed = 0.6 + Math.random() * 1.2;
+            col.length = 8 + Math.floor(Math.random() * 20);
+          }
+        }
+      }
+
+      // Pause when hero is off-screen
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            if (!animId) render();
+          } else {
+            if (animId) { cancelAnimationFrame(animId); animId = null; }
+          }
+        });
+      }, { threshold: 0.05 });
+
+      window.addEventListener('resize', () => { resize(); });
+      resize();
+      observer.observe(canvas.parentElement);
+      render();
+    })();
+
+    // ===== State =====
+    let currentLang = "zh";
+
+    // ===== Data =====
+    const NEWS_DATA_URLS = {
+      zh: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news.json",
+      en: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news_en.json",
+    };
+    let NEWS_DATA_BY_LANG = { zh: [], en: [] };
+    let NEWS_DATA = [];
+    let AGENDA = [];
+    let SPEAKERS = [];
+    let CONFIG = {};
+    let I18N_DATA = {};  // key → { zh, en }
+
+    let parkingMode = false;
+    let VENUE_MAP = "";
+    let PARKING_MAP = "";
+
+    function toggleParking() {
+      parkingMode = !parkingMode;
+      const iframe = document.getElementById("venueMap");
+      const btn = document.getElementById("parkingToggleBtn");
+      if (!iframe || !btn) return;
+
+      iframe.src = parkingMode ? PARKING_MAP : VENUE_MAP;
+      btn.classList.toggle("active", parkingMode);
+
+      const span = btn.querySelector("span");
+      if (span) {
+        if (parkingMode) {
+          span.innerText = currentLang === "en" ? "Back to Venue" : "回到會場位置";
+        } else {
+          span.innerText = currentLang === "en" ? "Find Nearby Parking" : "尋找附近停車場";
+        }
+      }
+    }
+
+    // ===== Render =====
+    let agendaCurrentDay = 1;
+    let agendaSortAsc = true; // true = 由近到遠（預設）
+    let agendaSearchQuery = "";
+
+    function localized(value, lang = currentLang) {
+      if (Array.isArray(value)) return value.map(item => localized(item, lang));
+      if (value && typeof value === "object") return value[lang] || value.zh || value.en || "";
+      return value || "";
+    }
+
+    function parseTime(timeStr) {
+      // 取開始時間，例如 "10:00 – 10:20" → "10:00"
+      const start = (timeStr || "").split(/[–\-]/)[0].trim();
+      const [h, m] = start.split(":").map(Number);
+      return (h || 0) * 60 + (m || 0);
+    }
+
+    function normalizeSearchText(value) {
+      return String(value || "").toLocaleLowerCase().replace(/\s+/g, "");
+    }
+
+    function agendaMatchesSearch(item, query) {
+      if (!query) return true;
+      const title = localized(item.title);
+      const tags = localized(item.tags || []).join(" ");
+      const haystack = normalizeSearchText(`${title} ${tags}`);
+      return haystack.includes(query);
+    }
+
+    function syncAgendaControls() {
+      const input = document.getElementById("agendaSearchInput");
+      if (input) {
+        if (input.value !== agendaSearchQuery) input.value = agendaSearchQuery;
+        input.placeholder = currentLang === "en" ? "Search title or tags" : "搜尋議題或標籤";
+      }
+
+      const sortBtn = document.getElementById("agendaSortBtn");
+      if (sortBtn) {
+        sortBtn.classList.toggle("is-desc", !agendaSortAsc);
+        sortBtn.setAttribute("aria-label", agendaSortAsc
+          ? (currentLang === "en" ? "Sort latest first" : "切換為時間倒序")
+          : (currentLang === "en" ? "Sort earliest first" : "切換為時間正序"));
+        sortBtn.title = sortBtn.getAttribute("aria-label");
+      }
+    }
+
+    function renderAgenda(day) {
+      const list = document.getElementById("agendaList");
+      if (!list) return;
+      const activeDay = day || 1;
+      agendaCurrentDay = activeDay;
+
+      // 更新 tab 狀態
+      document.querySelectorAll("#agendaTabs .agenda-tab").forEach(btn => {
+        const isActive = parseInt(btn.dataset.day) === activeDay;
+        btn.classList.toggle("is-active", isActive);
+        btn.setAttribute("aria-selected", String(isActive));
+      });
+
+      const query = normalizeSearchText(agendaSearchQuery);
+      const rows = AGENDA
+        .map((item, sourceIdx) => ({ item, sourceIdx }))
+        .filter(({ item }) => item.day === activeDay)
+        .filter(({ item }) => agendaMatchesSearch(item, query))
+        .slice()
+        .sort((a, b) => {
+          const delta = parseTime(a.item.time) - parseTime(b.item.time);
+          return agendaSortAsc ? delta : -delta;
+        });
+
+      if (rows.length === 0) {
+        list.innerHTML = `<div class="agenda-empty">${query
+          ? (currentLang === "en" ? "No matching sessions" : "沒有符合的議題")
+          : (currentLang === "en" ? "Agenda will be announced soon" : "議程公布後即將顯示")}</div>`;
+        syncAgendaControls();
+        return;
+      }
+
+      const tbaLabel = currentLang === "en" ? "TBA" : "TBA";
+
+      list.innerHTML = rows.map(({ item: r, sourceIdx }) => {
+        const tags = localized(r.tags || []);
+        const primaryTag = tags[0] || "";
+        const isKeynote = primaryTag.toUpperCase() === "KEYNOTE" || (r.track || "").toLowerCase() === "keynote";
+        const tagHTML = primaryTag
+          ? `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${primaryTag.toUpperCase()}</span>`
+          : "";
+        const speakerName = localized(r.speaker?.name) || tbaLabel;
+        const startTime = (r.time || "").split(/[–\-]/)[0].trim();
+        const desc = localized(r.description) || "";
+
+        return `
+        <div class="session" data-agenda-idx="${sourceIdx}" data-agenda-day="${activeDay}">
+          <span class="session-time">${startTime}</span>
+          <div class="session-body">
+            <h3 class="session-title">${localized(r.title)}</h3>
+            ${desc ? `<p class="session-desc">${desc}</p>` : ""}
+          </div>
+          <div class="session-meta">
+            ${tagHTML}
+            <span class="session-speaker">${speakerName}</span>
+          </div>
+        </div>`;
+      }).join("");
+
+      // 綁定點擊事件
+      list.querySelectorAll(".session").forEach(card => {
+        card.addEventListener("click", () => {
+          const day = parseInt(card.dataset.agendaDay);
+          const idx = parseInt(card.dataset.agendaIdx);
+          const item = AGENDA[idx];
+          if (item) showAgendaModal(item);
+        });
+      });
+      syncAgendaControls();
+    }
+
+    // tab 點擊事件
+    document.getElementById("agendaTabs")?.addEventListener("click", e => {
+      const btn = e.target.closest("button[data-day]");
+      if (btn) renderAgenda(parseInt(btn.dataset.day));
+    });
+
+    document.getElementById("agendaSearchInput")?.addEventListener("input", e => {
+      agendaSearchQuery = e.target.value || "";
+      renderAgenda(agendaCurrentDay);
+    });
+
+    document.getElementById("agendaSortBtn")?.addEventListener("click", () => {
+      agendaSortAsc = !agendaSortAsc;
+      renderAgenda(agendaCurrentDay);
+    });
+
+    // ===== Agenda Modal =====
+    const SOCIAL_ICONS = {
+      github: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>`,
+      linkedin: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.37V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.59 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>`,
+      twitter: `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.91-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+      web: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`
+    };
+
+    function showAgendaModal(item) {
+      const modal = document.getElementById("agendaModal");
+      if (!modal) return;
+
+      // 時間
+      document.getElementById("amTime").textContent = item.time;
+
+      // 標題
+      document.getElementById("amTitle").textContent = localized(item.title);
+
+      // 標籤
+      document.getElementById("amTags").innerHTML = localized(item.tags || [])
+        .map(tag => `<span class="agenda-tag">${tag}</span>`).join("");
+
+      // 講者
+      const sp = item.speaker || {};
+      const avatarSrc = sp.avatar || "img/staff/staff_sample.png";
+      const speakerName = localized(sp.name);
+      document.getElementById("amSpeaker").innerHTML = `
+        <img class="am-speaker-avatar" src="${avatarSrc}" alt="${speakerName}"
+          onerror="this.onerror=null;this.src='img/staff/staff_sample.png'">
+        <span class="am-speaker-name">${speakerName}</span>
+      `;
+
+      // 說明
+      document.getElementById("amDesc").textContent = localized(item.description);
+
+      // HackMD
+      const hackmdEl = document.getElementById("amHackmd");
+      if (item.hackmd) {
+        hackmdEl.href = item.hackmd;
+        hackmdEl.style.display = "inline-flex";
+      } else {
+        hackmdEl.style.display = "none";
+      }
+
+      // 社群連結
+      const social = (sp.social || []);
+      document.getElementById("amSocial").innerHTML = social.map(s => `
+        <a class="am-social-btn" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.type}">
+          ${SOCIAL_ICONS[s.type] || SOCIAL_ICONS.web}
+        </a>
+      `).join("");
+
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeAgendaModal() {
+      const modal = document.getElementById("agendaModal");
+      if (modal) modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    // ===== Speaker Modal =====
+    const SPEAKER_SOCIAL_ICONS = {
+      facebook:  'img/svg/media/facebook.svg',
+      twitter:   'img/svg/media/twitter.svg',
+      instagram: 'img/svg/media/instagram.svg',
+      discord:   'img/svg/media/discord.svg',
+      youtube:   'img/svg/media/youtube.svg',
+    };
+    const SPEAKER_SOCIAL_FALLBACK = 'img/svg/media/web.svg';
+
+    function getSocialIcon(type) {
+      return SPEAKER_SOCIAL_ICONS[type.toLowerCase()] || SPEAKER_SOCIAL_FALLBACK;
+    }
+
+    function showSpeakerModal(speaker) {
+      const modal = document.getElementById("speakerModal");
+      if (!modal) return;
+
+      const FALLBACK = 'img/speaker/speaker_sample.png';
+      document.getElementById("smPhoto").src = speaker.photo || FALLBACK;
+      document.getElementById("smPhoto").onerror = function() { this.src = FALLBACK; };
+      document.getElementById("smName").textContent = speaker.name || "";
+      document.getElementById("smRole").textContent = speaker.role || "";
+      document.getElementById("smCompany").textContent = speaker.company || "";
+      document.getElementById("smBio").textContent = speaker.bio || "";
+
+      const social = speaker.social || {};
+      document.getElementById("smSocial").innerHTML = Object.entries(social)
+        .filter(([, url]) => url)
+        .map(([type, url]) => `
+          <a class="sm-social-btn" href="${url}" target="_blank" rel="noopener" aria-label="${type}">
+            <img src="${getSocialIcon(type)}" alt="${type}" width="18" height="18" style="filter:brightness(0) invert(0.5);">
+          </a>
+        `).join("");
+
+      modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSpeakerModal() {
+      const modal = document.getElementById("speakerModal");
+      if (modal) modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    // ESC 關閉彈窗
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") { closeAgendaModal(); closeSpeakerModal(); }
+    });
+
+    // ===== Links — 從 data/iplayground_links.json 注入所有連結 =====
+    function applyLinks(links) {
+      if (!links) return;
+
+      // 建立查找表：data-link 值 → URL
+      const map = {};
+
+      // important links
+      Object.entries(links.important || {}).forEach(([k, v]) => { map[k] = v; });
+
+      // contact links
+      Object.entries(links.contact || {}).forEach(([k, v]) => { map[`contact_${k}`] = v; });
+
+      // social links（個別 id）
+      (links.social || []).forEach(s => { map[`social_${s.id}`] = s.url; });
+
+      // 注入所有 [data-link] 元素的 href
+      document.querySelectorAll("[data-link]").forEach(el => {
+        const key = el.dataset.link;
+        if (map[key]) el.href = map[key];
+      });
+
+      // 渲染 hero 社群按鈕
+      const socialRow = document.getElementById("heroSocialRow");
+      if (socialRow && links.social) {
+        socialRow.innerHTML = links.social.map(s => `
+          <a class="hero-social-btn" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}">
+            <img src="${s.icon}" alt="${s.label}" width="22" height="22">
+          </a>`).join("");
+      }
+    }
+
+    function renderNews(lang) {
+      const list = document.getElementById("newsList");
+      const more = document.getElementById("newsMore");
+      const meta = document.getElementById("newsMeta");
+      if (!list) return;
+      const l = lang || currentLang || "zh";
+      const MAX_DISPLAY = 10;
+      const visible = NEWS_DATA.slice(0, MAX_DISPLAY);
+
+      // News date is formatted as "YYYY.MM.DD" or "YYYY-MM-DD" — normalise both
+      const normaliseDate = (d) => {
+        if (!d) return null;
+        const parts = String(d).split(/[-./]/);
+        if (parts.length !== 3) return null;
+        return new Date(+parts[0], +parts[1] - 1, +parts[2]);
+      };
+      const formatDate = (d) => {
+        const p = String(d || '').split(/[-./]/);
+        if (p.length !== 3) return d || '';
+        return `${p[0]}.${p[1].padStart(2, '0')}.${p[2].padStart(2, '0')}`;
+      };
+
+      list.innerHTML = visible.map((n, i) => {
+        const title = typeof n.title === 'string' ? n.title : (n.title[l] || n.title.zh || n.title);
+        return `
+    <li class="news-row">
+      <a class="news-row-link" href="news.html?id=${i}" target="_blank" rel="noopener">
+        <span class="news-date">${formatDate(n.date)}</span>
+        <span class="news-title">${title}</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>`;
+      }).join("");
+
+      if (more) {
+        more.innerHTML = NEWS_DATA.length > MAX_DISPLAY
+          ? `<div class="news-more"><a href="news.html" target="_blank" rel="noopener">${l === "en" ? `View all news (${NEWS_DATA.length}) →` : `查看全部消息 (${NEWS_DATA.length}) →`}</a></div>`
+          : '';
+      }
+
+      // Section meta — "Past N days" computed from oldest visible news entry
+      if (meta) {
+        const oldest = visible.map(n => normaliseDate(n.date)).filter(Boolean).sort((a, b) => a - b)[0];
+        if (oldest) {
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+          const days = Math.max(1, Math.round((today - oldest) / 86400000));
+          meta.textContent = l === "en" ? `Past ${days} days` : `過去 ${days} 天`;
+        } else {
+          meta.textContent = '';
+        }
+      }
+    }
+
+    function renderSpeakers(lang) {
+      const container = document.getElementById("processTimeline");
+      if (!container) return;
+      const l = lang || currentLang || "zh";
+      const today = new Date(); today.setHours(0, 0, 0, 0);
+      function parseDate(str) { const p = str.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); }
+      let currentIdx = 0;
+      SPEAKERS.forEach(function (s, i) { if (parseDate(s.threshold) <= today) currentIdx = i; });
+      let items = "";
+      SPEAKERS.forEach(function (s, i) {
+        const passed = i === 0 || parseDate(s.threshold) <= today;
+        const current = i === currentIdx;
+        const dotCls = "h-dot" + (passed ? " passed" : "") + (current ? " current" : "");
+        const cardCls = "h-card" + (current ? " current" : "");
+        const name = typeof s.name === "object" ? (s.name[l] || s.name.zh) : s.name;
+        const role = typeof s.role === "object" ? (s.role[l] || s.role.zh) : s.role;
+        const topic = typeof s.topic === "object" ? (s.topic[l] || s.topic.zh) : s.topic;
+        items += '<div class="h-item">'
+          + '<div class="' + dotCls + '"></div>'
+          + '<div class="' + cardCls + '">'
+          + '<div class="h-date">' + name + '</div>'
+          + '<div class="h-title">' + role + '</div>'
+          + '<div class="h-desc">' + topic + '</div>'
+          + '</div></div>';
+      });
+      container.innerHTML = '<div class="h-timeline">' + items + '</div>';
+    }
+
+    // Countdown — to 2026-06-19 23:59:59 UTC+8 (CFP submission close)
+    const CD_TARGET = new Date("2026-06-19T23:59:59+08:00").getTime();
+    const cdCells = {};
+    let cdTickResetTimer = null;
+
+    function tickCountdown() {
+      if (!cdCells.d) {
+        cdCells.d = { cell: document.querySelector('.cd-cell[data-unit="d"]'), digits: document.getElementById("cdD"), last: null };
+        cdCells.h = { cell: document.querySelector('.cd-cell[data-unit="h"]'), digits: document.getElementById("cdH"), last: null };
+        cdCells.m = { cell: document.querySelector('.cd-cell[data-unit="m"]'), digits: document.getElementById("cdM"), last: null };
+        cdCells.s = { cell: document.querySelector('.cd-cell[data-unit="s"]'), digits: document.getElementById("cdS"), last: null };
+      }
+      const hero = document.getElementById("hero");
+      const diff = CD_TARGET - Date.now();
+      const pad = n => String(Math.max(0, n)).padStart(2, "0");
+
+      if (diff <= 0) {
+        if (hero) hero.dataset.state = "closed";
+        for (const k of ["d", "h", "m", "s"]) {
+          const c = cdCells[k];
+          if (c && c.digits) c.digits.textContent = "00";
+        }
+        return;
+      }
+      if (hero) hero.dataset.state = "open";
+
+      const next = {
+        d: pad(Math.floor(diff / 86400000)),
+        h: pad(Math.floor((diff % 86400000) / 3600000)),
+        m: pad(Math.floor((diff % 3600000) / 60000)),
+        s: pad(Math.floor((diff % 60000) / 1000)),
+      };
+
+      for (const [unit, val] of Object.entries(next)) {
+        const c = cdCells[unit];
+        if (!c || !c.digits) continue;
+        if (c.last === val) continue;
+        c.digits.textContent = val;
+        // Swap animation only on change, and skip seconds (the keyframe's mid-cycle
+        // opacity:0 reads as the digit being "cut" when it ticks every second).
+        if (c.last !== null && unit !== "s" && c.cell) {
+          c.cell.classList.remove("swap");
+          void c.cell.offsetWidth;
+          c.cell.classList.add("swap");
+        }
+        c.last = val;
+      }
+
+      // Heartbeat — flash signal on the seconds cell every tick
+      if (cdCells.s.cell) {
+        cdCells.s.cell.classList.remove("tick");
+        void cdCells.s.cell.offsetWidth;
+        cdCells.s.cell.classList.add("tick");
+        clearTimeout(cdTickResetTimer);
+        cdTickResetTimer = setTimeout(() => cdCells.s.cell.classList.remove("tick"), 240);
+      }
+    }
+
+    // ===== Interaction Utilities =====
+    function syncThemeButtons(pref) {
+      const btns = document.querySelectorAll('button[data-mode], button[data-m]');
+      btns.forEach(b => {
+        const m = b.getAttribute('data-mode') || b.getAttribute('data-m');
+        if (m) b.classList.toggle("active", m === pref);
+      });
+    }
+
+    function syncLangButtons(lang) {
+      const btns = document.querySelectorAll('button[data-lang]');
+      btns.forEach(b => {
+        const l = b.getAttribute('data-lang');
+        if (l) b.classList.toggle("active", l === lang);
+      });
+    }
+
+    // ===== Hamburger Menu =====
+    const hamburgerBtn = document.getElementById("hamburgerBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hamburgerBtn.classList.toggle("active");
+        mobileMenu.classList.toggle("active");
+      });
+
+      // Close mobile menu when a link is clicked
+      mobileMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          hamburgerBtn.classList.remove("active");
+          mobileMenu.classList.remove("active");
+        });
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!hamburgerBtn.classList.contains("active")) return;
+        const isNav = e.target.closest("nav.top");
+        const isMenu = e.target.closest(".mobile-menu");
+        if (!isNav && !isMenu) {
+          hamburgerBtn.classList.remove("active");
+          mobileMenu.classList.remove("active");
+        }
+      });
+    }
+
+    // ===== Tweaks & Edit Mode =====
+    let tweaksOn = false;
+    let state = { ...TWEAKS };
+
+    function applyTweaks(t) {
+      document.documentElement.style.setProperty("--hue", t.hue);
+      const hueLabel = document.getElementById("hueLabel");
+      if (hueLabel) hueLabel.textContent = t.hue + "°";
+      try { localStorage.setItem("hue", t.hue); } catch (e) { }
+
+      // NOTE: do NOT set data-mode here — applyAppearance owns that
+
+      // Hero art
+      const art = document.querySelector(".key-art");
+      if (art) {
+        art.style.display = t.keyArt === "none" ? "none" : "";
+        if (t.keyArt === "grid") {
+          art.innerHTML = '<div style="position:absolute;inset:0;background-image:linear-gradient(var(--rule-2) 1px, transparent 1px),linear-gradient(90deg,var(--rule-2) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(circle at 50% 30%, black, transparent 70%);-webkit-mask-image:radial-gradient(circle at 50% 30%, black, transparent 70%);"></div>';
+        } else {
+          art.innerHTML = '<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>';
+        }
+      }
+
+      // Hero Title Style
+      const h1 = document.querySelector("h1.hero-title");
+      if (h1) {
+        if (t.wordmarkStyle === "stacked") {
+          h1.innerHTML = '<img src="img/test.png" alt="iPlayground" class="hero-logo"><span class="hero-tagline">2026</span>';
+        } else {
+          const tagline = currentLang === "en" ? "CFP Open" : "徵稿中";
+          const date = currentLang === "en" ? "July 25 (Sat) – 26 (Sun)" : "7/25(六)～7/26(日)";
+          const dateEl = h1.querySelector('.hero-date');
+          const taglineEl = h1.querySelector('.hero-tagline');
+          if (dateEl) dateEl.innerHTML = date;
+          if (taglineEl) taglineEl.innerHTML = tagline;
+        }
+
+        // Recalculate Chinese subtitle alignment
+        requestAnimationFrame(() => {
+          const gradientSpan = h1.querySelector(".hero-tagline");
+          const zhSpan = h1.querySelector(".hero-sub-zh");
+          if (gradientSpan && zhSpan) {
+            zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
+          }
+        });
+      }
+
+      // Update Tweak Panel UI
+      document.querySelectorAll("#segMode button").forEach(b => b.classList.toggle("active", b.dataset.m === t.mode));
+      document.querySelectorAll("#segArt button").forEach(b => b.classList.toggle("active", b.dataset.k === t.keyArt));
+      document.querySelectorAll("#segMark button").forEach(b => b.classList.toggle("active", b.dataset.w === t.wordmarkStyle));
+      const hs = document.getElementById("hueSlider");
+      if (hs) hs.value = t.hue;
+    }
+
+    function updateTweak(patch) {
+      state = { ...state, ...patch };
+      applyTweaks(state);
+      try { window.parent.postMessage({ type: '__edit_mode_set_keys', edits: patch }, '*'); } catch (e) { }
+    }
+
+    document.getElementById("hueSlider")?.addEventListener("input", (e) => updateTweak({ hue: Number(e.target.value) }));
+    document.getElementById("segMode")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) { updateTweak({ mode: btn.dataset.m }); applyAppearance(btn.dataset.m); }
+    });
+    document.getElementById("segArt")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) updateTweak({ keyArt: btn.dataset.k });
+    });
+    document.getElementById("segMark")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (btn) updateTweak({ wordmarkStyle: btn.dataset.w });
+    });
+
+    window.addEventListener("resize", () => {
+      const h1 = document.querySelector("h1.hero-title");
+      if (h1) {
+        const gradientSpan = h1.querySelector(".gradient");
+        const zhSpan = h1.querySelector(".hero-sub-zh");
+        if (gradientSpan && zhSpan) {
+          zhSpan.style.width = "";
+          zhSpan.style.width = gradientSpan.getBoundingClientRect().width + "px";
+        }
+      }
+    });
+
+    window.addEventListener("message", (e) => {
+      if (!e.data || typeof e.data !== "object") return;
+      if (e.data.type === "__activate_edit_mode") {
+        tweaksOn = true;
+        document.getElementById("tweaksPanel")?.classList.add("on");
+      } else if (e.data.type === "__deactivate_edit_mode") {
+        tweaksOn = false;
+        document.getElementById("tweaksPanel")?.classList.remove("on");
+      }
+    });
+
+    // ===== i18n =====
+    // ===== I18N — 從 data/iplayground_i18n.json 載入，key → { zh, en } =====
+    function getDict(lang) {
+      const l = lang || 'zh';
+      const dict = {};
+      Object.entries(I18N_DATA).forEach(([k, v]) => {
+        // footer_tagline 特殊處理：從 CONFIG 取值
+        if (k === 'footer_tagline') {
+          dict[k] = CONFIG.footerTagline ? CONFIG.footerTagline[l] : '';
+        } else {
+          dict[k] = (v && v[l]) || (v && v['zh']) || '';
+        }
+      });
+      // countdown_units 組合成舊格式供 syncCountdownUnits 使用
+      dict.countdown_units = {
+        days:    (I18N_DATA.countdown_days    && I18N_DATA.countdown_days[l])    || '天',
+        hours:   (I18N_DATA.countdown_hours   && I18N_DATA.countdown_hours[l])   || '時',
+        minutes: (I18N_DATA.countdown_minutes && I18N_DATA.countdown_minutes[l]) || '分',
+        seconds: (I18N_DATA.countdown_seconds && I18N_DATA.countdown_seconds[l]) || '秒',
+      };
+      return dict;
+    }
+
+    function openBusSearch(bus) {
+      const query = encodeURIComponent(bus + '公車 路線');
+      const webUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
+      window.open(webUrl, '_blank');
+    }
+
+    function openNavigation(origin, destination) {
+      const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=walking`;
+      window.open(url, '_blank');
+    }
+
+    function applyLang(lang) {
+      currentLang = lang;
+      NEWS_DATA = NEWS_DATA_BY_LANG[lang] || NEWS_DATA_BY_LANG.zh || [];
+      const dict = getDict(lang);
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const k = el.dataset.i18n;
+        if (dict[k]) el.innerHTML = dict[k];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const k = el.dataset.i18nPlaceholder;
+        if (dict[k]) el.setAttribute("placeholder", dict[k]);
+      });
+      document.querySelectorAll("[data-i18n-aria]").forEach(el => {
+        const k = el.dataset.i18nAria;
+        if (dict[k]) el.setAttribute("aria-label", dict[k]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach(el => {
+        const k = el.dataset.i18nTitle;
+        if (dict[k]) el.setAttribute("title", dict[k]);
+      });
+      const agendaModalContent = document.getElementById("agendaModalContent");
+      if (agendaModalContent) {
+        agendaModalContent.setAttribute("data-modal-label", lang === "en" ? "// SESSION" : "// 議程");
+      }
+      const newsEyebrow = document.getElementById("newsEyebrow");
+      if (newsEyebrow) {
+        newsEyebrow.textContent = "// 01";
+      }
+      syncCountdownUnits(dict);
+      document.documentElement.lang = lang === "zh" ? "zh-Hant" : lang;
+      document.documentElement.dataset.lang = lang;
+      syncLangButtons(lang);
+      renderNews(lang);
+      const agendaSearchInput = document.getElementById("agendaSearchInput");
+      if (agendaSearchInput?.value.trim()) {
+        agendaSearchInput.dispatchEvent(new Event("input"));
+      } else {
+        renderAgenda(agendaCurrentDay);
+      }
+      renderSpeakers(lang);
+      applyTweaks(state);
+      try { localStorage.setItem("lang", lang); } catch (e) { }
+    }
+
+    function syncCountdownUnits(dict) {
+      const units = dict.countdown_units || { days: '天', hours: '時', minutes: '分', seconds: '秒' };
+      document.querySelectorAll("[data-countdown-unit]").forEach(el => {
+        const unit = el.dataset.countdownUnit;
+        if (units[unit]) el.textContent = units[unit];
+      });
+    }
+
+    function syncLangButtons(lang) {
+      document.querySelectorAll("[data-lang]").forEach(b =>
+        b.classList.toggle("active", b.dataset.lang === lang)
+      );
+      if (typeof syncFabLang === "function") syncFabLang(lang);
+    }
+
+    function syncThemeButtons(pref) {
+      document.querySelectorAll("[data-mode]").forEach(b =>
+        b.classList.toggle("active", b.dataset.mode === pref)
+      );
+      const fg = document.getElementById("fabGroup");
+      if (fg) fg.dataset.fabMode = pref;
+    }
+
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    function resolveMode(pref) {
+      if (pref === "light" || pref === "dark") return pref;
+      return mql.matches ? "dark" : "light";
+    }
+
+    function applyAppearance(pref) {
+      const effective = resolveMode(pref);
+      document.documentElement.dataset.mode = effective;
+      syncThemeButtons(pref);
+      state.mode = effective;
+      document.querySelectorAll("#segMode button").forEach(b => b.classList.toggle("active", b.dataset.m === effective));
+      try { localStorage.setItem("appearance", pref); } catch (e) { }
+      applyTweaks(state);
+    }
+
+    // ===== Event Listeners =====
+    document.getElementById("langSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-lang]");
+      if (btn) applyLang(btn.dataset.lang);
+    });
+
+    document.getElementById("mobileLangSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-lang]");
+      if (btn) applyLang(btn.dataset.lang);
+    });
+
+    document.getElementById("modeSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-mode]");
+      if (btn) applyAppearance(btn.dataset.mode);
+    });
+
+    document.getElementById("mobileModeSwitch")?.addEventListener("click", (e) => {
+      const btn = e.target.closest("button[data-mode]");
+      if (btn) applyAppearance(btn.dataset.mode);
+    });
+
+    // ===== Hero Pixel Logo =====
+    (function initPixelLogo() {
+      const sourceImg = document.getElementById('heroLogoImg');
+      const container = document.getElementById('heroPixelLogo');
+      if (!sourceImg || !container) return;
+
+      const ICONS = ['❤️','💎','💡','😄','⚡','��','🚀','🌟'];
+      let iconIdx = 0;
+      const DOT  = 5;
+      const STEP = 6;
+      const LEFT_OFFSET = 0.08;
+
+      function colColor(xRatio) {
+        if (xRatio < 0.10) return '#60a5fa';
+        if (xRatio < 0.58) return '#e2e8f0';
+        if (xRatio < 0.84) return '#93c5fd';
+        return '#7dd3fc';
+      }
+
+      function isHeartArea(xRatio, yRatio) {
+        return xRatio < 0.10 && yRatio < 0.35;
+      }
+
+      function build(img) {
+        const SAMPLE_W = 400;
+        const SAMPLE_H = Math.round(SAMPLE_W * img.naturalHeight / img.naturalWidth);
+        const oc = document.createElement('canvas');
+        oc.width  = SAMPLE_W;
+        oc.height = SAMPLE_H;
+        const ctx = oc.getContext('2d');
+        ctx.drawImage(img, 0, 0, SAMPLE_W, SAMPLE_H);
+        const data = ctx.getImageData(0, 0, SAMPLE_W, SAMPLE_H).data;
+
+        container.innerHTML = '';
+        const dispW = Math.min(480, Math.round(window.innerWidth * 0.42));
+        const dispH = Math.round(dispW * SAMPLE_H / SAMPLE_W);
+        const offsetPx = Math.round(dispW * LEFT_OFFSET);
+
+        const wrap = document.createElement('div');
+        wrap.style.cssText = `position:relative;width:${dispW}px;height:${dispH}px;margin:0 auto;`;
+
+        for (let sy = 0; sy < SAMPLE_H; sy += STEP) {
+          for (let sx = 0; sx < SAMPLE_W; sx += STEP) {
+            const idx = (sy * SAMPLE_W + sx) * 4;
+            if (data[idx + 3] < 80) continue;
+            const xRatio = sx / SAMPLE_W;
+            const yRatio = sy / SAMPLE_H;
+            if (isHeartArea(xRatio, yRatio)) continue;
+            const dx = Math.round(xRatio * dispW) - offsetPx;
+            const dy = Math.round(yRatio * dispH);
+            if (dx < 0 || dx > dispW) continue;
+            const dot = document.createElement('div');
+            dot.style.cssText = `position:absolute;left:${dx}px;top:${dy}px;width:${DOT}px;height:${DOT}px;border-radius:1px;background:${colColor(xRatio)};animation:pxFloat ${(2.5+Math.random()).toFixed(2)}s ease-in-out ${(Math.random()*2).toFixed(2)}s infinite;`;
+            wrap.appendChild(dot);
+          }
+        }
+
+        const iconEl = document.createElement('div');
+        iconEl.style.cssText = `position:absolute;left:2px;top:2px;font-size:${Math.round(dispH*0.30)}px;line-height:1;cursor:pointer;user-select:none;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5));transition:transform .2s;z-index:2;`;
+        iconEl.textContent = ICONS[iconIdx];
+        iconEl.title = '點擊切換圖示';
+        iconEl.addEventListener('click', () => {
+          iconIdx = (iconIdx + 1) % ICONS.length;
+          iconEl.textContent = ICONS[iconIdx];
+        });
+        iconEl.addEventListener('mouseenter', () => iconEl.style.transform = 'scale(1.3)');
+        iconEl.addEventListener('mouseleave', () => iconEl.style.transform = '');
+        wrap.appendChild(iconEl);
+        container.appendChild(wrap);
+      }
+
+      if (sourceImg.complete && sourceImg.naturalWidth > 0) {
+        build(sourceImg);
+      } else {
+        sourceImg.addEventListener('load', () => build(sourceImg));
+      }
+    })();
+
+    // ===== Pixel Heart =====
+    (function initPixelHeart() {
+      const container = document.getElementById('pxHeart');
+      if (!container) return;
+
+      // 11×10 heart bitmap
+      const HEART = [
+        [0,1,1,0,0,0,1,1,0,0,0],
+        [1,1,1,1,0,1,1,1,1,0,0],
+        [1,1,1,1,1,1,1,1,1,0,0],
+        [1,1,1,1,1,1,1,1,1,0,0],
+        [0,1,1,1,1,1,1,1,0,0,0],
+        [0,0,1,1,1,1,1,0,0,0,0],
+        [0,0,0,1,1,1,0,0,0,0,0],
+        [0,0,0,0,1,0,0,0,0,0,0],
+      ];
+
+      const ICONS = [
+        { bitmap: HEART, color: '#ff5080' },
+        { bitmap: [
+          // Diamond outline — top crown + girdle + pavilion
+          [0,0,1,1,1,1,1,1,1,1,1,0,0],
+          [0,1,0,0,1,0,1,0,1,0,0,1,0],
+          [1,0,0,0,0,0,0,0,0,0,0,0,1],
+          [1,1,1,1,1,1,1,1,1,1,1,1,1],
+          [0,1,0,0,0,1,0,1,0,0,0,1,0],
+          [0,0,1,0,0,0,1,0,0,0,1,0,0],
+          [0,0,0,1,0,0,1,0,0,1,0,0,0],
+          [0,0,0,0,1,0,1,0,1,0,0,0,0],
+          [0,0,0,0,0,1,1,1,0,0,0,0,0],
+          [0,0,0,0,0,0,1,0,0,0,0,0,0],
+        ], color: '#60a5fa' },  // diamond outline
+        { bitmap: [
+          // Bulb with rays — 15×15
+          [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+          [0,0,1,0,0,0,0,1,0,0,0,0,1,0,0],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [0,0,0,0,1,1,1,1,1,1,1,0,0,0,0],
+          [0,1,0,1,1,0,0,0,0,0,1,1,0,1,0],
+          [0,1,0,1,0,0,0,0,0,0,0,1,0,1,0],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [1,1,0,1,0,0,0,0,0,0,0,1,0,1,1],
+          [0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+          [0,1,0,1,1,0,0,0,0,0,1,1,0,1,0],
+          [0,0,0,0,1,1,0,0,0,1,1,0,0,0,0],
+          [0,0,1,0,0,1,1,1,1,1,0,0,1,0,0],
+          [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+          [0,0,0,0,0,0,1,1,1,0,0,0,0,0,0],
+          [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        ], color: '#fbbf24', scale: 1.21 },  // bulb with rays
+        { bitmap: [
+          [0,1,1,0,0,0,1,1,0],
+          [0,1,1,0,0,0,1,1,0],
+          [0,0,0,0,0,0,0,0,0],
+          [1,0,0,0,0,0,0,0,1],
+          [0,1,0,0,0,0,0,1,0],
+          [0,0,1,1,1,1,1,0,0],
+          [0,0,0,0,0,0,0,0,0],
+        ], color: '#facc15' },  // smile
+        { bitmap: [
+          // Daisy — 5 petals + yellow center
+          [0,0,0,0,1,1,0,0,0,0,0],
+          [0,0,0,1,1,1,1,0,0,0,0],
+          [0,1,1,0,1,1,0,0,1,1,0],
+          [1,1,1,0,2,2,0,0,1,1,1],
+          [1,1,0,2,2,2,2,0,0,1,1],
+          [0,0,0,2,2,2,2,0,0,0,0],
+          [1,1,0,2,2,2,2,0,0,1,1],
+          [1,1,1,0,2,2,0,0,1,1,1],
+          [0,1,1,0,0,0,0,0,1,1,0],
+          [0,0,0,1,1,1,1,0,0,0,0],
+          [0,0,0,0,1,1,0,0,0,0,0],
+        ], colorMap: { 1: '#ffffff', 2: '#f59e0b' }, color: '#ffffff' },  // daisy 5 petals
+        { bitmap: [
+          // Crown — three-point silhouette with separated base
+          [0,1,0,0,0,1,0,0,0,1,0],
+          [0,1,1,0,1,1,1,0,1,1,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+          [1,1,1,1,2,1,2,1,1,1,1],
+          [1,1,1,1,1,1,1,1,1,1,1],
+          [0,0,0,0,0,0,0,0,0,0,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+          [0,1,1,1,1,1,1,1,1,1,0],
+        ], colorMap: { 1: '#f59e0b', 2: '#fde68a' }, color: '#f59e0b', scale: 0.85, anim: 'sweep' },  // crown
+      ];
+
+      // Smile squint bitmap
+      const SMILE_SQUINT = [
+        [0,1,0,0,0,0,0,1,0],
+        [1,1,1,0,0,0,1,1,1],
+        [0,0,0,0,0,0,0,0,0],
+        [1,0,0,0,0,0,0,0,1],
+        [0,1,0,0,0,0,0,1,0],
+        [0,0,1,1,1,1,1,0,0],
+        [0,0,0,0,0,0,0,0,0],
+      ];
+
+      const TARGET_ROWS = 8;
+      const TARGET_COLS = 11;
+
+      // Responsive dot size by breakpoint
+      function getDotBase() {
+        const w = window.innerWidth;
+        if (w >= 1024) return 7;
+        if (w >= 768)  return 5;
+        return 4;
+      }
+
+      function getScale() {
+        const w = window.innerWidth;
+        if (w >= 1024) return 0.68;
+        if (w >= 768)  return 0.55;
+        return 0.45;
+      }
+
+      let idx = Math.floor(Math.random() * ICONS.length);
+      let animTimer = null;
+      let smileToggle = false;
+      let bulbOn = true;
+      let autoTimer = null;
+
+      function clearAnim() {
+        if (animTimer) { clearInterval(animTimer); animTimer = null; }
+        container.style.animation = '';
+        container.style.opacity = '';
+      }
+
+      function startAnim() {
+        clearAnim();
+        const icon = ICONS[idx];
+
+        if (idx === 0) {
+          // Heart — breathe via CSS
+          container.style.animation = 'pxHeartBreathe 1.2s ease-in-out infinite';
+
+        } else if (idx === 1) {
+          // Diamond — random dot flicker between blue and white
+          animTimer = setInterval(() => {
+            container.querySelectorAll('.ph-dot[data-on="1"]').forEach(dot => {
+              dot.style.background = Math.random() > 0.5 ? '#ffffff' : '#60a5fa';
+              dot.style.boxShadow = Math.random() > 0.5 ? '0 0 6px #ffffff' : '0 0 4px #60a5fa';
+            });
+          }, 120);
+
+        } else if (idx === 2) {
+          // Bulb — pulse glow on/off
+          animTimer = setInterval(() => {
+            bulbOn = !bulbOn;
+            container.querySelectorAll('.ph-dot[data-on="1"]').forEach(dot => {
+              dot.style.boxShadow = bulbOn
+                ? '0 0 10px #fbbf24, 0 0 20px #fbbf24'
+                : '0 0 2px #fbbf24';
+              dot.style.background = bulbOn ? '#fff7c0' : '#fbbf24';
+            });
+          }, 600);
+
+        } else if (idx === 3) {
+          // Smile — toggle squint
+          animTimer = setInterval(() => {
+            smileToggle = !smileToggle;
+            renderBitmap(smileToggle ? SMILE_SQUINT : ICONS[3].bitmap, ICONS[3].color, ICONS[3].scale);
+          }, 800);
+
+        } else if (icon.anim === 'sweep') {
+          // Crown — sweep light left to right, pause between cycles
+          const dots = Array.from(container.querySelectorAll('.ph-dot[data-on="1"]'));
+          const cols = ICONS[idx].bitmap[0].length;
+          let sweepCol = 0;
+          let pausing = false;
+
+          animTimer = setInterval(() => {
+            if (pausing) return;
+            dots.forEach(dot => {
+              const col = parseInt(dot.dataset.col || 0);
+              const dist = Math.abs(col - sweepCol);
+              if (dist === 0) {
+                dot.style.background = '#ffffff';
+                dot.style.boxShadow = '0 0 8px #ffffff, 0 0 16px #fde68a';
+              } else if (dist === 1) {
+                dot.style.background = '#fde68a';
+                dot.style.boxShadow = '0 0 4px #fde68a';
+              } else {
+                dot.style.background = dot.dataset.origColor || '#f59e0b';
+                dot.style.boxShadow = `0 0 3px ${dot.dataset.origColor || '#f59e0b'}`;
+              }
+            });
+            sweepCol++;
+            if (sweepCol >= cols) {
+              sweepCol = 0;
+              pausing = true;
+              setTimeout(() => { pausing = false; }, 3000);
+            }
+          }, 80);
+        }
+      }
+
+      function renderBitmap(bitmap, color, scale, color2, colorMap) {
+        container.innerHTML = '';
+        const rows = bitmap.length;
+        const cols = bitmap[0].length;
+        const dotW = Math.max(2, Math.floor((TARGET_COLS * getDotBase()) / cols));
+        const dotH = Math.max(2, Math.floor((TARGET_ROWS * getDotBase()) / rows));
+        const dotSize = Math.min(dotW, dotH) * (scale || 1);
+
+        bitmap.forEach(row => {
+          const rowEl = document.createElement('div');
+          rowEl.className = 'ph-row';
+          row.forEach((val, colIdx) => {
+            const dot = document.createElement('div');
+            dot.className = 'ph-dot';
+            dot.dataset.on = val ? '1' : '0';
+            dot.dataset.col = colIdx;
+            dot.style.width  = dotSize + 'px';
+            dot.style.height = dotSize + 'px';
+            let c = 'transparent';
+            if (val) {
+              if (colorMap && colorMap[val]) c = colorMap[val];
+              else if (val === 2) c = color2 || color;
+              else c = color;
+            }
+            dot.style.background = c;
+            if (val) {
+              dot.dataset.origColor = c;
+              dot.style.boxShadow = `0 0 3px ${c}`;
+            }
+            rowEl.appendChild(dot);
+          });
+          container.appendChild(rowEl);
+        });
+      }
+
+      function render() {
+        clearAnim();
+        bulbOn = true;
+        smileToggle = false;
+        container.style.opacity = '1';
+        const icon = ICONS[idx];
+        renderBitmap(icon.bitmap, icon.color, icon.scale, icon.color2, icon.colorMap);
+        startAnim();
+      }
+
+      container.addEventListener('click', () => {
+        idx = (idx + 1) % ICONS.length;
+        render();
+      });
+
+      render();
+
+      // Re-render on resize for responsiveness
+      let resizeTimer;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => render(), 200);
+      });
+    })();
+
+    // ===== Photo Wall =====
+    (function buildPhotoWall() {
+      const imgs = [
+        "1","2","3","4","5","6","7","8","9","10",
+        "11","12","13","14","15","16","17","18","19","20",
+        "24","25","26","27","28","30"
+      ].map(n => `img/slider/LINE_ALBUM_23042026_260424_${n}.jpg`);
+
+      // Fisher-Yates shuffle
+      for (let i = imgs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imgs[i], imgs[j]] = [imgs[j], imgs[i]];
+      }
+
+      const wall = document.getElementById("photoWall");
+      if (!wall) return;
+      const COLS = 4;
+      const perCol = Math.ceil(imgs.length / COLS);
+
+      for (let c = 0; c < COLS; c++) {
+        const col = document.createElement("div");
+        col.className = "pw-col";
+        // Each column gets a slice, then duplicated for seamless loop
+        const slice = [];
+        for (let r = 0; r < perCol + 2; r++) {
+          slice.push(imgs[(c * perCol + r) % imgs.length]);
+        }
+        // Duplicate for seamless infinite scroll
+        [...slice, ...slice].forEach(src => {
+          const img = document.createElement("img");
+          img.src = src;
+          img.alt = "";
+          img.loading = "lazy";
+          col.appendChild(img);
+        });
+        wall.appendChild(col);
+      }
+    })();
+
+    // ===== Init =====
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedLang = (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })() || "zh";
+      const savedPref = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return null; } })() || "auto";
+
+      // 並行載入所有 data/ 資料後再初始化
+      Promise.all([
+        fetch(NEWS_DATA_URLS.zh).then(r => r.json()),
+        fetch(NEWS_DATA_URLS.en).then(r => r.json()),
+        fetch("data/iplayground_agenda.json").then(r => r.json()),
+        fetch("data/iplayground_cfp_steps.json").then(r => r.json()),
+        fetch("data/iplayground_config.json").then(r => r.json()),
+        fetch("data/iplayground_links.json").then(r => r.json()),
+        fetch("data/iplayground_i18n.json").then(r => r.json()),
+      ]).then(([newsZh, newsEn, agenda, cfpSteps, config, links, i18n]) => {
+        NEWS_DATA_BY_LANG = { zh: newsZh, en: newsEn };
+        AGENDA = agenda;
+        SPEAKERS = cfpSteps;
+        CONFIG = config;
+        I18N_DATA = i18n;
+        VENUE_MAP = config.venue?.mapUrl || "";
+        PARKING_MAP = config.venue?.parkingMapUrl || "";
+
+        applyLinks(links);
+
+        renderNews(savedLang);
+        renderAgenda(1);
+        renderSpeakers();
+
+        requestAnimationFrame(() => {
+          applyLang(savedLang);
+          applyAppearance(savedPref);
+          setTimeout(() => {
+            syncLangButtons(savedLang);
+            syncThemeButtons(savedPref);
+          }, 100);
+          tickCountdown();
+          setInterval(tickCountdown, 1000);
+        });
+      }).catch(e => {
+        console.warn("資料載入失敗，使用空資料初始化", e);
+        renderNews(savedLang);
+        renderAgenda(1);
+        renderSpeakers();
+        requestAnimationFrame(() => {
+          applyLang(savedLang);
+          applyAppearance(savedPref);
+          setTimeout(() => {
+            syncLangButtons(savedLang);
+            syncThemeButtons(savedPref);
+          }, 100);
+          tickCountdown();
+          setInterval(tickCountdown, 1000);
+        });
+      });
+    });
+
+    mql.addEventListener("change", () => {
+      const cur = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return "auto"; } })() || "auto";
+      if (cur === "auto") applyAppearance("auto");
+    });
+  </script>
+
+  <!-- Floating Action Buttons -->
+  <div class="fab-group" id="fabGroup">
+    <button class="fab" id="fabMode" aria-label="Toggle appearance">
+      <svg class="fab-icon fab-icon--auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
+      <svg class="fab-icon fab-icon--light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="fab-icon fab-icon--dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="fab" id="fabLang" aria-label="Toggle language">
+      <span class="fab-lang-label">中</span>
+    </button>
+    <button class="fab fab--top" id="fabTop" aria-label="Back to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+  </div>
+
+  <link rel="stylesheet" href="css/fab.css">
+  <script>
+    // ===== FAB: Mode cycle (auto → light → dark → auto) =====
+    const modeOrder = ["auto", "light", "dark"];
+    const fabMode = document.getElementById("fabMode");
+    const fabLang = document.getElementById("fabLang");
+    const fabTop  = document.getElementById("fabTop");
+    const fabGroup = document.getElementById("fabGroup");
+
+    function updateFabMode(pref) {
+      fabGroup.dataset.fabMode = pref;
+    }
+
+    fabMode.addEventListener("click", () => {
+      const cur = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return "auto"; } })() || "auto";
+      const next = modeOrder[(modeOrder.indexOf(cur) + 1) % modeOrder.length];
+      applyAppearance(next);
+      updateFabMode(next);
+    });
+
+    fabLang.addEventListener("click", () => {
+      const next = currentLang === "zh" ? "en" : "zh";
+      applyLang(next);
+    });
+
+    fabTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Show/hide back-to-top
+    window.addEventListener("scroll", () => {
+      fabTop.classList.toggle("visible", window.scrollY > 300);
+    }, { passive: true });
+
+    // Sync fab lang label
+    function syncFabLang(lang) {
+      const label = fabLang.querySelector(".fab-lang-label");
+      if (label) label.textContent = lang === "zh" ? "中" : "EN";
+    }
+  </script>
+
+<!-- ===== Confetti / Party Popper ===== -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+<!-- ===== Hero: wave grid · dot field · wordmark letters · ms ticker · confetti ===== -->
+<script>
+(function heroFx() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Wave + perspective grid ----
+  (function buildWaveGrid() {
+    const svg = document.getElementById('waveGrid');
+    if (!svg) return;
+    const W = 1600, H = 900;
+    const horizon = 460;
+    const vpX = 800, vpY = horizon;
+    const amp = 95;
+    const xs = [0, W * 0.27, W * 0.52, W * 0.78, W];
+    const baseAmps = [-0.10, -0.85, 0.40, -0.55, 0.18];
+    const phases = [0, 1.20, 2.55, 4.10, 5.70];
+
+    function buildWavePath(t) {
+      const ys = baseAmps.map((b, i) => {
+        const wobble = Math.sin(t * 0.00038 + phases[i]) * 0.18;
+        return horizon + amp * (b + wobble);
+      });
+      let d = `M${xs[0]},${ys[0].toFixed(1)}`;
+      for (let i = 1; i < xs.length; i++) {
+        const dx = xs[i] - xs[i - 1];
+        const c1x = xs[i - 1] + dx * 0.5;
+        const c1y = ys[i - 1];
+        const c2x = xs[i] - dx * 0.5;
+        const c2y = ys[i];
+        d += ` C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${xs[i].toFixed(1)},${ys[i].toFixed(1)}`;
+      }
+      return d;
+    }
+
+    const initialWave = buildWavePath(reduceMotion ? 0 : performance.now());
+    const initialClip = `${initialWave} L${W},${H} L0,${H} Z`;
+
+    const NUM_VERT = 26;
+    const vertLines = [];
+    for (let i = 0; i <= NUM_VERT; i++) {
+      const t = i / NUM_VERT;
+      const exitX = -W * 0.45 + t * W * 1.9;
+      vertLines.push(`<line x1="${vpX}" y1="${vpY}" x2="${exitX.toFixed(1)}" y2="${H}"/>`);
+    }
+    const NUM_HORZ = 14;
+    const horzLineMarkup = [];
+    for (let i = 0; i < NUM_HORZ; i++) {
+      horzLineMarkup.push(`<line data-h-i="${i}" x1="0" y1="${horizon}" x2="${W}" y2="${horizon}"/>`);
+    }
+    function horzY(localT) {
+      return horizon + Math.pow(localT, 1.7) * (H - horizon);
+    }
+
+    svg.innerHTML = `
+      <defs>
+        <clipPath id="wgUnder"><path id="wgClipPath" d="${initialClip}"/></clipPath>
+        <linearGradient id="wgFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"    stop-color="#000000" stop-opacity="0"/>
+          <stop offset="0.85" stop-color="#000000" stop-opacity="0.10"/>
+          <stop offset="1"    stop-color="#000000" stop-opacity="0.45"/>
+        </linearGradient>
+        <filter id="wgGrain" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="7"/>
+          <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0"/>
+        </filter>
+      </defs>
+      <g clip-path="url(#wgUnder)">
+        <rect class="wg-floor" x="0" y="0" width="${W}" height="${H}"/>
+        <g class="wg-horizontal">${horzLineMarkup.join('')}</g>
+        <g class="wg-vertical">${vertLines.join('')}</g>
+        <rect x="0" y="0" width="${W}" height="${H}" fill="url(#wgFade)"/>
+      </g>
+      <path id="wgWaveLine" class="wg-wave-line" d="${initialWave}"/>
+      <circle class="wg-vp" cx="${vpX}" cy="${vpY}" r="1.8"/>
+      <rect x="0" y="0" width="${W}" height="${H}" filter="url(#wgGrain)" opacity="0.045"/>
+    `;
+
+    const horzLineEls = [...svg.querySelectorAll('.wg-horizontal line')];
+    function setHorzPositions(t) {
+      for (let i = 0; i < NUM_HORZ; i++) {
+        const localT = ((i + t) % NUM_HORZ) / NUM_HORZ;
+        const safeT = localT < 0.001 ? 0.001 : localT;
+        const y = horzY(safeT);
+        const el = horzLineEls[i];
+        el.setAttribute('y1', y.toFixed(1));
+        el.setAttribute('y2', y.toFixed(1));
+        const fadeIn = Math.min(1, safeT * 18);
+        const fadeOut = Math.min(1, (1 - safeT) * 6);
+        el.setAttribute('stroke-opacity', (fadeIn * fadeOut).toFixed(3));
+      }
+    }
+    setHorzPositions(0);
+
+    if (!reduceMotion) {
+      const wavePathEl = svg.querySelector('#wgWaveLine');
+      const clipPathEl = svg.querySelector('#wgClipPath');
+      let lastWave = 0, lastGrid = 0;
+      function tick(now) {
+        if (now - lastWave >= 33) {
+          const d = buildWavePath(now);
+          wavePathEl.setAttribute('d', d);
+          clipPathEl.setAttribute('d', `${d} L${W},${H} L0,${H} Z`);
+          lastWave = now;
+        }
+        if (now - lastGrid >= 33) {
+          const t = (now * 0.0004) % NUM_HORZ;
+          setHorzPositions(t);
+          lastGrid = now;
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+  })();
+
+  // ---- Wordmark letter-by-letter reveal ----
+  (function setupWordmarkLetters() {
+    const wmMark = document.querySelector('.wm-mark');
+    if (!wmMark) return;
+    const text = wmMark.dataset.text || wmMark.textContent.trim();
+    wmMark.textContent = '';
+    [...text].forEach((char, i) => {
+      const span = document.createElement('span');
+      span.className = 'wm-letter';
+      span.style.setProperty('--i', i);
+      span.textContent = char;
+      span.setAttribute('aria-hidden', 'true');
+      wmMark.appendChild(span);
+    });
+  })();
+
+  // ---- Dot field — twinkling backdrop behind the wordmark ----
+  (function buildDotField() {
+    const field = document.getElementById('dotField');
+    if (!field) return;
+    const W = 1200, H = 400;
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const layers = [
+      { cls: 'dot-layer dot-layer--far', count: 72, rMin: 0.45, rMax: 1.05, opMin: 0.08, opMax: 0.26, dMin: 6.5, dMax: 11.5, signalRate: 0.02 },
+      { cls: 'dot-layer dot-layer--mid', count: 52, rMin: 0.7,  rMax: 1.5,  opMin: 0.14, opMax: 0.42, dMin: 4.8, dMax: 8.2,  signalRate: 0.06 },
+      { cls: 'dot-layer dot-layer--near', count: 34, rMin: 0.95, rMax: 2.2,  opMin: 0.2,  opMax: 0.58, dMin: 3.4, dMax: 6.2,  signalRate: 0.1  },
+    ];
+
+    layers.forEach(layerConf => {
+      const layer = document.createElementNS(SVG_NS, 'g');
+      layer.setAttribute('class', layerConf.cls);
+
+      for (let i = 0; i < layerConf.count; i++) {
+        const c = document.createElementNS(SVG_NS, 'circle');
+        c.setAttribute('cx', (Math.random() * W).toFixed(1));
+        c.setAttribute('cy', (Math.random() * H).toFixed(1));
+        c.setAttribute('r', (layerConf.rMin + Math.random() * (layerConf.rMax - layerConf.rMin)).toFixed(2));
+        const baseOp = (layerConf.opMin + Math.random() * (layerConf.opMax - layerConf.opMin)).toFixed(3);
+        const delay = (-Math.random() * 11).toFixed(2);
+        const dur = (layerConf.dMin + Math.random() * (layerConf.dMax - layerConf.dMin)).toFixed(2);
+        c.style.setProperty('--base-op', baseOp);
+        c.style.setProperty('--delay', delay + 's');
+        c.style.setProperty('--dur', dur + 's');
+        c.style.opacity = baseOp;
+        if (Math.random() < layerConf.signalRate) c.classList.add('dot-signal');
+        layer.appendChild(c);
+      }
+      field.appendChild(layer);
+    });
+  })();
+
+  // ---- Millisecond ticker ----
+  (function setupMsTicker() {
+    const cdMs = document.getElementById('cdMs');
+    if (!cdMs) return;
+    if (reduceMotion) { cdMs.textContent = '.000'; return; }
+    let lastUpdate = 0;
+    function tickMs(now) {
+      if (now - lastUpdate >= 33) {
+        const ms = Date.now() % 1000;
+        cdMs.textContent = '.' + String(ms).padStart(3, '0');
+        lastUpdate = now;
+      }
+      requestAnimationFrame(tickMs);
+    }
+    requestAnimationFrame(tickMs);
+  })();
+
+  // ---- Wordmark click → confetti ----
+  const wordmark = document.getElementById('wordmark');
+  if (wordmark) {
+    function fireWordmarkConfetti() {
+      if (typeof window.confetti !== 'function') return;
+      window.confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.5 },
+        colors: ['#D2FF00', '#282C20', '#000000', '#F5E8E8'],
+        scalar: 0.9,
+      });
+    }
+    wordmark.addEventListener('click', fireWordmarkConfetti);
+    wordmark.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fireWordmarkConfetti(); }
+    });
+  }
+})();
+</script>
+<script>
+(function() {
+  const COLORS = ['#D2FF00','#FFD700','#FF6B35','#FF3D8B','#34C759','#FF9F0A','#FF453A','#FFFFFF','#F5E8E8','#A8C800'];
+  let confettiEnabled = true;
+
+  function normalizeSwitchValue(v) {
+    return String(v || '').trim().toLowerCase() === 'on' ? 'on' : 'off';
+  }
+
+  function playLaunchConfetti() {
+    if (!confettiEnabled) return;
+    setTimeout(function() {
+      confetti({
+        particleCount: 320,
+        spread: 200,
+        startVelocity: 78,
+        decay: 0.87,
+        gravity: 0.75,
+        ticks: 420,
+        scalar: 1.4,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.5, y: 0.78 }
+      });
+    }, 250);
+
+    setTimeout(function() {
+      confetti({
+        particleCount: 180,
+        spread: 160,
+        startVelocity: 65,
+        decay: 0.88,
+        gravity: 0.8,
+        ticks: 380,
+        scalar: 1.2,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.3, y: 0.82 }
+      });
+      confetti({
+        particleCount: 180,
+        spread: 160,
+        startVelocity: 65,
+        decay: 0.88,
+        gravity: 0.8,
+        ticks: 380,
+        scalar: 1.2,
+        colors: COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: 0.7, y: 0.82 }
+      });
+    }, 500);
+  }
+
+  function setupNewsConfetti(newsDriftEnabled) {
+    const newsCanvas = document.getElementById('newsConfettiCanvas');
+    if (!newsCanvas || !newsDriftEnabled) return;
+
+    const newsConfetti = confetti.create(newsCanvas, { resize: true, useWorker: false });
+    let driftTimer = null;
+    let isVisible = false;
+
+    // Subtle drift palette: lime + warm whites/blacks. No saturated rainbow.
+    const DRIFT_COLORS = ['#D2FF00', '#F5E8E8', '#FFFFFF', '#888888'];
+
+    function drift() {
+      if (!isVisible || !confettiEnabled) return;
+      newsConfetti({
+        particleCount: 1,
+        spread: 60,
+        startVelocity: 5,
+        decay: 0.95,
+        gravity: 0.5,
+        ticks: 200,
+        scalar: window.innerWidth < 600 ? 0.35 : 0.55,
+        colors: DRIFT_COLORS,
+        shapes: ['square', 'circle'],
+        origin: { x: Math.random(), y: 0 }
+      });
+      // Cadenced drop instead of every-frame — about ~5 particles/sec
+      driftTimer = setTimeout(drift, 200);
+    }
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          isVisible = true;
+          drift();
+        } else {
+          isVisible = false;
+          if (driftTimer) clearTimeout(driftTimer);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const newsSection = document.getElementById('news');
+    if (newsSection) observer.observe(newsSection);
+  }
+
+  fetch('data/confetti-control.json')
+    .then(function(r) { return r.json(); })
+    .then(function(confettiConfig) {
+      confettiEnabled = normalizeSwitchValue(confettiConfig.launchConfetti) === 'on';
+      setupNewsConfetti(normalizeSwitchValue(confettiConfig.newsDrift) === 'on');
+    })
+    .catch(function() {
+      confettiEnabled = true;
+      setupNewsConfetti(true);
+    });
+})();
+</script>
+
+<script>
+  // ============ Staff Grid — 從 data/iplayground_staff.json 動態渲染 ============
+  (async function () {
+    const FALLBACK_PHOTO = 'img/staff/staff_sample.png';
+    const grid = document.getElementById('staffGrid');
+    if (!grid) return;
+
+    let staff = [];
+    try {
+      const res = await fetch('data/iplayground_staff.json');
+      staff = await res.json();
+    } catch (e) {
+      console.warn('無法載入 data/iplayground_staff.json', e);
+      return;
+    }
+
+    grid.innerHTML = staff.map(({ name, role, photo, link }) => {
+      const src = photo || FALLBACK_PHOTO;
+      const avatar = `
+        <div class="staff-avatar-wrap">
+          <div class="staff-avatar-inner">
+            <img src="${src}" alt="${name}" loading="lazy"
+              onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'">
+          </div>
+        </div>`;
+
+      // 有 link 就包 <a>，沒有就用 <div>
+      const inner = link
+        ? `<a class="staff-card-link" href="${link}" target="_blank" rel="noopener noreferrer">${avatar}</a>`
+        : avatar;
+
+      return `
+        <div class="staff-card">
+          ${inner}
+          <p class="staff-name">${name}</p>
+          <p class="staff-role">${role}</p>
+        </div>`;
+    }).join('');
+  })();
+</script>
+
+<script>
+  // ============ Speaker Grid — 從 data/iplayground_speakers.json 動態渲染 ============
+  (async function () {
+    const FALLBACK_PHOTO = 'img/speaker/speaker_sample.png';
+    const grid = document.getElementById('speakerGrid');
+    if (!grid) return;
+
+    let speakers = [];
+    try {
+      const res = await fetch('data/iplayground_speakers.json');
+      speakers = await res.json();
+    } catch (e) {
+      console.warn('無法載入 data/iplayground_speakers.json', e);
+      return;
+    }
+
+    grid.innerHTML = speakers.map((speaker, i) => {
+      const { name, role, photo } = speaker;
+      const src = photo || FALLBACK_PHOTO;
+      const avatar = `
+        <div class="speaker-avatar-wrap">
+          <div class="speaker-avatar-inner">
+            <img src="${src}" alt="" loading="lazy"
+              onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'">
+          </div>
+        </div>`;
+
+      return `
+        <div class="speaker-card" data-speaker-idx="${i}" style="cursor:pointer;">
+          ${avatar}
+          <p class="speaker-name">${name}</p>
+          <p class="speaker-role">${role}</p>
+        </div>`;
+    }).join('');
+
+    // 點擊開啟彈窗
+    grid.querySelectorAll('.speaker-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const idx = parseInt(card.dataset.speakerIdx);
+        if (typeof showSpeakerModal === 'function') showSpeakerModal(speakers[idx]);
+      });
+    });
+  })();
+</script>
+
+<!-- ===== Margin-level delight: console hello · keyboard shortcuts · Konami · tab-blur title ===== -->
+<script>
+(function () {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lang = () => (typeof currentLang === 'string' ? currentLang : (document.documentElement.dataset.lang || 'zh'));
+  const t = (key, fallbackZh, fallbackEn) => {
+    const dict = (typeof I18N_DATA === 'object' && I18N_DATA) || {};
+    const entry = dict[key];
+    if (entry && entry[lang()]) return entry[lang()];
+    return lang() === 'en' ? fallbackEn : fallbackZh;
+  };
+  const isTypingTarget = (el) => {
+    if (!el) return false;
+    const tag = el.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return true;
+    if (el.isContentEditable) return true;
+    return false;
+  };
+
+  // ---- 1. DevTools console message (one-time per load) ----
+  // The audience inspects everything; reward the curious.
+  try {
+    const lime = '#D2FF00';
+    const surface = '#282C20';
+    const ink = '#F5E8E8';
+    console.log(
+      '%c iPlayground 2026 ',
+      `background:${lime};color:#000;font-family:Michroma,sans-serif;font-size:13px;padding:6px 10px;border-radius:4px;letter-spacing:0.06em;`
+    );
+    console.log(
+      `%c你好，正在 inspect 的開發者 👋\nHi developer — we see you. Apple-platform conf, run by volunteers.\n\n• CFP: 2026-06-19 · 23:59 UTC+8\n• Site source: https://github.com/iPlayground/iplayground.github.io\n• Like the lime? It's #D2FF00 on #000.\n\nP.S. ${lang() === 'en' ? 'press ?' : '網頁上按 ?'} for keyboard shortcuts.`,
+      `background:${surface};color:${ink};font-family:ui-monospace,monospace;font-size:12px;padding:8px 12px;line-height:1.6;border-left:2px solid ${lime};`
+    );
+  } catch (_) { /* no-op */ }
+
+  // ---- 2. Keyboard shortcuts ----
+  const SECTIONS = {
+    h: 'hero',
+    1: 'news',
+    2: 'about',
+    3: 'agenda',
+    4: 'speakers',
+    5: 'staff',
+  };
+  let gPrefix = false;
+  let gPrefixTimer = null;
+  const clearGPrefix = () => {
+    gPrefix = false;
+    if (gPrefixTimer) { clearTimeout(gPrefixTimer); gPrefixTimer = null; }
+  };
+
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function fireQuickConfetti() {
+    if (reduceMotion) return;
+    if (typeof window.confetti !== 'function') return;
+    window.confetti({
+      particleCount: 60,
+      spread: 65,
+      startVelocity: 38,
+      origin: { y: 0.6 },
+      colors: ['#D2FF00', '#F5E8E8', '#FFFFFF', '#282C20'],
+      scalar: 0.85,
+    });
+  }
+
+  function openCfpForm() {
+    const cta = document.getElementById('ctaSubmit');
+    if (cta && cta.href) window.open(cta.href, '_blank', 'noopener');
+  }
+
+  // ---- 3. Shortcuts overlay ----
+  const overlay = document.createElement('div');
+  overlay.className = 'kbd-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-labelledby', 'kbdOverlayTitle');
+  overlay.innerHTML = `
+    <div class="kbd-card" role="document">
+      <div class="kbd-head">
+        <div class="kbd-head-text">
+          <h2 id="kbdOverlayTitle" class="kbd-title" data-i18n="kbd_overlay_title">鍵盤捷徑</h2>
+          <p class="kbd-sub" data-i18n="kbd_overlay_sub">// 給用鍵盤思考的開發者</p>
+        </div>
+        <button type="button" class="kbd-close-btn" data-kbd-close aria-label="Close">×</button>
+      </div>
+      <div class="kbd-group">
+        <span class="kbd-group-label" data-i18n="kbd_group_action">// 動作</span>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_action_help">顯示這份清單</span>
+          <span class="kbd-keys"><kbd>?</kbd><span class="kbd-plus">/</span><kbd>/</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_action_theme">切換主題</span>
+          <span class="kbd-keys"><kbd>t</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_action_lang">切換語言</span>
+          <span class="kbd-keys"><kbd>l</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_action_confetti">灑一把彩帶</span>
+          <span class="kbd-keys"><kbd>c</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_action_submit">前往投稿表單</span>
+          <span class="kbd-keys"><kbd>s</kbd></span>
+        </div>
+      </div>
+      <div class="kbd-group">
+        <span class="kbd-group-label" data-i18n="kbd_group_nav">// 跳轉</span>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_home">回到頂部</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>h</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_news">最新消息</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>1</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_about">活動資訊</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>2</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_agenda">議程</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>3</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_speakers">講者</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>4</kbd></span>
+        </div>
+        <div class="kbd-row">
+          <span class="kbd-row-label" data-i18n="kbd_nav_staff">工作人員</span>
+          <span class="kbd-keys"><kbd>g</kbd><span class="kbd-plus">→</span><kbd>5</kbd></span>
+        </div>
+      </div>
+      <p class="kbd-foot" data-i18n="kbd_hint">提示：先按 <kbd>g</kbd>，再按下方數字或 <kbd>h</kbd>。</p>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  // re-apply i18n to the freshly injected nodes (the language dictionary may already be loaded)
+  if (typeof applyLang === 'function' && typeof currentLang === 'string') {
+    try { applyLang(currentLang); } catch (_) { /* no-op */ }
+  }
+
+  let lastFocused = null;
+  function openOverlay() {
+    if (overlay.dataset.open === 'true') return;
+    lastFocused = document.activeElement;
+    overlay.dataset.open = 'true';
+    const closeBtn = overlay.querySelector('[data-kbd-close]');
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
+  }
+  function closeOverlay() {
+    if (overlay.dataset.open !== 'true') return;
+    overlay.dataset.open = 'false';
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      try { lastFocused.focus({ preventScroll: true }); } catch (_) {}
+    }
+  }
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+  overlay.querySelector('[data-kbd-close]')?.addEventListener('click', closeOverlay);
+
+  // Optional desktop "?" affordance — hidden on touch / small screens via CSS.
+  const fabKbd = document.createElement('button');
+  fabKbd.type = 'button';
+  fabKbd.className = 'fab-kbd';
+  fabKbd.setAttribute('aria-label', 'Keyboard Shortcuts');
+  fabKbd.setAttribute('data-i18n-aria', 'kbd_fab_label');
+  fabKbd.textContent = '?';
+  fabKbd.addEventListener('click', openOverlay);
+  document.body.appendChild(fabKbd);
+  // Reveal after first scroll, like the back-to-top FAB
+  let revealed = false;
+  window.addEventListener('scroll', () => {
+    if (!revealed && window.scrollY > 80) {
+      revealed = true;
+      fabKbd.dataset.visible = 'true';
+    }
+  }, { passive: true });
+
+  // ---- 4. Konami code ----
+  const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let konamiIdx = 0;
+  let konamiFired = false;
+
+  const toast = document.createElement('div');
+  toast.className = 'easter-toast';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+  let toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.dataset.show = 'true';
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.dataset.show = 'false'; }, 2400);
+  }
+
+  function fireKonamiBurst() {
+    if (typeof window.confetti !== 'function' || reduceMotion) return;
+    const colors = ['#D2FF00', '#F5E8E8', '#FFFFFF', '#282C20'];
+    window.confetti({ particleCount: 140, spread: 90, startVelocity: 55, origin: { y: 0.7, x: 0.5 }, colors, scalar: 1.1 });
+    setTimeout(() => window.confetti({ particleCount: 80, spread: 120, startVelocity: 35, origin: { y: 0.9, x: 0.2 }, colors, scalar: 0.9 }), 220);
+    setTimeout(() => window.confetti({ particleCount: 80, spread: 120, startVelocity: 35, origin: { y: 0.9, x: 0.8 }, colors, scalar: 0.9 }), 280);
+  }
+
+  // ---- Master keydown handler ----
+  document.addEventListener('keydown', (e) => {
+    // Konami: track regardless of typing target (uses arrows + plain letters)
+    const expected = KONAMI[konamiIdx];
+    const matches = e.key === expected || (expected.length === 1 && e.key.toLowerCase() === expected);
+    if (matches) {
+      konamiIdx += 1;
+      if (konamiIdx === KONAMI.length) {
+        konamiIdx = 0;
+        if (!konamiFired) {
+          konamiFired = true;
+          fireKonamiBurst();
+          showToast(t('konami_toast', '🎉 你找到了 — Up Up Down Down …', '🎉 Up Up Down Down — you found it.'));
+        }
+      }
+    } else {
+      konamiIdx = 0;
+    }
+
+    // Skip remaining shortcuts when typing or with modifier keys
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (isTypingTarget(e.target)) return;
+
+    // Esc closes overlay
+    if (e.key === 'Escape') {
+      if (overlay.dataset.open === 'true') {
+        e.preventDefault();
+        closeOverlay();
+      }
+      clearGPrefix();
+      return;
+    }
+
+    // ? or / opens overlay
+    if (e.key === '?' || e.key === '/') {
+      e.preventDefault();
+      if (overlay.dataset.open === 'true') closeOverlay();
+      else openOverlay();
+      return;
+    }
+
+    // g-prefix navigation (vim-style)
+    if (gPrefix && SECTIONS[e.key]) {
+      e.preventDefault();
+      scrollToId(SECTIONS[e.key]);
+      clearGPrefix();
+      return;
+    }
+
+    if (e.key === 'g') {
+      gPrefix = true;
+      if (gPrefixTimer) clearTimeout(gPrefixTimer);
+      gPrefixTimer = setTimeout(clearGPrefix, 1200);
+      return;
+    }
+
+    if (gPrefix) {
+      // any non-matching key cancels the prefix
+      clearGPrefix();
+    }
+
+    // Single-key actions
+    if (e.key === 't') {
+      e.preventDefault();
+      if (typeof applyAppearance === 'function') {
+        const order = ['auto', 'light', 'dark'];
+        let cur = 'auto';
+        try { cur = localStorage.getItem('appearance') || 'auto'; } catch (_) {}
+        const next = order[(order.indexOf(cur) + 1) % order.length];
+        applyAppearance(next);
+      }
+      return;
+    }
+    if (e.key === 'l') {
+      e.preventDefault();
+      if (typeof applyLang === 'function') applyLang(lang() === 'zh' ? 'en' : 'zh');
+      return;
+    }
+    if (e.key === 'c') {
+      e.preventDefault();
+      fireQuickConfetti();
+      return;
+    }
+    if (e.key === 's') {
+      e.preventDefault();
+      openCfpForm();
+      return;
+    }
+  });
+
+  // ---- 5. Tab-blur title personality ----
+  // CFP deadline 2026-06-19 23:59 UTC+8 — match the visible countdown anchor.
+  const DEADLINE = new Date('2026-06-19T23:59:00+08:00').getTime();
+  const ORIGINAL_TITLE = document.title;
+  let focusedAt = Date.now();
+  let blurTimer = null;
+
+  function daysToDeadline() {
+    return Math.ceil((DEADLINE - Date.now()) / (24 * 60 * 60 * 1000));
+  }
+  function blurTitleString() {
+    const n = daysToDeadline();
+    if (n > 0) {
+      return t('blur_title', `← 投稿截止剩 ${n} 天 · iPlayground 2026`, `← ${n} days left to submit · iPlayground 2026`)
+        .replace('{n}', String(n));
+    }
+    if (n === 0) {
+      return t('blur_title_zero', '← 今天是投稿截止日 · iPlayground 2026', '← CFP closes today · iPlayground 2026');
+    }
+    return t('blur_title_past', '← iPlayground 2026 · 7/25–26 見', '← See you 7/25–26 · iPlayground 2026');
+  }
+
+  function onBlur() {
+    if (Date.now() - focusedAt < 8000) return; // ignore quick alt-tabs
+    if (blurTimer) clearTimeout(blurTimer);
+    blurTimer = setTimeout(() => {
+      if (document.hidden || !document.hasFocus()) {
+        document.title = blurTitleString();
+      }
+    }, 6000);
+  }
+  function onFocus() {
+    focusedAt = Date.now();
+    if (blurTimer) { clearTimeout(blurTimer); blurTimer = null; }
+    document.title = ORIGINAL_TITLE;
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) onBlur(); else onFocus();
+  });
+  window.addEventListener('blur', onBlur);
+  window.addEventListener('focus', onFocus);
+
+  // ---- 6. Reveal-on-scroll (one orchestrated rhythm for below-the-fold sections) ----
+  // Brand register: motion is part of the voice; below-the-fold sections enter as a unit
+  // with a small stagger. Hero already owns its own choreography — don't touch it.
+  if (!reduceMotion) {
+    const REVEAL_GROUPS = [
+      { container: '.section-head', child: ':scope > *',     stagger: 80,  soft: true },
+      { container: '.about-stats',  child: ':scope > .stat', stagger: 90 },
+      { container: '.transport-grid', child: ':scope > .transport-card', stagger: 110 },
+      { container: '#newsList',     child: ':scope > .news-row',         stagger: 60 },
+      { container: '#speakerGrid',  child: ':scope > .speaker-card',     stagger: 60 },
+      { container: '#staffGrid',    child: ':scope > .staff-card',       stagger: 50 },
+    ];
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+
+    const inViewport = (el) => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      return r.top < vh * 0.94 && r.bottom > 0;
+    };
+
+    function rescanReveal() {
+      REVEAL_GROUPS.forEach(group => {
+        document.querySelectorAll(group.container).forEach(container => {
+          let kids;
+          try { kids = container.querySelectorAll(group.child); }
+          catch (_) { return; }
+          let i = 0;
+          kids.forEach(el => {
+            if (el.dataset.revealInit === '1') return;
+            el.classList.add('reveal');
+            if (group.soft) el.classList.add('reveal--soft');
+            const delay = i * group.stagger;
+            if (delay) el.style.setProperty('--reveal-delay', `${delay}ms`);
+            el.dataset.revealInit = '1';
+            // If it's already in viewport (e.g. above-the-fold news section on first paint),
+            // reveal it on the next frame so the CSS transition can kick in.
+            if (inViewport(el)) {
+              requestAnimationFrame(() => el.classList.add('is-in'));
+            } else {
+              revealObserver.observe(el);
+            }
+            i += 1;
+          });
+        });
+      });
+    }
+
+    // Initial scan + re-scan whenever dynamic containers change
+    const dynamicIds = ['newsList', 'agendaList', 'speakerGrid', 'staffGrid'];
+    let rescanScheduled = false;
+    function scheduleRescan() {
+      if (rescanScheduled) return;
+      rescanScheduled = true;
+      requestAnimationFrame(() => {
+        rescanScheduled = false;
+        rescanReveal();
+      });
+    }
+    dynamicIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      new MutationObserver(scheduleRescan).observe(el, { childList: true });
+    });
+
+    // Also run after DOMContentLoaded data fetch settles (renders happen inside that promise)
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => setTimeout(rescanReveal, 0));
+    } else {
+      setTimeout(rescanReveal, 0);
+    }
+    // Catch the first wave of renders triggered by data fetches
+    setTimeout(rescanReveal, 400);
+    setTimeout(rescanReveal, 1200);
+  }
+
+  // ---- 7. Theme + language crossfade via View Transitions API ----
+  // Wraps the global applyAppearance / applyLang in document.startViewTransition().
+  // Browsers without support get the original instant call; reduced-motion bypasses entirely.
+  function withViewTransition(fn) {
+    if (reduceMotion) return fn();
+    if (typeof document.startViewTransition !== 'function') return fn();
+    try { document.startViewTransition(fn); }
+    catch (_) { fn(); }
+  }
+  if (typeof window.applyAppearance === 'function' && !window.__vtAppearancePatched) {
+    const _origAppearance = window.applyAppearance;
+    window.applyAppearance = function (pref) {
+      withViewTransition(() => _origAppearance(pref));
+    };
+    window.__vtAppearancePatched = true;
+  }
+  if (typeof window.applyLang === 'function' && !window.__vtLangPatched) {
+    const _origLang = window.applyLang;
+    window.applyLang = function (lang) {
+      withViewTransition(() => _origLang(lang));
+    };
+    window.__vtLangPatched = true;
+  }
+})();
+</script>
+
+</body>
+
+</html>
