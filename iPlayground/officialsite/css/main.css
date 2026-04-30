@@ -460,6 +460,7 @@
                   0 8px 24px -8px color-mix(in oklab, var(--c-signal) 80%, transparent);
     }
     html[data-mode="light"] .hero .cta-signal {
+      color: oklch(0.18 0.04 130);
       box-shadow: 0 0 0 1px var(--c-signal);
     }
     .hero .cta-signal:hover {
