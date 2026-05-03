@@ -21,8 +21,8 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <link rel="stylesheet" href="css/shared.css?v=20260430">
-  <link rel="stylesheet" href="css/main.css?v=20260430">
+  <link rel="stylesheet" href="css/shared.css?v=20260503-speaker-size-fix-5">
+  <link rel="stylesheet" href="css/main.css?v=20260503-speaker-size-fix-5">
 </head>
 
 <body>
@@ -89,7 +89,7 @@
     </ul>
   </div>
 
-  <link rel="stylesheet" href="css/confetti.css?v=20260430">
+  <link rel="stylesheet" href="css/confetti.css?v=20260503-speaker-size-fix-5">
   <!-- Hero -->
   <header class="hero" id="hero" data-screen-label="01 Hero" data-state="open">
 
@@ -107,26 +107,6 @@
     <div class="wordmark-banner">
       <svg class="dot-field" id="dotField" preserveAspectRatio="none" viewBox="0 0 1200 400" aria-hidden="true"></svg>
 
-      <div class="hero-brand-row">
-        <a class="hero-brand-mark" href="#hero" aria-label="iPlayground 2026">
-          <img src="img/svg/logo_header_light.svg" alt="iPlayground" class="hero-brand-img hero-brand-img--light">
-          <img src="img/svg/logo_header_dark.svg" alt="iPlayground" class="hero-brand-img hero-brand-img--dark">
-        </a>
-        <span class="status-pill" role="status">
-          <span class="dot" aria-hidden="true"></span>
-          <span data-i18n="hero_status_pill">開放投稿中</span>
-        </span>
-      </div>
-
-      <div class="eyebrow">
-        <span class="eyebrow-bracket">[</span>
-        <span data-i18n="hero_eyebrow_taipei">TAIPEI</span>
-        <span class="eyebrow-sep">·</span>
-        <span data-i18n="hero_eyebrow_dates">2026.07.25–26</span>
-        <span class="eyebrow-sep">·</span>
-        <span data-i18n="hero_eyebrow_cfp">徵稿中</span>
-        <span class="eyebrow-bracket">]</span>
-      </div>
 
       <div class="brand-crest" aria-label="iPlayground brand mark">
         <svg class="crest-cir" viewBox="0 0 24 24" aria-hidden="true" style="--i:0">
@@ -149,6 +129,15 @@
     <div class="hero-grid">
 
       <div class="hero-main">
+        <div class="eyebrow">
+          <span class="eyebrow-bracket">[</span>
+          <span data-i18n="hero_eyebrow_taipei">TAIPEI</span>
+          <span class="eyebrow-sep">·</span>
+          <span data-i18n="hero_eyebrow_dates">07.25–26</span>
+          <span class="eyebrow-sep">·</span>
+          <span data-i18n="hero_eyebrow_cfp">徵稿中</span>
+          <span class="eyebrow-bracket">]</span>
+        </div>
         <p class="lede" data-i18n="hero_lede">為 Apple 開發者準備的兩天，由社群志工策劃。技術分享、深度交流、與一群在乎品質的人。</p>
 
         <div class="cta-stack">
@@ -244,16 +233,16 @@
           <span class="stat-value" data-i18n="stat_venue_value">CPBAE</span>
           <span class="stat-sub" data-i18n="stat_venue_sub">政大公企中心 · 台北</span>
         </div>
-        <div class="stat">
-          <span class="stat-label">// FORMAT</span>
-          <span class="stat-value" data-i18n="stat_format_value">2 DAYS</span>
-          <span class="stat-sub" data-i18n="stat_format_sub">MULTI-TRACK · IOS / SWIFT / UX</span>
-        </div>
-        <div class="stat">
+        <a class="stat stat--link" href="#" data-link="cfp_form" target="_blank" rel="noopener">
+          <span class="stat-label">// SUBMIT</span>
+          <span class="stat-value" data-i18n="stat_cfp_value">徵稿中</span>
+          <span class="stat-sub" data-i18n="stat_cfp_sub">立即投稿 →</span>
+        </a>
+        <a class="stat stat--link" href="https://iplayground.kktix.cc/events/2026" target="_blank" rel="noopener">
           <span class="stat-label">// TICKETS</span>
-          <span class="stat-value" data-i18n="stat_tickets_value">SOON</span>
-          <span class="stat-sub" data-i18n="stat_tickets_sub">早鳥票即將開賣</span>
-        </div>
+          <span class="stat-value stat-value--on-sale" data-i18n="stat_tickets_value">立即購票</span>
+          <span class="stat-sub" data-i18n="stat_tickets_sub">早鳥票開賣中</span>
+        </a>
       </div>
 
       <div class="venue-wrap" style="margin-top: 100px;">
@@ -394,7 +383,7 @@
           </div>
           <div class="agenda-controls">
             <label class="agenda-search" aria-label="搜尋議程">
-              <input id="agendaSearchInput" type="search" autocomplete="off" placeholder="搜尋議題或標籤" aria-label="搜尋議程">
+              <input id="agendaSearchInput" type="text" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="搜尋議題或標籤" aria-label="搜尋議程">
             </label>
             <button class="agenda-sort-btn" id="agendaSortBtn" type="button" aria-label="切換議程排序" title="切換議程排序">
               <svg class="sort-icon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
@@ -609,7 +598,9 @@
 
       <!-- 方案 B：左右分欄 header -->
       <div class="sm-header">
-        <img class="sm-photo" id="smPhoto" src="" alt="">
+        <span class="sm-photo-wrap" id="smPhotoWrap">
+          <img class="sm-photo" id="smPhoto" src="" alt="">
+        </span>
         <div class="sm-info">
           <h2 class="sm-name" id="smName"></h2>
           <p class="sm-role" id="smRole"></p>
@@ -982,9 +973,17 @@
     let currentLang = "zh";
 
     // ===== Data =====
+    const DATA_VERSION = "20260503-sessiondata-2025";
     const NEWS_DATA_URLS = {
-      zh: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news.json",
-      en: "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/develop/news_en.json",
+      zh: `data/iplayground_news.json?v=${DATA_VERSION}`,
+      en: `data/iplayground_news.json?v=${DATA_VERSION}`,
+    };
+    const SESSION_DATA_BASE = "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/2025/v1";
+    const SESSION_DATA_URLS = {
+      schedule: `${SESSION_DATA_BASE}/schedule.json`,
+      scheduleEn: `${SESSION_DATA_BASE}/schedule_en.json`,
+      speakers: `${SESSION_DATA_BASE}/speakers.json`,
+      speakersEn: `${SESSION_DATA_BASE}/speakers_en.json`,
     };
     let NEWS_DATA_BY_LANG = { zh: [], en: [] };
     let NEWS_DATA = [];
@@ -1025,6 +1024,106 @@
       if (Array.isArray(value)) return value.map(item => localized(item, lang));
       if (value && typeof value === "object") return value[lang] || value.zh || value.en || "";
       return value || "";
+    }
+
+    async function fetchJson(url) {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`${response.status} ${url}`);
+      return response.json();
+    }
+
+    async function fetchJsonWithFallback(primaryUrl, fallbackUrl) {
+      try {
+        return await fetchJson(primaryUrl);
+      } catch (error) {
+        console.warn(`使用本機資料 fallback：${fallbackUrl}`, error);
+        return fetchJson(fallbackUrl);
+      }
+    }
+
+    function normalizeScheduleData(zhData, enData, speakers = []) {
+      if (Array.isArray(zhData)) return zhData;
+
+      const normalized = [];
+      const speakerMap = new Map((speakers || []).map(speaker => [String(speaker.id), speaker]));
+
+      [1, 2].forEach(day => {
+        const zhRows = zhData?.[`day${day}`] || [];
+        const enRows = enData?.[`day${day}`] || [];
+
+        zhRows.forEach((row, index) => {
+          const enRow = enRows[index] || {};
+          const matchedSpeaker = row.speakerID ? speakerMap.get(String(row.speakerID)) : null;
+          const speakerName = row.speaker || matchedSpeaker?.name || "";
+          const title = { zh: row.title || "", en: enRow.title || row.title || "" };
+          const description = { zh: row.description || "", en: enRow.description || row.description || "" };
+          const tags = { zh: row.tags || [], en: enRow.tags || row.tags || [] };
+          const isBreak = /休息|午餐|break|lunch/i.test(`${row.title || ""} ${enRow.title || ""}`);
+          const isSpecial = !row.speakerID && !row.speaker && !isBreak;
+
+          normalized.push({
+            day,
+            time: row.time || "",
+            track: isBreak ? "break" : isSpecial ? "special" : "ios",
+            noModal: isBreak,
+            title,
+            tags,
+            speaker: speakerName
+              ? {
+                  name: { zh: speakerName, en: enRow.speaker || speakerName },
+                  avatar: matchedSpeaker?.photo || "",
+                  social: []
+                }
+              : null,
+            description,
+            hackmd: row.hackMD || enRow.hackMD || ""
+          });
+        });
+      });
+
+      return normalized;
+    }
+
+    async function loadAgendaData() {
+      try {
+        const [scheduleZh, scheduleEn] = await Promise.all([
+          fetchJson(SESSION_DATA_URLS.schedule),
+          fetchJson(SESSION_DATA_URLS.scheduleEn).catch(() => null),
+        ]);
+        const speakers = await fetchJson(SESSION_DATA_URLS.speakers).catch(() => []);
+        return normalizeScheduleData(scheduleZh, scheduleEn, speakers);
+      } catch (error) {
+        console.warn("使用本機議程資料 fallback", error);
+        return fetchJson(`data/iplayground_agenda.json?v=${DATA_VERSION}`);
+      }
+    }
+
+    function normalizeSpeakerData(speakers) {
+      return (speakers || []).map(speaker => ({
+        name: speaker.name || "",
+        role: speaker.role || speaker.title || "",
+        company: speaker.company || "",
+        bio: speaker.bio || speaker.intro || "",
+        photo: speaker.photo || "",
+        social: speaker.social || {
+          facebook: speaker.fb || "",
+          twitter: speaker.x || speaker.twitter || "",
+          instagram: speaker.instagram || "",
+          github: speaker.github || "",
+          linkedin: speaker.linkedin || "",
+          threads: speaker.threads || "",
+          url: speaker.url || "",
+        }
+      }));
+    }
+
+    async function loadSpeakerData() {
+      try {
+        return normalizeSpeakerData(await fetchJson(SESSION_DATA_URLS.speakers));
+      } catch (error) {
+        console.warn("使用本機講者資料 fallback", error);
+        return normalizeSpeakerData(await fetchJson(`data/iplayground_speakers.json?v=${DATA_VERSION}`));
+      }
     }
 
     function parseTime(timeStr) {
@@ -1108,8 +1207,13 @@
         const startTime = (r.time || "").split(/[–\-]/)[0].trim();
         const desc = localized(r.description) || "";
 
+        const trackType = (r.track || "").toLowerCase();
+        const isBreak = trackType === "break";
+        const isSpecial = trackType === "special";
+        const cardClass = isBreak ? "session is-break" : isSpecial ? "session is-special" : "session";
+
         return `
-        <div class="session" data-agenda-idx="${sourceIdx}" data-agenda-day="${activeDay}">
+        <div class="${cardClass}" data-agenda-idx="${sourceIdx}" data-agenda-day="${activeDay}" data-track="${trackType}">
           <span class="session-time">${startTime}</span>
           <div class="session-body">
             <h3 class="session-title">${localized(r.title)}</h3>
@@ -1117,7 +1221,7 @@
           </div>
           <div class="session-meta">
             ${tagHTML}
-            <span class="session-speaker">${speakerName}</span>
+            ${!isBreak ? `<span class="session-speaker">${speakerName}</span>` : ""}
           </div>
         </div>`;
       }).join("");
@@ -1125,10 +1229,9 @@
       // 綁定點擊事件
       list.querySelectorAll(".session").forEach(card => {
         card.addEventListener("click", () => {
-          const day = parseInt(card.dataset.agendaDay);
           const idx = parseInt(card.dataset.agendaIdx);
           const item = AGENDA[idx];
-          if (item) showAgendaModal(item);
+          if (item && !item.noModal) showAgendaModal(item);
         });
       });
       syncAgendaControls();
@@ -1204,12 +1307,14 @@
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
+      document.body.classList.add("is-modal-open");
     }
 
     function closeAgendaModal() {
       const modal = document.getElementById("agendaModal");
       if (modal) modal.style.display = "none";
       document.body.style.overflow = "";
+      document.body.classList.remove("is-modal-open");
     }
 
     // ===== Speaker Modal =====
@@ -1230,9 +1335,18 @@
       const modal = document.getElementById("speakerModal");
       if (!modal) return;
 
-      const FALLBACK = 'img/speaker/speaker_sample.png';
-      document.getElementById("smPhoto").src = speaker.photo || FALLBACK;
-      document.getElementById("smPhoto").onerror = function() { this.src = FALLBACK; };
+      const FALLBACK = 'img/svg/swift.svg';
+      const smPhotoWrap = document.getElementById("smPhotoWrap");
+      const smPhoto = document.getElementById("smPhoto");
+      const setPlaceholderPhoto = () => {
+        smPhotoWrap.classList.add("is-placeholder");
+        smPhoto.classList.add("is-placeholder");
+        smPhoto.src = FALLBACK;
+      };
+      smPhotoWrap.classList.toggle("is-placeholder", !speaker.photo);
+      smPhoto.classList.toggle("is-placeholder", !speaker.photo);
+      smPhoto.src = speaker.photo || FALLBACK;
+      smPhoto.onerror = setPlaceholderPhoto;
       document.getElementById("smName").textContent = speaker.name || "";
       document.getElementById("smRole").textContent = speaker.role || "";
       document.getElementById("smCompany").textContent = speaker.company || "";
@@ -1249,12 +1363,14 @@
 
       modal.style.display = "flex";
       document.body.style.overflow = "hidden";
+      document.body.classList.add("is-modal-open");
     }
 
     function closeSpeakerModal() {
       const modal = document.getElementById("speakerModal");
       if (modal) modal.style.display = "none";
       document.body.style.overflow = "";
+      document.body.classList.remove("is-modal-open");
     }
 
     // ESC 關閉彈窗
@@ -1263,25 +1379,34 @@
     });
 
     // ===== Links — 從 data/iplayground_links.json 注入所有連結 =====
+    let _linksMap = {};
+
     function applyLinks(links) {
       if (!links) return;
 
-      // 建立查找表：data-link 值 → URL
-      const map = {};
+      // 建立查找表：data-link 值 → URL (字串或 {zh,en} 物件)
+      _linksMap = {};
 
       // important links
-      Object.entries(links.important || {}).forEach(([k, v]) => { map[k] = v; });
+      Object.entries(links.important || {}).forEach(([k, v]) => { _linksMap[k] = v; });
 
       // contact links
-      Object.entries(links.contact || {}).forEach(([k, v]) => { map[`contact_${k}`] = v; });
+      Object.entries(links.contact || {}).forEach(([k, v]) => { _linksMap[`contact_${k}`] = v; });
 
       // social links（個別 id）
-      (links.social || []).forEach(s => { map[`social_${s.id}`] = s.url; });
+      (links.social || []).forEach(s => { _linksMap[`social_${s.id}`] = s.url; });
 
+      applyLinksForLang(currentLang);
+    }
+
+    function applyLinksForLang(lang) {
+      const l = lang || currentLang || "zh";
       // 注入所有 [data-link] 元素的 href
       document.querySelectorAll("[data-link]").forEach(el => {
         const key = el.dataset.link;
-        if (map[key]) el.href = map[key];
+        const val = _linksMap[key];
+        if (!val) return;
+        el.href = (val && typeof val === "object") ? (val[l] || val.zh || val.en) : val;
       });
 
       // 渲染 hero 社群按鈕
@@ -1654,6 +1779,7 @@
         renderAgenda(agendaCurrentDay);
       }
       renderSpeakers(lang);
+      applyLinksForLang(lang);
       applyTweaks(state);
       try { localStorage.setItem("lang", lang); } catch (e) { }
     }
@@ -2100,11 +2226,11 @@
       Promise.all([
         fetch(NEWS_DATA_URLS.zh).then(r => r.json()),
         fetch(NEWS_DATA_URLS.en).then(r => r.json()),
-        fetch("data/iplayground_agenda.json").then(r => r.json()),
+        loadAgendaData(),
         fetch("data/iplayground_cfp_steps.json").then(r => r.json()),
         fetch("data/iplayground_config.json").then(r => r.json()),
         fetch("data/iplayground_links.json").then(r => r.json()),
-        fetch("data/iplayground_i18n.json").then(r => r.json()),
+        fetch(`data/iplayground_i18n.json?v=${DATA_VERSION}`).then(r => r.json()),
       ]).then(([newsZh, newsEn, agenda, cfpSteps, config, links, i18n]) => {
         NEWS_DATA_BY_LANG = { zh: newsZh, en: newsEn };
         AGENDA = agenda;
@@ -2156,7 +2282,7 @@
 
   <!-- Floating Action Buttons -->
   <div class="fab-group" id="fabGroup">
-    <button class="fab" id="fabMode" aria-label="Toggle appearance">
+    <button class="fab" id="fabMode" aria-label="Toggle appearance" hidden>
       <svg class="fab-icon fab-icon--auto" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/><path d="M12 3a9 9 0 0 1 0 18"/></svg>
       <svg class="fab-icon fab-icon--light" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       <svg class="fab-icon fab-icon--dark" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -2169,7 +2295,7 @@
     </button>
   </div>
 
-  <link rel="stylesheet" href="css/fab.css?v=20260430">
+  <link rel="stylesheet" href="css/fab.css?v=20260503-speaker-size-fix-5">
   <script>
     // ===== FAB: Mode cycle (auto → light → dark → auto) =====
     const modeOrder = ["auto", "light", "dark"];
@@ -2570,38 +2696,47 @@
 </script>
 
 <script>
-  // ============ Speaker Grid — 從 data/iplayground_speakers.json 動態渲染 ============
+  // ============ Speaker Grid — 優先從 SessionData GitHub Raw 載入 ============
   (async function () {
-    const FALLBACK_PHOTO = 'img/speaker/speaker_sample.png';
     const grid = document.getElementById('speakerGrid');
     if (!grid) return;
 
     let speakers = [];
     try {
-      const res = await fetch('data/iplayground_speakers.json');
-      speakers = await res.json();
+      speakers = await loadSpeakerData();
     } catch (e) {
-      console.warn('無法載入 data/iplayground_speakers.json', e);
+      console.warn('無法載入講者資料', e);
       return;
     }
 
+    const swapToPlaceholder = (img) => {
+      const card = img.closest('.speaker-card');
+      if (card) card.classList.add('speaker-card--placeholder');
+      const ph = document.createElement('div');
+      ph.className = 'speaker-photo-placeholder';
+      ph.setAttribute('aria-hidden', 'true');
+      img.replaceWith(ph);
+    };
+    window.__speakerPhotoFallback = swapToPlaceholder;
+
     grid.innerHTML = speakers.map((speaker, i) => {
       const { name, role, photo } = speaker;
-      const src = photo || FALLBACK_PHOTO;
-      const avatar = `
-        <div class="speaker-avatar-wrap">
-          <div class="speaker-avatar-inner">
-            <img src="${src}" alt="" loading="lazy"
-              onerror="this.onerror=null;this.src='${FALLBACK_PHOTO}'">
-          </div>
-        </div>`;
+      const isPlaceholder = !photo;
+      const inner = isPlaceholder
+        ? `<div class="speaker-photo-placeholder" aria-hidden="true"></div>`
+        : `<img src="${photo}" alt="" loading="lazy"
+              onerror="window.__speakerPhotoFallback(this);">`;
 
       return `
-        <div class="speaker-card" data-speaker-idx="${i}" style="cursor:pointer;">
-          ${avatar}
-          <p class="speaker-name">${name}</p>
-          <p class="speaker-role">${role}</p>
-        </div>`;
+        <article class="speaker-card${isPlaceholder ? ' speaker-card--placeholder' : ''}" data-speaker-idx="${i}">
+          <div class="speaker-photo">
+            ${inner}
+          </div>
+          <div class="speaker-card-meta">
+            <h3 class="speaker-name">${name}</h3>
+            <p class="speaker-role">${role}</p>
+          </div>
+        </article>`;
     }).join('');
 
     // 點擊開啟彈窗
@@ -2709,10 +2844,6 @@
         <div class="kbd-row">
           <span class="kbd-row-label" data-i18n="kbd_action_help">顯示這份清單</span>
           <span class="kbd-keys"><kbd>?</kbd><span class="kbd-plus">/</span><kbd>/</kbd></span>
-        </div>
-        <div class="kbd-row">
-          <span class="kbd-row-label" data-i18n="kbd_action_theme">切換主題</span>
-          <span class="kbd-keys"><kbd>t</kbd></span>
         </div>
         <div class="kbd-row">
           <span class="kbd-row-label" data-i18n="kbd_action_lang">切換語言</span>
@@ -2890,17 +3021,6 @@
     }
 
     // Single-key actions
-    if (e.key === 't') {
-      e.preventDefault();
-      if (typeof applyAppearance === 'function') {
-        const order = ['auto', 'light', 'dark'];
-        let cur = 'auto';
-        try { cur = localStorage.getItem('appearance') || 'auto'; } catch (_) {}
-        const next = order[(order.indexOf(cur) + 1) % order.length];
-        applyAppearance(next);
-      }
-      return;
-    }
     if (e.key === 'l') {
       e.preventDefault();
       if (typeof applyLang === 'function') applyLang(lang() === 'zh' ? 'en' : 'zh');
