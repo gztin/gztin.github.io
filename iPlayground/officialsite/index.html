@@ -291,6 +291,9 @@
               <button class="transport-link-btn" onclick="openBusSearch('214')">
                 從古亭站 4 號出口搭乘 214 公車
               </button>
+              <button class="transport-link-btn" onclick="openBusSearch('0南')">
+                從古亭站 4 號出口搭乘 0南 公車
+              </button>
               <button class="transport-link-btn" onclick="openBusSearch('606')">
                 從古亭站 4 號出口搭乘 606 公車
               </button>
@@ -311,14 +314,14 @@
             </div>
             <div style="font-size: 15px; line-height: 1.8; color: var(--ink-2);" data-i18n="trans_bus_desc">
               <div class="bus-tags">
-                <span class="bus-tag">0南</span>
-                <span class="bus-tag">214</span>
-                <span class="bus-tag">214直</span>
-                <span class="bus-tag">237</span>
-                <span class="bus-tag">253</span>
-                <span class="bus-tag">606</span>
-                <span class="bus-tag">670</span>
-                <span class="bus-tag">671</span>
+                <button class="bus-tag" type="button" onclick="showBusModal('0南');">0南</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('214');">214</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('214直');">214直</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('237');">237</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('253');">253</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('606');">606</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('670');">670</button>
+                <button class="bus-tag" type="button" onclick="showBusModal('671');">671</button>
               </div>
             </div>
           </div>
@@ -695,91 +698,20 @@
       if (!data) return;
 
       title.innerText = l === 'en' ? `${busNum} Bus Guide` : `${busNum} 公車搭乘指引`;
-      const labelSteps = l === 'en' ? 'Directions:' : '乘車步驟：';
-      const labelTip = l === 'en' ? 'Tips:' : '溫馨提示：';
-
-      let content = `
-        <div id="smartGuidance" style="background: var(--surface-2); padding: 20px; border-radius: 6px; margin-bottom: 0px;">
-          <p style="font-weight: 700; color: var(--accent); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-            ${labelSteps}
-          </p>
-          <ul id="stepList" style="margin: 0; padding-left: 0; list-style: none;">
-            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
-              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">1</span>
-              <span id="step1">${l === 'en' ? 'Take ' : '從'} <strong>${data.from[l]}</strong> ${l === 'en' ? 'and walk straight.' : '出站後直行。'}</span>
-            </li>
-            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
-              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">2</span>
-              <span id="step2">${l === 'en' ? 'Board the bus at ' : '至'} <strong>${data.stop[l]}</strong> ${l === 'en' ? 'stop.' : '站牌搭車。'}</span>
-            </li>
-            <li style="display: flex; gap: 12px;">
-              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">3</span>
-              <span>${l === 'en' ? 'Get off at ' : '在'} <strong>${data.dest[l]}</strong> ${l === 'en' ? 'stop.' : '站下車，下車後即抵達活動場地。'}</span>
-            </li>
-          </ul>
+      const unifiedGuide = l === 'en'
+        ? `Take bus <strong>${busNum}</strong> and get off at <strong>${data.dest[l]}</strong> stop.`
+        : `搭乘 <strong>${busNum}</strong> 公車，於 <strong>${data.dest[l]}</strong> 站下車。`;
+      desc.innerHTML = `
+        <div style="background: var(--surface-2); padding: 20px; border-radius: 6px;">
+          <p style="margin: 0; font-size: 16px; line-height: 1.8; color: var(--ink);">${unifiedGuide}</p>
         </div>
-        <p style="font-size: 14px; color: var(--ink-3); margin-top: 16px;">※ ${labelTip}${data.desc[l]}</p>
       `;
 
-      desc.innerHTML = content;
-
-      // Smart Detection for 0 South
-      if (busNum === '0南' && navigator.geolocation) {
-        const step1 = document.getElementById('step1');
-        const step2 = document.getElementById('step2');
-        const originalStep1 = step1.innerHTML;
-        const originalStep2 = step2.innerHTML;
-        
-        step1.innerHTML = l === 'en' ? '🔍 Detecting nearest stop...' : '🔍 正在偵測距離您最近的 0南 站牌...';
-        step2.style.opacity = '0.5';
-
-        navigator.geolocation.getCurrentPosition((pos) => {
-          const uLat = pos.coords.latitude;
-          const uLon = pos.coords.longitude;
-          const stops = BUS_STOPS_DB['0南'];
-          let nearest = stops[0];
-          let minDist = calculateDistance(uLat, uLon, nearest.lat, nearest.lon);
-
-          stops.forEach(s => {
-            const d = calculateDistance(uLat, uLon, s.lat, s.lon);
-            if (d < minDist) {
-              minDist = d;
-              nearest = s;
-            }
-          });
-
-          // Update UI with nearest stop
-          step1.innerHTML = l === 'en' ? `Board the <strong>0 South</strong> bus from <strong>${nearest.name[l]}</strong> stop.` : `從 <strong>${nearest.name[l]}</strong> 搭乘 <strong>0南</strong> 公車。`;
-          step2.innerHTML = l === 'en' ? `Get off at <strong>NCCU CPBAE</strong> stop.` : `在 <strong>「政大公企中心」</strong> 站下車，下車後即抵達活動場地。`;
-          step2.style.opacity = '1';
-          // Since we found a specific stop, we remove the "walk to stop" step and replace with direct boarding info
-          // Actually let's just make it simpler as per user request: "從 OO站搭成0南公車。在 「政大公企中心」 站下車"
-          const list = document.getElementById('stepList');
-          list.innerHTML = `
-            <li style="display: flex; gap: 12px; margin-bottom: 12px;">
-              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">1</span>
-              <span>${l === 'en' ? `Board <strong>0 South</strong> from <strong>${nearest.name[l]}</strong>.` : `從 <strong>${nearest.name[l]}</strong> 搭乘 <strong>0南</strong> 公車。`}</span>
-            </li>
-            <li style="display: flex; gap: 12px;">
-              <span style="background: var(--accent); color: #000; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;">2</span>
-              <span>${l === 'en' ? `Get off at <strong>NCCU CPBAE</strong> stop.` : `在 <strong>「政大公企中心」</strong> 站下車，下車後即抵達活動場地。`}</span>
-            </li>
-          `;
-        }, (err) => {
-          step1.innerHTML = originalStep1;
-          step2.style.opacity = '1';
-        });
-      }
-
       const navLabel = l === 'en' ? 'View Navigation' : '查看導航';
-      const statusLabel = l === 'en' ? 'Live Status' : '即時動態';
       const dest = encodeURIComponent("政大公企中心");
       const navUrl = `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=transit`;
-      const statusUrl = `https://ebus.gov.taipei/EBus/Route/RouteByRouteName?routeName=${encodeURIComponent(busNum)}`;
-      
       action.innerHTML = `
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%;">
+        <div style="display: grid; grid-template-columns: 1fr; gap: 12px; width: 100%;">
           <a href="${navUrl}" target="_blank" class="btn-primary" style="padding: 14px 20px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; justify-content: center; background: var(--surface); color: var(--accent); border: 2.5px solid var(--accent); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
@@ -788,13 +720,11 @@
             </svg>
             <span style="font-size: 15px;">${navLabel}</span>
           </a>
-          <a href="${statusUrl}" target="_blank" class="btn-primary" style="padding: 14px 20px; border-radius: 6px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; font-weight: 700; justify-content: center; background: var(--surface); color: var(--accent); border: 2.5px solid var(--accent); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              <path d="M12 8v4l3 3"></path>
-            </svg>
-            <span style="font-size: 15px;">${statusLabel}</span>
-          </a>
+          <p style="margin: 0; font-size: 13px; line-height: 1.7; color: var(--ink-3);">
+            ${l === 'en'
+              ? 'Google Maps transit suggestions are dynamic and based on your current location and real-time traffic, so Bus 0 South may not always appear in the top results.'
+              : 'Google 地圖的大眾運輸建議會依你目前位置與即時交通動態排序，因此 0南 不一定會出現在前幾個建議路線中。'}
+          </p>
         </div>
       `;
 
@@ -1729,9 +1659,7 @@
     }
 
     function openBusSearch(bus) {
-      const query = encodeURIComponent(bus + '公車 路線');
-      const webUrl = `https://www.google.com/maps/search/?api=1&query=${query}`;
-      window.open(webUrl, '_blank');
+      showBusModal(bus);
     }
 
     function openNavigation(origin, destination) {
@@ -1758,6 +1686,9 @@
       document.querySelectorAll("[data-i18n-title]").forEach(el => {
         const k = el.dataset.i18nTitle;
         if (dict[k]) el.setAttribute("title", dict[k]);
+      });
+      document.querySelectorAll(".bus-tag").forEach(tag => {
+        tag.onclick = () => showBusModal((tag.textContent || "").trim());
       });
       const agendaModalContent = document.getElementById("agendaModalContent");
       if (agendaModalContent) {
@@ -1842,6 +1773,14 @@
     document.getElementById("mobileModeSwitch")?.addEventListener("click", (e) => {
       const btn = e.target.closest("button[data-mode]");
       if (btn) applyAppearance(btn.dataset.mode);
+    });
+
+    // Bus tag click (works even after i18n re-renders trans_bus_desc)
+    document.addEventListener("click", (e) => {
+      const tag = e.target.closest(".bus-tag");
+      if (!tag) return;
+      const busNum = (tag.textContent || "").trim();
+      if (busNum) showBusModal(busNum);
     });
 
     // ===== Hero Pixel Logo =====
