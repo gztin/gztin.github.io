@@ -2204,14 +2204,16 @@
     .transport-card p+p {
       margin-top: 12px;
     }
-    .transport-card--commute .commute-tabs {
+    .transport-card--commute .commute-tabs,
+    .commute-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
       border: 1px solid var(--rule);
       margin-bottom: 20px;
       background: color-mix(in oklab, var(--surface-2) 25%, transparent);
     }
-    .transport-card--commute .commute-tab {
+    .transport-card--commute .commute-tab,
+    .commute-tab {
       appearance: none;
       border: 0;
       background: transparent;
@@ -2229,8 +2231,10 @@
       align-items: center;
       justify-content: center;
     }
-    .transport-card--commute .commute-tab + .commute-tab { border-left: 1px solid var(--rule); }
-    .transport-card--commute .commute-tab.is-active {
+    .transport-card--commute .commute-tab + .commute-tab,
+    .commute-tab + .commute-tab { border-left: 1px solid var(--rule); }
+    .transport-card--commute .commute-tab.is-active,
+    .commute-tab.is-active {
       background: var(--accent);
       color: var(--bg);
     }
