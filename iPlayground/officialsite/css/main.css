@@ -1214,17 +1214,26 @@
       font-size: 11px;
       white-space: normal;
     }
+    .session-tags {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
     .session-tag {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 30px;
+      min-height: 24px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #D2FF00;
       border: 1px solid var(--rule-2);
-      padding: 0 12px;
+      padding: 0 10px;
+      font-size: 10px;
+      white-space: nowrap;
+      writing-mode: horizontal-tb;
       background: color-mix(in oklab, #D2FF00 10%, transparent);
     }
     .session-tag.is-keynote {
@@ -1331,16 +1340,11 @@
       border: 0;
     }
 
-    /* Tags row used inside the agenda modal (multiple tags from data) */
-    .agenda-tag {
-      display: inline-block;
-      padding: 3px 10px;
-      font-family: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-3);
-      border: 1px solid var(--rule-2);
+    /* keep modal tags rhythm aligned with list chips */
+    .am-tags .session-tag {
+      min-height: 24px;
+      padding: 0 10px;
+      font-size: 10px;
     }
 
     @media (max-width: 720px) {
@@ -1388,12 +1392,24 @@
       }
       .session:hover { padding-left: 8px; }
       .session-meta {
-        grid-column: 1 / -1;
-        flex-direction: row;
-        align-items: center;
+        grid-column: 2;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 12px;
         margin-top: 4px;
         padding-right: 0;
+      }
+      .session-meta .session-speaker {
+        order: 1;
+      }
+      .session-meta .session-tag {
+        order: 2;
+      }
+      .session-meta .session-tags {
+        order: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
       }
       .session-time { font-size: 15px; }
     }

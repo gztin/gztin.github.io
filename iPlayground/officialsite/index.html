@@ -21,8 +21,8 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <link rel="stylesheet" href="css/shared.css?v=20260503-speaker-size-fix-7">
-  <link rel="stylesheet" href="css/main.css?v=20260503-speaker-size-fix-7">
+  <link rel="stylesheet" href="css/shared.css?v=20260503-speaker-size-fix-8">
+  <link rel="stylesheet" href="css/main.css?v=20260503-speaker-size-fix-8">
 </head>
 
 <body>
@@ -93,7 +93,7 @@
     </ul>
   </div>
 
-  <link rel="stylesheet" href="css/confetti.css?v=20260503-speaker-size-fix-6">
+  <link rel="stylesheet" href="css/confetti.css?v=20260503-speaker-size-fix-8">
   <!-- Hero -->
   <header class="hero" id="hero" data-screen-label="01 Hero" data-state="open">
 
@@ -942,6 +942,10 @@
       speakers: `${SESSION_DATA_BASE}/speakers.json`,
       speakersEn: `${SESSION_DATA_BASE}/speakers_en.json`,
     };
+    const LOCAL_DATA_URLS = {
+      agenda: `data/iplayground_agenda.json?v=${DATA_VERSION}`,
+      workshops: `data/iplayground_workshops.json?v=${DATA_VERSION}`,
+    };
     let NEWS_DATA_BY_LANG = { zh: [], en: [] };
     let NEWS_DATA = [];
     let AGENDA = [];
@@ -1043,72 +1047,30 @@
     }
 
     async function loadAgendaData() {
+      let workshops = [];
+      try {
+        workshops = await fetchJson(LOCAL_DATA_URLS.workshops);
+      } catch (error) {
+        console.warn("workshop 資料載入失敗，將只顯示 session agenda", error);
+      }
+
       try {
         const [scheduleZh, scheduleEn] = await Promise.all([
           fetchJson(SESSION_DATA_URLS.schedule),
           fetchJson(SESSION_DATA_URLS.scheduleEn).catch(() => null),
         ]);
         const speakers = await fetchJson(SESSION_DATA_URLS.speakers).catch(() => []);
-        return appendMockWorkshops(normalizeScheduleData(scheduleZh, scheduleEn, speakers));
+        return mergeWorkshops(normalizeScheduleData(scheduleZh, scheduleEn, speakers), workshops);
       } catch (error) {
         console.warn("使用本機議程資料 fallback", error);
-        return appendMockWorkshops(await fetchJson(`data/iplayground_agenda.json?v=${DATA_VERSION}`));
+        return mergeWorkshops(await fetchJson(LOCAL_DATA_URLS.agenda), workshops);
       }
     }
 
-    function appendMockWorkshops(agendaRows) {
-      const rows = Array.isArray(agendaRows) ? [...agendaRows] : [];
-      if (rows.some(item => (item.track || "").toLowerCase() === "workshop")) return rows;
-      const speakerPool = rows
-        .map(item => item?.speaker)
-        .filter(sp => sp && sp.name);
-      const pickSpeaker = () => {
-        if (!speakerPool.length) {
-          return { name: { zh: "待公布", en: "TBA" }, avatar: "img/staff/staff_sample.png", social: [] };
-        }
-        const picked = speakerPool[Math.floor(Math.random() * speakerPool.length)];
-        return {
-          name: picked.name || { zh: "待公布", en: "TBA" },
-          avatar: picked.avatar || "img/staff/staff_sample.png",
-          social: picked.social || []
-        };
-      };
-
-      const templates = {
-        1: [
-          ["09:30 - 10:20", "Workshop A: SwiftUI 動畫互動實作", "Workshop A: SwiftUI Interaction Lab", "Room A"],
-          ["11:40 - 12:30", "Workshop B: App 架構重構診療室", "Workshop B: App Architecture Clinic", "Room B"],
-          ["14:00 - 14:50", "Workshop C: iOS 效能調校工作坊", "Workshop C: iOS Performance Tuning", "Room C"],
-          ["16:00 - 16:50", "Workshop D: 測試策略與 CI 落地", "Workshop D: Testing and CI Workshop", "Room D"],
-        ],
-        2: [
-          ["09:30 - 10:20", "Workshop E: Swift 6 Concurrency 實戰", "Workshop E: Swift 6 Concurrency Lab", "Room A"],
-          ["11:40 - 12:30", "Workshop F: Design Token 到元件系統", "Workshop F: Design Token to Components", "Room B"],
-          ["14:00 - 14:50", "Workshop G: visionOS 快速原型工作坊", "Workshop G: visionOS Prototype Lab", "Room C"],
-          ["16:00 - 16:50", "Workshop H: 發佈流程與監控實作", "Workshop H: Release and Monitoring Workshop", "Room D"],
-        ]
-      };
-
-      [1, 2].forEach(day => {
-        templates[day].forEach(([time, titleZh, titleEn, room]) => {
-          const workshopSpeaker = pickSpeaker();
-          rows.push({
-            day,
-            time,
-            track: "workshop",
-            noModal: false,
-            title: { zh: titleZh, en: titleEn },
-            tags: { zh: ["Workshop", room], en: ["Workshop", room] },
-            speaker: workshopSpeaker,
-            description: {
-              zh: `互動式工作坊，名額有限，建議提早入場。地點：${room}`,
-              en: `Hands-on workshop with limited seats. Please arrive early. Venue: ${room}`
-            },
-            hackmd: ""
-          });
-        });
-      });
-      return rows;
+    function mergeWorkshops(agendaRows, workshops) {
+      const agenda = Array.isArray(agendaRows) ? agendaRows.filter(item => (item.track || "").toLowerCase() !== "workshop") : [];
+      const workshopRows = Array.isArray(workshops) ? workshops : [];
+      return [...agenda, ...workshopRows];
     }
 
     function normalizeSpeakerData(speakers) {
@@ -1229,11 +1191,10 @@
 
       list.innerHTML = rows.map(({ item: r, sourceIdx }) => {
         const tags = localized(r.tags || []);
-        const primaryTag = tags[0] || "";
-        const isKeynote = primaryTag.toUpperCase() === "KEYNOTE" || (r.track || "").toLowerCase() === "keynote";
-        const tagHTML = primaryTag
-          ? `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${primaryTag.toUpperCase()}</span>`
-          : "";
+        const tagHTML = tags.map(tag => {
+          const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (r.track || "").toLowerCase() === "keynote";
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag).toUpperCase()}</span>`;
+        }).join("");
         const speakerName = localized(r.speaker?.name) || tbaLabel;
         const startTime = (r.time || "").split(/[–\-]/)[0].trim();
         const desc = localized(r.description) || "";
@@ -1251,8 +1212,8 @@
             ${desc ? `<p class="session-desc">${desc}</p>` : ""}
           </div>
           <div class="session-meta">
-            ${tagHTML}
             ${!isBreak ? `<span class="session-speaker">${speakerName}</span>` : ""}
+            <span class="session-tags">${tagHTML}</span>
           </div>
         </div>`;
       }).join("");
@@ -1316,8 +1277,12 @@
       document.getElementById("amTitle").textContent = localized(item.title);
 
       // 標籤
-      document.getElementById("amTags").innerHTML = localized(item.tags || [])
-        .map(tag => `<span class="agenda-tag">${tag}</span>`).join("");
+      const itemTags = localized(item.tags || []);
+      document.getElementById("amTags").innerHTML = itemTags
+        .map(tag => {
+          const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (item.track || "").toLowerCase() === "keynote";
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag).toUpperCase()}</span>`;
+        }).join("");
 
       // 講者
       const sp = item.speaker || {};
@@ -2352,7 +2317,7 @@
     </button>
   </div>
 
-  <link rel="stylesheet" href="css/fab.css?v=20260503-speaker-size-fix-6">
+  <link rel="stylesheet" href="css/fab.css?v=20260503-speaker-size-fix-8">
   <script>
     // ===== FAB: Mode cycle (auto → light → dark → auto) =====
     const modeOrder = ["auto", "light", "dark"];
