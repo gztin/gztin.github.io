@@ -1034,6 +1034,7 @@
       justify-content: space-between;
       gap: 24px;
       margin-bottom: 48px;
+      flex-wrap: wrap;
     }
 
     .agenda-tabs {
@@ -1083,11 +1084,15 @@
       gap: 8px;
       margin-left: auto;
       min-height: 78px;
+      flex: 1;
+      min-width: 320px;
     }
 
     .agenda-search {
       display: flex;
-      width: min(360px, 36vw);
+      width: min(520px, 44vw);
+      flex: 1;
+      min-width: 240px;
       border: 1px solid var(--rule-2);
       background: color-mix(in oklab, var(--surface-2) 25%, transparent);
     }
@@ -1153,11 +1158,11 @@
 
     .session {
       display: grid;
-      grid-template-columns: 80px 1fr auto;
+      grid-template-columns: 80px 1fr;
       gap: 24px;
       padding: 24px 0;
       border-bottom: 1px solid var(--rule-2);
-      align-items: baseline;
+      align-items: start;
       cursor: pointer;
       transition: background 180ms cubic-bezier(0.22, 1, 0.36, 1),
                   padding-left 320ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -1176,7 +1181,10 @@
       font-variant-numeric: tabular-nums;
     }
 
-    .session-body { min-width: 0; }
+    .session-body {
+      min-width: 0;
+      grid-column: 2;
+    }
 
     .session-title {
       margin: 0;
@@ -1197,21 +1205,27 @@
 
     .session-meta {
       display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 8px;
-      padding-right: 14px;
+      flex-direction: row;
+      align-items: center;
+      gap: 12px;
+      grid-column: 2;
+      margin-top: 10px;
       font-family: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
       font-size: 11px;
-      white-space: nowrap;
+      white-space: normal;
     }
 
     .session-tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--ink-3);
+      color: #D2FF00;
       border: 1px solid var(--rule-2);
-      padding: 4px 8px;
+      padding: 0 12px;
+      background: color-mix(in oklab, #D2FF00 10%, transparent);
     }
     .session-tag.is-keynote {
       color: #D2FF00;
@@ -1223,9 +1237,23 @@
     }
 
     .session-speaker {
-      color: var(--ink-2);
-      letter-spacing: 0.06em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      letter-spacing: 0.04em;
       text-transform: uppercase;
+      font-weight: 500;
+      min-height: 30px;
+      padding: 0 12px;
+      border: 1px solid var(--rule-2);
+      background: color-mix(in oklab, #7dd3fc 10%, transparent);
+    }
+    .session-speaker::before {
+      content: "SPEAKER";
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: #7dd3fc;
     }
 
     .session.is-break {
@@ -1316,8 +1344,17 @@
     }
 
     @media (max-width: 720px) {
+      .agenda-tabs {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+      .agenda-tabs .agenda-tab {
+        width: 100%;
+      }
       .agenda-toolbar {
-        flex-direction: column;
+        display: grid;
+        grid-template-columns: 1fr;
         align-items: stretch;
         gap: 12px;
       }
@@ -1331,6 +1368,7 @@
       }
 
       .agenda-controls {
+        width: 100%;
         min-height: 52px;
       }
 
@@ -1998,13 +2036,14 @@
     .bus-tags {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 9px;
+      gap: 12px;
       margin-top: 0;
       width: 100%;
     }
 
     .bus-tag {
-      padding: 10px 4px;
+      height: 50px;
+      padding: 0 10px;
       border-radius: 6px;
       background: var(--surface-2);
       border: 1px solid var(--rule);
@@ -2015,10 +2054,12 @@
       transition: all .3s cubic-bezier(0.16, 1, 0.3, 1);
       text-decoration: none;
       vertical-align: middle;
-      line-height: 1;
+      line-height: 1.2;
       width: 100%;
       text-align: center;
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .bus-tag:hover {
@@ -2036,7 +2077,8 @@
       display: block;
       width: 100%;
       text-align: left;
-      padding: 12px 16px;
+      height: 50px;
+      padding: 0 16px;
       border-radius: 6px;
       background: var(--surface-2);
       border: 1px solid var(--rule);
@@ -2049,6 +2091,11 @@
       margin-bottom: 12px;
       position: relative;
       overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+    }
+    .transport-card--commute #commutePaneMrt .transport-link-btn:last-child {
+      margin-bottom: 0;
     }
 
     .transport-link-btn:hover {
@@ -2156,6 +2203,40 @@
 
     .transport-card p+p {
       margin-top: 12px;
+    }
+    .transport-card--commute .commute-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--rule);
+      margin-bottom: 20px;
+      background: color-mix(in oklab, var(--surface-2) 25%, transparent);
+    }
+    .transport-card--commute .commute-tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: var(--ink-2);
+      font-family: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      cursor: pointer;
+      width: 100%;
+      min-height: 56px;
+      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .transport-card--commute .commute-tab + .commute-tab { border-left: 1px solid var(--rule); }
+    .transport-card--commute .commute-tab.is-active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .transport-card--commute [data-commute-pane] {
+      padding-top: 4px;
+      min-height: var(--commute-pane-h, auto);
     }
 
     /* ============ Tweaks panel ============ */
@@ -2966,11 +3047,4 @@
     @media (prefers-reduced-motion: reduce) {
       ::view-transition-old(root),
       ::view-transition-new(root) { animation: none; }
-    }
-
-    /* Hide full sections per request */
-    #agenda,
-    #speakers,
-    #staff {
-      display: none !important;
     }
