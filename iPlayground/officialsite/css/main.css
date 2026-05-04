@@ -1250,8 +1250,8 @@
       align-items: center;
       gap: 8px;
       color: var(--ink);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
+      letter-spacing: 0;
+      text-transform: none !important;
       font-weight: 500;
       min-height: 30px;
       padding: 0 12px;
@@ -1263,6 +1263,11 @@
       font-size: 9px;
       letter-spacing: 0.16em;
       color: #7dd3fc;
+    }
+    html[lang="zh-Hant"] .session-speaker::before,
+    html[data-lang="zh"] .session-speaker::before {
+      content: "講者";
+      letter-spacing: 0.08em;
     }
 
     .session.is-break {
@@ -1527,7 +1532,7 @@
       font-family: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
       font-size: 12px;
       letter-spacing: 0.14em;
-      text-transform: uppercase;
+      text-transform: none !important;
       color: var(--ink-2);
     }
 
