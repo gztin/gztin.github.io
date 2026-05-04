@@ -931,25 +931,29 @@
 
     // ===== Data =====
     const DATA_VERSION = "20260503-sessiondata-2025";
-    const NEWS_DATA_URLS = {
-      zh: `data/iplayground_news.json?v=${DATA_VERSION}`,
-      en: `data/iplayground_news.json?v=${DATA_VERSION}`,
-    };
-    const SESSION_DATA_BASE = "https://raw.githubusercontent.com/iplayground/SessionData/refs/heads/2025/v1";
+    const SESSION_DATA_BASE = "https://raw.githubusercontent.com/iplayground/SessionData/develop";
     const SESSION_DATA_URLS = {
+      news: `${SESSION_DATA_BASE}/news.json`,
+      newsEn: `${SESSION_DATA_BASE}/news_en.json`,
       schedule: `${SESSION_DATA_BASE}/schedule.json`,
       scheduleEn: `${SESSION_DATA_BASE}/schedule_en.json`,
       speakers: `${SESSION_DATA_BASE}/speakers.json`,
-      speakersEn: `${SESSION_DATA_BASE}/speakers_en.json`,
+      links: `${SESSION_DATA_BASE}/links.json`,
+      staff: `${SESSION_DATA_BASE}/staffs.json`,
+      sponsors: `${SESSION_DATA_BASE}/sponsors.json`,
+      cfpSteps: `${SESSION_DATA_BASE}/iplayground_cfp_steps.json`,
+      config: `${SESSION_DATA_BASE}/iplayground_config.json`,
+      i18n: `${SESSION_DATA_BASE}/iplayground_i18n.json`,
     };
-    const LOCAL_DATA_URLS = {
-      agenda: `data/iplayground_agenda.json?v=${DATA_VERSION}`,
-      workshops: `data/iplayground_workshops.json?v=${DATA_VERSION}`,
+    const NEWS_DATA_URLS = {
+      zh: `${SESSION_DATA_URLS.news}?v=${DATA_VERSION}`,
+      en: `${SESSION_DATA_URLS.newsEn}?v=${DATA_VERSION}`,
     };
     let NEWS_DATA_BY_LANG = { zh: [], en: [] };
     let NEWS_DATA = [];
     let AGENDA = [];
     let SPEAKERS = [];
+    let SPONSORS = [];
     let CONFIG = {};
     let I18N_DATA = {};  // key → { zh, en }
 
@@ -992,15 +996,6 @@
       const response = await fetch(url);
       if (!response.ok) throw new Error(`${response.status} ${url}`);
       return response.json();
-    }
-
-    async function fetchJsonWithFallback(primaryUrl, fallbackUrl) {
-      try {
-        return await fetchJson(primaryUrl);
-      } catch (error) {
-        console.warn(`使用本機資料 fallback：${fallbackUrl}`, error);
-        return fetchJson(fallbackUrl);
-      }
     }
 
     function normalizeScheduleData(zhData, enData, speakers = []) {
@@ -1047,23 +1042,18 @@
     }
 
     async function loadAgendaData() {
-      let workshops = [];
-      try {
-        workshops = await fetchJson(LOCAL_DATA_URLS.workshops);
-      } catch (error) {
-        console.warn("workshop 資料載入失敗，將只顯示 session agenda", error);
-      }
+      const workshops = [];
 
       try {
         const [scheduleZh, scheduleEn] = await Promise.all([
-          fetchJson(SESSION_DATA_URLS.schedule),
-          fetchJson(SESSION_DATA_URLS.scheduleEn).catch(() => null),
+          fetchJson(`${SESSION_DATA_URLS.schedule}?v=${DATA_VERSION}`),
+          fetchJson(`${SESSION_DATA_URLS.scheduleEn}?v=${DATA_VERSION}`).catch(() => null),
         ]);
-        const speakers = await fetchJson(SESSION_DATA_URLS.speakers).catch(() => []);
+        const speakers = await fetchJson(`${SESSION_DATA_URLS.speakers}?v=${DATA_VERSION}`).catch(() => []);
         return mergeWorkshops(normalizeScheduleData(scheduleZh, scheduleEn, speakers), workshops);
       } catch (error) {
-        console.warn("使用本機議程資料 fallback", error);
-        return mergeWorkshops(await fetchJson(LOCAL_DATA_URLS.agenda), workshops);
+        console.warn("遠端議程資料載入失敗，將不顯示議程", error);
+        return [];
       }
     }
 
@@ -1094,11 +1084,43 @@
 
     async function loadSpeakerData() {
       try {
-        return normalizeSpeakerData(await fetchJson(SESSION_DATA_URLS.speakers));
+        return normalizeSpeakerData(await fetchJson(`${SESSION_DATA_URLS.speakers}?v=${DATA_VERSION}`));
       } catch (error) {
-        console.warn("使用本機講者資料 fallback", error);
-        return normalizeSpeakerData(await fetchJson(`data/iplayground_speakers.json?v=${DATA_VERSION}`));
+        console.warn("遠端講者資料載入失敗，將不顯示講者", error);
+        return [];
       }
+    }
+
+    function renderSponsors() {
+      const section = document.getElementById("sponsors");
+      if (!section) return;
+      if (!Array.isArray(SPONSORS) || SPONSORS.length === 0) {
+        section.setAttribute("hidden", "");
+        return;
+      }
+
+      section.removeAttribute("hidden");
+      const wrap = section.querySelector(".construction");
+      if (!wrap) return;
+
+      const cards = SPONSORS.map((s) => {
+        const name = localized(s.name) || s.name || "";
+        const logo = s.logo || "";
+        const link = s.website || s.url || "#";
+        const tier = localized(s.tier) || s.tier || "";
+        return `
+          <a href="${link}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;padding:18px 12px;border:1px solid var(--rule);border-radius:14px;background:var(--surface);text-decoration:none;">
+            ${logo ? `<img src="${logo}" alt="${name}" style="max-width:160px;max-height:56px;width:auto;height:auto;object-fit:contain;">` : `<strong style="font-size:16px;">${name}</strong>`}
+            ${tier ? `<span style="font-size:12px;color:var(--ink-2);">${tier}</span>` : ""}
+          </a>
+        `;
+      }).join("");
+
+      wrap.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
+          ${cards}
+        </div>
+      `;
     }
 
     function parseTime(timeStr) {
@@ -1718,15 +1740,20 @@
       }
     });
 
+    const FOOTER_TAGLINE_LOCAL = {
+      zh: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C、以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師創辦，目的是彌補台灣在 iOS 開發領域的研討會不足，並為開發者們提供更深入且多樣化的議程。",
+      en: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, as well as app development and UI/UX design. Founded by a group of senior engineers to fill the gap in iOS-focused conferences in Taiwan."
+    };
+
     // ===== i18n =====
     // ===== I18N — 從 data/iplayground_i18n.json 載入，key → { zh, en } =====
     function getDict(lang) {
       const l = lang || 'zh';
       const dict = {};
       Object.entries(I18N_DATA).forEach(([k, v]) => {
-        // footer_tagline 特殊處理：從 CONFIG 取值
+        // footer_tagline 固定使用本地文案
         if (k === 'footer_tagline') {
-          dict[k] = CONFIG.footerTagline ? CONFIG.footerTagline[l] : '';
+          dict[k] = FOOTER_TAGLINE_LOCAL[l] || FOOTER_TAGLINE_LOCAL.zh;
         } else {
           dict[k] = (v && v[l]) || (v && v['zh']) || '';
         }
@@ -1823,8 +1850,7 @@
 
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     function resolveMode(pref) {
-      if (pref === "light" || pref === "dark") return pref;
-      return mql.matches ? "dark" : "light";
+      return "dark";
     }
 
     function applyAppearance(pref) {
@@ -2242,23 +2268,25 @@
     // ===== Init =====
     window.addEventListener("DOMContentLoaded", () => {
       const savedLang = (() => { try { return localStorage.getItem("lang"); } catch (e) { return null; } })() || "zh";
-      const savedPref = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return null; } })() || "auto";
+      const savedPref = "dark";
 
       // 並行載入所有 data/ 資料後再初始化
       Promise.all([
-        fetch(NEWS_DATA_URLS.zh).then(r => r.json()),
-        fetch(NEWS_DATA_URLS.en).then(r => r.json()),
+        fetchJson(NEWS_DATA_URLS.zh),
+        fetchJson(NEWS_DATA_URLS.en),
         loadAgendaData(),
-        fetch("data/iplayground_cfp_steps.json").then(r => r.json()),
-        fetch("data/iplayground_config.json").then(r => r.json()),
-        fetch("data/iplayground_links.json").then(r => r.json()),
-        fetch(`data/iplayground_i18n.json?v=${DATA_VERSION}`).then(r => r.json()),
-      ]).then(([newsZh, newsEn, agenda, cfpSteps, config, links, i18n]) => {
+        fetchJson(`${SESSION_DATA_URLS.cfpSteps}?v=${DATA_VERSION}`).catch(() => []),
+        fetchJson(`${SESSION_DATA_URLS.config}?v=${DATA_VERSION}`).catch(() => ({})),
+        fetchJson(`${SESSION_DATA_URLS.links}?v=${DATA_VERSION}`).catch(() => ({})),
+        fetchJson(`${SESSION_DATA_URLS.i18n}?v=${DATA_VERSION}`).catch(() => ({})),
+        fetchJson(`${SESSION_DATA_URLS.sponsors}?v=${DATA_VERSION}`).catch(() => []),
+      ]).then(([newsZh, newsEn, agenda, cfpSteps, config, links, i18n, sponsors]) => {
         NEWS_DATA_BY_LANG = { zh: newsZh, en: newsEn };
         AGENDA = agenda;
         SPEAKERS = cfpSteps;
         CONFIG = config;
         I18N_DATA = i18n;
+        SPONSORS = sponsors;
         VENUE_MAP = config.venue?.mapUrl || "";
         PARKING_MAP = config.venue?.parkingMapUrl || "";
 
@@ -2267,6 +2295,7 @@
         renderNews(savedLang);
         renderAgenda(1);
         renderSpeakers();
+        renderSponsors();
 
         requestAnimationFrame(() => {
           applyLang(savedLang);
@@ -2296,10 +2325,7 @@
       });
     });
 
-    mql.addEventListener("change", () => {
-      const cur = (() => { try { return localStorage.getItem("appearance"); } catch (e) { return "auto"; } })() || "auto";
-      if (cur === "auto") applyAppearance("auto");
-    });
+    mql.addEventListener("change", () => {});
   </script>
 
   <!-- Floating Action Buttons -->
@@ -2677,7 +2703,7 @@
 </script>
 
 <script>
-  // ============ Staff Grid — 從 data/iplayground_staff.json 動態渲染 ============
+  // ============ Staff Grid — 優先從 SessionData GitHub Raw 載入 ============
   (async function () {
     const FALLBACK_PHOTO = 'img/staff/staff_sample.png';
     const grid = document.getElementById('staffGrid');
@@ -2685,10 +2711,9 @@
 
     let staff = [];
     try {
-      const res = await fetch('data/iplayground_staff.json');
-      staff = await res.json();
+      staff = await fetchJson(`${SESSION_DATA_URLS.staff}?v=${DATA_VERSION}`);
     } catch (e) {
-      console.warn('無法載入 data/iplayground_staff.json', e);
+      console.warn('無法載入遠端工作人員資料', e);
       grid.innerHTML = `<p class="agenda-empty">工作人員資料暫時無法載入</p>`;
       return;
     }
