@@ -1227,7 +1227,7 @@
       justify-content: center;
       min-height: 24px;
       letter-spacing: 0.14em;
-      text-transform: uppercase;
+      text-transform: none !important;
       color: #D2FF00;
       border: 1px solid var(--rule-2);
       padding: 0 10px;

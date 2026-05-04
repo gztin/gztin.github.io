@@ -21,8 +21,8 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <link rel="stylesheet" href="css/shared.css?v=20260503-speaker-size-fix-8">
-  <link rel="stylesheet" href="css/main.css?v=20260503-speaker-size-fix-8">
+  <link rel="stylesheet" href="css/shared.css?v=20260504-tag-case-fix-1">
+  <link rel="stylesheet" href="css/main.css?v=20260504-tag-case-fix-1">
 </head>
 
 <body>
@@ -1215,7 +1215,7 @@
         const tags = localized(r.tags || []);
         const tagHTML = tags.map(tag => {
           const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (r.track || "").toLowerCase() === "keynote";
-          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag).toUpperCase()}</span>`;
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag)}</span>`;
         }).join("");
         const speakerName = localized(r.speaker?.name) || tbaLabel;
         const startTime = (r.time || "").split(/[–\-]/)[0].trim();
@@ -1303,7 +1303,7 @@
       document.getElementById("amTags").innerHTML = itemTags
         .map(tag => {
           const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (item.track || "").toLowerCase() === "keynote";
-          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag).toUpperCase()}</span>`;
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag)}</span>`;
         }).join("");
 
       // 講者
