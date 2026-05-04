@@ -259,8 +259,9 @@
         </div>
 
         <div class="transport-grid"
-          style="margin-top: 104px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; text-align: left;">
-          <div class="transport-card transport-card--commute">
+          style="margin-top: 104px; display: grid; grid-template-columns: 1fr; gap: 32px; text-align: left;">
+          <div class="transport-card transport-card--commute transport-card--merged">
+            <div class="transport-merged-main">
             <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
               <div class="transport-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -308,8 +309,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="transport-card">
+            </div>
+            <aside class="transport-merged-side">
             <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 24px;">
               <div class="transport-icon">
                 <svg clip-rule="evenodd" fill-rule="evenodd" image-rendering="optimizeQuality"
@@ -338,6 +339,7 @@
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg></a></p>
             </div>
+            </aside>
           </div>
         </div>
       </div>
