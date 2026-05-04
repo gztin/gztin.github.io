@@ -1042,7 +1042,12 @@
     }
 
     async function loadAgendaData() {
-      const workshops = [];
+      let workshops = [];
+      try {
+        workshops = await fetchJson(`data/iplayground_workshops.json?v=${DATA_VERSION}`);
+      } catch (error) {
+        console.warn("workshop 本地假資料載入失敗，將只顯示 session agenda", error);
+      }
 
       try {
         const [scheduleZh, scheduleEn] = await Promise.all([
@@ -1210,12 +1215,14 @@
       }
 
       const tbaLabel = currentLang === "en" ? "TBA" : "TBA";
+      const speakerPrefix = currentLang === "en" ? "SPEAKER" : "講者";
 
       list.innerHTML = rows.map(({ item: r, sourceIdx }) => {
         const tags = localized(r.tags || []);
         const tagHTML = tags.map(tag => {
           const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (r.track || "").toLowerCase() === "keynote";
-          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag)}</span>`;
+          const isRoom = /room\s*[a-z0-9]/i.test(String(tag));
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}${isRoom ? " is-room" : ""}">${String(tag)}</span>`;
         }).join("");
         const speakerName = localized(r.speaker?.name) || tbaLabel;
         const startTime = (r.time || "").split(/[–\-]/)[0].trim();
@@ -1234,7 +1241,7 @@
             ${desc ? `<p class="session-desc">${desc}</p>` : ""}
           </div>
           <div class="session-meta">
-            ${!isBreak ? `<span class="session-speaker">${speakerName}</span>` : ""}
+            ${!isBreak ? `<span class="session-speaker"><span class="session-speaker-label">${speakerPrefix}</span><span>${speakerName}</span></span>` : ""}
             <span class="session-tags">${tagHTML}</span>
           </div>
         </div>`;
@@ -1303,7 +1310,8 @@
       document.getElementById("amTags").innerHTML = itemTags
         .map(tag => {
           const isKeynote = String(tag).toUpperCase() === "KEYNOTE" || (item.track || "").toLowerCase() === "keynote";
-          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}">${String(tag)}</span>`;
+          const isRoom = /room\s*[a-z0-9]/i.test(String(tag));
+          return `<span class="session-tag${isKeynote ? " is-keynote" : ""}${isRoom ? " is-room" : ""}">${String(tag)}</span>`;
         }).join("");
 
       // 講者

@@ -1240,6 +1240,11 @@
       color: #D2FF00;
       border-color: color-mix(in oklab, #D2FF00 40%, transparent);
     }
+    .session-tag.is-room {
+      color: #64D2FF;
+      border-color: color-mix(in oklab, #64D2FF 42%, transparent);
+      background: color-mix(in oklab, #64D2FF 11%, transparent);
+    }
     html[data-mode="light"] .session-tag.is-keynote {
       color: var(--accent);
       border-color: color-mix(in oklab, var(--accent) 40%, transparent);
@@ -1259,15 +1264,12 @@
       background: color-mix(in oklab, #7dd3fc 10%, transparent);
     }
     .session-speaker::before {
-      content: "SPEAKER";
+      content: none;
+    }
+    .session-speaker-label {
       font-size: 9px;
       letter-spacing: 0.16em;
       color: #7dd3fc;
-    }
-    html[lang="zh-Hant"] .session-speaker::before,
-    html[data-lang="zh"] .session-speaker::before {
-      content: "講者";
-      letter-spacing: 0.08em;
     }
 
     .session.is-break {
