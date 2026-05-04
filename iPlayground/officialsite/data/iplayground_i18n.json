@@ -73,7 +73,7 @@
   "stat_dates_value":    { "zh": "7.25–26",                           "en": "7.25–26" },
   "stat_dates_sub":      { "zh": "2026 · 週六–週日",                 "en": "2026 · SAT–SUN" },
   "stat_venue_value":    { "zh": "公企中心",                           "en": "CPBAE" },
-  "stat_venue_sub":      { "zh": "大安區 台北",                        "en": "Da'an District Taipei" },
+  "stat_venue_sub":      { "zh": "大安區 台北 政大",                   "en": "Da'an District Taipei NCCU" },
   "stat_format_value":   { "zh": "徵稿中",                            "en": "CFP" },
   "stat_format_sub":     { "zh": "MULTI-TRACK · IOS / SWIFT / UX",   "en": "MULTI-TRACK · IOS / SWIFT / UX" },
   "stat_cfp_value":      { "zh": "徵稿中",                            "en": "CFP" },

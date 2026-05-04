@@ -167,7 +167,7 @@
     .hero .hero-frame {
       position: absolute;
       inset: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px);
-      z-index: 0;
+      z-index: 10;
       pointer-events: none;
     }
     .hero .corner {
@@ -1225,13 +1225,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 24px;
+      height: 30px;
+      box-sizing: border-box;
       letter-spacing: 0.14em;
       text-transform: none !important;
       color: #D2FF00;
       border: 1px solid var(--rule-2);
-      padding: 0 10px;
-      font-size: 10px;
+      padding: 0 12px;
+      font-size: 11px;
       white-space: nowrap;
       writing-mode: horizontal-tb;
       background: color-mix(in oklab, #D2FF00 10%, transparent);
@@ -1349,7 +1350,8 @@
 
     /* keep modal tags rhythm aligned with list chips */
     .am-tags .session-tag {
-      min-height: 24px;
+      height: 30px;
+      box-sizing: border-box;
       padding: 0 10px;
       font-size: 10px;
     }
