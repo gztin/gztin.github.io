@@ -1,6 +1,6 @@
 # iPlayground JSON 資料結構說明
 
-本文件用「資訊區」整理目前站點主要資料來源與欄位，方便後續維護與擴充。
+本文件用「資訊區」整理目前站點主要資料來源與欄位，方便後續維護與擴充。操作向說明與範例見 [README.md](README.md)。
 
 ## 1) 議程（Sessions）
 - 檔案：`data/iplayground_agenda.json`
