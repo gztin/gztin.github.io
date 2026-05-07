@@ -25,7 +25,7 @@ const DISCORD_STAR_COLORS = {
     3: 0xe74c3c,
 };
 const DISCORD_SEND_GAP_MS = 1500;
-const MIN_SIGNAL_SCORE = 60;
+const MIN_SIGNAL_SCORE = Number(process.env.MIN_SIGNAL_SCORE || 60);
 const SIGNAL_JOURNAL_FILE = 'signal_journal.json';
 const SUMMARY_WEBHOOK_URL = process.env.DISCORD_SUMMARY_WEBHOOK_URL || '';
 const SUMMARY_SEND_INTERVAL_MS = 30 * 60 * 1000;

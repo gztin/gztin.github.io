@@ -7,17 +7,18 @@
   <link rel="stylesheet" href="https://impeccable.style/downloads/impeccable.min.css" />
   <style>
     :root { --bg:#0f1320; --panel:#151c2b; --line:#2a3550; --text:#f5f7fa; --muted:#99a7c2; --ok:#39d98a; --bad:#ff6b6b; --accent:#4da3ff; }
+    :root[data-theme="light"] { --bg:#f4f7ff; --panel:#ffffff; --line:#d7e0f3; --text:#1f2a44; --muted:#63718f; --ok:#198754; --bad:#c62828; --accent:#2b6dff; }
     * { box-sizing:border-box; }
-    body { margin:0; color:var(--text); background:radial-gradient(1200px 500px at 20% -10%, #1b2740 0%, var(--bg) 55%); font-family:"Segoe UI","Noto Sans TC",sans-serif; }
+    body { margin:0; color:var(--text); background:radial-gradient(1200px 500px at 20% -10%, color-mix(in oklab, var(--accent) 18%, var(--bg)) 0%, var(--bg) 55%); font-family:"Segoe UI","Noto Sans TC",sans-serif; }
     .wrap { max-width:1260px; margin:0 auto; padding:20px; }
-    h1 { margin:0; font-size:24px; }
+    h1 { margin:0 0 14px; font-size:24px; line-height:1.15; }
     .sub { color:var(--muted); }
     .toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:12px 0 14px; }
-    .chip { border:1px solid var(--line); background:#111a2b; color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
-    .chip.active { border-color:var(--accent); background:#152742; }
+    .chip { border:1px solid var(--line); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
+    .chip.active { border-color:var(--accent); background:color-mix(in oklab, var(--accent) 18%, var(--panel)); }
     .group { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
     label { color:var(--muted); font-size:14px; }
-    select { margin-left:6px; padding:7px 10px; background:#111a2b; color:var(--text); border:1px solid var(--line); border-radius:8px; min-height:40px; }
+    select { margin-left:6px; padding:7px 10px; background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; min-height:40px; }
     .meta { margin-left:auto; white-space:nowrap; }
     .card { background:linear-gradient(180deg, #171f31 0%, #141a28 100%); border:1px solid var(--line); border-radius:10px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,.22); margin-bottom:14px; }
     .card h2 { margin:0 0 10px; font-size:18px; }
@@ -38,11 +39,14 @@
     .stat-meta { color:var(--muted); font-size:13px; margin-top:4px; }
     @media (max-width:900px) {
       .meta { width:100%; margin-left:0; }
-      .stats-grid { grid-template-columns:1fr; }
+      .stats-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+      .stat { padding:10px; }
+      .stat-rate { font-size:20px; }
+      .stat-meta { font-size:12px; }
     }
     @media (max-width:640px) {
       .wrap { padding:14px; }
-      h1 { font-size:20px; }
+      h1 { font-size:20px; margin-bottom:12px; }
       .toolbar { gap:8px; }
       .group { width:100%; }
       .group:first-child { justify-content:space-between; }
@@ -75,6 +79,12 @@
         <button class="chip" data-tf="4h">4h</button>
       </div>
       <div class="group">
+        <label>模式
+          <select id="themeToggle">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </label>
         <label>是否達標<select id="statusFilter"><option value="pass" selected>達標</option><option value="fail">未達標</option><option value="pending">評估中</option><option value="all">全顯示</option></select></label>
         <label>星等<select id="starFilter"><option value="all" selected>全顯示</option><option value="1">⭐</option><option value="2">⭐⭐</option><option value="3">⭐⭐⭐</option></select></label>
         <label>型態<select id="typeFilter"><option value="all" selected>全顯示</option></select></label>
@@ -98,6 +108,11 @@
     const statusFilter = document.getElementById("statusFilter");
     const starFilter = document.getElementById("starFilter");
     const typeFilter = document.getElementById("typeFilter");
+    const themeToggle = document.getElementById("themeToggle");
+
+    const savedTheme = localStorage.getItem("gems_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+    themeToggle.value = savedTheme;
 
     chips.forEach((chip) => chip.addEventListener("click", () => {
       chips.forEach(c => c.classList.remove("active"));
@@ -108,6 +123,10 @@
     statusFilter.addEventListener("change", () => { state.status = statusFilter.value; render(); });
     starFilter.addEventListener("change", () => { state.star = starFilter.value; render(); });
     typeFilter.addEventListener("change", () => { state.type = typeFilter.value; render(); });
+    themeToggle.addEventListener("change", () => {
+      document.documentElement.setAttribute("data-theme", themeToggle.value);
+      localStorage.setItem("gems_theme", themeToggle.value);
+    });
 
     function formatTaipei(ts) { return new Date(ts).toLocaleString("zh-TW", { timeZone: DEFAULT_TIMEZONE, hour12: false }); }
     function evalForTf(entry) { return (entry.evaluations || {})[state.tf] || null; }
