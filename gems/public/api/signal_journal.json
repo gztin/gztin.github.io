@@ -1,0 +1,1053 @@
+{
+  "entries": [
+    {
+      "id": "BANK-USDT_1778164096563",
+      "symbol": "BANK-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 99.45,
+      "explanation": "15m 接近布林上軌 (1.03)，1h 動能 1.13，量能 67.97%",
+      "entryPrice": 0.03829,
+      "timestamp": 1778164096563,
+      "rank": 26,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.55,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": -0.55,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167705137
+        }
+      }
+    },
+    {
+      "id": "MAGASOL-USDT_1778164096710",
+      "symbol": "MAGASOL-USDT",
+      "signalType": "布林突破",
+      "stars": 1,
+      "score": 88.22,
+      "explanation": "15m 接近布林上軌 (1.03)，1h 動能 0.91，量能 0.00%",
+      "entryPrice": 0.01324,
+      "timestamp": 1778164096710,
+      "rank": 21,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -6.42,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": 15.11,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167705137
+        }
+      }
+    },
+    {
+      "id": "HIGH-USDT_1778164101970",
+      "symbol": "HIGH-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 92.3,
+      "explanation": "Avg R2 = 0.80\nAvg slope: 0.593% / bar\nAvg higher lows: 5.7",
+      "entryPrice": 0.2064,
+      "timestamp": 1778164101970,
+      "rank": 33,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.68,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": 2.91,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167705137
+        }
+      }
+    },
+    {
+      "id": "REZ-USDT_1778164102000",
+      "symbol": "REZ-USDT",
+      "signalType": "布林突破",
+      "stars": 1,
+      "score": 101.54,
+      "explanation": "15m 接近布林上軌 (1.20)，1h 動能 0.91，量能 133.51%",
+      "entryPrice": 0.005956,
+      "timestamp": 1778164102000,
+      "rank": 35,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -0.79,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": -0.92,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167705137
+        }
+      }
+    },
+    {
+      "id": "SPORTFUN-USDT_1778164105982",
+      "symbol": "SPORTFUN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 1,
+      "score": 94.66,
+      "explanation": "急跌 -8.58%，低點反彈 +8.71%，收復 93%",
+      "entryPrice": 0.06157,
+      "timestamp": 1778164105982,
+      "rank": 47,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -1.36,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": -2.71,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167725143
+        }
+      }
+    },
+    {
+      "id": "PROM-USDT_1778164106000",
+      "symbol": "PROM-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 88.67,
+      "explanation": "Avg R2 = 0.78\nAvg slope: 0.273% / bar\nAvg higher lows: 5.3",
+      "entryPrice": 2.185,
+      "timestamp": 1778164106001,
+      "rank": 50,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -0.78,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165906031
+        },
+        "1h": {
+          "pnlPct": -1.83,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167725143
+        }
+      }
+    },
+    {
+      "id": "CGPT-USDT_1778164112238",
+      "symbol": "CGPT-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 97.35,
+      "explanation": "15m 接近布林上軌 (0.99)，1h 動能 1.08，量能 57.41%",
+      "entryPrice": 0.02963,
+      "timestamp": 1778164112238,
+      "rank": 61,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.44,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165926153
+        },
+        "1h": {
+          "pnlPct": 0.81,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167725143
+        }
+      }
+    },
+    {
+      "id": "KMNO-USDT_1778164112265",
+      "symbol": "KMNO-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 87.43,
+      "explanation": "Avg R2 = 0.77\nAvg slope: 0.279% / bar\nAvg higher lows: 4.3",
+      "entryPrice": 0.02239,
+      "timestamp": 1778164112265,
+      "rank": 63,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -1.7,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165926153
+        },
+        "1h": {
+          "pnlPct": -1.61,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167715057
+        }
+      }
+    },
+    {
+      "id": "TONCOIN-USDT_1778164112475",
+      "symbol": "TONCOIN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 2,
+      "score": 93.7,
+      "explanation": "急跌 -14.53%，低點反彈 +14.32%，收復 84%",
+      "entryPrice": 2.493,
+      "timestamp": 1778164112475,
+      "rank": 68,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -25.75,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778165926153
+        },
+        "1h": {
+          "pnlPct": -46.45,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167715057
+        }
+      }
+    },
+    {
+      "id": "STRK-USDT_1778164127705",
+      "symbol": "STRK-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 74.98,
+      "explanation": "15m 成交量高於前 20 根均量 159.88%，價格斜率 0.235% / bar",
+      "entryPrice": 0.0433,
+      "timestamp": 1778164127705,
+      "rank": 90,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.21,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778167958187
+        },
+        "1h": {
+          "pnlPct": 0.21,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167958187
+        }
+      }
+    },
+    {
+      "id": "AKT-USDT_1778164130918",
+      "symbol": "AKT-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 88.64,
+      "explanation": "Avg R2 = 0.78\nAvg slope: 0.368% / bar\nAvg higher lows: 4.3",
+      "entryPrice": 0.6598,
+      "timestamp": 1778164130918,
+      "rank": 94,
+      "evaluations": {}
+    },
+    {
+      "id": "AIOT-USDT_1778164160215",
+      "symbol": "AIOT-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 102.65,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.27，量能 72.38%",
+      "entryPrice": 0.09183,
+      "timestamp": 1778164160215,
+      "rank": 85,
+      "evaluations": {}
+    },
+    {
+      "id": "CGPT-USDT_1778164197476",
+      "symbol": "CGPT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 81.89,
+      "explanation": "15m 成交量高於前 20 根均量 215.12%，價格斜率 0.162% / bar",
+      "entryPrice": 0.02976,
+      "timestamp": 1778164197476,
+      "rank": 57,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.13,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166006225
+        },
+        "1h": {
+          "pnlPct": 0.17,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167806088
+        }
+      }
+    },
+    {
+      "id": "SCAM-USDT_1778164201226",
+      "symbol": "SCAM-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 93.53,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.13，量能 8.48%",
+      "entryPrice": 0.0006195,
+      "timestamp": 1778164201226,
+      "rank": 71,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 6.99,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166006225
+        },
+        "1h": {
+          "pnlPct": 31.7,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167806088
+        }
+      }
+    },
+    {
+      "id": "FLORKETH-USDT_1778164201243",
+      "symbol": "FLORKETH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 115.33,
+      "explanation": "15m 成交量高於前 20 根均量 482.64%，價格斜率 0.303% / bar",
+      "entryPrice": 0.000002902,
+      "timestamp": 1778164201243,
+      "rank": 74,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 49.24,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166006225
+        },
+        "1h": {
+          "pnlPct": 62.72,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167806088
+        }
+      }
+    },
+    {
+      "id": "BANK-USDT_1778164271843",
+      "symbol": "BANK-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 90.05,
+      "explanation": "Avg R2 = 0.75\nAvg slope: 0.489% / bar\nAvg higher lows: 6.0",
+      "entryPrice": 0.038355,
+      "timestamp": 1778164271843,
+      "rank": 24,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 1.11,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166088272
+        },
+        "1h": {
+          "pnlPct": -0.48,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167888168
+        }
+      }
+    },
+    {
+      "id": "HIGH-USDT_1778164274172",
+      "symbol": "HIGH-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 91.89,
+      "explanation": "Avg R2 = 0.78\nAvg slope: 0.579% / bar\nAvg higher lows: 6.0",
+      "entryPrice": 0.2057,
+      "timestamp": 1778164274172,
+      "rank": 35,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 1.12,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166088272
+        },
+        "1h": {
+          "pnlPct": 0.97,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167888168
+        }
+      }
+    },
+    {
+      "id": "PROM-USDT_1778164278508",
+      "symbol": "PROM-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 90.34,
+      "explanation": "Avg R2 = 0.81\nAvg slope: 0.277% / bar\nAvg higher lows: 5.7",
+      "entryPrice": 2.175,
+      "timestamp": 1778164278508,
+      "rank": 55,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -0.09,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166088272
+        },
+        "1h": {
+          "pnlPct": -1.2,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167888168
+        }
+      }
+    },
+    {
+      "id": "FLORKETH-USDT_1778164282789",
+      "symbol": "FLORKETH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 115.33,
+      "explanation": "15m 成交量高於前 20 根均量 482.64%，價格斜率 0.303% / bar",
+      "entryPrice": 0.000002902,
+      "timestamp": 1778164282789,
+      "rank": 72,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 59.03,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166088272
+        },
+        "1h": {
+          "pnlPct": 62.72,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167888168
+        }
+      }
+    },
+    {
+      "id": "SCAM-USDT_1778164282919",
+      "symbol": "SCAM-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 93.53,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.13，量能 8.48%",
+      "entryPrice": 0.0006183,
+      "timestamp": 1778164282919,
+      "rank": 73,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 9.23,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166088272
+        },
+        "1h": {
+          "pnlPct": 31.96,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778167888168
+        }
+      }
+    },
+    {
+      "id": "AKT-USDT_1778164288318",
+      "symbol": "AKT-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 88.29,
+      "explanation": "Avg R2 = 0.78\nAvg slope: 0.357% / bar\nAvg higher lows: 4.3",
+      "entryPrice": 0.6587,
+      "timestamp": 1778164288318,
+      "rank": 97,
+      "evaluations": {}
+    },
+    {
+      "id": "BANK-USDT_1778164512393",
+      "symbol": "BANK-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 89.98,
+      "explanation": "Avg R2 = 0.75\nAvg slope: 0.496% / bar\nAvg higher lows: 6.0",
+      "entryPrice": 0.038555,
+      "timestamp": 1778164512393,
+      "rank": 22,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.87,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166330760
+        },
+        "1h": {
+          "pnlPct": -1.28,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778168130149
+        }
+      }
+    },
+    {
+      "id": "HIGH-USDT_1778164572803",
+      "symbol": "HIGH-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 92.41,
+      "explanation": "Avg R2 = 0.79\nAvg slope: 0.591% / bar\nAvg higher lows: 6.0",
+      "entryPrice": 0.2067,
+      "timestamp": 1778164572803,
+      "rank": 31,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 3.05,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166391658
+        },
+        "1h": {
+          "pnlPct": 1.5,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778168190311
+        }
+      }
+    },
+    {
+      "id": "SCAM-USDT_1778164573038",
+      "symbol": "SCAM-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 93.53,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.13，量能 8.48%",
+      "entryPrice": 0.0006253,
+      "timestamp": 1778164573038,
+      "rank": 36,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 8.01,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166391658
+        },
+        "1h": {
+          "pnlPct": 30.48,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778168190311
+        }
+      }
+    },
+    {
+      "id": "PROM-USDT_1778164576753",
+      "symbol": "PROM-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 90.56,
+      "explanation": "Avg R2 = 0.82\nAvg slope: 0.283% / bar\nAvg higher lows: 5.7",
+      "entryPrice": 2.184,
+      "timestamp": 1778164576753,
+      "rank": 45,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -0.46,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166391658
+        },
+        "1h": {
+          "pnlPct": -1.56,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778168190311
+        }
+      }
+    },
+    {
+      "id": "FLORKETH-USDT_1778164579103",
+      "symbol": "FLORKETH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 115.33,
+      "explanation": "15m 成交量高於前 20 根均量 482.64%，價格斜率 0.303% / bar",
+      "entryPrice": 0.000002863,
+      "timestamp": 1778164579103,
+      "rank": 65,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 61.19,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166391658
+        },
+        "1h": {
+          "pnlPct": 64.93,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778168190311
+        }
+      }
+    },
+    {
+      "id": "XNY-USDT_1778164755142",
+      "symbol": "XNY-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 74.26,
+      "explanation": "15m 成交量高於前 20 根均量 154.05%，價格斜率 0.058% / bar",
+      "entryPrice": 0.008163,
+      "timestamp": 1778164755142,
+      "rank": 67,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.62,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166572453
+        },
+        "1h": {
+          "pnlPct": 1.13,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168368367
+        }
+      }
+    },
+    {
+      "id": "BANK-USDT_1778164814371",
+      "symbol": "BANK-USDT",
+      "signalType": "V轉反彈",
+      "stars": 1,
+      "score": 93.33,
+      "explanation": "急跌 -9.33%，低點反彈 +8.07%，收復 78%",
+      "entryPrice": 0.038,
+      "timestamp": 1778164814371,
+      "rank": 26,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -0.47,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166633740
+        },
+        "1h": {
+          "pnlPct": 0.18,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168429470
+        }
+      }
+    },
+    {
+      "id": "BLESS-USDT_1778164855368",
+      "symbol": "BLESS-USDT",
+      "signalType": "布林突破",
+      "stars": 1,
+      "score": 99.67,
+      "explanation": "15m 接近布林上軌 (1.04)，1h 動能 0.92，量能 113.53%",
+      "entryPrice": 0.007372,
+      "timestamp": 1778164855368,
+      "rank": 13,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 1.86,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166678025
+        },
+        "1h": {
+          "pnlPct": 2.84,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168469476
+        }
+      }
+    },
+    {
+      "id": "ROBO-USDT_1778165039448",
+      "symbol": "ROBO-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 73.81,
+      "explanation": "15m 成交量高於前 20 根均量 150.48%，價格斜率 0.226% / bar",
+      "entryPrice": 0.02144,
+      "timestamp": 1778165039448,
+      "rank": 63,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.79,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166840184
+        },
+        "1h": {
+          "pnlPct": 0.47,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168650715
+        }
+      }
+    },
+    {
+      "id": "INIT-USDT_1778165045261",
+      "symbol": "INIT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 78.86,
+      "explanation": "15m 成交量高於前 20 根均量 190.87%，價格斜率 0.051% / bar",
+      "entryPrice": 0.1018,
+      "timestamp": 1778165045261,
+      "rank": 99,
+      "evaluations": {
+        "1h": {
+          "pnlPct": 1.34,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778169104860
+        }
+      }
+    },
+    {
+      "id": "XNY-USDT_1778165056297",
+      "symbol": "XNY-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 75.22,
+      "explanation": "15m 成交量高於前 20 根均量 161.75%，價格斜率 0.060% / bar",
+      "entryPrice": 0.008186,
+      "timestamp": 1778165056297,
+      "rank": 51,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 1.05,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166860245
+        },
+        "1h": {
+          "pnlPct": 0.75,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168670755
+        }
+      }
+    },
+    {
+      "id": "NXPC-USDT_1778165058946",
+      "symbol": "NXPC-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 78.67,
+      "explanation": "15m 成交量高於前 20 根均量 189.36%，價格斜率 0.181% / bar",
+      "entryPrice": 0.32383,
+      "timestamp": 1778165058946,
+      "rank": 99,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.92,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166860245
+        },
+        "1h": {
+          "pnlPct": 1.41,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168670755
+        }
+      }
+    },
+    {
+      "id": "ONDO-USDT_1778165076910",
+      "symbol": "ONDO-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 74.06,
+      "explanation": "15m 成交量高於前 20 根均量 152.46%，價格斜率 0.516% / bar",
+      "entryPrice": 0.3553,
+      "timestamp": 1778165076910,
+      "rank": 58,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 3.21,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166880597
+        },
+        "1h": {
+          "pnlPct": 0.76,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168690742
+        }
+      }
+    },
+    {
+      "id": "BLESS-USDT_1778165155340",
+      "symbol": "BLESS-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 91.92,
+      "explanation": "15m 接近布林上軌 (1.17)，1h 動能 1.05，量能 9.60%",
+      "entryPrice": 0.007644,
+      "timestamp": 1778165155340,
+      "rank": 12,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -3.14,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778166956818
+        },
+        "1h": {
+          "pnlPct": -2.25,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168771961
+        }
+      }
+    },
+    {
+      "id": "HIGH-USDT_1778165358853",
+      "symbol": "HIGH-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 90.56,
+      "explanation": "Avg R2 = 0.76\nAvg slope: 0.563% / bar\nAvg higher lows: 5.7",
+      "entryPrice": 0.2053,
+      "timestamp": 1778165358853,
+      "rank": 27,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 5.6,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778167177915
+        },
+        "1h": {
+          "pnlPct": 2.14,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778168972820
+        }
+      }
+    },
+    {
+      "id": "BLESS-USDT_1778165461056",
+      "symbol": "BLESS-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 127.02,
+      "explanation": "15m 接近布林上軌 (1.21)，1h 動能 1.07，量能 356.51%",
+      "entryPrice": 0.007688,
+      "timestamp": 1778165461056,
+      "rank": 12,
+      "evaluations": {
+        "30m": {
+          "pnlPct": -2.08,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778167279028
+        },
+        "1h": {
+          "pnlPct": -0.91,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778169074776
+        }
+      }
+    },
+    {
+      "id": "SLP-USDT_1778165483351",
+      "symbol": "SLP-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 116.03,
+      "explanation": "15m 接近布林上軌 (1.11)，1h 動能 1.31，量能 198.03%",
+      "entryPrice": 0.0007849,
+      "timestamp": 1778165483351,
+      "rank": 85,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 0.28,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778167298961
+        },
+        "1h": {
+          "pnlPct": 0.37,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778169094873
+        }
+      }
+    },
+    {
+      "id": "HIGH-USDT_1778165662447",
+      "symbol": "HIGH-USDT",
+      "signalType": "穩健斜率",
+      "stars": 2,
+      "score": 91.27,
+      "explanation": "Avg R2 = 0.77\nAvg slope: 0.579% / bar\nAvg higher lows: 5.7",
+      "entryPrice": 0.2074,
+      "timestamp": 1778165662447,
+      "rank": 27,
+      "evaluations": {
+        "30m": {
+          "pnlPct": 1.64,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778167479103
+        },
+        "1h": {
+          "pnlPct": 2.17,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778169275873
+        }
+      }
+    }
+  ],
+  "summary": {
+    "byType": {
+      "布林突破__30m": {
+        "signalType": "布林突破",
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 11,
+        "wins": 4,
+        "winRate": 36.36
+      },
+      "布林突破__1h": {
+        "signalType": "布林突破",
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 11,
+        "wins": 4,
+        "winRate": 36.36
+      },
+      "穩健斜率__30m": {
+        "signalType": "穩健斜率",
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 11,
+        "wins": 6,
+        "winRate": 54.55
+      },
+      "穩健斜率__1h": {
+        "signalType": "穩健斜率",
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 11,
+        "wins": 1,
+        "winRate": 9.09
+      },
+      "V轉反彈__30m": {
+        "signalType": "V轉反彈",
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 3,
+        "wins": 0,
+        "winRate": 0
+      },
+      "V轉反彈__1h": {
+        "signalType": "V轉反彈",
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 3,
+        "wins": 0,
+        "winRate": 0
+      },
+      "量能爆發__30m": {
+        "signalType": "量能爆發",
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 10,
+        "wins": 6,
+        "winRate": 60
+      },
+      "量能爆發__1h": {
+        "signalType": "量能爆發",
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 11,
+        "wins": 3,
+        "winRate": 27.27
+      }
+    },
+    "byStar": {
+      "2__30m": {
+        "stars": 2,
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 25,
+        "wins": 12,
+        "winRate": 48
+      },
+      "2__1h": {
+        "stars": 2,
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 26,
+        "wins": 4,
+        "winRate": 15.38
+      },
+      "1__30m": {
+        "stars": 1,
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 5,
+        "wins": 1,
+        "winRate": 20
+      },
+      "1__1h": {
+        "stars": 1,
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 5,
+        "wins": 1,
+        "winRate": 20
+      },
+      "3__30m": {
+        "stars": 3,
+        "horizon": "30m",
+        "threshold": 0.8,
+        "total": 5,
+        "wins": 3,
+        "winRate": 60
+      },
+      "3__1h": {
+        "stars": 3,
+        "horizon": "1h",
+        "threshold": 1.5,
+        "total": 5,
+        "wins": 3,
+        "winRate": 60
+      }
+    }
+  },
+  "updatedAt": 1778169276258
+}

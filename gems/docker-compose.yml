@@ -1,10 +1,10 @@
 services:
-  gem0507:
+  gems:
     build:
       context: .
       dockerfile: Dockerfile
-    image: gem0507:latest
-    container_name: gem0507
+    image: gems:latest
+    container_name: gems
     env_file:
       - .env
     environment:
@@ -16,7 +16,8 @@ services:
       - ./backtests:/app/backtests
       - ./k_data:/app/k_data
       - ./signals:/app/signals
+      - ./public:/app/public
       - ./BOT_CHANGELOG.md:/app/BOT_CHANGELOG.md
       - ./ignoreCommit:/app/ignoreCommit
     network_mode: host
-    restart: "no"
+    restart: unless-stopped
