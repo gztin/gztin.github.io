@@ -1,0 +1,17 @@
+{
+  "name": "crypto-intel",
+  "private": true,
+  "version": "2.24.0",
+  "type": "module",
+  "scripts": {
+    "bot": "node --dns-result-order=ipv4first src/scripts/telegram_query_bot.js",
+    "bot:dev": "DATA_DIR=data node --dns-result-order=ipv4first src/scripts/telegram_query_bot.js",
+    "release:update": "node scripts/release-update.mjs"
+  },
+  "dependencies": {
+    "canvas": "^3.2.1",
+    "form-data": "^4.0.5",
+    "exceljs": "^4.4.0"
+  }
+
+}

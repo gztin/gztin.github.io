@@ -1,0 +1,600 @@
+﻿/**
+ * Loop G嚗???撣???? (15m + 1h)
+ * 蝯曹???詨??摩 - ?桀馳閰喟敦??
+ */
+
+import fs from 'fs';
+import path from 'path';
+import { fetchKlines, getMaxLeverage } from '../trading/scanner.js';
+import { bollingerBands, avgVolume } from '../core/indicators.js';
+import { loadCredentials } from '../trading/bingx_trader.js';
+import { loadUserState, saveUserState } from '../core/state_manager.js';
+
+// ?? ??????????????????????????????????????????????????????
+const trackingList = new Map();
+const NOTIFY_STAGES = [0, 5, 30, 60, 240]; 
+const SIGNAL_PUSH_ENABLED = true;
+const DISCORD_STAR_WEBHOOKS = {
+    1: process.env.DISCORD_WEBHOOK_URL_STAR_1 || 'https://discord.com/api/webhooks/1501939009944031384/bml0g14TTqFW4dyo9bY6Ov9cVWUKKi41devC1unJGjEl-1UchVW8udhklN55bx5WJo4i',
+    2: process.env.DISCORD_WEBHOOK_URL_STAR_2 || 'https://discord.com/api/webhooks/1501940259016016002/w6Yu4A1Xuj0Yea1bXR5VAToFEQ6SqmLDT5nHJbbn6ZdAOKnJroi1-Pb4R8EBL8S3aR3C',
+    3: process.env.DISCORD_WEBHOOK_URL_STAR_3 || 'https://discord.com/api/webhooks/1501940986459328554/coJ8C3izuC5iA-ryRk2T-2OgTmFrpYOFGRxCOLnKQZ_tv3HVytvft4PPDLF3xgjtsfE6',
+};
+const DISCORD_STAR_COLORS = {
+    1: 0xf1c40f,
+    2: 0x3498db,
+    3: 0xe74c3c,
+};
+const DISCORD_SEND_GAP_MS = 1500;
+const MIN_SIGNAL_SCORE = 60;
+const SIGNAL_JOURNAL_FILE = 'signal_journal.json';
+const SUMMARY_WEBHOOK_URL = process.env.DISCORD_SUMMARY_WEBHOOK_URL || 'https://discord.com/api/webhooks/1501954073556025475/OBE4sq49lot9qOK_cFA9HOpVvsPmkMnWcQsJU7nTauKwhmkRYV7sNsEeDAZBJWW6VnQf';
+const SUMMARY_SEND_INTERVAL_MS = 30 * 60 * 1000;
+const SIGNAL_WIN_THRESHOLDS = {
+    '1h': 5,
+    '2h': 15,
+    '4h': 25,
+};
+let discordSendQueue = Promise.resolve();
+let lastSummarySentAt = 0;
+
+function getDataDir() {
+    const dir = process.env.DATA_DIR || 'data';
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    return dir;
+}
+
+function getSignalJournalPath() {
+    return path.join(getDataDir(), SIGNAL_JOURNAL_FILE);
+}
+
+function readSignalJournal() {
+    const file = getSignalJournalPath();
+    try {
+        if (!fs.existsSync(file)) return { entries: [], summary: {}, updatedAt: Date.now() };
+        return JSON.parse(fs.readFileSync(file, 'utf-8'));
+    } catch {
+        return { entries: [], summary: {}, updatedAt: Date.now() };
+    }
+}
+
+function writeSignalJournal(journal) {
+    const file = getSignalJournalPath();
+    fs.writeFileSync(file, JSON.stringify({ ...journal, updatedAt: Date.now() }, null, 2), 'utf-8');
+    // Mirror to public path for remote dashboard read.
+    try {
+        const publicApiDir = path.join(process.cwd(), 'public', 'api');
+        fs.mkdirSync(publicApiDir, { recursive: true });
+        const publicFile = path.join(publicApiDir, 'signal_journal.json');
+        fs.writeFileSync(publicFile, JSON.stringify({ ...journal, updatedAt: Date.now() }, null, 2), 'utf-8');
+    } catch (err) {
+        console.error('[JOURNAL] failed to mirror public signal journal:', err.message);
+    }
+}
+
+function formatSummaryMessage(summary = {}) {
+    const byStar = Object.values(summary.byStar || {});
+    const byType = Object.values(summary.byType || {});
+    if (!byStar.length && !byType.length) return 'Signal Summary\n\n暫無可用統計資料';
+
+    const starLines = byStar
+        .sort((a, b) => a.stars - b.stars || a.horizon.localeCompare(b.horizon))
+        .map(r => `${'⭐️'.repeat(r.stars)} [${r.horizon}] 上漲 ${r.threshold}%  達成率 : ${r.wins}/${r.total} (${r.winRate}%)`);
+    const typeLines = byType
+        .sort((a, b) => b.winRate - a.winRate)
+        .map(r => `${r.signalType} [${r.horizon}]  ${r.wins}/${r.total} (${r.winRate}%)`);
+
+    return `Signal Summary\n\n[星等勝率]\n${starLines.join('\n')}\n\n[型態勝率]\n${typeLines.join('\n')}\n\n更新時間: ${new Date().toLocaleString('zh-TW', { hour12: true })}`;
+}
+
+function appendSignalJournalEntry(payload) {
+    const journal = readSignalJournal();
+    journal.entries.push(payload);
+    writeSignalJournal(journal);
+}
+
+function updateSignalSummary(journal) {
+    const byType = {};
+    const byStar = {};
+    for (const entry of journal.entries) {
+        if (!entry.evaluations) continue;
+        for (const [horizon, result] of Object.entries(entry.evaluations)) {
+            if (!result || typeof result.win !== 'boolean') continue;
+            const typeKey = `${entry.signalType}__${horizon}`;
+            if (!byType[typeKey]) byType[typeKey] = {
+                signalType: entry.signalType,
+                horizon,
+                threshold: result.threshold,
+                total: 0,
+                wins: 0,
+                winRate: 0,
+            };
+            byType[typeKey].total += 1;
+            if (result.win) byType[typeKey].wins += 1;
+
+            const starKey = `${entry.stars}__${horizon}`;
+            if (!byStar[starKey]) byStar[starKey] = {
+                stars: entry.stars,
+                horizon,
+                threshold: result.threshold,
+                total: 0,
+                wins: 0,
+                winRate: 0,
+            };
+            byStar[starKey].total += 1;
+            if (result.win) byStar[starKey].wins += 1;
+        }
+    }
+    for (const key of Object.keys(byType)) {
+        const row = byType[key];
+        row.winRate = row.total > 0 ? Number((row.wins / row.total * 100).toFixed(2)) : 0;
+    }
+    for (const key of Object.keys(byStar)) {
+        const row = byStar[key];
+        row.winRate = row.total > 0 ? Number((row.wins / row.total * 100).toFixed(2)) : 0;
+    }
+    journal.summary = { byType, byStar };
+}
+
+function queueDiscordSignal(sendDiscordMessage, message, options) {
+    discordSendQueue = discordSendQueue
+        .then(async () => {
+            await sendDiscordMessage(message, options);
+            await new Promise(resolve => setTimeout(resolve, DISCORD_SEND_GAP_MS));
+        })
+        .catch(err => {
+            console.error('[DISCORD] queued send failed:', err.message);
+        });
+    return discordSendQueue;
+}
+
+const rankCache = new Map();
+const orderLock = new Map();
+const ORDER_LOCK_MS = 60 * 1000; 
+
+let lastGlobalOrderTime = 0;
+const GLOBAL_ORDER_INTERVAL_MS = 30 * 1000;
+
+export const closedPositionsCache = new Map();
+const POST_CLOSE_COOL_DOWN_MS = 15 * 60 * 1000;
+
+const klineCache = new Map();
+const CACHE_TTL_MS = 15 * 1000; 
+
+function autoAddSignalWatchlist(ticker, stars, botState, chatIds, rank = {}) {
+    const symbol = ticker.symbol;
+    const subscriptionSymbol = symbol.replace('-USDT', '');
+    const targets = Array.from(new Set((chatIds || []).map(String).filter(Boolean)));
+
+    for (const chatId of targets) {
+        try {
+            if (!botState.subscriptions) botState.subscriptions = {};
+            if (!Array.isArray(botState.subscriptions[chatId])) botState.subscriptions[chatId] = [];
+            if (!botState.subscriptions[chatId].includes(subscriptionSymbol)) {
+                botState.subscriptions[chatId].push(subscriptionSymbol);
+            }
+
+            const userState = loadUserState(chatId);
+            userState.subscriptions = Array.from(new Set([
+                ...(Array.isArray(userState.subscriptions) ? userState.subscriptions : []),
+                subscriptionSymbol,
+            ]));
+            userState.watchlist = userState.watchlist || {};
+            userState.watchlist[symbol] = {
+                ...(userState.watchlist[symbol] || {}),
+                symbol,
+                entryPrice: userState.watchlist[symbol]?.entryPrice || ticker.price,
+                starCount: Math.max(userState.watchlist[symbol]?.starCount || 0, stars || 1),
+                lastSignalPrice: ticker.price,
+                lastSignalAt: Date.now(),
+                rank: rank.current || userState.watchlist[symbol]?.rank || null,
+                prevRank: rank.previous || userState.watchlist[symbol]?.prevRank || null,
+                source: 'auto_signal',
+            };
+            saveUserState(chatId, userState);
+        } catch (err) {
+            console.error(`[WATCHLIST] auto add failed for ${symbol} / ${chatId}:`, err.message);
+        }
+    }
+}
+
+/**
+ * 閮??寞霈?
+ */
+function getPriceChange(candles) {
+    if (!candles || candles.length < 2) return 0;
+    const cur = parseFloat(candles[candles.length - 1][4]);
+    const prev = parseFloat(candles[candles.length - 2][4]);
+    return ((cur - prev) / prev) * 100;
+}
+
+function getVolumeChange(candles, lookback = 20) {
+    if (!candles || candles.length < lookback + 1) return 0;
+    const currentVolume = parseFloat(candles[candles.length - 1][5] || 0);
+    const prevVolumes = candles
+        .slice(-(lookback + 1), -1)
+        .map(c => parseFloat(c[5] || 0))
+        .filter(v => Number.isFinite(v));
+    const avgPrevVolume = prevVolumes.reduce((sum, value) => sum + value, 0) / (prevVolumes.length || 1);
+    return avgPrevVolume > 0 ? ((currentVolume - avgPrevVolume) / avgPrevVolume * 100) : 0;
+}
+
+function emaSeries(values, period) {
+    if (!values || values.length < period) return [];
+    const multiplier = 2 / (period + 1);
+    const result = [];
+    let ema = values.slice(0, period).reduce((sum, value) => sum + value, 0) / period;
+    result[period - 1] = ema;
+    for (let i = period; i < values.length; i++) {
+        ema = values[i] * multiplier + ema * (1 - multiplier);
+        result[i] = ema;
+    }
+    return result;
+}
+
+function detectVReversal(candles) {
+    if (!candles || candles.length < 35) return null;
+    const closes = candles.map(c => parseFloat(c[4]));
+    const lows = candles.map(c => parseFloat(c[3]));
+    const current = closes[closes.length - 1];
+    const recent = candles.slice(-16);
+    const recentHigh = Math.max(...recent.map(c => parseFloat(c[2])));
+    const recentLow = Math.min(...recent.map(c => parseFloat(c[3])));
+    const dropPct = recentHigh > 0 ? ((recentLow - recentHigh) / recentHigh * 100) : 0;
+    const reboundPct = recentLow > 0 ? ((current - recentLow) / recentLow * 100) : 0;
+    const recoveryRatio = recentHigh > recentLow ? ((current - recentLow) / (recentHigh - recentLow)) : 0;
+    const ema7 = emaSeries(closes, 7);
+    const ema30 = emaSeries(closes, 30);
+    const lastEma7 = ema7[ema7.length - 1];
+    const lastEma30 = ema30[ema30.length - 1];
+    const volChange = getVolumeChange(candles, 20);
+    const regainedEma7 = current > lastEma7;
+    const ema7NearOrAbove30 = lastEma7 >= lastEma30 * 0.995;
+
+    if (dropPct <= -8 && reboundPct >= 8 && recoveryRatio >= 0.4 && volChange >= 80 && regainedEma7 && ema7NearOrAbove30) {
+        return { dropPct, reboundPct, recoveryRatio, volChange };
+    }
+    return null;
+}
+
+function regressionStats(values) {
+    const n = values.length;
+    if (n < 2) return { r2: 0, slopePct: 0 };
+    const xMean = (n - 1) / 2;
+    const yMean = values.reduce((sum, v) => sum + v, 0) / n;
+    let ssXX = 0, ssXY = 0, ssTot = 0, ssRes = 0;
+    for (let i = 0; i < n; i++) {
+        ssXX += (i - xMean) ** 2;
+        ssXY += (i - xMean) * (values[i] - yMean);
+        ssTot += (values[i] - yMean) ** 2;
+    }
+    const slope = ssXX > 0 ? ssXY / ssXX : 0;
+    const intercept = yMean - slope * xMean;
+    for (let i = 0; i < n; i++) ssRes += (values[i] - (intercept + slope * i)) ** 2;
+    const r2 = ssTot > 0 ? Math.max(0, 1 - ssRes / ssTot) : 0;
+    const slopePct = values[0] > 0 ? (slope / values[0]) * 100 : 0;
+    return { r2, slopePct };
+}
+
+function countHigherLows(candles, lookback = 8) {
+    const lows = candles.slice(-lookback).map(c => parseFloat(c[3]));
+    let count = 0;
+    for (let i = 1; i < lows.length; i++) {
+        if (lows[i] > lows[i - 1]) count++;
+    }
+    return count;
+}
+
+function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul }) {
+    const closes15m = k15m.map(c => parseFloat(c[4]));
+    const trend15 = regressionStats(closes15m.slice(-20));
+    const trend30 = regressionStats(k30m.map(c => parseFloat(c[4])).slice(-20));
+    const trend1h = regressionStats(k1h.map(c => parseFloat(c[4])).slice(-20));
+    const avgR2 = (trend15.r2 + trend30.r2 + trend1h.r2) / 3;
+    const avgSlope = (trend15.slopePct + trend30.slopePct + trend1h.slopePct) / 3;
+    const avgHigherLows = (countHigherLows(k15m) + countHigherLows(k30m) + countHigherLows(k1h)) / 3;
+    const candidates = [];
+    const clamp = (value, min = 0, max = 100) => Math.max(min, Math.min(max, value));
+
+    const momentum15 = clamp(((b15m.pct - 0.9) / 0.2) * 100);
+    const momentum1h = clamp(((b1h.pct - 0.8) / 0.2) * 100);
+    const volumeStrength = clamp((volChange / 200) * 100);
+    const structureStrength = clamp(((avgR2 * 0.6) + (Math.max(0, avgSlope) / 1.5) * 0.3 + (avgHigherLows / 6) * 0.1) * 100);
+    const reversalStrength = vReversal
+        ? clamp((Math.abs(vReversal.dropPct) / 20) * 25 + (vReversal.reboundPct / 20) * 45 + (vReversal.recoveryRatio * 30))
+        : 0;
+
+    if (b15m.pct >= 0.98 && b1h.pct >= 0.9 && volChange > 0) {
+        candidates.push({
+            type: '布林突破',
+            stars: b1h.pct >= 0.98 && volMul > 2 ? 3 : (b1h.pct >= 0.95 ? 2 : 1),
+            score: clamp(momentum15 * 0.35 + momentum1h * 0.2 + volumeStrength * 0.25 + structureStrength * 0.2),
+            explanation: `15m 接近布林上軌 (${b15m.pct.toFixed(2)})，1h 動能 ${b1h.pct.toFixed(2)}，量能 ${volChange.toFixed(2)}%`,
+        });
+    }
+    if (vReversal) {
+        candidates.push({
+            type: 'V轉反彈',
+            stars: vReversal.reboundPct >= 20 && vReversal.volChange >= 150 ? 3 : (vReversal.reboundPct >= 12 ? 2 : 1),
+            score: clamp(reversalStrength * 0.5 + volumeStrength * 0.25 + structureStrength * 0.15 + momentum15 * 0.1),
+            explanation: `急跌 ${vReversal.dropPct.toFixed(2)}%，低點反彈 +${vReversal.reboundPct.toFixed(2)}%，收復 ${(vReversal.recoveryRatio * 100).toFixed(0)}%`,
+        });
+    }
+    if (volChange >= 150 && avgSlope > 0) {
+        candidates.push({
+            type: '量能爆發',
+            stars: volChange >= 300 ? 3 : 2,
+            score: clamp(volumeStrength * 0.55 + structureStrength * 0.25 + momentum15 * 0.2),
+            explanation: `15m 成交量高於前 20 根均量 ${volChange.toFixed(2)}%，價格斜率 ${avgSlope.toFixed(3)}% / bar`,
+        });
+    }
+    if (avgR2 >= 0.75 && avgSlope >= 0.25 && avgHigherLows >= 3) {
+        candidates.push({
+            type: '穩健斜率',
+            stars: avgR2 >= 0.85 && avgSlope >= 0.8 ? 3 : 2,
+            score: clamp(structureStrength * 0.6 + momentum15 * 0.2 + volumeStrength * 0.2),
+            explanation: `Avg R2 = ${avgR2.toFixed(2)}\nAvg slope: ${avgSlope.toFixed(3)}% / bar\nAvg higher lows: ${avgHigherLows.toFixed(1)}`,
+        });
+    }
+
+    return candidates.sort((a, b) => b.score - a.score)[0] || null;
+}
+
+function formatSignalExplanation(explanation = '') {
+    return String(explanation)
+        .replace(/，/g, '\n')
+        .replace(/\s\/\s/g, '\n')
+        .replace(/ \/ /g, '\n');
+}
+
+async function evaluatePendingSignals() {
+    const journal = readSignalJournal();
+    const now = Date.now();
+    let changed = false;
+
+    for (const entry of journal.entries) {
+        entry.evaluations = entry.evaluations || {};
+        const ageMs = now - entry.timestamp;
+        const horizons = [
+            { key: '1h', ms: 60 * 60 * 1000 },
+            { key: '2h', ms: 2 * 60 * 60 * 1000 },
+            { key: '4h', ms: 4 * 60 * 60 * 1000 },
+        ];
+        for (const horizon of horizons) {
+            if (entry.evaluations[horizon.key]) continue;
+            if (ageMs < horizon.ms) continue;
+            const klines = await fetchKlines(entry.symbol.replace('-USDT', ''), horizon.key, 2).catch(() => null);
+            if (!klines || klines.length < 2) continue;
+            const latestClose = parseFloat(klines[klines.length - 1][4]);
+            if (!latestClose || !entry.entryPrice) continue;
+            const pnlPct = ((latestClose - entry.entryPrice) / entry.entryPrice) * 100;
+            const threshold = SIGNAL_WIN_THRESHOLDS[horizon.key] || 0;
+            entry.evaluations[horizon.key] = {
+                pnlPct: Number(pnlPct.toFixed(2)),
+                win: pnlPct >= threshold,
+                threshold,
+                evaluatedAt: now,
+            };
+            changed = true;
+        }
+    }
+
+    if (changed) {
+        updateSignalSummary(journal);
+        writeSignalJournal(journal);
+    }
+}
+
+async function maybeSendSummary(sendDiscordMessage) {
+    if (!sendDiscordMessage || !SUMMARY_WEBHOOK_URL) return;
+    const now = Date.now();
+    if (now - lastSummarySentAt < SUMMARY_SEND_INTERVAL_MS) return;
+    const journal = readSignalJournal();
+    const message = formatSummaryMessage(journal.summary || {});
+    await queueDiscordSignal(sendDiscordMessage, message, {
+        username: 'gem0507 summary',
+        webhookUrl: SUMMARY_WEBHOOK_URL,
+    });
+    lastSummarySentAt = now;
+}
+
+/**
+ * ?撣????摩
+ */
+export async function bollingerScan(coins, ctx) {
+    const { sendMessage, sendDiscordMessage, botState, openOrder, getPositions, momentum_channel } = ctx;
+    const now = Date.now();
+    await evaluatePendingSignals();
+    await maybeSendSummary(sendDiscordMessage);
+
+    for (let i = 0; i < coins.length; i += 10) {
+        const batch = coins.slice(i, i + 10);
+        await Promise.all(batch.map(async (t, idx) => {
+            try {
+                const currentRank = i + idx + 1;
+                const getK = async (sym, iv) => {
+                    const k = `${sym}_${iv}`;
+                    if (klineCache.has(k) && (now - klineCache.get(k).ts < CACHE_TTL_MS)) return klineCache.get(k).data;
+                    const d = await fetchKlines(sym.replace('-USDT',''), iv, 100);
+                    if (d) klineCache.set(k, { data: d, ts: now });
+                    return d;
+                };
+
+                const [k15m, k30m, k1h, k4h] = await Promise.all([
+                    getK(t.symbol, '15m'), 
+                    getK(t.symbol, '30m'),
+                    getK(t.symbol, '1h'),
+                    getK(t.symbol, '4h')
+                ]);
+
+                if (!k15m || !k30m || !k1h || !k4h) return;
+
+                const c15m = k15m.map(c => parseFloat(c[4]));
+                const c1h = k1h.map(c => parseFloat(c[4]));
+                const b15m = bollingerBands(c15m, 20, 2);
+                const b1h = bollingerBands(c1h, 20, 2);
+                const vReversal = detectVReversal(k15m);
+
+                const hasMomentum = b15m.pct >= 0.98 && (b1h.pct >= 0.9);
+                if (false && !hasMomentum && !vReversal) {
+                    trackingList.delete(t.symbol);
+                    return;
+                }
+
+                // 閮???
+                const avgV = avgVolume(k15m, 20);
+                const curV = parseFloat(k15m[k15m.length - 1][5] || 0);
+                const volMul = curV / (avgV || 1);
+                const volChange = getVolumeChange(k15m, 20);
+                if (false && volChange <= 0) {
+                    trackingList.delete(t.symbol);
+                    return;
+                }
+                
+                let stars = 1, label = 'Signal';
+                if (b1h.pct >= 0.98 && b15m.pct >= 0.98 && volMul > 2.0) { stars = 3; label = 'Momentum'; }
+                else if (b1h.pct >= 0.95 && b15m.pct >= 0.98) { stars = 2; label = 'Trend'; }
+
+                // ?瑕?斗
+                if (vReversal) {
+                    stars = vReversal.reboundPct >= 20 && vReversal.volChange >= 150 ? 3 : (vReversal.reboundPct >= 12 ? 2 : 1);
+                    label = 'V-Reversal';
+                }
+
+                const signalProfile = buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul });
+                if (!signalProfile) {
+                    trackingList.delete(t.symbol);
+                    return;
+                }
+                stars = signalProfile.stars;
+                label = signalProfile.type;
+
+                let track = trackingList.get(t.symbol);
+                let shouldNotify = false;
+
+                if (!track) {
+                    track = { stageIndex: 0, nextNotifyAt: now + NOTIFY_STAGES[1] * 60 * 1000, lastSeenAt: now };
+                    trackingList.set(t.symbol, track);
+                    shouldNotify = true;
+                } else {
+                    track.lastSeenAt = now;
+                    if (now >= track.nextNotifyAt) {
+                        track.stageIndex++;
+                        if (track.stageIndex < NOTIFY_STAGES.length) {
+                            const wait = (NOTIFY_STAGES[track.stageIndex + 1] || Infinity) - NOTIFY_STAGES[track.stageIndex];
+                            track.nextNotifyAt = wait === Infinity ? Infinity : (now + wait * 60 * 1000);
+                            shouldNotify = true;
+                        }
+                    }
+                }
+
+                if (shouldNotify) {
+                    const prevRank = rankCache.get(t.symbol);
+                    const autoWatchTargets = botState.admins?.length ? botState.admins : [momentum_channel || '931709772'];
+                    autoAddSignalWatchlist(t, stars, botState, autoWatchTargets, { current: currentRank, previous: prevRank });
+
+                    let rankDesc = `#${currentRank}`;
+                    if (prevRank && prevRank !== currentRank) {
+                        rankDesc += currentRank < prevRank ? ` (??from #${prevRank})` : ` (??from #${prevRank})`;
+                    }
+                    rankCache.set(t.symbol, currentRank);
+
+                    const ch30m = getPriceChange(k30m);
+                    const ch1h = getPriceChange(k1h);
+                    const ch4h = getPriceChange(k4h);
+                    
+                    // volChange is calculated before signal gating.
+                    const signalType = vReversal ? 'V-Reversal' : 'Bollinger Momentum';
+                    const vReversalDetail = vReversal
+                        ? `?亥? ${vReversal.dropPct.toFixed(2)}% / 雿??? +${vReversal.reboundPct.toFixed(2)}% / ?嗅儔 ${(vReversal.recoveryRatio * 100).toFixed(0)}%`
+                        : '';
+
+                    const msg = `${'*'.repeat(stars)} ${t.symbol} ${fmtPct(t.change)} rank ${rankDesc}`;
+
+                    const starLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
+                    const fmtPct = (value) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
+                    const cleanStarLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
+                    const symbolName = t.symbol.replace('-USDT', '');
+                    const cleanDescription = `${symbolName} ${fmtPct(t.change)}  排名 ${rankDesc}\n型態 : ${signalProfile.type}\n\n` +
+                        `${formatSignalExplanation(signalProfile.explanation)}\n\n` +
+                        `K線變化 30m / 1h / 4h\n` +
+                        `${fmtPct(ch30m)} / ${fmtPct(ch1h)} / ${fmtPct(ch4h)}\n\n` +
+                        `交易量 : ${fmtPct(volChange)}\n` +
+                        `綜合分數 : ${signalProfile.score.toFixed(1)}\n` +
+                        `${new Date().toLocaleString('zh-TW', { hour12: true })}`;
+                    const discordMsg = `${starLabels[stars] || starLabels[1]}\n` +
+                        `${t.symbol.replace('-USDT', '')}\n` +
+                        `靽∟???嚗?{signalProfile.type}\n` +
+                        `隤芣?嚗?{signalProfile.explanation}\n` +
+                        `瞍脰?撟?${fmtPct(t.change)}\n` +
+                        `??嚗?${rankDesc}\n\n` +
+                        `K蝺???\n` +
+                        `30m : ${fmtPct(ch30m)}\n` +
+                        `1h : ${fmtPct(ch1h)}\n` +
+                        `4h : ${fmtPct(ch4h)}\n\n` +
+                        `鈭斗???${fmtPct(volChange)}`;
+
+                    const replyMarkup = {
+                        inline_keyboard: [[
+                            { text: '分析', callback_data: `check_${t.symbol.replace('-USDT','')}` },
+                            { text: '追蹤', callback_data: `trace_${t.symbol.replace('-USDT','')}` },
+                            { text: '加入觀察', callback_data: `watch_add_${t.symbol}_${t.price}_${stars}` }
+                        ]]
+                    };
+
+                    if (SIGNAL_PUSH_ENABLED && signalProfile.score >= MIN_SIGNAL_SCORE) {
+                        appendSignalJournalEntry({
+                            id: `${t.symbol}_${Date.now()}`,
+                            symbol: t.symbol,
+                            signalType: signalProfile.type,
+                            stars,
+                            score: Number(signalProfile.score.toFixed(2)),
+                            explanation: signalProfile.explanation,
+                            entryPrice: t.price,
+                            timestamp: Date.now(),
+                            rank: currentRank,
+                            evaluations: {},
+                        });
+                        if (sendDiscordMessage) {
+                            await queueDiscordSignal(sendDiscordMessage, discordMsg, {
+                                username: `gem0507-${stars}star`,
+                                webhookUrl: DISCORD_STAR_WEBHOOKS[stars],
+                                embeds: [{
+                                    title: cleanStarLabels[stars] || cleanStarLabels[1],
+                                    description: cleanDescription,
+                                    color: DISCORD_STAR_COLORS[stars] || DISCORD_STAR_COLORS[1],
+                                    fields: [],
+                                    timestamp: new Date().toISOString(),
+                                }],
+                            });
+                        } else {
+                            await sendMessage(momentum_channel || '931709772', msg, { parse_mode: 'Markdown', omitLabel: true, replyMarkup });
+                        }
+                    }
+                }
+
+                // ?芸???(2 ?誑銝?
+                if (track.stageIndex === 0 && stars >= 2 && openOrder && getPositions) {
+                    try {
+                        if (now - lastGlobalOrderTime < GLOBAL_ORDER_INTERVAL_MS) return;
+                        if (closedPositionsCache.get(t.symbol) && (now - closedPositionsCache.get(t.symbol) < POST_CLOSE_COOL_DOWN_MS)) return;
+                        if (orderLock.get(t.symbol) && (now - orderLock.get(t.symbol) < ORDER_LOCK_MS)) return;
+
+                        const pos = await getPositions(t.symbol);
+                        if (!pos.some(p => p.symbol === t.symbol && Math.abs(parseFloat(p.positionAmt)) > 0)) {
+                            const cred = loadCredentials();
+                            if (cred.apiKey && cred.apiSecret) {
+                                lastGlobalOrderTime = now;
+                                orderLock.set(t.symbol, now);
+                                await openOrder({
+                                    symbol: t.symbol, side: 'LONG', entryPrice: t.price,
+                                    sl: b15m.mid, tp1: t.price * 1.1, leverage: 10, strength: stars >= 3 ? 'HIGH' : 'MED'
+                                });
+                            }
+                        }
+                    } catch (e) {}
+                }
+            } catch (e) {}
+        }));
+    }
+}
+

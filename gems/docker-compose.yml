@@ -1,0 +1,22 @@
+services:
+  gem0507:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gem0507:latest
+    container_name: gem0507
+    env_file:
+      - .env
+    environment:
+      - DATA_DIR=/app/data
+    volumes:
+      - ./data:/app/data
+      - ./src/scripts:/app/src/scripts
+      - ./agent:/app/agent
+      - ./backtests:/app/backtests
+      - ./k_data:/app/k_data
+      - ./signals:/app/signals
+      - ./BOT_CHANGELOG.md:/app/BOT_CHANGELOG.md
+      - ./ignoreCommit:/app/ignoreCommit
+    network_mode: host
+    restart: "no"

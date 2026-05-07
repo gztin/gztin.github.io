@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx skills *)",
+      "WebFetch(domain:impeccable.style)",
+      "Bash(pip install *)",
+      "Bash(python .agents/skills/backtesting-trading-strategies/scripts/fetch_data.py --symbol BTC-USD --period 2y --interval 1h)",
+      "Bash(python .agents/skills/backtesting-trading-strategies/scripts/backtest.py --strategy ema_crossover --symbol BTC-USD --period 2y --params \"{\\\\\"fast_period\\\\\": 21, \\\\\"slow_period\\\\\": 55}\")",
+      "Bash(python .agents/skills/backtesting-trading-strategies/scripts/backtest.py --strategy rsi_reversal --symbol BTC-USD --period 2y --params \"{\\\\\"period\\\\\": 14, \\\\\"overbought\\\\\": 52, \\\\\"oversold\\\\\": 48}\")",
+      "Bash(python backtest_loopA.py)",
+      "Bash(grep -v \"^$\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
+    ]
+  }
+}

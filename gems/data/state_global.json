@@ -1,0 +1,16 @@
+{
+  "admins": [
+    "931709772"
+  ],
+  "whitelist": [],
+  "rankSnapshot": {},
+  "rankBestRank": {},
+  "scanCooldown": {
+    "XAU_LONG": 1777090433270,
+    "XAU_SHORT": 1777090578302
+  },
+  "loopAPending": {},
+  "loopFPending": {},
+  "isRankRunning": false,
+  "lastUpdateId": 106777096
+}

@@ -1,0 +1,54 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+!.env.production
+!.env.staging
+!.env.taipei
+.DS_Store
+public/api/data/*.json
+!public/api/data/symbols.json
+*.log
+
+# 環境特定文件 (runtime data - 不隨分支合併)
+bot_state*.json
+bot_history.json
+contracts.json
+bot_weights.json
+public/bot_state*.json
+
+# Docker volumes
+data_prod/
+data_test/
+
+# 地點特定配置
+.location
+
+# Bot 設定檔（含敏感資訊，請勿 commit）
+src/scripts/bot.config.js
+bingx_credentials.json
+
+# 本機敏感設定資料夾
+ignoreCommit/
+
+# 腳本日誌
+scripts/*.log
+
+# 測試覆蓋率
+coverage/
+
+# K 線歷史資料（檔案過大，不 commit）
+k_data/
+data/*.json
+!data/state_global.json
+
+# Agent 信號（runtime，不 commit）
+signals/*.json
+signals/*.txt
+
+# 驗證結果（本地用，不 commit）
+backtests/validation/validation_results.txt
+backtests/validation/grid_search_results.txt
+backtests/validation/grid_search_summary.csv
+backtests/crypto/**/*_validation_result.json

@@ -1,0 +1,19 @@
+{
+  "BTC": {
+    "calibPeriod": "2026-03-01 ~ 2026-03-09",
+    "volThreshold": 1.0,
+    "rsiOverbought": 60.9,
+    "rsiOversold": 34.3,
+    "rsiMomentum": 40,
+    "slMultiplier": 1.0,
+    "emaPeriodFast": 30,
+    "emaPeriodSlow": 75,
+    "bosConfirmPct": 0.05,
+    "scoreThreshold": 5,
+    "cooldownH": 4,
+    "tpMultipliers": [1.0, 1.618, 2.618],
+    "slMaxPct": 8,
+    "breakevenOnTp1": true,
+    "notes": "自適應+4h趨勢過濾，勝率68.6%，扣費後+5.1U（3U×20x，15天）"
+  }
+}
