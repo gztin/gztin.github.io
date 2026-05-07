@@ -4,62 +4,100 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Signal Dashboard</title>
+  <link rel="stylesheet" href="https://impeccable.style/downloads/impeccable.min.css" />
   <style>
-    :root { --bg:#10131a; --panel:#171a21; --line:#2a3242; --text:#f5f7fa; --muted:#9da7b8; --ok:#2ecc71; --bad:#e74c3c; --accent:#3ea6ff; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family:"Segoe UI","Noto Sans TC",sans-serif; background:var(--bg); color:var(--text); }
-    .wrap { max-width:1200px; margin:0 auto; padding:20px; }
-    h1 { margin:0 0 8px; font-size:24px; }
-    .sub { color:var(--muted); margin-bottom:16px; }
-    .bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; align-items:center; }
-    .chip { border:1px solid var(--line); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
-    .chip.active { border-color:var(--accent); background:#132235; }
-    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
-    .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; }
-    .card h2 { margin:0 0 10px; font-size:16px; }
-    table { width:100%; border-collapse:collapse; font-size:13px; }
-    th,td { border-bottom:1px solid var(--line); text-align:left; padding:8px 6px; vertical-align:top; }
-    th { color:var(--muted); font-weight:600; }
+    :root { --bg:#0f1320; --panel:#151c2b; --line:#2a3550; --text:#f5f7fa; --muted:#99a7c2; --ok:#39d98a; --bad:#ff6b6b; --accent:#4da3ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--text); background:radial-gradient(1200px 500px at 20% -10%, #1b2740 0%, var(--bg) 55%); font-family:"Segoe UI","Noto Sans TC",sans-serif; }
+    .wrap { max-width:1260px; margin:0 auto; padding:20px; }
+    h1 { margin:0; font-size:24px; }
+    .sub { color:var(--muted); }
+    .toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:12px 0 14px; }
+    .chip { border:1px solid var(--line); background:#111a2b; color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
+    .chip.active { border-color:var(--accent); background:#152742; }
+    .group { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    label { color:var(--muted); font-size:14px; }
+    select { margin-left:6px; padding:7px 10px; background:#111a2b; color:var(--text); border:1px solid var(--line); border-radius:8px; min-height:40px; }
+    .meta { margin-left:auto; white-space:nowrap; }
+    .card { background:linear-gradient(180deg, #171f31 0%, #141a28 100%); border:1px solid var(--line); border-radius:10px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,.22); margin-bottom:14px; }
+    .card h2 { margin:0 0 10px; font-size:18px; }
+    table { width:100%; border-collapse:collapse; font-size:15px; }
+    th, td { border-bottom:1px solid var(--line); padding:11px 8px; }
+    th { color:var(--muted); text-align:left; }
+    #entryTable th:nth-child(1), #entryTable td:nth-child(1) { width:33.33%; text-align:left; }
+    #entryTable th:nth-child(2), #entryTable td:nth-child(2) { width:33.33%; text-align:center; }
+    #entryTable th:nth-child(3), #entryTable td:nth-child(3) { width:33.33%; text-align:right; }
     .mono { font-family:Consolas,"Courier New",monospace; }
-    .pill { border:1px solid var(--line); border-radius:6px; padding:2px 8px; display:inline-block; }
     .ok { color:var(--ok); }
     .bad { color:var(--bad); }
-    @media (max-width:860px) { .grid { grid-template-columns:1fr; } }
+    tbody tr:hover { background:rgba(77,163,255,.08); }
+    .stats-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .stat { border:1px solid var(--line); border-radius:10px; background:#10192a; padding:12px; }
+    .stat-title { color:var(--muted); font-size:13px; margin-bottom:4px; }
+    .stat-rate { font-size:24px; font-weight:700; }
+    .stat-meta { color:var(--muted); font-size:13px; margin-top:4px; }
+    @media (max-width:900px) {
+      .meta { width:100%; margin-left:0; }
+      .stats-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:640px) {
+      .wrap { padding:14px; }
+      h1 { font-size:20px; }
+      .toolbar { gap:8px; }
+      .group { width:100%; }
+      .group:first-child { justify-content:space-between; }
+      .group:first-child .chip { flex:1 1 calc(25% - 6px); text-align:center; padding:8px 0; }
+      .group:nth-child(2) label { width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+      .group:nth-child(2) select { width:58%; margin-left:0; }
+      .meta { font-size:13px; line-height:1.35; }
+      .card { padding:10px; border-radius:9px; }
+      .card h2 { font-size:16px; }
+      table { font-size:13px; }
+      th, td { padding:9px 6px; }
+      #entryTable th:nth-child(1), #entryTable td:nth-child(1) { width:40%; }
+      #entryTable th:nth-child(2), #entryTable td:nth-child(2) { width:25%; }
+      #entryTable th:nth-child(3), #entryTable td:nth-child(3) { width:35%; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Signal Dashboard</h1>
-    <div class="sub" id="meta">Loading...</div>
-    <div class="bar">
-      <button class="chip active" data-tf="15m">15m</button>
-      <button class="chip" data-tf="30m">30m</button>
-      <button class="chip" data-tf="1h">1h</button>
-      <button class="chip" data-tf="4h">4h</button>
-      <span class="sub">依時間框架切換顯示</span>
+    <div class="card">
+      <h2>統計資訊 (60m)</h2>
+      <div class="stats-grid" id="starCards"></div>
     </div>
-    <div class="grid">
-      <div class="card">
-        <h2>分批次勝率 (Asia/Taipei)</h2>
-        <table id="batchTable"><thead><tr><th>批次</th><th>推送數</th><th>已評估</th><th>達標率</th></tr></thead><tbody></tbody></table>
+    <div class="toolbar">
+      <div class="group">
+        <button class="chip active" data-tf="15m">15m</button>
+        <button class="chip" data-tf="30m">30m</button>
+        <button class="chip" data-tf="1h">1h</button>
+        <button class="chip" data-tf="4h">4h</button>
       </div>
-      <div class="card">
-        <h2>型態勝率</h2>
-        <table id="typeTable"><thead><tr><th>型態</th><th>推送數</th><th>已評估</th><th>達標率</th></tr></thead><tbody></tbody></table>
+      <div class="group">
+        <label>是否達標<select id="statusFilter"><option value="pass" selected>達標</option><option value="fail">未達標</option><option value="pending">評估中</option><option value="all">全顯示</option></select></label>
+        <label>星等<select id="starFilter"><option value="all" selected>全顯示</option><option value="1">⭐</option><option value="2">⭐⭐</option><option value="3">⭐⭐⭐</option></select></label>
+        <label>型態<select id="typeFilter"><option value="all" selected>全顯示</option></select></label>
       </div>
+      <div class="meta sub" id="meta">Loading...</div>
     </div>
+
     <div class="card">
       <h2>信號明細</h2>
       <table id="entryTable">
-        <thead><tr><th>幣種</th><th>漲幅</th><th>型態</th><th>星等</th><th>推送信號時間</th><th>是否達標</th></tr></thead>
+        <thead><tr><th>幣種</th><th>漲跌幅</th><th>推送時間</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
   </div>
+
   <script>
     const DEFAULT_TIMEZONE = "Asia/Taipei";
-    const state = { tf: "15m", data: null };
+    const state = { tf: "15m", data: null, status: "pass", star: "all", type: "all" };
     const chips = Array.from(document.querySelectorAll(".chip"));
+    const statusFilter = document.getElementById("statusFilter");
+    const starFilter = document.getElementById("starFilter");
+    const typeFilter = document.getElementById("typeFilter");
 
     chips.forEach((chip) => chip.addEventListener("click", () => {
       chips.forEach(c => c.classList.remove("active"));
@@ -67,67 +105,27 @@
       state.tf = chip.dataset.tf;
       render();
     }));
+    statusFilter.addEventListener("change", () => { state.status = statusFilter.value; render(); });
+    starFilter.addEventListener("change", () => { state.star = starFilter.value; render(); });
+    typeFilter.addEventListener("change", () => { state.type = typeFilter.value; render(); });
 
-    function formatTaipei(ts) {
-      return new Date(ts).toLocaleString("zh-TW", {
-        timeZone: DEFAULT_TIMEZONE,
-        hour12: false
-      });
-    }
-
-    function starsText(stars) { return "⭐".repeat(Number(stars || 0)); }
+    function formatTaipei(ts) { return new Date(ts).toLocaleString("zh-TW", { timeZone: DEFAULT_TIMEZONE, hour12: false }); }
     function evalForTf(entry) { return (entry.evaluations || {})[state.tf] || null; }
-    function passTextByTf(entry, tf) {
-      const r = (entry.evaluations || {})[tf] || null;
-      if (!r) return `${tf} 評估中`;
-      return r.win ? `${tf} 達標` : `${tf} 未達標`;
-    }
-
-    function passText(entry) {
-      const tfs = ["15m", "30m", "1h", "4h"];
-      return tfs.map((tf) => passTextByTf(entry, tf)).join(" / ");
-    }
     function changePct(entry) { const r = evalForTf(entry); return r && typeof r.pnlPct === "number" ? r.pnlPct : 0; }
-    function pct(win, evaluated) { return evaluated ? `${((win / evaluated) * 100).toFixed(2)}%` : "0.00%"; }
+    function statusKey(entry) { const r = evalForTf(entry); if (!r) return "pending"; return r.win ? "pass" : "fail"; }
 
-    function batchKey(ts) {
-      const dtf = new Intl.DateTimeFormat("zh-TW", { timeZone: DEFAULT_TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
-      const text = dtf.format(new Date(ts));
-      if (state.tf === "15m") return text.replace(/(\d{2}):(\d{2})/, (_, h, m) => `${h}:${String(Math.floor(Number(m) / 15) * 15).padStart(2, "0")}`);
-      if (state.tf === "30m") return text.replace(/(\d{2}):(\d{2})/, (_, h, m) => `${h}:${Number(m) < 30 ? "00" : "30"}`);
-      if (state.tf === "1h") return text.replace(/:\d{2}$/, ":00");
-      return text.replace(/ \d{2}:\d{2}$/, "");
-    }
-
-    function summarizeBatch(entries) {
-      const map = new Map();
+    function summarizeStarRate60m(entries) {
+      const base = new Map([[1, { stars:1, total:0, evaluated:0, wins:0 }],[2, { stars:2, total:0, evaluated:0, wins:0 }],[3, { stars:3, total:0, evaluated:0, wins:0 }]]);
       entries.forEach((entry) => {
-        const key = batchKey(entry.timestamp);
-        if (!map.has(key)) map.set(key, { batch: key, total: 0, evaluated: 0, wins: 0 });
-        const row = map.get(key);
+        const stars = Math.max(1, Math.min(3, Number(entry.stars || 1)));
+        const row = base.get(stars);
         row.total += 1;
-        const result = evalForTf(entry);
-        if (result) { row.evaluated += 1; if (result.win) row.wins += 1; }
+        const r = (entry.evaluations || {})["1h"] || null;
+        if (!r || typeof r.win !== "boolean") return;
+        row.evaluated += 1;
+        if (r.win) row.wins += 1;
       });
-      return Array.from(map.values()).sort((a, b) => b.batch.localeCompare(a.batch));
-    }
-
-    function summarizeType(entries) {
-      const map = new Map();
-      entries.forEach((entry) => {
-        const key = entry.signalType || "未分類";
-        if (!map.has(key)) map.set(key, { signalType: key, total: 0, evaluated: 0, wins: 0 });
-        const row = map.get(key);
-        row.total += 1;
-        const result = evalForTf(entry);
-        if (result) { row.evaluated += 1; if (result.win) row.wins += 1; }
-      });
-      return Array.from(map.values()).sort((a, b) => b.total - a.total);
-    }
-
-    function renderRows(tableId, rows, mapper) {
-      const tbody = document.querySelector(`#${tableId} tbody`);
-      tbody.innerHTML = rows.length ? rows.map(mapper).join("") : `<tr><td colspan="4">無資料</td></tr>`;
+      return [1,2,3].map(k => base.get(k));
     }
 
     function renderEntries(entries) {
@@ -136,18 +134,43 @@
       tbody.innerHTML = sorted.length ? sorted.map((e) => {
         const p = changePct(e);
         const cls = p >= 0 ? "ok" : "bad";
-        return `<tr><td class="mono">${e.symbol}</td><td class="${cls}">${p.toFixed(2)}%</td><td>${e.signalType || "-"}</td><td>${starsText(e.stars)}</td><td>${formatTaipei(e.timestamp)}</td><td>${passText(e)}</td></tr>`;
-      }).join("") : `<tr><td colspan="6">無資料</td></tr>`;
+        const arrow = p >= 0 ? "▲" : "▼";
+        return `<tr><td class="mono">${e.symbol}</td><td class="${cls}">${arrow} ${Math.abs(p).toFixed(2)}%</td><td>${formatTaipei(e.timestamp)}</td></tr>`;
+      }).join("") : `<tr><td colspan="3">無資料</td></tr>`;
+    }
+
+    function renderStarCards(rows) {
+      const el = document.getElementById("starCards");
+      el.innerHTML = rows.map((r) => {
+        const rate = r.evaluated ? ((r.wins / r.evaluated) * 100).toFixed(2) : "0.00";
+        return `<div class="stat"><div class="stat-title">${"⭐".repeat(r.stars)}</div><div class="stat-rate">${rate}%</div><div class="stat-meta">已評估 ${r.evaluated} / 推送 ${r.total}</div></div>`;
+      }).join("");
     }
 
     function render() {
       if (!state.data) return;
       const entries = state.data.entries || [];
+      const allTypes = Array.from(new Set(entries.map(e => e.signalType || "-"))).sort((a, b) => a.localeCompare(b, "zh-Hant"));
+      const cur = state.type;
+      typeFilter.innerHTML = `<option value="all">全顯示</option>` + allTypes.map(t => `<option value="${t}">${t}</option>`).join("");
+      if (allTypes.includes(cur)) typeFilter.value = cur; else { state.type = "all"; typeFilter.value = "all"; }
+
+      const filteredEntries = entries.filter((e) => {
+        if (state.status !== "all" && statusKey(e) !== state.status) return false;
+        if (state.star !== "all" && String(e.stars || 1) !== state.star) return false;
+        if (state.type !== "all" && (e.signalType || "-") !== state.type) return false;
+        return true;
+      });
+      const statsEntries = entries.filter((e) => {
+        if (state.star !== "all" && String(e.stars || 1) !== state.star) return false;
+        if (state.type !== "all" && (e.signalType || "-") !== state.type) return false;
+        return true;
+      });
+
       const updatedAt = state.data.updatedAt || Date.now();
-      document.getElementById("meta").textContent = `更新時間 (台灣 GMT+8): ${formatTaipei(updatedAt)} | Filter: ${state.tf}`;
-      renderRows("batchTable", summarizeBatch(entries), (r) => `<tr><td>${r.batch}</td><td>${r.total}</td><td>${r.evaluated}</td><td>${pct(r.wins, r.evaluated)}</td></tr>`);
-      renderRows("typeTable", summarizeType(entries), (r) => `<tr><td>${r.signalType}</td><td>${r.total}</td><td>${r.evaluated}</td><td>${pct(r.wins, r.evaluated)}</td></tr>`);
-      renderEntries(entries);
+      document.getElementById("meta").textContent = `更新時間 (台灣 GMT+8): ${formatTaipei(updatedAt)} | TF: ${state.tf}`;
+      renderEntries(filteredEntries);
+      renderStarCards(summarizeStarRate60m(statsEntries));
     }
 
     async function loadData() {

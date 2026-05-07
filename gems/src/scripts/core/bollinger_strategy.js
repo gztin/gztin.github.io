@@ -15,9 +15,9 @@ const trackingList = new Map();
 const NOTIFY_STAGES = [0, 5, 30, 60, 240]; 
 const SIGNAL_PUSH_ENABLED = true;
 const DISCORD_STAR_WEBHOOKS = {
-    1: process.env.DISCORD_WEBHOOK_URL_STAR_1 || 'https://discord.com/api/webhooks/1501939009944031384/bml0g14TTqFW4dyo9bY6Ov9cVWUKKi41devC1unJGjEl-1UchVW8udhklN55bx5WJo4i',
-    2: process.env.DISCORD_WEBHOOK_URL_STAR_2 || 'https://discord.com/api/webhooks/1501940259016016002/w6Yu4A1Xuj0Yea1bXR5VAToFEQ6SqmLDT5nHJbbn6ZdAOKnJroi1-Pb4R8EBL8S3aR3C',
-    3: process.env.DISCORD_WEBHOOK_URL_STAR_3 || 'https://discord.com/api/webhooks/1501940986459328554/coJ8C3izuC5iA-ryRk2T-2OgTmFrpYOFGRxCOLnKQZ_tv3HVytvft4PPDLF3xgjtsfE6',
+    1: process.env.DISCORD_WEBHOOK_URL_STAR_1 || '',
+    2: process.env.DISCORD_WEBHOOK_URL_STAR_2 || '',
+    3: process.env.DISCORD_WEBHOOK_URL_STAR_3 || '',
 };
 const DISCORD_STAR_COLORS = {
     1: 0xf1c40f,
@@ -27,7 +27,7 @@ const DISCORD_STAR_COLORS = {
 const DISCORD_SEND_GAP_MS = 1500;
 const MIN_SIGNAL_SCORE = 60;
 const SIGNAL_JOURNAL_FILE = 'signal_journal.json';
-const SUMMARY_WEBHOOK_URL = process.env.DISCORD_SUMMARY_WEBHOOK_URL || 'https://discord.com/api/webhooks/1501954073556025475/OBE4sq49lot9qOK_cFA9HOpVvsPmkMnWcQsJU7nTauKwhmkRYV7sNsEeDAZBJWW6VnQf';
+const SUMMARY_WEBHOOK_URL = process.env.DISCORD_SUMMARY_WEBHOOK_URL || '';
 const SUMMARY_SEND_INTERVAL_MS = 30 * 60 * 1000;
 const SIGNAL_WIN_THRESHOLDS = {
     '15m': 0.8,
@@ -38,6 +38,14 @@ const SIGNAL_WIN_THRESHOLDS = {
 };
 let discordSendQueue = Promise.resolve();
 let lastSummarySentAt = 0;
+
+function maskWebhook(url = '') {
+    if (!url) return 'NOT_SET';
+    if (url.length < 20) return 'SET';
+    return `${url.slice(0, 24)}...${url.slice(-6)}`;
+}
+
+console.log(`[DISCORD] config star1=${maskWebhook(DISCORD_STAR_WEBHOOKS[1])} star2=${maskWebhook(DISCORD_STAR_WEBHOOKS[2])} star3=${maskWebhook(DISCORD_STAR_WEBHOOKS[3])} summary=${maskWebhook(SUMMARY_WEBHOOK_URL)}`);
 
 function getDataDir() {
     const dir = process.env.DATA_DIR || 'data';
