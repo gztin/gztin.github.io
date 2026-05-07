@@ -5,250 +5,159 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Signal Dashboard</title>
   <style>
-    :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --panel-2: #1d2230;
-      --text: #f5f7fa;
-      --muted: #9da7b8;
-      --ok: #2ecc71;
-      --warn: #f1c40f;
-      --bad: #e74c3c;
-      --line: #2a3242;
-      --accent: #3ea6ff;
-    }
+    :root { --bg:#10131a; --panel:#171a21; --line:#2a3242; --text:#f5f7fa; --muted:#9da7b8; --ok:#2ecc71; --bad:#e74c3c; --accent:#3ea6ff; }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-      background: radial-gradient(circle at 20% -10%, #20283a 0%, var(--bg) 50%);
-      color: var(--text);
-    }
-    .wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    h1 { margin: 0 0 8px 0; font-size: 24px; }
-    .sub { color: var(--muted); margin-bottom: 16px; }
-    .bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-    .chip {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      color: var(--text);
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .chip.active {
-      border-color: var(--accent);
-      background: #132235;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 12px;
-    }
-    .card h2 {
-      margin: 0 0 10px 0;
-      font-size: 16px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-    th, td {
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      padding: 8px 6px;
-      vertical-align: top;
-    }
-    th { color: var(--muted); font-weight: 600; }
-    .mono { font-family: Consolas, "Courier New", monospace; }
-    .pill {
-      display: inline-block;
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 12px;
-      border: 1px solid var(--line);
-      background: var(--panel-2);
-    }
-    .score-ok { color: var(--ok); }
-    .score-mid { color: var(--warn); }
-    .score-low { color: var(--bad); }
-    @media (max-width: 860px) {
-      .grid { grid-template-columns: 1fr; }
-      table { font-size: 12px; }
-    }
+    body { margin:0; font-family:"Segoe UI","Noto Sans TC",sans-serif; background:var(--bg); color:var(--text); }
+    .wrap { max-width:1200px; margin:0 auto; padding:20px; }
+    h1 { margin:0 0 8px; font-size:24px; }
+    .sub { color:var(--muted); margin-bottom:16px; }
+    .bar { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px; align-items:center; }
+    .chip { border:1px solid var(--line); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
+    .chip.active { border-color:var(--accent); background:#132235; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:16px; }
+    .card { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:12px; }
+    .card h2 { margin:0 0 10px; font-size:16px; }
+    table { width:100%; border-collapse:collapse; font-size:13px; }
+    th,td { border-bottom:1px solid var(--line); text-align:left; padding:8px 6px; vertical-align:top; }
+    th { color:var(--muted); font-weight:600; }
+    .mono { font-family:Consolas,"Courier New",monospace; }
+    .pill { border:1px solid var(--line); border-radius:6px; padding:2px 8px; display:inline-block; }
+    .ok { color:var(--ok); }
+    .bad { color:var(--bad); }
+    @media (max-width:860px) { .grid { grid-template-columns:1fr; } }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Signal Dashboard</h1>
     <div class="sub" id="meta">Loading...</div>
-
     <div class="bar">
-      <button class="chip active" data-stars="all">全部星等</button>
-      <button class="chip" data-stars="1">⭐️</button>
-      <button class="chip" data-stars="2">⭐️⭐️</button>
-      <button class="chip" data-stars="3">⭐️⭐️⭐️</button>
-      <span class="sub">每 20 秒自動刷新</span>
+      <button class="chip active" data-tf="15m">15m</button>
+      <button class="chip" data-tf="30m">30m</button>
+      <button class="chip" data-tf="1h">1h</button>
+      <button class="chip" data-tf="4h">4h</button>
+      <span class="sub">依時間框架切換顯示</span>
     </div>
-
     <div class="grid">
       <div class="card">
-        <h2>星等勝率 (1h / 2h / 4h)</h2>
-        <table id="starTable">
-          <thead>
-            <tr><th>星等</th><th>時間窗</th><th>達標門檻</th><th>達成率</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <h2>分批次勝率 (Asia/Taipei)</h2>
+        <table id="batchTable"><thead><tr><th>批次</th><th>推送數</th><th>已評估</th><th>達標率</th></tr></thead><tbody></tbody></table>
       </div>
-
       <div class="card">
-        <h2>型態勝率 (1h / 2h / 4h)</h2>
-        <table id="typeTable">
-          <thead>
-            <tr><th>型態</th><th>時間窗</th><th>達標門檻</th><th>達成率</th></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+        <h2>型態勝率</h2>
+        <table id="typeTable"><thead><tr><th>型態</th><th>推送數</th><th>已評估</th><th>達標率</th></tr></thead><tbody></tbody></table>
       </div>
     </div>
-
     <div class="card">
-      <h2>信號紀錄</h2>
+      <h2>信號明細</h2>
       <table id="entryTable">
-        <thead>
-          <tr>
-            <th>時間</th>
-            <th>幣種</th>
-            <th>星等</th>
-            <th>型態</th>
-            <th>分數</th>
-            <th>說明</th>
-          </tr>
-        </thead>
+        <thead><tr><th>幣種</th><th>漲幅</th><th>型態</th><th>星等</th><th>推送信號時間</th><th>是否達標</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
   </div>
-
   <script>
-    const state = { stars: "all", data: null };
+    const DEFAULT_TIMEZONE = "Asia/Taipei";
+    const state = { tf: "15m", data: null };
     const chips = Array.from(document.querySelectorAll(".chip"));
 
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chips.forEach(c => c.classList.remove("active"));
-        chip.classList.add("active");
-        state.stars = chip.dataset.stars;
-        render();
+    chips.forEach((chip) => chip.addEventListener("click", () => {
+      chips.forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      state.tf = chip.dataset.tf;
+      render();
+    }));
+
+    function formatTaipei(ts) {
+      return new Date(ts).toLocaleString("zh-TW", {
+        timeZone: DEFAULT_TIMEZONE,
+        hour12: false
       });
-    });
-
-    function scoreClass(score) {
-      if (score >= 80) return "score-ok";
-      if (score >= 60) return "score-mid";
-      return "score-low";
     }
 
-    function starsText(stars) {
-      return "⭐️".repeat(Number(stars || 0));
+    function starsText(stars) { return "⭐".repeat(Number(stars || 0)); }
+    function evalForTf(entry) { return (entry.evaluations || {})[state.tf] || null; }
+    function passTextByTf(entry, tf) {
+      const r = (entry.evaluations || {})[tf] || null;
+      if (!r) return `${tf} 評估中`;
+      return r.win ? `${tf} 達標` : `${tf} 未達標`;
     }
 
-    function pct(w, t) {
-      if (!t) return "0/0 (0%)";
-      return `${w}/${t} (${((w / t) * 100).toFixed(2)}%)`;
+    function passText(entry) {
+      const tfs = ["15m", "30m", "1h", "4h"];
+      return tfs.map((tf) => passTextByTf(entry, tf)).join(" / ");
+    }
+    function changePct(entry) { const r = evalForTf(entry); return r && typeof r.pnlPct === "number" ? r.pnlPct : 0; }
+    function pct(win, evaluated) { return evaluated ? `${((win / evaluated) * 100).toFixed(2)}%` : "0.00%"; }
+
+    function batchKey(ts) {
+      const dtf = new Intl.DateTimeFormat("zh-TW", { timeZone: DEFAULT_TIMEZONE, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false });
+      const text = dtf.format(new Date(ts));
+      if (state.tf === "15m") return text.replace(/(\d{2}):(\d{2})/, (_, h, m) => `${h}:${String(Math.floor(Number(m) / 15) * 15).padStart(2, "0")}`);
+      if (state.tf === "30m") return text.replace(/(\d{2}):(\d{2})/, (_, h, m) => `${h}:${Number(m) < 30 ? "00" : "30"}`);
+      if (state.tf === "1h") return text.replace(/:\d{2}$/, ":00");
+      return text.replace(/ \d{2}:\d{2}$/, "");
     }
 
-    function renderSummaryRows(tableId, rows, mapper) {
+    function summarizeBatch(entries) {
+      const map = new Map();
+      entries.forEach((entry) => {
+        const key = batchKey(entry.timestamp);
+        if (!map.has(key)) map.set(key, { batch: key, total: 0, evaluated: 0, wins: 0 });
+        const row = map.get(key);
+        row.total += 1;
+        const result = evalForTf(entry);
+        if (result) { row.evaluated += 1; if (result.win) row.wins += 1; }
+      });
+      return Array.from(map.values()).sort((a, b) => b.batch.localeCompare(a.batch));
+    }
+
+    function summarizeType(entries) {
+      const map = new Map();
+      entries.forEach((entry) => {
+        const key = entry.signalType || "未分類";
+        if (!map.has(key)) map.set(key, { signalType: key, total: 0, evaluated: 0, wins: 0 });
+        const row = map.get(key);
+        row.total += 1;
+        const result = evalForTf(entry);
+        if (result) { row.evaluated += 1; if (result.win) row.wins += 1; }
+      });
+      return Array.from(map.values()).sort((a, b) => b.total - a.total);
+    }
+
+    function renderRows(tableId, rows, mapper) {
       const tbody = document.querySelector(`#${tableId} tbody`);
-      tbody.innerHTML = rows.map(mapper).join("") || `<tr><td colspan="4">無資料</td></tr>`;
+      tbody.innerHTML = rows.length ? rows.map(mapper).join("") : `<tr><td colspan="4">無資料</td></tr>`;
     }
 
     function renderEntries(entries) {
       const tbody = document.querySelector("#entryTable tbody");
-      tbody.innerHTML = entries.map(e => `
-        <tr>
-          <td>${new Date(e.timestamp).toLocaleString("zh-TW", { hour12: true })}</td>
-          <td class="mono">${e.symbol}</td>
-          <td>${starsText(e.stars)}</td>
-          <td>${e.signalType}</td>
-          <td class="${scoreClass(e.score)}">${e.score.toFixed(1)}</td>
-          <td>${(e.explanation || "").replaceAll("\n", "<br>")}</td>
-        </tr>
-      `).join("") || `<tr><td colspan="6">無資料</td></tr>`;
+      const sorted = entries.slice().sort((a, b) => b.timestamp - a.timestamp).slice(0, 300);
+      tbody.innerHTML = sorted.length ? sorted.map((e) => {
+        const p = changePct(e);
+        const cls = p >= 0 ? "ok" : "bad";
+        return `<tr><td class="mono">${e.symbol}</td><td class="${cls}">${p.toFixed(2)}%</td><td>${e.signalType || "-"}</td><td>${starsText(e.stars)}</td><td>${formatTaipei(e.timestamp)}</td><td>${passText(e)}</td></tr>`;
+      }).join("") : `<tr><td colspan="6">無資料</td></tr>`;
     }
 
     function render() {
       if (!state.data) return;
-      const { entries = [], summary = {}, updatedAt } = state.data;
-      document.getElementById("meta").textContent = `資料更新時間: ${new Date(updatedAt).toLocaleString("zh-TW", { hour12: true })}`;
-
-      const byStar = Object.values(summary.byStar || {});
-      const byType = Object.values(summary.byType || {});
-
-      const filteredEntries = state.stars === "all"
-        ? entries
-        : entries.filter(e => String(e.stars) === state.stars);
-
-      const filteredByStar = state.stars === "all"
-        ? byStar
-        : byStar.filter(r => String(r.stars) === state.stars);
-
-      const filteredByType = state.stars === "all"
-        ? byType
-        : byType.filter(r => {
-            const starEntries = entries.filter(e => e.signalType === r.signalType && String(e.stars) === state.stars);
-            return starEntries.length > 0;
-          });
-
-      renderSummaryRows("starTable", filteredByStar, r => `
-        <tr>
-          <td>${starsText(r.stars)}</td>
-          <td>${r.horizon}</td>
-          <td>上漲 ${r.threshold}%</td>
-          <td>${pct(r.wins, r.total)}</td>
-        </tr>
-      `);
-
-      renderSummaryRows("typeTable", filteredByType, r => `
-        <tr>
-          <td>${r.signalType}</td>
-          <td>${r.horizon}</td>
-          <td>上漲 ${r.threshold}%</td>
-          <td>${pct(r.wins, r.total)}</td>
-        </tr>
-      `);
-
-      renderEntries(filteredEntries.slice().sort((a, b) => b.timestamp - a.timestamp).slice(0, 300));
+      const entries = state.data.entries || [];
+      const updatedAt = state.data.updatedAt || Date.now();
+      document.getElementById("meta").textContent = `更新時間 (台灣 GMT+8): ${formatTaipei(updatedAt)} | Filter: ${state.tf}`;
+      renderRows("batchTable", summarizeBatch(entries), (r) => `<tr><td>${r.batch}</td><td>${r.total}</td><td>${r.evaluated}</td><td>${pct(r.wins, r.evaluated)}</td></tr>`);
+      renderRows("typeTable", summarizeType(entries), (r) => `<tr><td>${r.signalType}</td><td>${r.total}</td><td>${r.evaluated}</td><td>${pct(r.wins, r.evaluated)}</td></tr>`);
+      renderEntries(entries);
     }
 
     async function loadData() {
       try {
         const res = await fetch("./api/signal_journal.json", { cache: "no-store" });
-        if (!res.ok) return;
+        if (!res.ok) { document.getElementById("meta").textContent = `資料讀取失敗: HTTP ${res.status}`; return; }
         state.data = await res.json();
         render();
       } catch (err) {
-        document.getElementById("meta").textContent = `讀取失敗: ${err.message}`;
+        document.getElementById("meta").textContent = `資料讀取失敗: ${err.message}`;
       }
     }
 
@@ -257,4 +166,3 @@
   </script>
 </body>
 </html>
-

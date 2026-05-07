@@ -110,6 +110,10 @@ export async function sendDiscordMessage(text, options = {}) {
     if (options.username || process.env.DISCORD_USERNAME) {
         body.username = options.username || process.env.DISCORD_USERNAME;
     }
+    const maskedWebhook = webhookUrl ? `${webhookUrl.slice(0, 36)}...${webhookUrl.slice(-8)}` : 'N/A';
+    const sourceTag = options.sourceTag || 'unspecified';
+    const preview = String(text || '').replace(/\s+/g, ' ').slice(0, 80);
+    console.log(`[DISCORD] sending source=${sourceTag} webhook=${maskedWebhook} preview="${preview}"`);
 
     try {
         const res = await fetch(webhookUrl, {

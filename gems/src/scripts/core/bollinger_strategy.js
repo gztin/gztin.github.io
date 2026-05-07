@@ -30,6 +30,8 @@ const SIGNAL_JOURNAL_FILE = 'signal_journal.json';
 const SUMMARY_WEBHOOK_URL = process.env.DISCORD_SUMMARY_WEBHOOK_URL || 'https://discord.com/api/webhooks/1501954073556025475/OBE4sq49lot9qOK_cFA9HOpVvsPmkMnWcQsJU7nTauKwhmkRYV7sNsEeDAZBJWW6VnQf';
 const SUMMARY_SEND_INTERVAL_MS = 30 * 60 * 1000;
 const SIGNAL_WIN_THRESHOLDS = {
+    '15m': 0.8,
+    '30m': 1.5,
     '1h': 5,
     '2h': 15,
     '4h': 25,
@@ -71,19 +73,103 @@ function writeSignalJournal(journal) {
     }
 }
 
-function formatSummaryMessage(summary = {}) {
-    const byStar = Object.values(summary.byStar || {});
-    const byType = Object.values(summary.byType || {});
-    if (!byStar.length && !byType.length) return 'Signal Summary\n\n暫無可用統計資料';
+function formatSummaryMessage(journal = {}) {
+    const entries = Array.isArray(journal.entries) ? journal.entries : [];
+    if (!entries.length) return 'Signal Summary\n\n暫無可用統計資料';
 
-    const starLines = byStar
-        .sort((a, b) => a.stars - b.stars || a.horizon.localeCompare(b.horizon))
-        .map(r => `${'⭐️'.repeat(r.stars)} [${r.horizon}] 上漲 ${r.threshold}%  達成率 : ${r.wins}/${r.total} (${r.winRate}%)`);
-    const typeLines = byType
-        .sort((a, b) => b.winRate - a.winRate)
-        .map(r => `${r.signalType} [${r.horizon}]  ${r.wins}/${r.total} (${r.winRate}%)`);
+    const latestBySymbol = new Map();
+    for (const entry of entries) {
+        if (!entry?.symbol) continue;
+        const current = latestBySymbol.get(entry.symbol);
+        if (!current || (entry.timestamp || 0) > (current.timestamp || 0)) {
+            latestBySymbol.set(entry.symbol, entry);
+        }
+    }
 
-    return `Signal Summary\n\n[星等勝率]\n${starLines.join('\n')}\n\n[型態勝率]\n${typeLines.join('\n')}\n\n更新時間: ${new Date().toLocaleString('zh-TW', { hour12: true })}`;
+    const horizons = [
+        { key: '15m', label: '15m' },
+        { key: '30m', label: '30m' },
+        { key: '1h', label: '60m' },
+    ];
+    const fmtPct = (v) => {
+        if (typeof v !== 'number' || Number.isNaN(v)) return '0%';
+        const rounded = Math.round(v * 100) / 100;
+        const sign = rounded > 0 ? '+' : '';
+        return `${sign}${rounded}%`;
+    };
+
+    const rows = [];
+    for (const entry of latestBySymbol.values()) {
+        const symbol = entry.symbol.replace('-USDT', '');
+        const evaluations = entry.evaluations || {};
+        const segments = horizons.map(({ key, label }) => {
+            const result = evaluations[key];
+            if (!result || typeof result.win !== 'boolean') return `${label}:評估中`;
+            const status = result.win ? '達標' : '未達標';
+            return `${label}:${status}(${fmtPct(result.pnlPct)})`;
+        });
+        const r1h = evaluations['1h'];
+        const state60m = !r1h || typeof r1h.win !== 'boolean'
+            ? 'pending'
+            : (r1h.win ? 'pass' : 'fail');
+        const pnl60m = (r1h && typeof r1h.pnlPct === 'number') ? r1h.pnlPct : null;
+        rows.push({ symbol, stars: Number(entry.stars || 1), segments, state60m, pnl60m });
+    }
+    if (!rows.length) return 'Signal Summary\n\n暫無可用統計資料';
+
+    const passCount = rows.filter(r => r.state60m === 'pass').length;
+    const failCount = rows.filter(r => r.state60m === 'fail').length;
+    const pendingCount = rows.filter(r => r.state60m === 'pending').length;
+
+    const topPasses = rows
+        .filter(r => r.state60m === 'pass')
+        .sort((a, b) => (b.pnl60m ?? 0) - (a.pnl60m ?? 0))
+        .slice(0, 5)
+        .map(r => `${r.symbol} ${fmtPct(r.pnl60m)}   ${'⭐️'.repeat(Math.max(1, Math.min(3, Number(r.stars || 1))))}`);
+
+    const failByStars = new Map([
+        [1, []],
+        [2, []],
+        [3, []],
+    ]);
+    rows
+        .filter(r => r.state60m === 'fail')
+        .sort((a, b) => (a.pnl60m ?? 0) - (b.pnl60m ?? 0))
+        .forEach((r) => {
+            const star = Math.max(1, Math.min(3, Number(r.stars || 1)));
+            failByStars.get(star).push(`${r.symbol} (${fmtPct(r.pnl60m)})`);
+        });
+
+    const sections = [];
+    const starStats = new Map([
+        [1, { total: 0, pass: 0 }],
+        [2, { total: 0, pass: 0 }],
+        [3, { total: 0, pass: 0 }],
+    ]);
+    rows.forEach((r) => {
+        const star = Math.max(1, Math.min(3, Number(r.stars || 1)));
+        const stat = starStats.get(star);
+        stat.total += 1;
+        if (r.state60m === 'pass') stat.pass += 1;
+    });
+
+    sections.push('Signal Summary');
+    sections.push('');
+    sections.push(`總覽: 達標 ${passCount} / 未達標 ${failCount} / 評估中 ${pendingCount}`);
+    if (topPasses.length) {
+        sections.push('');
+        sections.push('表現最好 (60m 達標):');
+        sections.push(...topPasses);
+    }
+    sections.push('');
+    [1, 2, 3].forEach((star) => {
+        const stat = starStats.get(star);
+        const label = '⭐️'.repeat(star);
+        sections.push(`${label}   達標率${stat.pass}/${stat.total}`);
+    });
+    sections.push('');
+    sections.push(`更新時間: ${new Date().toLocaleString('zh-TW', { hour12: false, timeZone: 'Asia/Taipei' })}`);
+    return sections.join('\n');
 }
 
 function appendSignalJournalEntry(payload) {
@@ -355,6 +441,8 @@ async function evaluatePendingSignals() {
         entry.evaluations = entry.evaluations || {};
         const ageMs = now - entry.timestamp;
         const horizons = [
+            { key: '15m', ms: 15 * 60 * 1000 },
+            { key: '30m', ms: 30 * 60 * 1000 },
             { key: '1h', ms: 60 * 60 * 1000 },
             { key: '2h', ms: 2 * 60 * 60 * 1000 },
             { key: '4h', ms: 4 * 60 * 60 * 1000 },
@@ -389,10 +477,11 @@ async function maybeSendSummary(sendDiscordMessage) {
     const now = Date.now();
     if (now - lastSummarySentAt < SUMMARY_SEND_INTERVAL_MS) return;
     const journal = readSignalJournal();
-    const message = formatSummaryMessage(journal.summary || {});
+    const message = formatSummaryMessage(journal);
     await queueDiscordSignal(sendDiscordMessage, message, {
         username: 'gem0507 summary',
         webhookUrl: SUMMARY_WEBHOOK_URL,
+        sourceTag: 'summary',
     });
     lastSummarySentAt = now;
 }
@@ -558,6 +647,7 @@ export async function bollingerScan(coins, ctx) {
                             await queueDiscordSignal(sendDiscordMessage, discordMsg, {
                                 username: `gem0507-${stars}star`,
                                 webhookUrl: DISCORD_STAR_WEBHOOKS[stars],
+                                sourceTag: `star-${stars}`,
                                 embeds: [{
                                     title: cleanStarLabels[stars] || cleanStarLabels[1],
                                     description: cleanDescription,
