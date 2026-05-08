@@ -36812,6 +36812,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778253290249
+        },
+        "30m": {
+          "pnlPct": -5.36,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778253908619
         }
       }
     },
@@ -36942,9 +36948,9 @@
         "signalType": "布林突破",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 341,
+        "total": 342,
         "wins": 79,
-        "winRate": 23.17
+        "winRate": 23.1
       },
       "布林突破__1h": {
         "signalType": "布林突破",
@@ -37042,5 +37048,5 @@
       }
     }
   },
-  "updatedAt": 1778253792228
+  "updatedAt": 1778253909107
 }
