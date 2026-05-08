@@ -36992,6 +36992,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778256987390
+        },
+        "30m": {
+          "pnlPct": 50.11,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778258081935
         }
       }
     },
@@ -37104,9 +37110,9 @@
         "signalType": "V轉反彈",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 29,
-        "wins": 11,
-        "winRate": 37.93
+        "total": 30,
+        "wins": 12,
+        "winRate": 40
       },
       "V轉反彈__1h": {
         "signalType": "V轉反彈",
@@ -37244,5 +37250,5 @@
       }
     }
   },
-  "updatedAt": 1778257968472
+  "updatedAt": 1778258083285
 }
