@@ -2116,6 +2116,186 @@
       "timestamp": 1778211358162,
       "rank": 365,
       "evaluations": {}
+    },
+    {
+      "id": "SPORTFUN-USDT_1778211506019",
+      "symbol": "SPORTFUN-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 67.29,
+      "explanation": "15m 接近布林上軌 (1.11)，1h 動能 1.00，量能 8.90%",
+      "entryPrice": 0.06789,
+      "timestamp": 1778211506019,
+      "rank": 48,
+      "evaluations": {}
+    },
+    {
+      "id": "TIA-USDT_1778211513060",
+      "symbol": "TIA-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 69.86,
+      "explanation": "15m 接近布林上軌 (1.07)，1h 動能 1.12，量能 89.73%",
+      "entryPrice": 0.3975,
+      "timestamp": 1778211513060,
+      "rank": 126,
+      "evaluations": {}
+    },
+    {
+      "id": "VVV-USDT_1778211513066",
+      "symbol": "VVV-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 66.76,
+      "explanation": "15m 成交量高於前 20 根均量 155.32%，價格斜率 0.196% / bar",
+      "entryPrice": 13.299,
+      "timestamp": 1778211513066,
+      "rank": 123,
+      "evaluations": {}
+    },
+    {
+      "id": "ARKM-USDT_1778211520070",
+      "symbol": "ARKM-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 63.3,
+      "explanation": "15m 接近布林上軌 (1.08)，1h 動能 1.03，量能 42.47%",
+      "entryPrice": 0.1347,
+      "timestamp": 1778211520070,
+      "rank": 162,
+      "evaluations": {}
+    },
+    {
+      "id": "TURBO-USDT_1778211523739",
+      "symbol": "TURBO-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 85.44,
+      "explanation": "15m 接近布林上軌 (1.23)，1h 動能 1.02，量能 205.08%",
+      "entryPrice": 0.0013343,
+      "timestamp": 1778211523739,
+      "rank": 182,
+      "evaluations": {}
+    },
+    {
+      "id": "NIGHT-USDT_1778211528135",
+      "symbol": "NIGHT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 62.65,
+      "explanation": "15m 成交量高於前 20 根均量 172.51%，價格斜率 0.399% / bar",
+      "entryPrice": 0.0331,
+      "timestamp": 1778211528135,
+      "rank": 217,
+      "evaluations": {}
+    },
+    {
+      "id": "ESP-USDT_1778211530492",
+      "symbol": "ESP-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 66.44,
+      "explanation": "15m 成交量高於前 20 根均量 241.79%，價格斜率 0.019% / bar",
+      "entryPrice": 0.07183,
+      "timestamp": 1778211530492,
+      "rank": 226,
+      "evaluations": {}
+    },
+    {
+      "id": "PENDLE-USDT_1778211545170",
+      "symbol": "PENDLE-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 63.68,
+      "explanation": "15m 接近布林上軌 (1.15)，1h 動能 1.08，量能 21.01%",
+      "entryPrice": 1.9358,
+      "timestamp": 1778211545170,
+      "rank": 425,
+      "evaluations": {}
+    },
+    {
+      "id": "LPT-USDT_1778211711957",
+      "symbol": "LPT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 67.62,
+      "explanation": "15m 成交量高於前 20 根均量 157.21%，價格斜率 0.035% / bar",
+      "entryPrice": 2.265,
+      "timestamp": 1778211711957,
+      "rank": 267,
+      "evaluations": {}
+    },
+    {
+      "id": "PEOPLE-USDT_1778211723073",
+      "symbol": "PEOPLE-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 81.03,
+      "explanation": "15m 接近布林上軌 (1.44)，1h 動能 1.15，量能 1977.69%",
+      "entryPrice": 0.00833,
+      "timestamp": 1778211723073,
+      "rank": 395,
+      "evaluations": {}
+    },
+    {
+      "id": "BR-USDT_1778211727453",
+      "symbol": "BR-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 84.91,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.19，量能 613.19%",
+      "entryPrice": 0.16905,
+      "timestamp": 1778211727453,
+      "rank": 431,
+      "evaluations": {}
+    },
+    {
+      "id": "NOT-USDT_1778211891139",
+      "symbol": "NOT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 79.54,
+      "explanation": "15m 成交量高於前 20 根均量 193.44%，價格斜率 0.391% / bar",
+      "entryPrice": 0.0007438,
+      "timestamp": 1778211891139,
+      "rank": 16,
+      "evaluations": {}
+    },
+    {
+      "id": "ONDO-USDT_1778211895446",
+      "symbol": "ONDO-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 67.54,
+      "explanation": "15m 成交量高於前 20 根均量 165.01%，價格斜率 0.021% / bar",
+      "entryPrice": 0.3595,
+      "timestamp": 1778211895446,
+      "rank": 38,
+      "evaluations": {}
+    },
+    {
+      "id": "OP-USDT_1778211900473",
+      "symbol": "OP-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 65.03,
+      "explanation": "15m 接近布林上軌 (1.09)，1h 動能 1.14，量能 20.37%",
+      "entryPrice": 0.1506,
+      "timestamp": 1778211900473,
+      "rank": 88,
+      "evaluations": {}
+    },
+    {
+      "id": "TURBO-USDT_1778212109989",
+      "symbol": "TURBO-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 79.57,
+      "explanation": "15m 接近布林上軌 (1.22)，1h 動能 1.15，量能 151.05%",
+      "entryPrice": 0.0013467,
+      "timestamp": 1778212109989,
+      "rank": 153,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -2212,5 +2392,5 @@
       }
     }
   },
-  "updatedAt": 1778211358164
+  "updatedAt": 1778212109991
 }
