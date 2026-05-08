@@ -36979,7 +36979,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 408,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 7.97,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778256987390
+        }
+      }
     },
     {
       "id": "CHILLGUY-USDT_1778256359729",
@@ -37043,9 +37050,9 @@
         "signalType": "V轉反彈",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 29,
-        "wins": 10,
-        "winRate": 34.48
+        "total": 30,
+        "wins": 11,
+        "winRate": 36.67
       },
       "V轉反彈__30m": {
         "signalType": "V轉反彈",
@@ -37178,9 +37185,9 @@
       "80-90": {
         "bracket": "80-90",
         "total": 136,
-        "evaluated": 134,
-        "wins": 49,
-        "winRate": 36.57
+        "evaluated": 135,
+        "wins": 50,
+        "winRate": 37.04
       },
       "90-100": {
         "bracket": "90-100",
@@ -37191,5 +37198,5 @@
       }
     }
   },
-  "updatedAt": 1778256359735
+  "updatedAt": 1778256987723
 }
