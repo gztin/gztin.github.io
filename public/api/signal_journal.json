@@ -36603,6 +36603,51 @@
       "history": [],
       "rank": 396,
       "evaluations": {}
+    },
+    {
+      "id": "ETH-USDT_1778251095636",
+      "symbol": "ETH-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 67.46,
+      "explanation": "15m 成交量高於前 20 根均量 259.48%，速度 0.3x，斜率 0.001%",
+      "entryPrice": 2284.96,
+      "timestamp": 1778251095636,
+      "firstTimestamp": 1778251094477,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 2,
+      "evaluations": {}
+    },
+    {
+      "id": "BSB-USDT_1778251101322",
+      "symbol": "BSB-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 66.78,
+      "explanation": "15m 成交量高於前 20 根均量 217.55%，速度 1.9x，斜率 0.845%",
+      "entryPrice": 0.68342,
+      "timestamp": 1778251101322,
+      "firstTimestamp": 1778251094477,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 13,
+      "evaluations": {}
+    },
+    {
+      "id": "MEGA-USDT_1778251171835",
+      "symbol": "MEGA-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 68.39,
+      "explanation": "15m 成交量高於前 20 根均量 189.45%，速度 2.7x，斜率 0.012%",
+      "entryPrice": 0.12842,
+      "timestamp": 1778251171835,
+      "firstTimestamp": 1778251169000,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 62,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -36771,7 +36816,7 @@
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 510,
+        "total": 513,
         "evaluated": 505,
         "wins": 112,
         "winRate": 22.18
@@ -36799,5 +36844,5 @@
       }
     }
   },
-  "updatedAt": 1778251095085
+  "updatedAt": 1778251171841
 }
