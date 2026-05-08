@@ -36648,6 +36648,36 @@
       "history": [],
       "rank": 62,
       "evaluations": {}
+    },
+    {
+      "id": "XRP-USDT_1778251196332",
+      "symbol": "XRP-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 82.24,
+      "explanation": "15m 成交量高於前 20 根均量 227.70%，速度 4.0x，斜率 0.004%",
+      "entryPrice": 1.3942,
+      "timestamp": 1778251196332,
+      "firstTimestamp": 1778251196070,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 5,
+      "evaluations": {}
+    },
+    {
+      "id": "ACH-USDT_1778252026387",
+      "symbol": "ACH-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 71.75,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 0.97，量能速度 1.8x",
+      "entryPrice": 0.0086,
+      "timestamp": 1778252026387,
+      "firstTimestamp": 1778252013546,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 92,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -36823,14 +36853,14 @@
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 166,
+        "total": 167,
         "evaluated": 166,
         "wins": 35,
         "winRate": 21.08
       },
       "80-90": {
         "bracket": "80-90",
-        "total": 133,
+        "total": 134,
         "evaluated": 133,
         "wins": 49,
         "winRate": 36.84
@@ -36844,5 +36874,5 @@
       }
     }
   },
-  "updatedAt": 1778251171841
+  "updatedAt": 1778252026393
 }
