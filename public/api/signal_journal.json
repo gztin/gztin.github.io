@@ -36829,6 +36829,23 @@
       "history": [],
       "rank": 82,
       "evaluations": {}
+    },
+    {
+      "id": "ACH-USDT_1778253792220",
+      "symbol": "ACH-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 76.67,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.15，量能速度 0.2x",
+      "entryPrice": 0.0086,
+      "timestamp": 1778253792220,
+      "firstTimestamp": 1778252013546,
+      "stageIndex": 1,
+      "history": [
+        "15m  內再次推送｜目前 -0.01%"
+      ],
+      "rank": 81,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -37004,7 +37021,7 @@
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 168,
+        "total": 169,
         "evaluated": 167,
         "wins": 35,
         "winRate": 20.96
@@ -37025,5 +37042,5 @@
       }
     }
   },
-  "updatedAt": 1778253758977
+  "updatedAt": 1778253792228
 }
