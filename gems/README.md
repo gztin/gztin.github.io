@@ -13,7 +13,18 @@
 - 專案結構說明：
   - [STRUCTURE.md](/C:/Users/GGT/Documents/GitHub/gems/STRUCTURE.md)
 
-## 執行與部署
+## 📚 系統文檔 (Documentation)
+
+詳細的系統說明、評分邏輯與操作指南已整理至 `docs/` 資料夾：
+
+- [**文檔中心首頁 (docs/README.md)**](./docs/README.md)
+- [**訊號評分與達標標準**](./docs/signal_scoring_and_winrate.md)
+- [**儀表板使用指南**](./docs/interface_guide.md)
+- [**系統架構說明 (STRUCTURE.md)**](./STRUCTURE.md)
+
+---
+
+## 🚀 快速啟動 (Quick Start)
 - 主程式：
   - `src/scripts/telegram_query_bot.js`
 - Docker 服務名稱：
