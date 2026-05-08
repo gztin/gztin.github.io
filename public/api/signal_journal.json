@@ -36672,6 +36672,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -1.36,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778253290249
         }
       }
     },
@@ -36694,6 +36700,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": 0.58,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778253290249
         }
       }
     },
@@ -36716,6 +36728,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -34.01,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778253290249
         }
       }
     },
@@ -36766,6 +36784,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -0.16,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778253290249
         }
       }
     },
@@ -36782,6 +36806,28 @@
       "stageIndex": 0,
       "history": [],
       "rank": 92,
+      "evaluations": {
+        "15m": {
+          "pnlPct": -7.44,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778253290249
+        }
+      }
+    },
+    {
+      "id": "ACH-USDT_1778253758971",
+      "symbol": "ACH-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 76.67,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.15，量能速度 0.2x",
+      "entryPrice": 0.0086,
+      "timestamp": 1778253758971,
+      "firstTimestamp": 1778252013546,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 82,
       "evaluations": {}
     }
   ],
@@ -36799,9 +36845,9 @@
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 440,
+        "total": 444,
         "wins": 59,
-        "winRate": 13.41
+        "winRate": 13.29
       },
       "量能爆發__1h": {
         "signalType": "量能爆發",
@@ -36871,9 +36917,9 @@
         "signalType": "布林突破",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 341,
+        "total": 342,
         "wins": 98,
-        "winRate": 28.74
+        "winRate": 28.65
       },
       "布林突破__30m": {
         "signalType": "布林突破",
@@ -36958,10 +37004,10 @@
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 167,
-        "evaluated": 166,
+        "total": 168,
+        "evaluated": 167,
         "wins": 35,
-        "winRate": 21.08
+        "winRate": 20.96
       },
       "80-90": {
         "bracket": "80-90",
@@ -36979,5 +37025,5 @@
       }
     }
   },
-  "updatedAt": 1778253262372
+  "updatedAt": 1778253758977
 }
