@@ -2800,6 +2800,90 @@
       "timestamp": 1778215633227,
       "rank": 34,
       "evaluations": {}
+    },
+    {
+      "id": "B2-USDT_1778215647842",
+      "symbol": "B2-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.46,
+      "explanation": "15m 成交量高於前 20 根均量 1272.76%，價格斜率 0.030% / bar",
+      "entryPrice": 0.6282,
+      "timestamp": 1778215647842,
+      "rank": 230,
+      "evaluations": {}
+    },
+    {
+      "id": "FREEDOMMONEY-USDT_1778215986421",
+      "symbol": "FREEDOMMONEY-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 65.17,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.05，量能 8.22%",
+      "entryPrice": 0.009895,
+      "timestamp": 1778215986421,
+      "rank": 31,
+      "evaluations": {}
+    },
+    {
+      "id": "MYX-USDT_1778215994654",
+      "symbol": "MYX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 65.26,
+      "explanation": "15m 成交量高於前 20 根均量 301.25%，價格斜率 0.020% / bar",
+      "entryPrice": 0.25369,
+      "timestamp": 1778215994654,
+      "rank": 147,
+      "evaluations": {}
+    },
+    {
+      "id": "B2-USDT_1778216006279",
+      "symbol": "B2-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.42,
+      "explanation": "15m 成交量高於前 20 根均量 1529.89%，價格斜率 0.030% / bar",
+      "entryPrice": 0.6279,
+      "timestamp": 1778216006280,
+      "rank": 264,
+      "evaluations": {}
+    },
+    {
+      "id": "ZAMA-USDT_1778216020657",
+      "symbol": "ZAMA-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 61.83,
+      "explanation": "15m 成交量高於前 20 根均量 212.48%，價格斜率 0.055% / bar",
+      "entryPrice": 0.0282,
+      "timestamp": 1778216020657,
+      "rank": 438,
+      "evaluations": {}
+    },
+    {
+      "id": "RAVE-USDT_1778216280189",
+      "symbol": "RAVE-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 72,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.22，量能 61.79%",
+      "entryPrice": 0.70801,
+      "timestamp": 1778216280189,
+      "rank": 45,
+      "evaluations": {}
+    },
+    {
+      "id": "WHITEWHALE-USDT_1778216280218",
+      "symbol": "WHITEWHALE-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 77.19,
+      "explanation": "15m 接近布林上軌 (1.07)，1h 動能 1.09，量能 204.20%",
+      "entryPrice": 0.006954,
+      "timestamp": 1778216280218,
+      "rank": 47,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -2896,5 +2980,5 @@
       }
     }
   },
-  "updatedAt": 1778215633229
+  "updatedAt": 1778216280220
 }
