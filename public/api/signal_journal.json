@@ -36471,7 +36471,36 @@
       "stageIndex": 0,
       "history": [],
       "rank": 209,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -11.43,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778249495322
+        }
+      }
+    },
+    {
+      "id": "BB-USDT_1778248269388",
+      "symbol": "BB-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 65.69,
+      "explanation": "15m 成交量高於前 20 根均量 265.78%，速度 1.0x，斜率 0.016%",
+      "entryPrice": 0.03242,
+      "timestamp": 1778248269388,
+      "firstTimestamp": 1778248240969,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 286,
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.34,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778249495322
+        }
+      }
     }
   ],
   "summary": {
@@ -36480,9 +36509,9 @@
         "signalType": "量能爆發",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 434,
+        "total": 435,
         "wins": 87,
-        "winRate": 20.05
+        "winRate": 20
       },
       "量能爆發__30m": {
         "signalType": "量能爆發",
@@ -36520,9 +36549,9 @@
         "signalType": "V轉反彈",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 28,
+        "total": 29,
         "wins": 10,
-        "winRate": 35.71
+        "winRate": 34.48
       },
       "V轉反彈__30m": {
         "signalType": "V轉反彈",
@@ -36640,10 +36669,10 @@
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 504,
-        "evaluated": 503,
+        "total": 505,
+        "evaluated": 505,
         "wins": 112,
-        "winRate": 22.27
+        "winRate": 22.18
       },
       "70-80": {
         "bracket": "70-80",
@@ -36668,5 +36697,5 @@
       }
     }
   },
-  "updatedAt": 1778248259955
+  "updatedAt": 1778249495671
 }
