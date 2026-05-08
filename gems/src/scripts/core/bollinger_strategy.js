@@ -759,7 +759,7 @@ export async function bollingerScan(coins, ctx) {
                         ]]
                     };
 
-                    if (SIGNAL_PUSH_ENABLED && signalProfile.score >= MIN_SIGNAL_SCORE) {
+                    if (SIGNAL_PUSH_ENABLED && signalProfile.score >= MIN_SIGNAL_SCORE && shouldNotify) {
                         appendSignalJournalEntry({
                             id: `${t.symbol}_${Date.now()}`,
                             symbol: t.symbol,

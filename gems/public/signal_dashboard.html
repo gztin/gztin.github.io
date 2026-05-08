@@ -59,22 +59,23 @@
     h1 {
       margin: 0;
       font-family: var(--font-display);
-      font-size: 42px;
+      font-size: 28px;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
     }
 
     .sub-brand {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       color: var(--ink-dim);
+      margin-bottom: 4px;
     }
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1px;
       background: var(--ink-border);
       border: 1px solid var(--ink-border);
@@ -266,9 +267,11 @@
     <header>
       <div>
         <div class="sub-brand">智能監控系統</div>
-        <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
           <h1>Gems 訊號</h1>
           <button id="themeToggleBtn" class="icon-btn" title="切換主題">🌙</button>
+          <button id="helpBtn" class="icon-btn" title="達標標準說明" style="font-family: serif; font-style: italic; font-weight: 800; font-size: 18px;">i</button>
+          <a href="md_viewer.html?file=docs/README.md" class="icon-btn" title="系統文檔" style="text-decoration: none; font-size: 16px;">📖</a>
         </div>
       </div>
     </header>
@@ -292,9 +295,6 @@
           <option value="90">90+ (極致級)</option>
         </select>
       </div>
-      <div class="group" style="flex-direction: row; gap: 12px; margin-top: 18px;">
-        <button id="helpBtn" class="help-btn" style="margin-top: 0;">📊 達標標準說明</button>
-        <a href="md_viewer.html?file=docs/README.md" class="help-btn" style="text-decoration: none; margin-top: 0;">📖 系統文檔</a>
       </div>
     </div>
 
