@@ -2716,6 +2716,90 @@
       "timestamp": 1778214872973,
       "rank": 131,
       "evaluations": {}
+    },
+    {
+      "id": "KGEN-USDT_1778215133292",
+      "symbol": "KGEN-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 62.06,
+      "explanation": "15m 成交量高於前 20 根均量 232.11%，價格斜率 0.122% / bar",
+      "entryPrice": 0.19155,
+      "timestamp": 1778215133292,
+      "rank": 117,
+      "evaluations": {}
+    },
+    {
+      "id": "LUNA-USDT_1778215139227",
+      "symbol": "LUNA-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 62.06,
+      "explanation": "15m 接近布林上軌 (1.09)，1h 動能 1.07，量能 2.92%",
+      "entryPrice": 0.07101,
+      "timestamp": 1778215139227,
+      "rank": 172,
+      "evaluations": {}
+    },
+    {
+      "id": "TURTLE-USDT_1778215144560",
+      "symbol": "TURTLE-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 62.37,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.04，量能 36.79%",
+      "entryPrice": 0.05358,
+      "timestamp": 1778215144560,
+      "rank": 235,
+      "evaluations": {}
+    },
+    {
+      "id": "CFX-USDT_1778215150260",
+      "symbol": "CFX-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 71,
+      "explanation": "15m 接近布林上軌 (1.07)，1h 動能 1.05，量能 133.61%",
+      "entryPrice": 0.06529,
+      "timestamp": 1778215150260,
+      "rank": 296,
+      "evaluations": {}
+    },
+    {
+      "id": "SOPH-USDT_1778215154619",
+      "symbol": "SOPH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.04,
+      "explanation": "15m 成交量高於前 20 根均量 518.79%，價格斜率 0.028% / bar",
+      "entryPrice": 0.008938,
+      "timestamp": 1778215154619,
+      "rank": 338,
+      "evaluations": {}
+    },
+    {
+      "id": "APEX-USDT_1778215165557",
+      "symbol": "APEX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 71.37,
+      "explanation": "15m 成交量高於前 20 根均量 379.48%，價格斜率 0.004% / bar",
+      "entryPrice": 0.2924,
+      "timestamp": 1778215165557,
+      "rank": 482,
+      "evaluations": {}
+    },
+    {
+      "id": "FREEDOMMONEY-USDT_1778215633227",
+      "symbol": "FREEDOMMONEY-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 65.17,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.05，量能 8.22%",
+      "entryPrice": 0.009765,
+      "timestamp": 1778215633227,
+      "rank": 34,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -2812,5 +2896,5 @@
       }
     }
   },
-  "updatedAt": 1778214872975
+  "updatedAt": 1778215633229
 }
