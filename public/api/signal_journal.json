@@ -37031,6 +37031,23 @@
       "history": [],
       "rank": 246,
       "evaluations": {}
+    },
+    {
+      "id": "D-USDT_1778257968461",
+      "symbol": "D-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 66.82,
+      "explanation": "15m 成交量高於前 20 根均量 320.72%，速度 0.2x，斜率 0.073%",
+      "entryPrice": 0.015056,
+      "timestamp": 1778257968461,
+      "firstTimestamp": 1778256987205,
+      "stageIndex": 1,
+      "history": [
+        "15m  內再次推送｜目前 -0.66%"
+      ],
+      "rank": 152,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -37199,7 +37216,7 @@
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 513,
+        "total": 514,
         "evaluated": 513,
         "wins": 116,
         "winRate": 22.61
@@ -37227,5 +37244,5 @@
       }
     }
   },
-  "updatedAt": 1778257283709
+  "updatedAt": 1778257968472
 }
