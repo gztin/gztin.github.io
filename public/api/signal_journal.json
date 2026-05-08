@@ -36501,6 +36501,21 @@
           "evaluatedAt": 1778249495322
         }
       }
+    },
+    {
+      "id": "AR-USDT_1778250783870",
+      "symbol": "AR-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 65.7,
+      "explanation": "15m 成交量高於前 20 根均量 383.00%，速度 0.5x，斜率 0.071%",
+      "entryPrice": 2.457,
+      "timestamp": 1778250783870,
+      "firstTimestamp": 1778243049623,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 389,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -36669,7 +36684,7 @@
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 505,
+        "total": 506,
         "evaluated": 505,
         "wins": 112,
         "winRate": 22.18
@@ -36697,5 +36712,5 @@
       }
     }
   },
-  "updatedAt": 1778249495671
+  "updatedAt": 1778250783876
 }
