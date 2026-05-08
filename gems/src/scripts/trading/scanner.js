@@ -8,8 +8,12 @@
  *   4. 回傳通過的訊號列表
  */
 
+import { createHmac } from 'crypto';
+
 const BINGX_PUBLIC = 'https://open-api.bingx.com';
-const BINANCE_BASE = 'https://fapi.binance.com';
+const BINANCE_BASE = 'https://data-api.binance.vision';
+const BINGX_API_KEY    = process.env.BINGX_API_KEY    || '';
+const BINGX_API_SECRET = process.env.BINGX_API_SECRET || '';
 
 // 排除大盤幣（不算「潛力幣」）
 const BIG_CAPS = new Set(['BTC', 'ETH', 'BNB', 'XRP', 'SOL', 'ADA', 'DOGE', 'TRX', 'AVAX', 'LINK']);
@@ -28,11 +32,14 @@ function isValidBingxSymbol(symbol) {
 
 // ── HTTP 工具 ─────────────────────────────────────────────────────
 async function get(url) {
+    const controller = new AbortController();
+    const tid = setTimeout(() => controller.abort(), 5000);
     try {
-        const res = await fetch(url, { headers: { 'User-Agent': 'Bot' } });
+        const res = await fetch(url, { headers: { 'User-Agent': 'Bot' }, signal: controller.signal });
+        clearTimeout(tid);
         if (!res.ok) return null;
         return await res.json();
-    } catch { return null; }
+    } catch { clearTimeout(tid); return null; }
 }
 
 // 合約資訊快取 (包含槓桿倍數)
@@ -117,12 +124,12 @@ export function preFilter(tickers, opts = {}) {
         .slice(0, topN);
 }
 
-// K 線快取（TTL 15 秒，loopMonitor 和 loopExit 共用避免重複打 API）
+// K 線快取（TTL 15 秒）
 const _klineCache = {};
 const _KLINE_TTL = 15 * 1000;
 
-// ── 抓 K 線（優先 Binance，fallback BingX）────────────────────────
-// 特殊合約：幣安不存在，直接用 BingX symbol
+// ── 抓 K 線：Bybit（主）→ OKX（備）→ BingX（末） ─────────────────
+// 特殊合約（黃金/石油）在其他交易所不存在，只走 BingX
 const BINGX_ONLY_SYMBOLS = {
     'OIL':             'NCCO1OILWTI2USD-USDT',
     'WTI':             'NCCO1OILWTI2USD-USDT',
@@ -139,6 +146,50 @@ const BINGX_ONLY_SYMBOLS = {
     'NCCOXAG2USD':     'NCCOXAG2USD-USDT',
 };
 
+const BYBIT_INTERVAL = { '1m':'1','3m':'3','5m':'5','15m':'15','30m':'30','1h':'60','2h':'120','4h':'240','1d':'D' };
+const OKX_INTERVAL   = { '15m':'15m','30m':'30m','1h':'1H','4h':'4H','1d':'1D' };
+
+// BingX 簽名 K 線（需 API Key，可繞過 Docker 403 封鎖）
+async function fetchBingxKlinesSigned(base, interval, limit) {
+    if (!BINGX_API_KEY || !BINGX_API_SECRET) return null;
+    const ts = Date.now();
+    const symbol = `${base}-USDT`;
+    const params = `symbol=${symbol}&interval=${interval}&limit=${limit}&timestamp=${ts}`;
+    const signature = createHmac('sha256', BINGX_API_SECRET).update(params).digest('hex');
+    const url = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?${params}&signature=${signature}`;
+    const controller = new AbortController();
+    const tid = setTimeout(() => controller.abort(), 6000);
+    try {
+        const res = await fetch(url, {
+            headers: { 'X-BX-APIKEY': BINGX_API_KEY, 'User-Agent': 'Bot' },
+            signal: controller.signal,
+        });
+        clearTimeout(tid);
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (data?.code !== 0 || !data.data || data.data.length < 20) return null;
+        return data.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
+    } catch { clearTimeout(tid); return null; }
+}
+
+async function fetchBybitKlines(base, interval, limit) {
+    const bar = BYBIT_INTERVAL[interval] || interval;
+    const url = `https://api.bybit.com/v5/market/kline?category=linear&symbol=${base}USDT&interval=${bar}&limit=${limit}`;
+    const data = await get(url);
+    if (!data || data.retCode !== 0 || !data.result?.list || data.result.list.length < 20) return null;
+    // Bybit 回傳降序 [ts,open,high,low,close,vol,turnover]，reverse 成升序
+    return data.result.list.slice().reverse().map(c => [c[0], c[1], c[2], c[3], c[4], c[5]]);
+}
+
+async function fetchOkxKlines(base, interval, limit) {
+    const bar = OKX_INTERVAL[interval] || interval;
+    const url = `https://www.okx.com/api/v5/market/candles?instId=${base}-USDT-SWAP&bar=${bar}&limit=${limit}`;
+    const data = await get(url);
+    if (!data || data.code !== '0' || !data.data || data.data.length < 20) return null;
+    // OKX 回傳降序 [ts,open,high,low,close,vol,...]，reverse 成升序
+    return data.data.slice().reverse();
+}
+
 export async function fetchKlines(base, interval, limit = 100) {
     const key = `${base}_${interval}`;
     const now = Date.now();
@@ -146,28 +197,40 @@ export async function fetchKlines(base, interval, limit = 100) {
         return _klineCache[key].data;
     }
 
-    // 特殊合約直接走 BingX，跳過幣安
+    // 特殊合約（黃金/石油）→ BingX 專用
     const bxSymbol = BINGX_ONLY_SYMBOLS[base.toUpperCase()];
-    if (!bxSymbol) {
-        // Binance Futures
-        const pair = `${base}USDT`;
-        const url = `${BINANCE_BASE}/fapi/v1/klines?symbol=${pair}&interval=${interval}&limit=${limit}`;
-        const data = await get(url);
-        if (data && Array.isArray(data) && data.length >= 20) {
-            _klineCache[key] = { data, ts: now };
-            return data;
+    if (bxSymbol) {
+        const bxUrl = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${bxSymbol}&interval=${interval}&limit=${limit}`;
+        const bxData = await get(bxUrl);
+        if (bxData?.code === 0 && bxData.data?.length >= 20) {
+            const result = bxData.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
+            _klineCache[key] = { data: result, ts: now };
+            return result;
         }
+        return null;
     }
 
-    // Fallback / 特殊合約：BingX K 線
-    const symbol = bxSymbol || `${base}-USDT`;
-    const bxUrl = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`;
-    const bxData = await get(bxUrl);
-    if (bxData?.code === 0 && bxData.data?.length >= 20) {
-        const result = bxData.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
+    // 1. BingX 簽名（原生資料，最準確）
+    const bxSigned = await fetchBingxKlinesSigned(base, interval, limit);
+    if (bxSigned) { _klineCache[key] = { data: bxSigned, ts: now }; return bxSigned; }
+
+    // 2. Bybit Linear（Docker 內確認 200 OK）
+    const bybitData = await fetchBybitKlines(base, interval, limit);
+    if (bybitData) { _klineCache[key] = { data: bybitData, ts: now }; return bybitData; }
+
+    // 3. OKX Swap（備援）
+    const okxData = await fetchOkxKlines(base, interval, limit);
+    if (okxData) { _klineCache[key] = { data: okxData, ts: now }; return okxData; }
+
+    // 4. BingX 公開端點（部分環境可用）
+    const bxUrl2 = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${base}-USDT&interval=${interval}&limit=${limit}`;
+    const bxData2 = await get(bxUrl2);
+    if (bxData2?.code === 0 && bxData2.data?.length >= 20) {
+        const result = bxData2.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
         _klineCache[key] = { data: result, ts: now };
         return result;
     }
+
     return null;
 }
 

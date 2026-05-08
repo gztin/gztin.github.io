@@ -25,7 +25,7 @@ export async function runLoopMajor(ctx) {
 
     try {
         lastScanAt = now;
-        console.log('[LOOP-A] 開始統一布林掃描 (主流幣 + 排行榜 Top 100)...');
+        console.log('[LOOP-A] 開始統一布林掃描 (主流幣 + 全平台)...');
 
         const allTickers = await fetchBingxTickers();
         if (!allTickers || !allTickers.length) return;
@@ -33,13 +33,13 @@ export async function runLoopMajor(ctx) {
         // 1. 取得主流標的
         const majors = allTickers.filter(t => MAJOR_SYMBOLS.includes(t.symbol));
 
-        // 2. 取得排行榜前 100 名
-        const top100 = allTickers
+        // 2. 取得全平台所有其他幣（依漲跌幅排序，方便 log 觀察）
+        const others = allTickers
             .sort((a, b) => Math.abs(b.change) - Math.abs(a.change))
-            .slice(0, 100)
             .filter(t => !MAJOR_SYMBOLS.includes(t.symbol));
 
-        const scanList = [...majors, ...top100];
+        const scanList = [...majors, ...others];
+        console.log(`[LOOP-A] 掃描清單: 主流 ${majors.length} + 其他 ${others.length} = 共 ${scanList.length} 個`);
 
         // 將 momentum_channel 傳入 bollingerScan 以便獨立推播
         await bollingerScan(scanList, { ...ctx, momentum_channel: CHANNELS.momentum_channel });

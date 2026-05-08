@@ -115,12 +115,16 @@ export async function sendDiscordMessage(text, options = {}) {
     const preview = String(text || '').replace(/\s+/g, ' ').slice(0, 80);
     console.log(`[DISCORD] sending source=${sourceTag} webhook=${maskedWebhook} preview="${preview}"`);
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
     try {
         const res = await fetch(webhookUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'User-Agent': 'Bot' },
             body: JSON.stringify(body),
+            signal: controller.signal,
         });
+        clearTimeout(timeoutId);
         if (!res.ok) {
             console.error(`[DISCORD] Message failed: ${res.status} ${res.statusText}`);
             return null;
@@ -128,7 +132,9 @@ export async function sendDiscordMessage(text, options = {}) {
         console.log('[DISCORD] Message sent successfully');
         return { ok: true };
     } catch (e) {
-        console.error(`[DISCORD] Message exception: ${e.message}`);
+        clearTimeout(timeoutId);
+        const reason = e.name === 'AbortError' ? 'timeout (10s)' : e.message;
+        console.error(`[DISCORD] Message exception: ${reason}`);
         return null;
     }
 }

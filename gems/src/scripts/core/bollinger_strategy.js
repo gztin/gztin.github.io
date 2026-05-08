@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Loop G嚗???撣???? (15m + 1h)
  * 蝯曹???詨??摩 - ?桀馳閰喟敦??
  */
@@ -38,6 +38,12 @@ const SIGNAL_WIN_THRESHOLDS = {
 };
 let discordSendQueue = Promise.resolve();
 let lastSummarySentAt = 0;
+
+// --- 掃描日誌 ---
+const DISCORD_JOURNAL_WEBHOOK_URL = process.env.DISCORD_JOURNAL_WEBHOOK_URL || '';
+const JOURNAL_SEND_INTERVAL_MS = 5 * 60 * 1000;
+let lastJournalSentAt = 0;
+let latestScanStats = null; // 最近一次掃描結果，供 journal 使用
 
 function maskWebhook(url = '') {
     if (!url) return 'NOT_SET';
@@ -237,6 +243,8 @@ function queueDiscordSignal(sendDiscordMessage, message, options) {
         })
         .catch(err => {
             console.error('[DISCORD] queued send failed:', err.message);
+            // 重置 queue，讓後續訊息不被這次失敗永久阻塞
+            discordSendQueue = Promise.resolve();
         });
     return discordSendQueue;
 }
@@ -252,7 +260,7 @@ export const closedPositionsCache = new Map();
 const POST_CLOSE_COOL_DOWN_MS = 15 * 60 * 1000;
 
 const klineCache = new Map();
-const CACHE_TTL_MS = 15 * 1000; 
+const CACHE_TTL_MS = 3 * 60 * 1000; // 3 分鐘快取，避免 Binance rate limit 重複打 API
 
 function autoAddSignalWatchlist(ticker, stars, botState, chatIds, rank = {}) {
     const symbol = ticker.symbol;
@@ -494,14 +502,58 @@ async function maybeSendSummary(sendDiscordMessage) {
     lastSummarySentAt = now;
 }
 
+async function maybeSendJournalReport(sendDiscordMessage) {
+    if (!sendDiscordMessage || !DISCORD_JOURNAL_WEBHOOK_URL || !latestScanStats) return;
+    const now = Date.now();
+    if (now - lastJournalSentAt < JOURNAL_SEND_INTERVAL_MS) return;
+
+    const { total, withSignal, buckets, scannedAt } = latestScanStats;
+    const labels = ['0-10 ', '10-20', '20-30', '30-40', '40-50', '50-60', '60-70', '70-80', '80-90', '90-100'];
+    const maxCount = Math.max(...buckets, 1);
+    const BAR_WIDTH = 12;
+    const bucketLines = buckets.map((count, i) => {
+        const filled = Math.round((count / maxCount) * BAR_WIDTH);
+        const bar = '▓'.repeat(filled) + '░'.repeat(BAR_WIDTH - filled);
+        return `\`${labels[i]}\` ${bar} ${String(count).padStart(3)}`;
+    }).join('\n');
+
+    const timeStr = new Date(scannedAt).toLocaleString('zh-TW', { hour12: false, timeZone: 'Asia/Taipei' });
+    const description = [
+        `⏱ 掃描時間：${timeStr}`,
+        `🔍 掃描幣數：**${total}**`,
+        `📶 偵測到訊號：**${withSignal}**`,
+        '',
+        '**評分分佈（每 10 分一級距）**',
+        bucketLines,
+    ].join('\n');
+
+    await queueDiscordSignal(sendDiscordMessage, description, {
+        username: 'gem-journal',
+        webhookUrl: DISCORD_JOURNAL_WEBHOOK_URL,
+        sourceTag: 'journal',
+        embeds: [{
+            title: '📊 掃描報告',
+            description,
+            color: 0x5865f2,
+            timestamp: new Date().toISOString(),
+        }],
+    });
+    lastJournalSentAt = now;
+}
+
 /**
  * ?撣????摩
  */
 export async function bollingerScan(coins, ctx) {
     const { sendMessage, sendDiscordMessage, botState, openOrder, getPositions, momentum_channel } = ctx;
     const now = Date.now();
+    // 本次掃描的評分統計（局部，每次 bollingerScan 獨立計算）
+    const scanBuckets = new Array(10).fill(0);
+    let scanWithSignal = 0;
+    let klineOk = 0;  // 成功抓到 K 線的幣數
     await evaluatePendingSignals();
     await maybeSendSummary(sendDiscordMessage);
+    await maybeSendJournalReport(sendDiscordMessage);
 
     for (let i = 0; i < coins.length; i += 10) {
         const batch = coins.slice(i, i + 10);
@@ -524,6 +576,7 @@ export async function bollingerScan(coins, ctx) {
                 ]);
 
                 if (!k15m || !k30m || !k1h || !k4h) return;
+                klineOk++;
 
                 const c15m = k15m.map(c => parseFloat(c[4]));
                 const c1h = k1h.map(c => parseFloat(c[4]));
@@ -564,6 +617,9 @@ export async function bollingerScan(coins, ctx) {
                 }
                 stars = signalProfile.stars;
                 label = signalProfile.type;
+                // 追蹤評分分佈
+                scanWithSignal++;
+                scanBuckets[Math.min(9, Math.floor(signalProfile.score / 10))]++;
 
                 let track = trackingList.get(t.symbol);
                 let shouldNotify = false;
@@ -605,12 +661,13 @@ export async function bollingerScan(coins, ctx) {
                         ? `?亥? ${vReversal.dropPct.toFixed(2)}% / 雿??? +${vReversal.reboundPct.toFixed(2)}% / ?嗅儔 ${(vReversal.recoveryRatio * 100).toFixed(0)}%`
                         : '';
 
-                    const msg = `${'*'.repeat(stars)} ${t.symbol} ${fmtPct(t.change)} rank ${rankDesc}`;
-
-                    const starLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
                     const fmtPct = (value) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
+                    const starLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
                     const cleanStarLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
                     const symbolName = t.symbol.replace('-USDT', '');
+
+                    const msg = `${'*'.repeat(stars)} ${t.symbol} ${fmtPct(t.change)} rank ${rankDesc}`;
+
                     const cleanDescription = `${symbolName} ${fmtPct(t.change)}  排名 ${rankDesc}\n型態 : ${signalProfile.type}\n\n` +
                         `${formatSignalExplanation(signalProfile.explanation)}\n\n` +
                         `K線變化 30m / 1h / 4h\n` +
@@ -619,16 +676,16 @@ export async function bollingerScan(coins, ctx) {
                         `綜合分數 : ${signalProfile.score.toFixed(1)}\n` +
                         `${new Date().toLocaleString('zh-TW', { hour12: true })}`;
                     const discordMsg = `${starLabels[stars] || starLabels[1]}\n` +
-                        `${t.symbol.replace('-USDT', '')}\n` +
-                        `靽∟???嚗?{signalProfile.type}\n` +
-                        `隤芣?嚗?{signalProfile.explanation}\n` +
-                        `瞍脰?撟?${fmtPct(t.change)}\n` +
-                        `??嚗?${rankDesc}\n\n` +
-                        `K蝺???\n` +
+                        `${symbolName}\n` +
+                        `型態：${signalProfile.type}\n` +
+                        `說明：${signalProfile.explanation}\n` +
+                        `漲幅：${fmtPct(t.change)}\n` +
+                        `排名：${rankDesc}\n\n` +
+                        `K線：\n` +
                         `30m : ${fmtPct(ch30m)}\n` +
                         `1h : ${fmtPct(ch1h)}\n` +
                         `4h : ${fmtPct(ch4h)}\n\n` +
-                        `鈭斗???${fmtPct(volChange)}`;
+                        `交易量：${fmtPct(volChange)}`;
 
                     const replyMarkup = {
                         inline_keyboard: [[
@@ -693,6 +750,11 @@ export async function bollingerScan(coins, ctx) {
                 }
             } catch (e) {}
         }));
+        // 批次之間稍作延遲，避免打爆 Binance API rate limit
+        if (i + 10 < coins.length) await new Promise(r => setTimeout(r, 150));
     }
+    // 更新最新掃描統計，供下一次 journal 使用
+    latestScanStats = { total: coins.length, withSignal: scanWithSignal, buckets: scanBuckets, scannedAt: Date.now() };
+    console.log(`[SCAN] 完成：掃描 ${coins.length} 幣，K線成功 ${klineOk}，有訊號 ${scanWithSignal}，分佈 [${scanBuckets.join(',')}]`);
 }
 
