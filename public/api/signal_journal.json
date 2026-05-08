@@ -36455,6 +36455,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778247325710
+        },
+        "2h": {
+          "pnlPct": -11.68,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778251094724
         }
       }
     },
@@ -36477,6 +36483,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778249495322
+        },
+        "30m": {
+          "pnlPct": -3.23,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778251094724
         }
       }
     },
@@ -36499,6 +36511,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778249495322
+        },
+        "30m": {
+          "pnlPct": 3.42,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778251094724
         }
       }
     },
@@ -36601,9 +36619,9 @@
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 434,
-        "wins": 58,
-        "winRate": 13.36
+        "total": 435,
+        "wins": 59,
+        "winRate": 13.56
       },
       "量能爆發__1h": {
         "signalType": "量能爆發",
@@ -36617,7 +36635,7 @@
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 433,
+        "total": 434,
         "wins": 14,
         "winRate": 3.23
       },
@@ -36641,9 +36659,9 @@
         "signalType": "V轉反彈",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 28,
+        "total": 29,
         "wins": 11,
-        "winRate": 39.29
+        "winRate": 37.93
       },
       "V轉反彈__1h": {
         "signalType": "V轉反彈",
@@ -36781,5 +36799,5 @@
       }
     }
   },
-  "updatedAt": 1778250949414
+  "updatedAt": 1778251095085
 }
