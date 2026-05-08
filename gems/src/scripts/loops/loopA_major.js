@@ -7,8 +7,7 @@ import { fetchBingxTickers } from '../trading/scanner.js';
 import { bollingerScan } from '../core/bollinger_strategy.js';
 
 const MAJOR_SYMBOLS = [
-    'BTC-USDT', 'ETH-USDT', 'BNB-USDT', 'XRP-USDT', 'SOL-USDT', 
-    'ADA-USDT', 'DOGE-USDT', 'TRX-USDT', 'AVAX-USDT', 'LINK-USDT',
+    'BTC-USDT', 'ETH-USDT', 
     'NCCOGOLD2USD-USDT', 'NCCOOILWTI2USD-USDT'
 ];
 

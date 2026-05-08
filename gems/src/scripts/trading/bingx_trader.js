@@ -85,13 +85,8 @@ const MARGIN_USDT = 3;  // 每筆保證金固定 3U，開倉金額 = 3 × 槓桿
 
 // 特殊幣種固定槓桿（覆蓋動態槓桿）
 const FIXED_LEVERAGE = {
-    'BTC-USDT': 75,
-    'ETH-USDT': 75,
-    'NCCOGOLD2USD-USDT': 75,
-    'NCCO1OILWTI2USD-USDT': 75,
-    'NCCOOILWTI2USD-USDT': 75,
-    'NCCO1OILBRENT2USD-USDT': 75,
-    'NCCOXAG2USD-USDT': 75,
+    'BTC-USDT': 20,
+    'ETH-USDT': 20,
 };
 
 // BingX 合約名稱對應（symbol → BingX 格式）
@@ -128,15 +123,12 @@ export function toBingxSymbol(symbol) {
 
 // ── 動態槓桿（依形態強度）────────────────────────────────────────
 // strength: 'HIGH' | 'MED' | 'LOW'
-// HIGH = BOS + 量價齊升 + RSI確認 → 10x
-// MED  = 部分條件符合         → 5x
 // HIGH = 多條件強確認         → 10x
 // MED  = 部分條件符合         → 7x
 // LOW  = 只有漲幅，形態弱     → 5x
 export function calcLeverage(strength = 'MED') {
-    if (strength === 'HIGH') return 10;
-    if (strength === 'MED') return 7;
-    return 5;
+    // 依據使用者需求，將槓桿鎖定為固定 10x
+    return 10;
 }
 
 // ── 簽名 ──────────────────────────────────────────────────────────

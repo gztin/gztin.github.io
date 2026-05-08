@@ -35,7 +35,7 @@ const SYMBOL_ALIAS = {
 };
 
 const MAINSTREAM_TRACE_KEYWORDS = new Set(['主流', '主流幣', '主流幣種', 'MAJOR', 'MAJORS', 'MAIN']);
-const MAINSTREAM_TRACE_SYMBOLS = ['BTC', 'ETH', 'SOL', 'XAU'];
+const MAINSTREAM_TRACE_SYMBOLS = ['BTC', 'ETH', 'XAU', 'OIL'];
 
 function parseSymbol(input) {
     const raw = (input || '').toUpperCase().replace(/USDT$/, '').trim();
@@ -1355,7 +1355,7 @@ export function createCommandHandlers(ctx) {
 async function formatWatchlistMessage(userState, tickers) {
     const watchlist = userState.watchlist || {};
     const groups = { 3: [], 2: [], 1: [] };
-    const mainSymbolsSet = new Set(['BTC-USDT', 'ETH-USDT', 'SOL-USDT', 'NCCOGOLD2USD-USDT']);
+    const mainSymbolsSet = new Set(['BTC-USDT', 'ETH-USDT', 'NCCOGOLD2USD-USDT', 'NCCOOILWTI2USD-USDT']);
     const formatElapsed = (startedAt) => {
         const ts = Number(startedAt || 0);
         if (!ts) return '0:00';
@@ -1406,8 +1406,13 @@ async function formatWatchlistMessage(userState, tickers) {
     msg += `---\n\n`;
     msg += `主流幣種\n`;
 
-    const mainSymbolsForDisplay = ['BTC-USDT', 'ETH-USDT', 'SOL-USDT', 'NCCOGOLD2USD-USDT'];
-    const mainNamesForDisplay = { 'BTC-USDT': 'BTC', 'ETH-USDT': 'ETH', 'SOL-USDT': 'SOL', 'NCCOGOLD2USD-USDT': 'XAU' };
+    const mainSymbolsForDisplay = ['BTC-USDT', 'ETH-USDT', 'NCCOGOLD2USD-USDT', 'NCCOOILWTI2USD-USDT'];
+    const mainNamesForDisplay = { 
+        'BTC-USDT': 'BTC', 
+        'ETH-USDT': 'ETH', 
+        'NCCOGOLD2USD-USDT': 'XAU',
+        'NCCOOILWTI2USD-USDT': 'OIL'
+    };
     const mainDisplayLines = [];
     for (const sym of mainSymbolsForDisplay) {
         const data = watchlist[sym];

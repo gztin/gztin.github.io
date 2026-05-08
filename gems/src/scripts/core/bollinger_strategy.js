@@ -5,11 +5,15 @@
 
 import fs from 'fs';
 import path from 'path';
-import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 import { fetchKlines, getMaxLeverage } from '../trading/scanner.js';
 import { bollingerBands, avgVolume } from '../core/indicators.js';
 import { loadCredentials } from '../trading/bingx_trader.js';
 import { loadUserState, saveUserState } from '../core/state_manager.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // ?€?€ ?€????€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 const trackingList = new Map();
@@ -46,7 +50,7 @@ const DISCORD_JOURNAL_WEBHOOK_URL = process.env.DISCORD_JOURNAL_WEBHOOK_URL || '
 const JOURNAL_SEND_INTERVAL_MS = 5 * 60 * 1000;
 let lastJournalSentAt = 0;
 let lastGitPushAt = 0;
-const GIT_PUSH_INTERVAL_MS = 10 * 60 * 1000;
+const GIT_PUSH_INTERVAL_MS = 5 * 60 * 1000;
 let latestScanStats = null; // 最近一次掃描結果，供 journal 使用
 
 function maskWebhook(url = '') {
@@ -64,7 +68,31 @@ function getDataDir() {
 }
 
 function getSignalJournalPath() {
-    return path.join(getDataDir(), SIGNAL_JOURNAL_FILE);
+    return path.join(__dirname, '../../../public/api', SIGNAL_JOURNAL_FILE);
+}
+
+function syncToGithub() {
+    const now = Date.now();
+    if (now - lastGitPushAt < GIT_PUSH_INTERVAL_MS) return;
+    try {
+        console.log('[GIT] 正在同步數據到 GitHub...');
+        const rootDir = path.join(__dirname, '../../../');
+        // 自動配置 Git（避免 Docker 環境權限問題）
+        const setupCmd = `git config --global user.name "gztin" && git config --global user.email "atharsfake@gmail.com" && git config --global --add safe.directory /app`;
+        const pushCmd = `git add . && git commit -m "chore: 自動同步系統更新 (數據+介面) [skip ci]" && git push`;
+        
+        execSync(`${setupCmd} && ${pushCmd}`, { cwd: rootDir, stdio: 'inherit' });
+        lastGitPushAt = now;
+
+        // 同步成功後在 JSON 中記錄
+        const journal = readSignalJournal();
+        journal.lastGitPush = now;
+        fs.writeFileSync(getSignalJournalPath(), JSON.stringify(journal, null, 2), 'utf-8');
+        console.log('[GIT] GitHub 同步成功');
+    } catch (e) {
+        console.error('[GIT] GitHub 同步失敗:', e.message);
+        lastGitPushAt = now - (GIT_PUSH_INTERVAL_MS - 30000); 
+    }
 }
 
 function readSignalJournal() {
@@ -79,39 +107,15 @@ function readSignalJournal() {
 
 function writeSignalJournal(journal) {
     const file = getSignalJournalPath();
+    const dir = path.dirname(file);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(file, JSON.stringify({ ...journal, updatedAt: Date.now() }, null, 2), 'utf-8');
-    // Mirror to public path for remote dashboard read.
-    try {
-        const publicApiDir = path.join(process.cwd(), 'public', 'api');
-        fs.mkdirSync(publicApiDir, { recursive: true });
-        const publicFile = path.join(publicApiDir, 'signal_journal.json');
-        fs.writeFileSync(publicFile, JSON.stringify({ ...journal, updatedAt: Date.now() }, null, 2), 'utf-8');
-    } catch (err) {
-        console.error('[JOURNAL] failed to mirror public signal journal:', err.message);
-    }
-    
-    // Trigger auto git push (throttled)
-    maybeGitPushJournal();
+    syncToGithub();
 }
 
-async function maybeGitPushJournal() {
-    const now = Date.now();
-    if (now - lastGitPushAt < GIT_PUSH_INTERVAL_MS) return;
-    lastGitPushAt = now;
+// 已整合至 syncToGithub，此處移除舊函數
+async function maybeGitPushJournal() {}
 
-    console.log('[GIT] Attempting to push signal journal to web...');
-    // Ensure git is configured in the container
-    const setupCmd = `git config --global user.name "gztin" && git config --global user.email "atharsfake@gmail.com" && git config --global --add safe.directory /app`;
-    const pushCmd = `git add public/api/signal_journal.json && git commit -m "auto: update signal journal [bot]" && git push`;
-    
-    exec(`${setupCmd} && ${pushCmd}`, { cwd: process.cwd() }, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`[GIT] Push failed: ${error.message}`);
-            return;
-        }
-        console.log(`[GIT] Push success: ${stdout.split('\n')[0]}`);
-    });
-}
 
 function formatSummaryMessage(journal = {}) {
     const entries = Array.isArray(journal.entries) ? journal.entries : [];
@@ -408,7 +412,7 @@ function countHigherLows(candles, lookback = 8) {
     return count;
 }
 
-function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul }) {
+function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul, velocity = 1, rank = 0 }) {
     const closes15m = k15m.map(c => parseFloat(c[4]));
     const trend15 = regressionStats(closes15m.slice(-20));
     const trend30 = regressionStats(k30m.map(c => parseFloat(c[4])).slice(-20));
@@ -422,6 +426,9 @@ function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, 
     const momentum15 = clamp(((b15m.pct - 0.9) / 0.2) * 100);
     const momentum1h = clamp(((b1h.pct - 0.8) / 0.2) * 100);
     const volumeStrength = clamp((volChange / 200) * 100);
+    const velocityBonus = clamp((velocity - 1) * 10, 0, 20); // 量能加速度加分
+    const seedBonus = (rank >= 150 && rank <= 300) ? 10 : 0; // 黑馬潛伏區加分
+    
     const structureStrength = clamp(((avgR2 * 0.6) + (Math.max(0, avgSlope) / 1.5) * 0.3 + (avgHigherLows / 6) * 0.1) * 100);
     const reversalStrength = vReversal
         ? clamp((Math.abs(vReversal.dropPct) / 20) * 25 + (vReversal.reboundPct / 20) * 45 + (vReversal.recoveryRatio * 30))
@@ -431,36 +438,45 @@ function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, 
         candidates.push({
             type: '布林突破',
             stars: b1h.pct >= 0.98 && volMul > 2 ? 3 : (b1h.pct >= 0.95 ? 2 : 1),
-            score: clamp(momentum15 * 0.35 + momentum1h * 0.2 + volumeStrength * 0.25 + structureStrength * 0.2),
-            explanation: `15m 接近布林上軌 (${b15m.pct.toFixed(2)})，1h 動能 ${b1h.pct.toFixed(2)}，量能 ${volChange.toFixed(2)}%`,
+            score: clamp(momentum15 * 0.35 + momentum1h * 0.2 + volumeStrength * 0.2 + structureStrength * 0.15 + velocityBonus + seedBonus),
+            explanation: `15m 接近布林上軌 (${b15m.pct.toFixed(2)})，1h 動能 ${b1h.pct.toFixed(2)}，量能速度 ${velocity.toFixed(1)}x`,
         });
     }
     if (vReversal) {
         candidates.push({
             type: 'V轉反彈',
             stars: vReversal.reboundPct >= 20 && vReversal.volChange >= 150 ? 3 : (vReversal.reboundPct >= 12 ? 2 : 1),
-            score: clamp(reversalStrength * 0.5 + volumeStrength * 0.25 + structureStrength * 0.15 + momentum15 * 0.1),
-            explanation: `急跌 ${vReversal.dropPct.toFixed(2)}%，低點反彈 +${vReversal.reboundPct.toFixed(2)}%，收復 ${(vReversal.recoveryRatio * 100).toFixed(0)}%`,
+            score: clamp(reversalStrength * 0.5 + volumeStrength * 0.2 + structureStrength * 0.1 + momentum15 * 0.1 + velocityBonus),
+            explanation: `急跌 ${vReversal.dropPct.toFixed(2)}%，低點反彈 +${vReversal.reboundPct.toFixed(2)}%，量能速度 ${velocity.toFixed(1)}x`,
         });
     }
     if (volChange >= 150 && avgSlope > 0) {
         candidates.push({
             type: '量能爆發',
             stars: volChange >= 300 ? 3 : 2,
-            score: clamp(volumeStrength * 0.55 + structureStrength * 0.25 + momentum15 * 0.2),
-            explanation: `15m 成交量高於前 20 根均量 ${volChange.toFixed(2)}%，價格斜率 ${avgSlope.toFixed(3)}% / bar`,
+            score: clamp(volumeStrength * 0.5 + structureStrength * 0.2 + momentum15 * 0.15 + velocityBonus + seedBonus),
+            explanation: `15m 成交量高於前 20 根均量 ${volChange.toFixed(2)}%，速度 ${velocity.toFixed(1)}x，斜率 ${avgSlope.toFixed(3)}%`,
         });
     }
     if (avgR2 >= 0.75 && avgSlope >= 0.25 && avgHigherLows >= 3) {
         candidates.push({
             type: '穩健斜率',
             stars: avgR2 >= 0.85 && avgSlope >= 0.8 ? 3 : 2,
-            score: clamp(structureStrength * 0.6 + momentum15 * 0.2 + volumeStrength * 0.2),
-            explanation: `Avg R2 = ${avgR2.toFixed(2)}\nAvg slope: ${avgSlope.toFixed(3)}% / bar\nAvg higher lows: ${avgHigherLows.toFixed(1)}`,
+            score: clamp(structureStrength * 0.5 + momentum15 * 0.15 + volumeStrength * 0.15 + velocityBonus),
+            explanation: `斜率 ${avgSlope.toFixed(3)}%，量能速度 ${velocity.toFixed(1)}x`,
         });
     }
 
-    return candidates.sort((a, b) => b.score - a.score)[0] || null;
+    const winner = candidates.sort((a, b) => b.score - a.score)[0];
+    if (winner) {
+        winner.velocity = velocity;
+        winner.rank = rank;
+        // --- V2 預估點位實作 ---
+        const entryPrice = parseFloat(k15m[k15m.length - 1][4]);
+        winner.tp1 = entryPrice * (1 + (velocity * 0.005)); // 保守位
+        winner.tp2 = entryPrice * (1 + (velocity * 0.015)); // 激進位
+    }
+    return winner;
 }
 
 function formatSignalExplanation(explanation) {
@@ -497,10 +513,10 @@ async function evaluatePendingSignals() {
             const latestClose = parseFloat(klines[klines.length - 1][4]);
             if (!latestClose || !entry.entryPrice) continue;
             const pnlPct = ((latestClose - entry.entryPrice) / entry.entryPrice) * 100;
-            console.log(`[EVAL] ${entry.symbol} ${horizon.key} success: ${pnlPct.toFixed(2)}%`);
+            console.log(`[EVAL] ${entry.symbol} ${horizon.key} success: ${pnlPct.toFixed(3)}%`);
             const threshold = SIGNAL_WIN_THRESHOLDS[horizon.key] || 0;
             entry.evaluations[horizon.key] = {
-                pnlPct: Number(pnlPct.toFixed(2)),
+                pnlPct: Number(pnlPct.toFixed(3)),
                 win: pnlPct >= threshold,
                 threshold,
                 evaluatedAt: now,
@@ -551,7 +567,7 @@ async function maybeSendJournalReport(sendDiscordMessage) {
         `📶 偵測到訊號：**${withSignal}**`,
         '',
         '**評分分佈（每 10 分一級距）**',
-        bucketLines,
+    bucketLines,
     ].join('\n');
 
     await queueDiscordSignal(sendDiscordMessage, description, {
@@ -578,10 +594,33 @@ export async function bollingerScan(coins, ctx) {
     const scanBuckets = new Array(10).fill(0);
     let scanWithSignal = 0;
     let klineOk = 0;  // 成功抓到 K 線的幣數
+
+    // --- 全市場量能雷達 (Volume Velocity Radar) ---
+    const velocityMap = new Map();
+    const currentSnapshot = new Map();
+    try {
+        const res = await fetch('https://open-api.bingx.com/openApi/swap/v2/quote/ticker');
+        const data = await res.json();
+        if (data?.code === 0 && Array.isArray(data.data)) {
+            for (const tk of data.data) {
+                const curVol = parseFloat(tk.quoteVolume);
+                currentSnapshot.set(tk.symbol, curVol);
+                const prevVol = global.lastMarketSnapshot?.get(tk.symbol);
+                if (prevVol && curVol >= prevVol) {
+                    const deltaVol = curVol - prevVol;
+                    const avgVolPerMin = curVol / (24 * 60);
+                    velocityMap.set(tk.symbol, deltaVol / (avgVolPerMin || 1));
+                }
+            }
+            global.lastMarketSnapshot = currentSnapshot;
+        }
+    } catch (e) {}
+
     await evaluatePendingSignals();
     await maybeSendSummary(sendDiscordMessage);
     await maybeSendJournalReport(sendDiscordMessage);
 
+    // 批次掃描
     for (let i = 0; i < coins.length; i += 10) {
         const batch = coins.slice(i, i + 10);
         await Promise.all(batch.map(async (t, idx) => {
@@ -637,11 +676,56 @@ export async function bollingerScan(coins, ctx) {
                     label = 'V-Reversal';
                 }
 
-                const signalProfile = buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul });
+                const velocity = velocityMap.get(t.symbol) || 1.0;
+                const signalProfile = buildSignalProfile({ 
+                    b15m, b1h, k15m, k30m, k1h, vReversal, volChange, volMul,
+                    velocity, rank: currentRank
+                });
+
                 if (!signalProfile) {
                     trackingList.delete(t.symbol);
                     return;
                 }
+
+                // --- 嚴格過濾：不追漲邏輯 ---
+                const isMajor = ['BTC-USDT', 'ETH-USDT', 'NCCOGOLD2USD-USDT', 'NCCOOILWTI2USD-USDT'].includes(t.symbol);
+                
+                if (!track) {
+                    // 如果是新發現的訊號：
+                    // 1. 漲幅 > 4% 絕對不追 (所有幣種)
+                    // 2. 非主流幣 且 排名 < 100 不追 (排除已經是熱點的小幣)
+                    if (t.change > 4.0 || (!isMajor && currentRank < 100)) {
+                        return;
+                    }
+                } else {
+                    // 如果是在追蹤中的訊號：
+                    // 如果漲幅已經過高 (例如 > 6%)，就不再發送後續的階段性報告，避免干擾
+                    if (t.change > 6.0) {
+                        return;
+                    }
+                }
+
+                // --- GEMS GOLDEN FILTER V2 (吸籌/累積模式) ---
+                let gemStatus = '📶';
+                
+                // 定義「種子」：排名 100-500 (廣泛小幣), 漲幅低 (< 4%), 量能穩步放大 (Velocity > 1.0)
+                const isLowPosition = t.change < 4.0 && t.change > -1.0;
+                const isAccumulating = velocity > 1.0 && volChange > 120; // 只要流速高於平均且15m有放量
+                
+                if (currentRank >= 100 && currentRank <= 500 && signalProfile.score >= 60 && isLowPosition && isAccumulating) {
+                    gemStatus = 'SEED';
+                } 
+                // 定義「爆發」：排名在前 150, 分數極高, 且量能突發性大增 (Velocity > 2.0)
+                else if (currentRank < 150 && signalProfile.score >= 75 && velocity > 2.0) {
+                    gemStatus = 'EXPLOSIVE';
+                }
+                else if (signalProfile.score >= 75) {
+                    gemStatus = 'CONFIRMED';
+                }
+
+                if (gemStatus === '📶' && signalProfile.score < 65) return; // 低分一般訊號過濾
+
+                signalProfile.gemStatus = gemStatus;
                 stars = signalProfile.stars;
                 label = signalProfile.type;
                 // 追蹤評分分佈
@@ -673,6 +757,7 @@ export async function bollingerScan(coins, ctx) {
                             lastSeenAt: now,
                             entryPrice: lastEntry.entryPrice,
                             firstTimestamp,
+                            lastVelocity: lastEntry.velocity || 1.0,
                             history: lastEntry.history || []
                         };
 
@@ -690,6 +775,7 @@ export async function bollingerScan(coins, ctx) {
                             lastSeenAt: now,
                             entryPrice: t.price,
                             firstTimestamp: now,
+                            lastVelocity: velocity,
                             history: []
                         };
                         shouldNotify = true;
@@ -709,14 +795,14 @@ export async function bollingerScan(coins, ctx) {
                             const currentPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
                             const stageMin = NOTIFY_STAGES[track.stageIndex];
                             const stageLabel = stageMin < 60 ? `${stageMin}m` : `${stageMin / 60}h`;
-                            const reportLine = `${stageLabel.padEnd(4)} 內再次推送｜目前 ${currentPnl > 0 ? '+' : ''}${currentPnl.toFixed(2)}%`;
+                            const reportLine = `${stageLabel.padEnd(3)} 內再次推送｜目前 ${currentPnl > 0 ? '+' : ''}${currentPnl.toFixed(2)}%`;
                             
                             track.history.push(reportLine);
                             
-                            progressReport = `\n📊 追蹤表現：\n`;
                             const firstPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
-                            progressReport += `15m  內首次推送｜目前 ${firstPnl > 0 ? '+' : ''}${firstPnl.toFixed(2)}%\n`;
-                            progressReport += track.history.join('\n') + '\n';
+                            progressReport = `\n📊 追蹤表現：\n` +
+                                           `15m 內首次推送｜目前 ${firstPnl > 0 ? '+' : ''}${firstPnl.toFixed(2)}%\n` +
+                                           track.history.join('\n') + '\n';
                         }
                     }
                 }
@@ -806,15 +892,35 @@ export async function bollingerScan(coins, ctx) {
                                 }],
                             });
                         }
+                        // 計算量能加速度變化
+                        let accelerationText = "";
+                        const prevVel = track.lastVelocity || 1.0;
+                        if (velocity > prevVel * 1.2) {
+                            accelerationText = `\n🔥 *量能正在加速：${prevVel.toFixed(1)}x ➔ ${velocity.toFixed(1)}x*`;
+                        }
+                        track.lastVelocity = velocity; // 更新紀錄
+
                         // Telegram 推送 (格式比照 Discord)
-                        const tgMsg = `🚀 *Entry Score: ${scoreStr}*\n` +
+                        const statusEmoji = signalProfile.gemStatus === 'EXPLOSIVE' ? '🚀' : signalProfile.gemStatus === 'SEED' ? '🌱' : '📶';
+                        const tp1Str = signalProfile.tp1 ? signalProfile.tp1.toFixed(6) : "---";
+                        const tp2Str = signalProfile.tp2 ? signalProfile.tp2.toFixed(6) : "---";
+                        const tp1Pct = ((signalProfile.tp1 - t.price) / t.price * 100).toFixed(1);
+                        const tp2Pct = ((signalProfile.tp2 - t.price) / t.price * 100).toFixed(1);
+
+                        // 量能門檻提示
+                        const velThresholdText = velocity > 10 ? '(🔴 遠超 2.0 門檻)' : (velocity > 2 ? '(🟢 超過 2.0 門檻)' : '');
+                        const statusDesc = signalProfile.gemStatus === 'SEED' ? '潛力種子埋伏中' : (signalProfile.gemStatus === 'EXPLOSIVE' ? '主升段噴發中' : '量能穩定追蹤中');
+
+                        const tgMsg = `${statusEmoji} *[${signalProfile.gemStatus}] Score: ${scoreStr}*\n` +
                                      `*${symbolName}*  ${fmtPct(t.change)}\n` +
-                                     `型態：${signalProfile.type}\n` +
+                                     `狀態：${statusDesc}\n` +
+                                     `⚡ 量能加速度：${velocity.toFixed(1)}x ${velThresholdText}\n` +
                                      `說明：\n${formatSignalExplanation(signalProfile.explanation)}\n` +
-                                     `排名：${rankDesc}\n\n` +
-                                     (progressReport || "") +
-                                     `K線變動：30m ${fmtPct(ch30m)} / 1h ${fmtPct(ch1h)} / 4h ${fmtPct(ch4h)}\n` +
-                                     `交易量：${fmtPct(volChange)}`;
+                                     `排名：${rankDesc}${accelerationText}\n\n` +
+                                     ` 🎯 *預估目標位：*\n` +
+                                     ` └ 保守 TP1: \`${tp1Str}\` (+${tp1Pct}%)\n` +
+                                     ` └ 激進 TP2: \`${tp2Str}\` (+${tp2Pct}%)\n\n` +
+                                     (progressReport || "");
                                      
                         await sendMessage(momentum_channel || '931709772', tgMsg, { parse_mode: 'Markdown', omitLabel: true, replyMarkup });
                     }

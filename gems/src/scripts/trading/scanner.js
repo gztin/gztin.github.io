@@ -197,39 +197,23 @@ export async function fetchKlines(base, interval, limit = 100) {
         return _klineCache[key].data;
     }
 
-    // 特殊合約（黃金/石油）→ BingX 專用
-    const bxSymbol = BINGX_ONLY_SYMBOLS[base.toUpperCase()];
-    if (bxSymbol) {
-        const bxUrl = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${bxSymbol}&interval=${interval}&limit=${limit}`;
+    // 唯一數據源：BingX 簽名 API
+    const bxSigned = await fetchBingxKlinesSigned(base, interval, limit);
+    if (bxSigned) { 
+        _klineCache[key] = { data: bxSigned, ts: now }; 
+        return bxSigned; 
+    }
+
+    // 如果 BingX 簽名 API 失敗，嘗試 BingX 公開 API (作為最後防線，但依然是 BingX)
+    const bxUrl = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${base}-USDT&interval=${interval}&limit=${limit}`;
+    try {
         const bxData = await get(bxUrl);
         if (bxData?.code === 0 && bxData.data?.length >= 20) {
             const result = bxData.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
             _klineCache[key] = { data: result, ts: now };
             return result;
         }
-        return null;
-    }
-
-    // 1. BingX 簽名（原生資料，最準確）
-    const bxSigned = await fetchBingxKlinesSigned(base, interval, limit);
-    if (bxSigned) { _klineCache[key] = { data: bxSigned, ts: now }; return bxSigned; }
-
-    // 2. Bybit Linear（Docker 內確認 200 OK）
-    const bybitData = await fetchBybitKlines(base, interval, limit);
-    if (bybitData) { _klineCache[key] = { data: bybitData, ts: now }; return bybitData; }
-
-    // 3. OKX Swap（備援）
-    const okxData = await fetchOkxKlines(base, interval, limit);
-    if (okxData) { _klineCache[key] = { data: okxData, ts: now }; return okxData; }
-
-    // 4. BingX 公開端點（部分環境可用）
-    const bxUrl2 = `${BINGX_PUBLIC}/openApi/swap/v3/quote/klines?symbol=${base}-USDT&interval=${interval}&limit=${limit}`;
-    const bxData2 = await get(bxUrl2);
-    if (bxData2?.code === 0 && bxData2.data?.length >= 20) {
-        const result = bxData2.data.map(c => [c.time, c.open, c.high, c.low, c.close, c.volume]);
-        _klineCache[key] = { data: result, ts: now };
-        return result;
-    }
+    } catch (e) {}
 
     return null;
 }

@@ -45,15 +45,22 @@
       transition: background 0.4s ease, color 0.4s ease;
     }
 
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 60px 24px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--ink-border);
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+      width: 100%;
+    }
 
     header {
       display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 60px;
-      border-bottom: 1px solid var(--ink-border);
-      padding-bottom: 24px;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 48px;
     }
 
     h1 {
@@ -75,19 +82,14 @@
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1px;
-      background: var(--ink-border);
-      border: 1px solid var(--ink-border);
-      margin-bottom: 64px;
-      border-radius: 12px;
-      overflow: hidden;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 32px;
     }
 
     .stat {
-      background: var(--paper);
-      padding: 24px;
-      transition: background 0.2s ease;
+      background: transparent;
+      padding: 0;
+      transition: all 0.2s ease;
     }
 
     .stat:hover { background: var(--surface); }
@@ -104,27 +106,25 @@
     .stat-rate {
       font-family: var(--font-cyber);
       font-size: 32px;
-      line-height: 1;
+      line-height: 1.2;
       margin-bottom: 12px;
       color: var(--ink);
       letter-spacing: -0.02em;
+      display: flex;
+      align-items: baseline;
     }
 
     .stat-meta {
       font-family: var(--font-body);
       font-size: 13px;
       color: var(--ink-dim);
+      line-height: 1.5;
     }
 
     .toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 32px;
-      margin-bottom: 48px;
-      padding: 24px;
-      background: var(--surface);
-      border: 1px solid var(--ink-border);
-      border-radius: 12px;
+      gap: 48px;
       align-items: center;
     }
 
@@ -145,6 +145,49 @@
     .chip:hover { color: var(--ink); background: var(--surface); }
     .chip.active { background: var(--ink); color: var(--paper); }
 
+    .score-badge {
+      background: var(--ink-border);
+      color: var(--ink);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* V2 Gems Badges */
+    .gem-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .badge-seed {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .badge-boom {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+    }
+    .badge-norm {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    .vel-tag {
+      font-family: var(--font-mono);
+      background: rgba(0,0,0,0.05);
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    [data-theme="dark"] .vel-tag { background: rgba(255,255,255,0.05); }
+
     select {
       background: var(--paper);
       color: var(--ink);
@@ -155,23 +198,6 @@
       min-width: 160px;
       outline: none;
     }
-
-    .help-btn {
-      background: transparent;
-      border: 1px solid var(--ink-border);
-      color: var(--ink-dim);
-      padding: 10px 16px;
-      font-family: var(--font-body);
-      font-size: 13px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 18px;
-    }
-    .help-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
 
     .icon-btn {
       background: var(--surface);
@@ -191,35 +217,47 @@
     .modal {
       display: none;
       position: fixed;
-      z-index: 2000;
+      z-index: 1000;
       left: 0; top: 0;
       width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      backdrop-filter: blur(8px);
+      background-color: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
     }
     .modal-content {
-      background-color: var(--paper);
-      margin: 10% auto;
-      padding: 0;
-      border: 1px solid var(--ink-border);
+      background-color: var(--surface);
       width: 90%;
-      max-width: 500px;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+      max-width: 800px;
+      max-height: 90vh;
+      border-radius: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: modalSlide 0.3s ease-out;
+    }
+    @keyframes modalSlide {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
     .modal-header {
       padding: 20px 24px;
-      background: var(--surface);
       border-bottom: 1px solid var(--ink-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-shrink: 0;
     }
-    .modal-header h3 { margin: 0; font-size: 18px; font-family: var(--font-cyber); color: var(--ink); }
+    .modal-header h3 { font-size: 18px; font-family: var(--font-cyber); color: var(--ink); }
     .close { color: var(--ink-dim); font-size: 28px; font-weight: bold; cursor: pointer; }
     .close:hover { color: var(--ink); }
-    .modal-body { padding: 24px; color: var(--ink); }
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex-grow: 1;
+      color: var(--ink);
+    }
     .help-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
     .help-table th, .help-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--ink-border); font-family: var(--font-mono); font-size: 14px; }
     .help-table th { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; }
@@ -240,7 +278,15 @@
     th.sortable:hover { color: var(--ink); }
     td { padding: 20px 8px; border-bottom: 1px solid var(--ink-border); font-size: 15px; }
     .mono { font-family: var(--font-mono); font-weight: 700; }
-    .unit { font-size: 0.55em; color: var(--ink-dim); margin-left: 1px; font-weight: 400; vertical-align: baseline; opacity: 0.6; font-family: sans-serif; }
+    .unit { 
+      font-size: 0.55em; 
+      color: var(--ink-dim); 
+      margin-left: 4px; 
+      font-weight: 400; 
+      vertical-align: baseline; 
+      opacity: 0.8; 
+      font-family: sans-serif; 
+    }
     .score-badge { font-family: var(--font-cyber); font-size: 16px; color: var(--ink); }
     .ok { color: var(--ok); }
     .bad { color: var(--bad); }
@@ -265,21 +311,19 @@
 </head>
 <body>
   <div class="wrap">
-    <header style="margin-bottom: 32px;">
-      <div style="display: flex; flex-direction: column; gap: 4px;">
-        <div class="sub-brand">智能監控系統</div>
-        <div style="display: flex; align-items: center; gap: 16px;">
-          <h1 style="margin: 0; line-height: 1.2;">Gems 訊號</h1>
-          <div style="display: flex; align-items: center; gap: 8px;">
-            <button id="themeToggleBtn" class="icon-btn" title="切換主題">🌙</button>
-            <button id="helpBtn" class="icon-btn" title="達標標準說明" style="font-family: 'Outfit', sans-serif; font-style: italic; font-weight: 700; font-size: 17px; padding-bottom: 2px;">i</button>
-            <a href="md_viewer.html?file=docs/README.md" class="icon-btn" title="系統文檔" style="text-decoration: none; font-size: 16px;">📖</a>
-          </div>
+    <header style="margin-bottom: 48px; display: flex; flex-direction: column; gap: 8px;">
+      <div class="sub-brand">智能監控系統</div>
+      <div style="display: flex; align-items: center; gap: 24px;">
+        <h1 style="margin: 0; padding: 0; font-size: 32px; font-weight: 700;">Gems 訊號</h1>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <button id="themeToggleBtn" class="icon-btn" title="切換主題" style="font-size: 18px;">🌙</button>
+          <button id="helpBtn" class="icon-btn" title="達標標準說明" style="font-family: sans-serif; font-weight: 900; font-style: italic; font-size: 16px; line-height: 0;">i</button>
         </div>
       </div>
+      <div id="header-meta" class="meta-info" style="margin: 4px 0 0 0; text-align: left; opacity: 0.6; font-size: 11px;">資料同步中...</div>
     </header>
 
-    <div class="toolbar">
+    <div class="card toolbar">
       <div class="group">
         <label>時間週期</label>
         <div class="chip-group">
@@ -298,6 +342,12 @@
           <option value="90">90+ (極致級)</option>
         </select>
       </div>
+      <div class="group">
+        <label>顯示模式</label>
+        <div class="chip-group">
+          <button class="chip active" data-mode="live">即時監控</button>
+          <button class="chip" data-mode="seed-win">🌱 種子達標戰績</button>
+        </div>
       </div>
     </div>
 
@@ -327,22 +377,32 @@
       </div>
     </div>
     
-    <div class="section-container">
-      <div class="stats-grid" id="scoreCards"></div>
-    </div>
+    <!-- 移除統計卡片，保持簡約 -->
 
-    <div class="table-card">
+    <div class="card table-card" style="padding: 0; overflow: hidden;">
       <table id="entryTable">
         <thead>
           <tr>
-            <th>資產項目</th>
-            <th class="sortable" id="sortScore">進場分數 ↕</th>
-            <th>價格變動</th>
-            <th class="sortable" id="sortTime">推送時間 ↕</th>
+            <th style="padding-left: 32px;">幣種名稱</th>
+            <th>當前漲幅</th>
+            <th class="sortable" id="sortTime" style="padding-right: 32px;">最早推送時間 ↕</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
+    </div>
+
+    <!-- History Detail Modal -->
+    <div id="detailModal" class="modal">
+      <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+          <h3 id="modalSymbol">AR 歷史紀錄</h3>
+          <span class="close" id="closeDetail">&times;</span>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- 歷史紀錄將動態插入此處 -->
+        </div>
+      </div>
     </div>
 
     <div class="meta-info" id="meta">資料同步中...</div>
@@ -350,79 +410,181 @@
 
   <script>
     const DEFAULT_TIMEZONE = "Asia/Taipei";
-    const state = { tf: "15m", data: null, status: "pass", minScore: 60, sortKey: 'timestamp', sortOrder: 'desc' };
-    const chips = Array.from(document.querySelectorAll(".chip"));
-    const scoreFilter = document.getElementById("scoreFilter");
+    const state = { 
+      tf: "15m", 
+      data: null, 
+      minScore: 60, 
+      sortKey: 'firstTime', 
+      sortOrder: 'desc', 
+      mode: 'live' 
+    };
+
     const themeToggleBtn = document.getElementById("themeToggleBtn");
     const helpBtn = document.getElementById("helpBtn");
     const helpModal = document.getElementById("helpModal");
     const closeModal = document.getElementById("closeModal");
+    const scoreFilter = document.getElementById("scoreFilter");
 
     function setTheme(theme) {
       document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("gems_theme", theme);
       themeToggleBtn.textContent = theme === "dark" ? "🌙" : "☀️";
     }
-
-    const savedTheme = localStorage.getItem("gems_theme") || "dark";
-    setTheme(savedTheme);
-
+    setTheme(localStorage.getItem("gems_theme") || "dark");
     themeToggleBtn.addEventListener("click", () => {
       const current = document.documentElement.getAttribute("data-theme") || "dark";
       setTheme(current === "dark" ? "light" : "dark");
     });
 
-    chips.forEach((chip) => chip.addEventListener("click", () => {
-      chips.forEach(c => c.classList.remove("active"));
-      chip.classList.add("active");
-      state.tf = chip.dataset.tf;
-      render();
-    }));
-    scoreFilter.addEventListener("change", () => { state.minScore = Number(scoreFilter.value); render(); });
-
-    helpBtn.onclick = () => { helpModal.style.display = "block"; }
+    // Modal Logic
+    helpBtn.onclick = () => { helpModal.style.display = "flex"; }
     closeModal.onclick = () => { helpModal.style.display = "none"; }
-    window.onclick = (event) => { if (event.target == helpModal) helpModal.style.display = "none"; }
+    
+    // 強化關閉詳情彈窗的邏輯
+    if (closeDetail) {
+      closeDetail.onclick = () => { detailModal.style.display = "none"; }
+    }
+
+    window.onclick = (e) => { 
+      if (e.target == helpModal) helpModal.style.display = "none"; 
+      if (e.target == detailModal) detailModal.style.display = "none"; 
+    }
+
+    // 增加 ESC 鍵關閉功能
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        helpModal.style.display = "none";
+        detailModal.style.display = "none";
+      }
+    });
+
+    document.querySelectorAll(".chip[data-tf]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".chip[data-tf]").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        state.tf = btn.dataset.tf;
+        render();
+      });
+    });
+
+    document.querySelectorAll(".chip[data-mode]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".chip[data-mode]").forEach(c => c.classList.remove("active"));
+        btn.classList.add("active");
+        state.mode = btn.dataset.mode;
+        render();
+      });
+    });
+
+    scoreFilter.addEventListener("change", () => {
+      state.minScore = Number(scoreFilter.value);
+      render();
+    });
 
     document.getElementById("sortTime").onclick = () => {
-      state.sortKey = 'timestamp'; state.sortOrder = state.sortOrder === 'desc' ? 'asc' : 'desc'; render();
-    };
-    document.getElementById("sortScore").onclick = () => {
-      state.sortKey = 'score'; state.sortOrder = state.sortOrder === 'desc' ? 'asc' : 'desc'; render();
+      state.sortKey = 'firstTime'; 
+      state.sortOrder = state.sortOrder === 'desc' ? 'asc' : 'desc'; 
+      render();
     };
 
     function formatTaipei(ts) { return new Date(ts).toLocaleString("zh-TW", { timeZone: DEFAULT_TIMEZONE, hour12: false }); }
     function evalForTf(entry) { return (entry.evaluations || {})[state.tf] || null; }
-    function changePct(entry) { 
+    function statusKey(entry) { 
       const r = evalForTf(entry); 
-      return r && typeof r.pnlPct === "number" ? r.pnlPct : null; 
+      if (!r) return "pending"; 
+      return r.win ? "pass" : "fail"; 
     }
-    function statusKey(entry) { const r = evalForTf(entry); if (!r) return "pending"; return r.win ? "pass" : "fail"; }
-    function wrapPct(valStr) {
+    function wrapPct(valStr, valNum) {
       if (valStr === "--%") return `--<span class="unit">%</span>`;
+      // 異常過濾：漲跌幅超過 500% 通常是數據錯誤
+      if (valNum && Math.abs(valNum) > 500) {
+        return `<span style="color:var(--bad); font-size:12px;">⚠️ 數據異常</span>`;
+      }
       return valStr.replace("%", `<span class="unit">%</span>`);
     }
 
-    function renderEntries(entries) {
+    // --- History View ---
+    window.showHistory = (symbol) => {
+      if (!state.data) return;
+      const allEntries = state.data.entries || [];
+      const records = allEntries.filter(e => e.symbol === symbol).sort((a,b) => b.timestamp - a.timestamp);
+      
+      const modalSymbol = document.getElementById("modalSymbol");
+      const modalBody = document.getElementById("modalBody");
+      const detailModal = document.getElementById("detailModal");
+      
+      modalSymbol.textContent = `${symbol.replace('-USDT','')} 歷史紀錄 (${records.length} 次推送)`;
+      modalBody.innerHTML = `
+        <table class="help-table" style="width:100%;">
+          <thead>
+            <tr>
+              <th>時間</th>
+              <th>評分</th>
+              <th>形態</th>
+              <th>表現</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${records.map(r => {
+              const p = (r.evaluations || {})[state.tf]?.pnlPct || 0;
+              const cls = p >= 0 ? "ok" : "bad";
+              return `
+                <tr>
+                  <td style="font-size:12px; opacity:0.7;">${formatTaipei(r.timestamp)}</td>
+                  <td>
+                    <div style="font-weight:700;">${r.score.toFixed(1)}</div>
+                    <div style="font-size:10px; opacity:0.6;">⚡${r.velocity ? r.velocity.toFixed(1) + 'x' : '--'}</div>
+                  </td>
+                  <td style="font-size:12px;">
+                    <div>${r.gemStatus || '📶'} ${r.type || ''}</div>
+                    <div style="font-size:10px; opacity:0.6;">Rank #${r.rank || '--'}</div>
+                  </td>
+                  <td class="${cls} mono">${p >= 0 ? '▲' : '▼'} ${wrapPct(Math.abs(p).toFixed(3) + '%', p)}</td>
+                </tr>
+              `;
+            }).join('')}
+          </tbody>
+        </table>
+      `;
+      detailModal.style.display = "flex";
+    };
+
+    function renderEntries(groups) {
       const tbody = document.querySelector("#entryTable tbody");
-      const sorted = entries.slice().sort((a, b) => {
+      const sorted = groups.sort((a, b) => {
         const valA = a[state.sortKey] || 0;
         const valB = b[state.sortKey] || 0;
         return state.sortOrder === 'desc' ? valB - valA : valA - valB;
-      }).slice(0, 300);
+      });
       
-      tbody.innerHTML = sorted.length ? sorted.map((e) => {
-        const p = changePct(e);
+      tbody.innerHTML = sorted.length ? sorted.map((g) => {
+        const latest = g.records.sort((a,b) => b.timestamp - a.timestamp)[0]; 
+        const p = (latest.evaluations || {})[state.tf]?.pnlPct || null;
         const hasValue = p !== null;
         const cls = !hasValue ? "" : (p >= 0 ? "ok" : "bad");
         const arrow = !hasValue ? "" : (p >= 0 ? "▲" : "▼");
         const displayPct = !hasValue ? "--%" : `${Math.abs(p).toFixed(2)}%`;
-        return `<tr><td style="font-family: var(--font-body); font-size: 16px;">${e.symbol.replace('-USDT','')}</td><td class="score-badge">${e.score.toFixed(1)}</td><td class="${cls} mono">${arrow} ${wrapPct(displayPct)}</td><td style="font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim);">${formatTaipei(e.timestamp)}</td></tr>`;
-      }).join("") : `<tr><td colspan="4">目前無達標訊號</td></tr>`;
+        
+        return `
+          <tr onclick="showHistory('${latest.symbol}')" style="cursor:pointer;">
+            <td style="padding-left: 32px; font-family: var(--font-body);">
+              <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-weight:700; font-size:18px;">${latest.symbol.replace('-USDT','')}</span>
+                <span class="badge-norm gem-badge" style="background:var(--ink-border); color:var(--ink);">${g.records.length} 次</span>
+                ${latest.gemStatus === 'SEED' ? '<span class="gem-badge badge-seed">SEED</span>' : ''}
+              </div>
+            </td>
+            <td class="${cls} mono" style="font-size:18px;">${arrow} ${wrapPct(Math.abs(p).toFixed(3) + '%', p)}</td>
+            <td style="padding-right: 32px; font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim);">
+              ${formatTaipei(g.firstTime)}
+            </td>
+          </tr>`;
+      }).join("") : `<tr><td colspan="3" style="padding:48px; text-align:center; opacity:0.5;">未發現符合條件的重複訊號</td></tr>`;
     }
 
     function renderScoreCards(summary) {
       const el = document.getElementById("scoreCards");
+      if (!el) return;
       const brackets = summary?.byScoreBracket || {};
       const keys = ['60-70', '70-80', '80-90', '90-100'];
       el.innerHTML = keys.map((k) => {
@@ -435,22 +597,51 @@
     function render() {
       if (!state.data) return;
       const entries = state.data.entries || [];
-      const tfMsMap = { '15m': 15 * 60 * 1000, '30m': 30 * 60 * 1000, '1h': 60 * 60 * 1000, '4h': 4 * 60 * 60 * 1000 };
-      const minAgeMs = tfMsMap[state.tf] || 0;
-      const now = Date.now();
-
-      const filteredEntries = entries.filter((e) => {
-        if (now - e.timestamp < minAgeMs) return false;
-        // 固定只顯示已達標
-        if (statusKey(e) !== "pass") return false;
-        if ((e.score || 0) < state.minScore) return false;
-        return true;
+      
+      const groupsMap = {};
+      entries.forEach(e => {
+        if (!groupsMap[e.symbol]) {
+          groupsMap[e.symbol] = { symbol: e.symbol, records: [], firstTime: Infinity };
+        }
+        groupsMap[e.symbol].records.push(e);
+        if (e.timestamp < groupsMap[e.symbol].firstTime) {
+          groupsMap[e.symbol].firstTime = e.timestamp;
+        }
       });
 
+      const groups = Object.values(groupsMap)
+        .filter(g => g.records.length > 1) 
+        .filter(g => {
+          const latest = g.records.sort((a,b) => b.timestamp - a.timestamp)[0];
+          const sKey = statusKey(latest);
+          if ((latest.score || 0) < state.minScore) return false;
+          if (state.mode === 'seed-win') {
+            return latest.gemStatus === 'SEED' && sKey === 'pass';
+          } else {
+            if (sKey === "fail") return false;
+            return true;
+          }
+        });
+
       const updatedAt = state.data.updatedAt || Date.now();
+      const lastGitPush = state.data.lastGitPush || 0;
+      const diffMin = (Date.now() - lastGitPush) / (60 * 1000);
+      
+      let syncStatus = "🔴 STALE";
+      let statusColor = "var(--bad)";
+      if (lastGitPush === 0) { syncStatus = "⚪ WAITING"; statusColor = "var(--ink-dim)"; }
+      else if (diffMin < 10) { syncStatus = "🟢 ONLINE"; statusColor = "var(--ok)"; }
+      else if (diffMin < 30) { syncStatus = "🟠 DELAY"; statusColor = "var(--accent)"; }
+
       let tfLabel = state.tf === "15m" ? "15分" : state.tf === "30m" ? "30分" : state.tf === "1h" ? "1小時" : "4小時";
-      document.getElementById("meta").textContent = `最後同步：${formatTaipei(updatedAt)} | 當前週期：${tfLabel}`;
-      renderEntries(filteredEntries);
+      const metaHtml = `<span style="color: ${statusColor}; font-weight: 700; margin-right: 12px;">${syncStatus}</span>最後同步：${formatTaipei(updatedAt)} | 當前週期：${tfLabel}`;
+
+      const headerMeta = document.getElementById("header-meta");
+      const footerMeta = document.getElementById("meta");
+      if (headerMeta) headerMeta.innerHTML = metaHtml;
+      if (footerMeta) footerMeta.textContent = `最後同步：${formatTaipei(updatedAt)} | 雲端同步：${lastGitPush ? formatTaipei(lastGitPush) : '等待中'}`;
+      
+      renderEntries(groups);
       renderScoreCards(state.data.summary);
     }
 
