@@ -2884,6 +2884,162 @@
       "timestamp": 1778216280218,
       "rank": 47,
       "evaluations": {}
+    },
+    {
+      "id": "ALICE-USDT_1778216287928",
+      "symbol": "ALICE-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 71.08,
+      "explanation": "15m 成交量高於前 20 根均量 166.20%，價格斜率 0.135% / bar",
+      "entryPrice": 0.1474,
+      "timestamp": 1778216287928,
+      "rank": 73,
+      "evaluations": {}
+    },
+    {
+      "id": "QNT-USDT_1778216291474",
+      "symbol": "QNT-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 86.47,
+      "explanation": "15m 成交量高於前 20 根均量 197.84%，價格斜率 0.235% / bar",
+      "entryPrice": 74.39,
+      "timestamp": 1778216291474,
+      "rank": 90,
+      "evaluations": {}
+    },
+    {
+      "id": "LAYER-USDT_1778216300724",
+      "symbol": "LAYER-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 79.6,
+      "explanation": "15m 接近布林上軌 (1.25)，1h 動能 1.00，量能 170.48%",
+      "entryPrice": 0.08899,
+      "timestamp": 1778216300724,
+      "rank": 235,
+      "evaluations": {}
+    },
+    {
+      "id": "THETA-USDT_1778216308539",
+      "symbol": "THETA-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 86.3,
+      "explanation": "15m 接近布林上軌 (1.15)，1h 動能 1.27，量能 392.51%",
+      "entryPrice": 0.2155,
+      "timestamp": 1778216308539,
+      "rank": 313,
+      "evaluations": {}
+    },
+    {
+      "id": "CFX-USDT_1778216308572",
+      "symbol": "CFX-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 60.13,
+      "explanation": "15m 成交量高於前 20 根均量 209.10%，價格斜率 0.036% / bar",
+      "entryPrice": 0.06499,
+      "timestamp": 1778216308572,
+      "rank": 319,
+      "evaluations": {}
+    },
+    {
+      "id": "ZAMA-USDT_1778216314356",
+      "symbol": "ZAMA-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 62.12,
+      "explanation": "15m 成交量高於前 20 根均量 240.64%，價格斜率 0.058% / bar",
+      "entryPrice": 0.0283,
+      "timestamp": 1778216314356,
+      "rank": 338,
+      "evaluations": {}
+    },
+    {
+      "id": "SKY-USDT_1778216317093",
+      "symbol": "SKY-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 60.8,
+      "explanation": "15m 成交量高於前 20 根均量 185.93%，價格斜率 0.065% / bar",
+      "entryPrice": 0.08052,
+      "timestamp": 1778216317093,
+      "rank": 349,
+      "evaluations": {}
+    },
+    {
+      "id": "Q-USDT_1778216324971",
+      "symbol": "Q-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 85.09,
+      "explanation": "15m 接近布林上軌 (1.38)，1h 動能 1.18，量能 391.32%",
+      "entryPrice": 0.010536,
+      "timestamp": 1778216324971,
+      "rank": 419,
+      "evaluations": {}
+    },
+    {
+      "id": "ACH-USDT_1778216611640",
+      "symbol": "ACH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 66.73,
+      "explanation": "15m 成交量高於前 20 根均量 355.21%，價格斜率 0.039% / bar",
+      "entryPrice": 0.008028,
+      "timestamp": 1778216611640,
+      "rank": 179,
+      "evaluations": {}
+    },
+    {
+      "id": "STX-USDT_1778216617734",
+      "symbol": "STX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 64.36,
+      "explanation": "15m 成交量高於前 20 根均量 339.14%，價格斜率 0.110% / bar",
+      "entryPrice": 0.2629,
+      "timestamp": 1778216617734,
+      "rank": 218,
+      "evaluations": {}
+    },
+    {
+      "id": "AVA-USDT_1778216629031",
+      "symbol": "AVA-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 78.67,
+      "explanation": "15m 接近布林上軌 (1.32)，1h 動能 1.04，量能 157.08%",
+      "entryPrice": 0.2819,
+      "timestamp": 1778216629031,
+      "rank": 381,
+      "evaluations": {}
+    },
+    {
+      "id": "FLUID-USDT_1778216632177",
+      "symbol": "FLUID-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 79.36,
+      "explanation": "15m 成交量高於前 20 根均量 228.43%，價格斜率 0.002% / bar",
+      "entryPrice": 1.7113,
+      "timestamp": 1778216632177,
+      "rank": 394,
+      "evaluations": {}
+    },
+    {
+      "id": "RAVE-USDT_1778216909230",
+      "symbol": "RAVE-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 68.25,
+      "explanation": "15m 接近布林上軌 (1.13)，1h 動能 1.18，量能 24.53%",
+      "entryPrice": 0.70825,
+      "timestamp": 1778216909230,
+      "rank": 44,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -2980,5 +3136,5 @@
       }
     }
   },
-  "updatedAt": 1778216280220
+  "updatedAt": 1778216909232
 }
