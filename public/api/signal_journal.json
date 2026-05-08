@@ -127,6 +127,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778205124183
+        },
+        "30m": {
+          "pnlPct": 1.83,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778206979597
         }
       }
     },
@@ -1090,6 +1096,138 @@
       "timestamp": 1778206655788,
       "rank": 19,
       "evaluations": {}
+    },
+    {
+      "id": "BELIEF-USDT_1778206665255",
+      "symbol": "BELIEF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 80.5,
+      "explanation": "15m 成交量高於前 20 根均量 926.12%，價格斜率 0.612% / bar",
+      "entryPrice": 0.0003788,
+      "timestamp": 1778206665255,
+      "rank": 132,
+      "evaluations": {}
+    },
+    {
+      "id": "AGLD-USDT_1778206676497",
+      "symbol": "AGLD-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 61.92,
+      "explanation": "15m 成交量高於前 20 根均量 258.10%，價格斜率 0.019% / bar",
+      "entryPrice": 0.2593,
+      "timestamp": 1778206676497,
+      "rank": 228,
+      "evaluations": {}
+    },
+    {
+      "id": "SIREN-USDT_1778206860016",
+      "symbol": "SIREN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 1,
+      "score": 72.83,
+      "explanation": "急跌 -11.16%，低點反彈 +11.38%，收復 91%",
+      "entryPrice": 1.03622,
+      "timestamp": 1778206860016,
+      "rank": 9,
+      "evaluations": {}
+    },
+    {
+      "id": "BANANAS31-USDT_1778206864808",
+      "symbol": "BANANAS31-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 79.4,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 0.98，量能 109.57%",
+      "entryPrice": 0.012697,
+      "timestamp": 1778206864808,
+      "rank": 44,
+      "evaluations": {}
+    },
+    {
+      "id": "BANK-USDT_1778206868462",
+      "symbol": "BANK-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61,
+      "explanation": "15m 成交量高於前 20 根均量 327.52%，價格斜率 0.170% / bar",
+      "entryPrice": 0.037006,
+      "timestamp": 1778206868462,
+      "rank": 61,
+      "evaluations": {}
+    },
+    {
+      "id": "TAC-USDT_1778206870998",
+      "symbol": "TAC-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 72.99,
+      "explanation": "15m 接近布林上軌 (1.14)，1h 動能 1.38，量能 76.60%",
+      "entryPrice": 0.024003,
+      "timestamp": 1778206870998,
+      "rank": 72,
+      "evaluations": {}
+    },
+    {
+      "id": "HEMI-USDT_1778206877182",
+      "symbol": "HEMI-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 64.37,
+      "explanation": "15m 成交量高於前 20 根均量 437.70%，價格斜率 0.107% / bar",
+      "entryPrice": 0.008029,
+      "timestamp": 1778206877182,
+      "rank": 96,
+      "evaluations": {}
+    },
+    {
+      "id": "OPG-USDT_1778206883998",
+      "symbol": "OPG-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 85.32,
+      "explanation": "15m 接近布林上軌 (1.17)，1h 動能 0.97，量能 221.49%",
+      "entryPrice": 0.2502,
+      "timestamp": 1778206883998,
+      "rank": 146,
+      "evaluations": {}
+    },
+    {
+      "id": "STG-USDT_1778206884086",
+      "symbol": "STG-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.78,
+      "explanation": "15m 成交量高於前 20 根均量 519.64%，價格斜率 0.108% / bar",
+      "entryPrice": 0.2465,
+      "timestamp": 1778206884086,
+      "rank": 143,
+      "evaluations": {}
+    },
+    {
+      "id": "TA-USDT_1778206895815",
+      "symbol": "TA-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 72.65,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.30，量能 96.99%",
+      "entryPrice": 0.05337,
+      "timestamp": 1778206895815,
+      "rank": 233,
+      "evaluations": {}
+    },
+    {
+      "id": "BROCCOLI-USDT_1778207523216",
+      "symbol": "BROCCOLI-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 63.43,
+      "explanation": "15m 接近布林上軌 (1.08)，1h 動能 1.00，量能 29.36%",
+      "entryPrice": 0.01859,
+      "timestamp": 1778207523216,
+      "rank": 201,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -1122,9 +1260,9 @@
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 1,
-        "wins": 0,
-        "winRate": 0
+        "total": 2,
+        "wins": 1,
+        "winRate": 50
       }
     },
     "byStar": {
@@ -1148,11 +1286,11 @@
         "stars": 3,
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 1,
-        "wins": 0,
-        "winRate": 0
+        "total": 2,
+        "wins": 1,
+        "winRate": 50
       }
     }
   },
-  "updatedAt": 1778206655790
+  "updatedAt": 1778207523218
 }
