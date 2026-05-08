@@ -36495,6 +36495,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778252339806
+        },
+        "2h": {
+          "pnlPct": -27.43,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36529,6 +36535,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778252339806
+        },
+        "2h": {
+          "pnlPct": -0.86,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36557,6 +36569,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778252661442
+        },
+        "1h": {
+          "pnlPct": 0.61,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36587,6 +36605,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778252661442
+        },
+        "1h": {
+          "pnlPct": 0.61,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36618,6 +36642,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778252661442
+        },
+        "1h": {
+          "pnlPct": 0.61,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36650,6 +36680,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253202502
+        },
+        "1h": {
+          "pnlPct": 0.61,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36712,6 +36748,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253290249
+        },
+        "1h": {
+          "pnlPct": 3.21,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36740,6 +36782,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253290249
+        },
+        "1h": {
+          "pnlPct": -25.96,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36768,6 +36816,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253260955
+        },
+        "1h": {
+          "pnlPct": -2.19,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36796,6 +36850,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253290249
+        },
+        "1h": {
+          "pnlPct": 1.99,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36824,6 +36884,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778253908619
+        },
+        "1h": {
+          "pnlPct": -8.31,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778255743954
         }
       }
     },
@@ -36840,7 +36906,20 @@
       "stageIndex": 0,
       "history": [],
       "rank": 82,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -6.24,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778255743954
+        },
+        "30m": {
+          "pnlPct": -6.47,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778255743954
+        }
+      }
     },
     {
       "id": "ACH-USDT_1778253792220",
@@ -36857,7 +36936,20 @@
         "15m  內再次推送｜目前 -0.01%"
       ],
       "rank": 81,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -6.24,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778255743954
+        },
+        "30m": {
+          "pnlPct": -6.47,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778255743954
+        }
+      }
     }
   ],
   "summary": {
@@ -36882,17 +36974,17 @@
         "signalType": "量能爆發",
         "horizon": "1h",
         "threshold": 5,
-        "total": 436,
+        "total": 444,
         "wins": 33,
-        "winRate": 7.57
+        "winRate": 7.43
       },
       "量能爆發__2h": {
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 434,
+        "total": 435,
         "wins": 14,
-        "winRate": 3.23
+        "winRate": 3.22
       },
       "量能爆發__4h": {
         "signalType": "量能爆發",
@@ -36930,9 +37022,9 @@
         "signalType": "V轉反彈",
         "horizon": "2h",
         "threshold": 15,
-        "total": 28,
+        "total": 29,
         "wins": 2,
-        "winRate": 7.14
+        "winRate": 6.9
       },
       "V轉反彈__4h": {
         "signalType": "V轉反彈",
@@ -36946,25 +37038,25 @@
         "signalType": "布林突破",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 342,
+        "total": 344,
         "wins": 98,
-        "winRate": 28.65
+        "winRate": 28.49
       },
       "布林突破__30m": {
         "signalType": "布林突破",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 342,
+        "total": 344,
         "wins": 79,
-        "winRate": 23.1
+        "winRate": 22.97
       },
       "布林突破__1h": {
         "signalType": "布林突破",
         "horizon": "1h",
         "threshold": 5,
-        "total": 341,
+        "total": 342,
         "wins": 17,
-        "winRate": 4.99
+        "winRate": 4.97
       },
       "布林突破__2h": {
         "signalType": "布林突破",
@@ -37034,9 +37126,9 @@
       "70-80": {
         "bracket": "70-80",
         "total": 169,
-        "evaluated": 167,
+        "evaluated": 169,
         "wins": 35,
-        "winRate": 20.96
+        "winRate": 20.71
       },
       "80-90": {
         "bracket": "80-90",
@@ -37054,5 +37146,5 @@
       }
     }
   },
-  "updatedAt": 1778255453342
+  "updatedAt": 1778255745350
 }
