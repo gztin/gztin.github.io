@@ -5,14 +5,16 @@
 
 import fs from 'fs';
 import path from 'path';
+import { exec } from 'child_process';
 import { fetchKlines, getMaxLeverage } from '../trading/scanner.js';
 import { bollingerBands, avgVolume } from '../core/indicators.js';
 import { loadCredentials } from '../trading/bingx_trader.js';
 import { loadUserState, saveUserState } from '../core/state_manager.js';
 
-// ?? ??????????????????????????????????????????????????????
+// ?€?€ ?€????€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€?€
 const trackingList = new Map();
-const NOTIFY_STAGES = [0, 5, 30, 60, 240]; 
+const NOTIFY_STAGES = [0, 15, 30, 60, 240]; 
+const PERSISTENT_TRACKING = true; // 是否從日誌恢復追蹤狀態
 const SIGNAL_PUSH_ENABLED = true;
 const DISCORD_STAR_WEBHOOKS = {
     1: process.env.DISCORD_WEBHOOK_URL_STAR_1 || '',
@@ -43,6 +45,8 @@ let lastSummarySentAt = 0;
 const DISCORD_JOURNAL_WEBHOOK_URL = process.env.DISCORD_JOURNAL_WEBHOOK_URL || '';
 const JOURNAL_SEND_INTERVAL_MS = 5 * 60 * 1000;
 let lastJournalSentAt = 0;
+let lastGitPushAt = 0;
+const GIT_PUSH_INTERVAL_MS = 10 * 60 * 1000;
 let latestScanStats = null; // 最近一次掃描結果，供 journal 使用
 
 function maskWebhook(url = '') {
@@ -85,6 +89,28 @@ function writeSignalJournal(journal) {
     } catch (err) {
         console.error('[JOURNAL] failed to mirror public signal journal:', err.message);
     }
+    
+    // Trigger auto git push (throttled)
+    maybeGitPushJournal();
+}
+
+async function maybeGitPushJournal() {
+    const now = Date.now();
+    if (now - lastGitPushAt < GIT_PUSH_INTERVAL_MS) return;
+    lastGitPushAt = now;
+
+    console.log('[GIT] Attempting to push signal journal to web...');
+    // Ensure git is configured in the container
+    const setupCmd = `git config --global user.name "gztin" && git config --global user.email "atharsfake@gmail.com" && git config --global --add safe.directory /app`;
+    const pushCmd = `git add public/api/signal_journal.json && git commit -m "auto: update signal journal [bot]" && git push`;
+    
+    exec(`${setupCmd} && ${pushCmd}`, { cwd: process.cwd() }, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`[GIT] Push failed: ${error.message}`);
+            return;
+        }
+        console.log(`[GIT] Push success: ${stdout.split('\n')[0]}`);
+    });
 }
 
 function formatSummaryMessage(journal = {}) {
@@ -100,11 +126,6 @@ function formatSummaryMessage(journal = {}) {
         }
     }
 
-    const horizons = [
-        { key: '15m', label: '15m' },
-        { key: '30m', label: '30m' },
-        { key: '1h', label: '60m' },
-    ];
     const fmtPct = (v) => {
         if (typeof v !== 'number' || Number.isNaN(v)) return '0%';
         const rounded = Math.round(v * 100) / 100;
@@ -116,20 +137,13 @@ function formatSummaryMessage(journal = {}) {
     for (const entry of latestBySymbol.values()) {
         const symbol = entry.symbol.replace('-USDT', '');
         const evaluations = entry.evaluations || {};
-        const segments = horizons.map(({ key, label }) => {
-            const result = evaluations[key];
-            if (!result || typeof result.win !== 'boolean') return `${label}:評估中`;
-            const status = result.win ? '達標' : '未達標';
-            return `${label}:${status}(${fmtPct(result.pnlPct)})`;
-        });
         const r1h = evaluations['1h'];
         const state60m = !r1h || typeof r1h.win !== 'boolean'
             ? 'pending'
             : (r1h.win ? 'pass' : 'fail');
         const pnl60m = (r1h && typeof r1h.pnlPct === 'number') ? r1h.pnlPct : null;
-        rows.push({ symbol, stars: Number(entry.stars || 1), segments, state60m, pnl60m });
+        rows.push({ symbol, score: entry.score || 0, state60m, pnl60m });
     }
-    if (!rows.length) return 'Signal Summary\n\n暫無可用統計資料';
 
     const passCount = rows.filter(r => r.state60m === 'pass').length;
     const failCount = rows.filter(r => r.state60m === 'fail').length;
@@ -139,63 +153,83 @@ function formatSummaryMessage(journal = {}) {
         .filter(r => r.state60m === 'pass')
         .sort((a, b) => (b.pnl60m ?? 0) - (a.pnl60m ?? 0))
         .slice(0, 5)
-        .map(r => `${r.symbol} ${fmtPct(r.pnl60m)}   ${'⭐️'.repeat(Math.max(1, Math.min(3, Number(r.stars || 1))))}`);
+        .map(r => `${r.symbol} ${fmtPct(r.pnl60m)}   Score: ${r.score.toFixed(1)}`);
 
-    const failByStars = new Map([
-        [1, []],
-        [2, []],
-        [3, []],
-    ]);
-    rows
-        .filter(r => r.state60m === 'fail')
-        .sort((a, b) => (a.pnl60m ?? 0) - (b.pnl60m ?? 0))
-        .forEach((r) => {
-            const star = Math.max(1, Math.min(3, Number(r.stars || 1)));
-            failByStars.get(star).push(`${r.symbol} (${fmtPct(r.pnl60m)})`);
-        });
-
-    const sections = [];
-    const starStats = new Map([
-        [1, { total: 0, pass: 0 }],
-        [2, { total: 0, pass: 0 }],
-        [3, { total: 0, pass: 0 }],
-    ]);
-    rows.forEach((r) => {
-        const star = Math.max(1, Math.min(3, Number(r.stars || 1)));
-        const stat = starStats.get(star);
-        stat.total += 1;
-        if (r.state60m === 'pass') stat.pass += 1;
-    });
-
-    sections.push('Signal Summary');
-    sections.push('');
+    const sections = ['Signal Summary', ''];
     sections.push(`總覽: 達標 ${passCount} / 未達標 ${failCount} / 評估中 ${pendingCount}`);
+    
     if (topPasses.length) {
-        sections.push('');
-        sections.push('表現最好 (60m 達標):');
+        sections.push('', '表現最好 (1h 達標):');
         sections.push(...topPasses);
     }
-    sections.push('');
-    [1, 2, 3].forEach((star) => {
-        const stat = starStats.get(star);
-        const label = '⭐️'.repeat(star);
-        sections.push(`${label}   達標率${stat.pass}/${stat.total}`);
+
+    sections.push('', '分數段勝率統計 (15m 基準):');
+    const brackets = journal.summary?.byScoreBracket || {};
+    const keys = ['60-70', '70-80', '80-90', '90-100'];
+    keys.forEach(k => {
+        const b = brackets[k] || { wins: 0, total: 0, winRate: 0 };
+        sections.push(`- ${k} 分: 勝率 ${b.winRate}% (${b.wins}/${b.total})`);
     });
-    sections.push('');
-    sections.push(`更新時間: ${new Date().toLocaleString('zh-TW', { hour12: false, timeZone: 'Asia/Taipei' })}`);
+
+    sections.push('', `更新時間: ${new Date().toLocaleString('zh-TW', { hour12: false, timeZone: 'Asia/Taipei' })}`);
     return sections.join('\n');
 }
+
+const MAX_JOURNAL_ENTRIES = 2000;
 
 function appendSignalJournalEntry(payload) {
     const journal = readSignalJournal();
     journal.entries.push(payload);
+    
+    // 如果資料量過大，進行裁切並封存
+    if (journal.entries.length > MAX_JOURNAL_ENTRIES) {
+        const removed = journal.entries.splice(0, journal.entries.length - MAX_JOURNAL_ENTRIES);
+        archiveSignals(removed);
+    }
+    
+    updateSignalSummary(journal);
     writeSignalJournal(journal);
+}
+
+function archiveSignals(entries) {
+    try {
+        const historyFile = path.join(getDataDir(), 'signal_history.ndjson');
+        const lines = entries.map(e => JSON.stringify(e)).join('\n') + '\n';
+        fs.appendFileSync(historyFile, lines, 'utf-8');
+    } catch (err) {
+        console.error('[ARCHIVE] 封存失敗:', err.message);
+    }
 }
 
 function updateSignalSummary(journal) {
     const byType = {};
-    const byStar = {};
+    const byScoreBracket = {
+        '60-70': { bracket: '60-70', total: 0, evaluated: 0, wins: 0, winRate: 0 },
+        '70-80': { bracket: '70-80', total: 0, evaluated: 0, wins: 0, winRate: 0 },
+        '80-90': { bracket: '80-90', total: 0, evaluated: 0, wins: 0, winRate: 0 },
+        '90-100': { bracket: '90-100', total: 0, evaluated: 0, wins: 0, winRate: 0 },
+    };
+
     for (const entry of journal.entries) {
+        // 分數區間歸類
+        const score = entry.score || 0;
+        let bracket = null;
+        if (score >= 90) bracket = '90-100';
+        else if (score >= 80) bracket = '80-90';
+        else if (score >= 70) bracket = '70-80';
+        else if (score >= 60) bracket = '60-70';
+
+        if (bracket) {
+            byScoreBracket[bracket].total += 1;
+            if (entry.evaluations) {
+                const ev15m = entry.evaluations['15m'];
+                if (ev15m && typeof ev15m.win === 'boolean') {
+                    byScoreBracket[bracket].evaluated += 1;
+                    if (ev15m.win) byScoreBracket[bracket].wins += 1;
+                }
+            }
+        }
+
         if (!entry.evaluations) continue;
         for (const [horizon, result] of Object.entries(entry.evaluations)) {
             if (!result || typeof result.win !== 'boolean') continue;
@@ -210,29 +244,17 @@ function updateSignalSummary(journal) {
             };
             byType[typeKey].total += 1;
             if (result.win) byType[typeKey].wins += 1;
-
-            const starKey = `${entry.stars}__${horizon}`;
-            if (!byStar[starKey]) byStar[starKey] = {
-                stars: entry.stars,
-                horizon,
-                threshold: result.threshold,
-                total: 0,
-                wins: 0,
-                winRate: 0,
-            };
-            byStar[starKey].total += 1;
-            if (result.win) byStar[starKey].wins += 1;
         }
     }
-    for (const key of Object.keys(byType)) {
-        const row = byType[key];
-        row.winRate = row.total > 0 ? Number((row.wins / row.total * 100).toFixed(2)) : 0;
-    }
-    for (const key of Object.keys(byStar)) {
-        const row = byStar[key];
-        row.winRate = row.total > 0 ? Number((row.wins / row.total * 100).toFixed(2)) : 0;
-    }
-    journal.summary = { byType, byStar };
+
+    Object.values(byScoreBracket).forEach(b => {
+        b.winRate = b.evaluated > 0 ? Number(((b.wins / b.evaluated) * 100).toFixed(2)) : 0;
+    });
+    Object.values(byType).forEach(t => {
+        t.winRate = t.total > 0 ? Number(((t.wins / t.total) * 100).toFixed(2)) : 0;
+    });
+
+    journal.summary = { byType, byScoreBracket };
 }
 
 function queueDiscordSignal(sendDiscordMessage, message, options) {
@@ -441,7 +463,8 @@ function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, 
     return candidates.sort((a, b) => b.score - a.score)[0] || null;
 }
 
-function formatSignalExplanation(explanation = '') {
+function formatSignalExplanation(explanation) {
+    if (Array.isArray(explanation)) return explanation.join('\n');
     return String(explanation)
         .replace(/，/g, '\n')
         .replace(/\s\/\s/g, '\n')
@@ -466,11 +489,15 @@ async function evaluatePendingSignals() {
         for (const horizon of horizons) {
             if (entry.evaluations[horizon.key]) continue;
             if (ageMs < horizon.ms) continue;
-            const klines = await fetchKlines(entry.symbol.replace('-USDT', ''), horizon.key, 2).catch(() => null);
-            if (!klines || klines.length < 2) continue;
+            const klines = await fetchKlines(entry.symbol.replace('-USDT', ''), horizon.key, 50).catch(() => null);
+            if (!klines || klines.length < 2) {
+                console.log(`[EVAL] ${entry.symbol} ${horizon.key} fetch failed or too short`);
+                continue;
+            }
             const latestClose = parseFloat(klines[klines.length - 1][4]);
             if (!latestClose || !entry.entryPrice) continue;
             const pnlPct = ((latestClose - entry.entryPrice) / entry.entryPrice) * 100;
+            console.log(`[EVAL] ${entry.symbol} ${horizon.key} success: ${pnlPct.toFixed(2)}%`);
             const threshold = SIGNAL_WIN_THRESHOLDS[horizon.key] || 0;
             entry.evaluations[horizon.key] = {
                 pnlPct: Number(pnlPct.toFixed(2)),
@@ -623,11 +650,38 @@ export async function bollingerScan(coins, ctx) {
 
                 let track = trackingList.get(t.symbol);
                 let shouldNotify = false;
+                let progressReport = "";
 
                 if (!track) {
-                    track = { stageIndex: 0, nextNotifyAt: now + NOTIFY_STAGES[1] * 60 * 1000, lastSeenAt: now };
+                    // 嘗試從日誌找最近一小時內的紀錄，看是否要銜接追蹤
+                    const journal = readSignalJournal();
+                    const lastEntry = journal.entries.slice().reverse().find(e => e.symbol === t.symbol && (now - e.timestamp < 4 * 60 * 60 * 1000));
+                    
+                    if (lastEntry) {
+                        // 銜接舊追蹤 (如果已經推送過，判斷是否到下個階段)
+                        const stageIndex = lastEntry.stageIndex || 0;
+                        const firstTimestamp = lastEntry.firstTimestamp || lastEntry.timestamp;
+                        const nextStageTime = firstTimestamp + NOTIFY_STAGES[stageIndex + 1] * 60 * 1000;
+                        
+                        track = { 
+                            stageIndex, 
+                            nextNotifyAt: stageIndex + 1 < NOTIFY_STAGES.length ? nextStageTime : Infinity, 
+                            lastSeenAt: now,
+                            entryPrice: lastEntry.entryPrice,
+                            firstTimestamp
+                        };
+                    } else {
+                        // 完全新訊號
+                        track = { 
+                            stageIndex: 0, 
+                            nextNotifyAt: now + NOTIFY_STAGES[1] * 60 * 1000, 
+                            lastSeenAt: now,
+                            entryPrice: t.price,
+                            firstTimestamp: now
+                        };
+                        shouldNotify = true;
+                    }
                     trackingList.set(t.symbol, track);
-                    shouldNotify = true;
                 } else {
                     track.lastSeenAt = now;
                     if (now >= track.nextNotifyAt) {
@@ -636,6 +690,14 @@ export async function bollingerScan(coins, ctx) {
                             const wait = (NOTIFY_STAGES[track.stageIndex + 1] || Infinity) - NOTIFY_STAGES[track.stageIndex];
                             track.nextNotifyAt = wait === Infinity ? Infinity : (now + wait * 60 * 1000);
                             shouldNotify = true;
+                            
+                            // 計算累積表現
+                            const currentPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
+                            const stageName = NOTIFY_STAGES[track.stageIndex] === 0 ? "首次推送" : `${NOTIFY_STAGES[track.stageIndex]}m 內再次推送`;
+                            progressReport = `\n📊 追蹤表現：\n`;
+                            // 這裡模擬顯示之前的進度（實際應從 journal 拿或記錄在 track）
+                            // 簡化版：只顯示目前相對首次推送的獲利
+                            progressReport += `首次推送以來 ｜ 目前 ${currentPnl > 0 ? '+' : ''}${currentPnl.toFixed(2)}%\n`;
                         }
                     }
                 }
@@ -662,35 +724,29 @@ export async function bollingerScan(coins, ctx) {
                         : '';
 
                     const fmtPct = (value) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
-                    const starLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
-                    const cleanStarLabels = { 1: '⭐️ (潛力級)', 2: '⭐️⭐️ (趨勢級)', 3: '⭐️⭐️⭐️ (爆發級)' };
                     const symbolName = t.symbol.replace('-USDT', '');
+                    const scoreStr = signalProfile.score.toFixed(1);
 
-                    const msg = `${'*'.repeat(stars)} ${t.symbol} ${fmtPct(t.change)} rank ${rankDesc}`;
-
-                    const cleanDescription = `${symbolName} ${fmtPct(t.change)}  排名 ${rankDesc}\n型態 : ${signalProfile.type}\n\n` +
+                    const cleanDescription = `[綜合分數: ${scoreStr}]\n${symbolName} ${fmtPct(t.change)}  排名 ${rankDesc}\n型態 : ${signalProfile.type}\n\n` +
                         `${formatSignalExplanation(signalProfile.explanation)}\n\n` +
                         `K線變化 30m / 1h / 4h\n` +
                         `${fmtPct(ch30m)} / ${fmtPct(ch1h)} / ${fmtPct(ch4h)}\n\n` +
                         `交易量 : ${fmtPct(volChange)}\n` +
-                        `綜合分數 : ${signalProfile.score.toFixed(1)}\n` +
                         `${new Date().toLocaleString('zh-TW', { hour12: true })}`;
-                    const discordMsg = `${starLabels[stars] || starLabels[1]}\n` +
-                        `${symbolName}\n` +
+
+                    const discordMsg = `Entry Score: ${scoreStr}\n` +
+                        `**${symbolName}** ${fmtPct(t.change)}\n` +
                         `型態：${signalProfile.type}\n` +
-                        `說明：${signalProfile.explanation}\n` +
-                        `漲幅：${fmtPct(t.change)}\n` +
-                        `排名：${rankDesc}\n\n` +
-                        `K線：\n` +
-                        `30m : ${fmtPct(ch30m)}\n` +
-                        `1h : ${fmtPct(ch1h)}\n` +
-                        `4h : ${fmtPct(ch4h)}\n\n` +
+                        `說明：\n${formatSignalExplanation(signalProfile.explanation)}\n` +
+                        `排名：${rankDesc}\n` +
+                        (progressReport || "") + "\n" +
+                        `K線變動：30m ${fmtPct(ch30m)} / 1h ${fmtPct(ch1h)} / 4h ${fmtPct(ch4h)}\n` +
                         `交易量：${fmtPct(volChange)}`;
 
                     const replyMarkup = {
                         inline_keyboard: [[
-                            { text: '分析', callback_data: `check_${t.symbol.replace('-USDT','')}` },
-                            { text: '追蹤', callback_data: `trace_${t.symbol.replace('-USDT','')}` },
+                            { text: '分析', callback_data: `check_${symbolName}` },
+                            { text: '追蹤', callback_data: `trace_${symbolName}` },
                             { text: '加入觀察', callback_data: `watch_add_${t.symbol}_${t.price}_${stars}` }
                         ]]
                     };
@@ -703,27 +759,43 @@ export async function bollingerScan(coins, ctx) {
                             stars,
                             score: Number(signalProfile.score.toFixed(2)),
                             explanation: signalProfile.explanation,
-                            entryPrice: t.price,
+                            entryPrice: track?.entryPrice || t.price,
                             timestamp: Date.now(),
+                            firstTimestamp: track?.firstTimestamp || Date.now(),
+                            stageIndex: track?.stageIndex || 0,
                             rank: currentRank,
                             evaluations: {},
                         });
+                        
                         if (sendDiscordMessage) {
+                            const majorCaps = ['BTC', 'ETH', 'BNB', 'XRP', 'SOL', 'ADA', 'DOGE', 'TRX', 'AVAX', 'LINK'];
+                            const isMajor = majorCaps.some(cap => t.symbol.startsWith(cap));
+                            const webhookUrl = isMajor 
+                                ? (process.env.DISCORD_WEBHOOK_MAJOR || DISCORD_STAR_WEBHOOKS[stars])
+                                : (process.env.DISCORD_WEBHOOK_ALT || DISCORD_STAR_WEBHOOKS[stars]);
+
                             await queueDiscordSignal(sendDiscordMessage, discordMsg, {
-                                username: `gem0507-${stars}star`,
-                                webhookUrl: DISCORD_STAR_WEBHOOKS[stars],
-                                sourceTag: `star-${stars}`,
+                                username: `Gems-${isMajor ? 'Major' : 'Alt'} ${scoreStr}`,
+                                webhookUrl: webhookUrl,
+                                sourceTag: `signal-${scoreStr}`,
                                 embeds: [{
-                                    title: cleanStarLabels[stars] || cleanStarLabels[1],
-                                    description: cleanDescription,
-                                    color: DISCORD_STAR_COLORS[stars] || DISCORD_STAR_COLORS[1],
-                                    fields: [],
+                                    title: `${isMajor ? '🏛️ 主流幣' : '🚀 小幣'} ${symbolName} 訊號推送`,
+                                    description: discordMsg,
+                                    color: signalProfile.score >= 80 ? 0x00ff00 : 0xcccccc,
                                     timestamp: new Date().toISOString(),
                                 }],
                             });
-                        } else {
-                            await sendMessage(momentum_channel || '931709772', msg, { parse_mode: 'Markdown', omitLabel: true, replyMarkup });
                         }
+                        // Telegram 推送 (格式比照 Discord)
+                        const tgMsg = `🚀 *Entry Score: ${scoreStr}*\n` +
+                                     `*${symbolName}*  ${fmtPct(t.change)}\n` +
+                                     `型態：${signalProfile.type}\n` +
+                                     `說明：\n${formatSignalExplanation(signalProfile.explanation)}\n` +
+                                     `排名：${rankDesc}\n\n` +
+                                     `K線變動：30m ${fmtPct(ch30m)} / 1h ${fmtPct(ch1h)} / 4h ${fmtPct(ch4h)}\n` +
+                                     `交易量：${fmtPct(volChange)}`;
+                                     
+                        await sendMessage(momentum_channel || '931709772', tgMsg, { parse_mode: 'Markdown', omitLabel: true, replyMarkup });
                     }
                 }
 

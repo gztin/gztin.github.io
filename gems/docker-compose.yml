@@ -19,5 +19,6 @@ services:
       - ./public:/app/public
       - ./BOT_CHANGELOG.md:/app/BOT_CHANGELOG.md
       - ./ignoreCommit:/app/ignoreCommit
+      - ../.git:/app/.git
     network_mode: host
     restart: unless-stopped

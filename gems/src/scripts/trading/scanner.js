@@ -23,7 +23,7 @@ const SPECIAL_PREFIX = ['NC', 'PAXG', 'XAUT'];
 function isValidBingxSymbol(symbol) {
     if (!symbol.endsWith('-USDT')) return false;
     const base = symbol.replace('-USDT', '');
-    if (BIG_CAPS.has(base)) return false;
+    // 移除對 BIG_CAPS 的排除，讓主流幣也能進入掃描流程
     if (SPECIAL_PREFIX.some(p => base.startsWith(p))) return false;
     if (/^\d/.test(base)) return false; // 數字開頭（1000PEPE 等）
     if (['UP', 'DOWN', 'BULL', 'BEAR'].some(s => base.endsWith(s))) return false;

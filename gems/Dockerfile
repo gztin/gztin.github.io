@@ -11,7 +11,8 @@ RUN apk add --no-cache \
     jpeg-dev \
     giflib-dev \
     librsvg-dev \
-    font-noto-cjk
+    font-noto-cjk \
+    git
 
 WORKDIR /app
 

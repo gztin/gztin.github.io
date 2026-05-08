@@ -3,116 +3,369 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Signal Dashboard</title>
-  <link rel="stylesheet" href="https://impeccable.style/downloads/impeccable.min.css" />
+  <title>Gems 訊號情報系統</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Instrument+Sans:wght@400;600&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    :root { --bg:#0f1320; --panel:#151c2b; --line:#2a3550; --text:#f5f7fa; --muted:#99a7c2; --ok:#39d98a; --bad:#ff6b6b; --accent:#4da3ff; }
-    :root[data-theme="light"] { --bg:#f4f7ff; --panel:#ffffff; --line:#d7e0f3; --text:#1f2a44; --muted:#63718f; --ok:#198754; --bad:#c62828; --accent:#2b6dff; }
-    * { box-sizing:border-box; }
-    body { margin:0; color:var(--text); background:radial-gradient(1200px 500px at 20% -10%, color-mix(in oklab, var(--accent) 18%, var(--bg)) 0%, var(--bg) 55%); font-family:"Segoe UI","Noto Sans TC",sans-serif; }
-    .wrap { max-width:1260px; margin:0 auto; padding:20px; }
-    h1 { margin:0 0 14px; font-size:24px; line-height:1.15; }
-    .sub { color:var(--muted); }
-    .toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:12px 0 14px; }
-    .chip { border:1px solid var(--line); background:var(--panel); color:var(--text); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:14px; }
-    .chip.active { border-color:var(--accent); background:color-mix(in oklab, var(--accent) 18%, var(--panel)); }
-    .group { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
-    label { color:var(--muted); font-size:14px; }
-    select { margin-left:6px; padding:7px 10px; background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:8px; min-height:40px; }
-    .meta { margin-left:auto; white-space:nowrap; }
-    .card { background:linear-gradient(180deg, #171f31 0%, #141a28 100%); border:1px solid var(--line); border-radius:10px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,.22); margin-bottom:14px; }
-    .card h2 { margin:0 0 10px; font-size:18px; }
-    table { width:100%; border-collapse:collapse; font-size:15px; }
-    th, td { border-bottom:1px solid var(--line); padding:11px 8px; }
-    th { color:var(--muted); text-align:left; }
-    #entryTable th:nth-child(1), #entryTable td:nth-child(1) { width:33.33%; text-align:left; }
-    #entryTable th:nth-child(2), #entryTable td:nth-child(2) { width:33.33%; text-align:center; }
-    #entryTable th:nth-child(3), #entryTable td:nth-child(3) { width:33.33%; text-align:right; }
-    .mono { font-family:Consolas,"Courier New",monospace; }
-    .ok { color:var(--ok); }
-    .bad { color:var(--bad); }
-    tbody tr:hover { background:rgba(77,163,255,.08); }
-    .stats-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
-    .stat { border:1px solid var(--line); border-radius:10px; background:#10192a; padding:12px; }
-    .stat-title { color:var(--muted); font-size:13px; margin-bottom:4px; }
-    .stat-rate { font-size:24px; font-weight:700; }
-    .stat-meta { color:var(--muted); font-size:13px; margin-top:4px; }
-    @media (max-width:900px) {
-      .meta { width:100%; margin-left:0; }
-      .stats-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
-      .stat { padding:10px; }
-      .stat-rate { font-size:20px; }
-      .stat-meta { font-size:12px; }
+    :root {
+      --paper: oklch(12% 0 0);
+      --ink: oklch(95% 0 0);
+      --ink-dim: oklch(65% 0 0);
+      --ink-border: oklch(25% 0 0);
+      --accent: oklch(70% 0.1 200);
+      --ok: oklch(75% 0.15 150);
+      --bad: oklch(65% 0.15 25);
+      --surface: oklch(16% 0 0);
+      
+      --font-display: "Instrument Sans", sans-serif;
+      --font-body: "Space Grotesk", sans-serif;
+      --font-mono: "Space Grotesk", monospace;
+      --font-cyber: "Michroma", sans-serif;
     }
-    @media (max-width:640px) {
-      .wrap { padding:14px; }
-      h1 { font-size:20px; margin-bottom:12px; }
-      .toolbar { gap:8px; }
-      .group { width:100%; }
-      .group:first-child { justify-content:space-between; }
-      .group:first-child .chip { flex:1 1 calc(25% - 6px); text-align:center; padding:8px 0; }
-      .group:nth-child(2) label { width:100%; display:flex; align-items:center; justify-content:space-between; gap:8px; }
-      .group:nth-child(2) select { width:58%; margin-left:0; }
-      .meta { font-size:13px; line-height:1.35; }
-      .card { padding:10px; border-radius:9px; }
-      .card h2 { font-size:16px; }
-      table { font-size:13px; }
-      th, td { padding:9px 6px; }
-      #entryTable th:nth-child(1), #entryTable td:nth-child(1) { width:40%; }
-      #entryTable th:nth-child(2), #entryTable td:nth-child(2) { width:25%; }
-      #entryTable th:nth-child(3), #entryTable td:nth-child(3) { width:35%; }
+
+    :root[data-theme="light"] {
+      --paper: oklch(98% 0 0);
+      --ink: oklch(12% 0 0);
+      --ink-dim: oklch(45% 0 0);
+      --ink-border: oklch(85% 0 0);
+      --surface: oklch(94% 0 0);
+      --accent: oklch(50% 0.15 250);
+      --ok: oklch(60% 0.15 150);
+    }
+
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 60px 24px; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 60px;
+      border-bottom: 1px solid var(--ink-border);
+      padding-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .sub-brand {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--ink-dim);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--ink-border);
+      border: 1px solid var(--ink-border);
+      margin-bottom: 64px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .stat {
+      background: var(--paper);
+      padding: 24px;
+      transition: background 0.2s ease;
+    }
+
+    .stat:hover { background: var(--surface); }
+
+    .stat-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-dim);
+      margin-bottom: 12px;
+    }
+
+    .stat-rate {
+      font-family: var(--font-cyber);
+      font-size: 32px;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-meta {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--ink-dim);
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-bottom: 48px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--ink-border);
+      border-radius: 12px;
+      align-items: center;
+    }
+
+    .group { display: flex; flex-direction: column; gap: 8px; }
+    .group label { font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-dim); }
+
+    .chip-group { display: flex; gap: 1px; background: var(--ink-border); border: 1px solid var(--ink-border); }
+    .chip {
+      background: var(--paper);
+      border: none;
+      color: var(--ink-dim);
+      padding: 10px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip:hover { color: var(--ink); background: var(--surface); }
+    .chip.active { background: var(--ink); color: var(--paper); }
+
+    select {
+      background: var(--paper);
+      color: var(--ink);
+      border: 1px solid var(--ink-border);
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      min-width: 160px;
+      outline: none;
+    }
+
+    .help-btn {
+      background: transparent;
+      border: 1px solid var(--ink-border);
+      color: var(--ink-dim);
+      padding: 10px 16px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .help-btn:hover { border-color: var(--ink); color: var(--ink); background: var(--surface); }
+
+    .icon-btn {
+      background: var(--surface);
+      border: 1px solid var(--ink-border);
+      color: var(--ink);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { border-color: var(--ink); transform: scale(1.05); }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+    }
+    .modal-content {
+      background-color: var(--paper);
+      margin: 10% auto;
+      padding: 0;
+      border: 1px solid var(--ink-border);
+      width: 90%;
+      max-width: 500px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.5);
+    }
+    .modal-header {
+      padding: 20px 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--ink-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { margin: 0; font-size: 18px; font-family: var(--font-cyber); color: var(--ink); }
+    .close { color: var(--ink-dim); font-size: 28px; font-weight: bold; cursor: pointer; }
+    .close:hover { color: var(--ink); }
+    .modal-body { padding: 24px; color: var(--ink); }
+    .help-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    .help-table th, .help-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--ink-border); font-family: var(--font-mono); font-size: 14px; }
+    .help-table th { color: var(--ink-dim); font-size: 11px; text-transform: uppercase; }
+
+    .table-card { margin-top: 48px; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-dim);
+      text-align: left;
+      padding: 16px 8px;
+      border-bottom: 1px solid var(--ink-border);
+    }
+    th.sortable { cursor: pointer; user-select: none; transition: color 0.2s; }
+    th.sortable:hover { color: var(--ink); }
+    td { padding: 20px 8px; border-bottom: 1px solid var(--ink-border); font-size: 15px; }
+    .mono { font-family: var(--font-mono); font-weight: 700; }
+    .score-badge { font-family: var(--font-cyber); font-size: 16px; color: var(--ink); }
+    .ok { color: var(--ok); }
+    .bad { color: var(--bad); }
+
+    .meta-info {
+      margin-top: 40px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 40px 16px; }
+      h1 { font-size: 32px; }
+      header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .toolbar { gap: 16px; padding: 16px; }
+      .stat-rate { font-size: 28px; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Signal Dashboard</h1>
-    <div class="card">
-      <h2>統計資訊 (60m)</h2>
-      <div class="stats-grid" id="starCards"></div>
-    </div>
+    <header>
+      <div>
+        <div class="sub-brand">智能監控系統</div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <h1>Gems 訊號</h1>
+          <button id="themeToggleBtn" class="icon-btn" title="切換主題">🌙</button>
+        </div>
+      </div>
+    </header>
+
     <div class="toolbar">
       <div class="group">
-        <button class="chip active" data-tf="15m">15m</button>
-        <button class="chip" data-tf="30m">30m</button>
-        <button class="chip" data-tf="1h">1h</button>
-        <button class="chip" data-tf="4h">4h</button>
+        <label>時間週期</label>
+        <div class="chip-group">
+          <button class="chip active" data-tf="15m">15分</button>
+          <button class="chip" data-tf="30m">30分</button>
+          <button class="chip" data-tf="1h">1小時</button>
+          <button class="chip" data-tf="4h">4小時</button>
+        </div>
       </div>
       <div class="group">
-        <label>模式
-          <select id="themeToggle">
-            <option value="dark">Dark</option>
-            <option value="light">Light</option>
-          </select>
-        </label>
-        <label>是否達標<select id="statusFilter"><option value="pass" selected>達標</option><option value="fail">未達標</option><option value="pending">評估中</option><option value="all">全顯示</option></select></label>
-        <label>星等<select id="starFilter"><option value="all" selected>全顯示</option><option value="1">⭐</option><option value="2">⭐⭐</option><option value="3">⭐⭐⭐</option></select></label>
-        <label>型態<select id="typeFilter"><option value="all" selected>全顯示</option></select></label>
+        <label>進場門檻 (綜合分數)</label>
+        <select id="scoreFilter">
+          <option value="60" selected>60+ (基礎級)</option>
+          <option value="70">70+ (優質級)</option>
+          <option value="80">80+ (精選級)</option>
+          <option value="90">90+ (極致級)</option>
+        </select>
       </div>
-      <div class="meta sub" id="meta">Loading...</div>
+      <div class="group">
+        <button id="helpBtn" class="help-btn">📖 達標門檻標準</button>
+      </div>
     </div>
 
-    <div class="card">
-      <h2>信號明細</h2>
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📊 達標標準說明</h3>
+          <span class="close" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>訊號進場後，在指定時間內達到以下漲幅即判定為「達標」：</p>
+          <table class="help-table">
+            <thead>
+              <tr><th>週期</th><th>達標漲幅門檻</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>15 分鐘 (15m)</td><td>+ 0.8%</td></tr>
+              <tr><td>30 分鐘 (30m)</td><td>+ 1.5%</td></tr>
+              <tr><td>1 小時 (1h)</td><td>+ 5.0%</td></tr>
+              <tr><td>2 小時 (2h)</td><td>+ 15.0%</td></tr>
+              <tr><td>4 小時 (4h)</td><td>+ 25.0%</td></tr>
+            </tbody>
+          </table>
+          <p style="font-size: 12px; color: var(--ink-dim); margin-top: 16px;">* 價格數據以 BingX 交易所之標記價格為準。</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="section-container">
+      <div class="stats-grid" id="scoreCards"></div>
+    </div>
+
+    <div class="table-card">
       <table id="entryTable">
-        <thead><tr><th>幣種</th><th>漲跌幅</th><th>推送時間</th></tr></thead>
+        <thead>
+          <tr>
+            <th>資產項目</th>
+            <th class="sortable" id="sortScore">進場分數 ↕</th>
+            <th>價格變動</th>
+            <th class="sortable" id="sortTime">推送時間 ↕</th>
+          </tr>
+        </thead>
         <tbody></tbody>
       </table>
     </div>
+
+    <div class="meta-info" id="meta">資料同步中...</div>
   </div>
 
   <script>
     const DEFAULT_TIMEZONE = "Asia/Taipei";
-    const state = { tf: "15m", data: null, status: "pass", star: "all", type: "all" };
+    const state = { tf: "15m", data: null, status: "pass", minScore: 60, sortKey: 'timestamp', sortOrder: 'desc' };
     const chips = Array.from(document.querySelectorAll(".chip"));
-    const statusFilter = document.getElementById("statusFilter");
-    const starFilter = document.getElementById("starFilter");
-    const typeFilter = document.getElementById("typeFilter");
-    const themeToggle = document.getElementById("themeToggle");
+    const scoreFilter = document.getElementById("scoreFilter");
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const helpBtn = document.getElementById("helpBtn");
+    const helpModal = document.getElementById("helpModal");
+    const closeModal = document.getElementById("closeModal");
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("gems_theme", theme);
+      themeToggleBtn.textContent = theme === "dark" ? "🌙" : "☀️";
+    }
 
     const savedTheme = localStorage.getItem("gems_theme") || "dark";
-    document.documentElement.setAttribute("data-theme", savedTheme);
-    themeToggle.value = savedTheme;
+    setTheme(savedTheme);
+
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "dark";
+      setTheme(current === "dark" ? "light" : "dark");
+    });
 
     chips.forEach((chip) => chip.addEventListener("click", () => {
       chips.forEach(c => c.classList.remove("active"));
@@ -120,87 +373,85 @@
       state.tf = chip.dataset.tf;
       render();
     }));
-    statusFilter.addEventListener("change", () => { state.status = statusFilter.value; render(); });
-    starFilter.addEventListener("change", () => { state.star = starFilter.value; render(); });
-    typeFilter.addEventListener("change", () => { state.type = typeFilter.value; render(); });
-    themeToggle.addEventListener("change", () => {
-      document.documentElement.setAttribute("data-theme", themeToggle.value);
-      localStorage.setItem("gems_theme", themeToggle.value);
-    });
+    scoreFilter.addEventListener("change", () => { state.minScore = Number(scoreFilter.value); render(); });
+
+    helpBtn.onclick = () => { helpModal.style.display = "block"; }
+    closeModal.onclick = () => { helpModal.style.display = "none"; }
+    window.onclick = (event) => { if (event.target == helpModal) helpModal.style.display = "none"; }
+
+    document.getElementById("sortTime").onclick = () => {
+      state.sortKey = 'timestamp'; state.sortOrder = state.sortOrder === 'desc' ? 'asc' : 'desc'; render();
+    };
+    document.getElementById("sortScore").onclick = () => {
+      state.sortKey = 'score'; state.sortOrder = state.sortOrder === 'desc' ? 'asc' : 'desc'; render();
+    };
 
     function formatTaipei(ts) { return new Date(ts).toLocaleString("zh-TW", { timeZone: DEFAULT_TIMEZONE, hour12: false }); }
     function evalForTf(entry) { return (entry.evaluations || {})[state.tf] || null; }
-    function changePct(entry) { const r = evalForTf(entry); return r && typeof r.pnlPct === "number" ? r.pnlPct : 0; }
-    function statusKey(entry) { const r = evalForTf(entry); if (!r) return "pending"; return r.win ? "pass" : "fail"; }
-
-    function summarizeStarRate60m(entries) {
-      const base = new Map([[1, { stars:1, total:0, evaluated:0, wins:0 }],[2, { stars:2, total:0, evaluated:0, wins:0 }],[3, { stars:3, total:0, evaluated:0, wins:0 }]]);
-      entries.forEach((entry) => {
-        const stars = Math.max(1, Math.min(3, Number(entry.stars || 1)));
-        const row = base.get(stars);
-        row.total += 1;
-        const r = (entry.evaluations || {})["1h"] || null;
-        if (!r || typeof r.win !== "boolean") return;
-        row.evaluated += 1;
-        if (r.win) row.wins += 1;
-      });
-      return [1,2,3].map(k => base.get(k));
+    function changePct(entry) { 
+      const r = evalForTf(entry); 
+      return r && typeof r.pnlPct === "number" ? r.pnlPct : null; 
     }
+    function statusKey(entry) { const r = evalForTf(entry); if (!r) return "pending"; return r.win ? "pass" : "fail"; }
 
     function renderEntries(entries) {
       const tbody = document.querySelector("#entryTable tbody");
-      const sorted = entries.slice().sort((a, b) => b.timestamp - a.timestamp).slice(0, 300);
+      const sorted = entries.slice().sort((a, b) => {
+        const valA = a[state.sortKey] || 0;
+        const valB = b[state.sortKey] || 0;
+        return state.sortOrder === 'desc' ? valB - valA : valA - valB;
+      }).slice(0, 300);
+      
       tbody.innerHTML = sorted.length ? sorted.map((e) => {
         const p = changePct(e);
-        const cls = p >= 0 ? "ok" : "bad";
-        const arrow = p >= 0 ? "▲" : "▼";
-        return `<tr><td class="mono">${e.symbol}</td><td class="${cls}">${arrow} ${Math.abs(p).toFixed(2)}%</td><td>${formatTaipei(e.timestamp)}</td></tr>`;
-      }).join("") : `<tr><td colspan="3">無資料</td></tr>`;
+        const hasValue = p !== null;
+        const cls = !hasValue ? "" : (p >= 0 ? "ok" : "bad");
+        const arrow = !hasValue ? "" : (p >= 0 ? "▲" : "▼");
+        const displayPct = !hasValue ? "--%" : `${Math.abs(p).toFixed(2)}%`;
+        return `<tr><td style="font-family: var(--font-body); font-size: 16px;">${e.symbol.replace('-USDT','')}</td><td class="score-badge">${e.score.toFixed(1)}</td><td class="${cls} mono">${arrow} ${displayPct}</td><td style="font-family: var(--font-mono); font-size: 13px; color: var(--ink-dim);">${formatTaipei(e.timestamp)}</td></tr>`;
+      }).join("") : `<tr><td colspan="4">目前無達標訊號</td></tr>`;
     }
 
-    function renderStarCards(rows) {
-      const el = document.getElementById("starCards");
-      el.innerHTML = rows.map((r) => {
-        const rate = r.evaluated ? ((r.wins / r.evaluated) * 100).toFixed(2) : "0.00";
-        return `<div class="stat"><div class="stat-title">${"⭐".repeat(r.stars)}</div><div class="stat-rate">${rate}%</div><div class="stat-meta">已評估 ${r.evaluated} / 推送 ${r.total}</div></div>`;
+    function renderScoreCards(summary) {
+      const el = document.getElementById("scoreCards");
+      const brackets = summary?.byScoreBracket || {};
+      const keys = ['60-70', '70-80', '80-90', '90-100'];
+      el.innerHTML = keys.map((k) => {
+        const r = brackets[k] || { winRate: 0, total: 0, evaluated: 0, wins: 0 };
+        const winRateDisplay = r.evaluated > 0 ? `${r.winRate}%` : "--%";
+        return `<div class="stat"><div class="stat-title">分數段 ${k}</div><div class="stat-rate">${winRateDisplay}</div><div class="stat-meta">已達標：${r.wins} / ${r.evaluated}<br>評估中：${r.total - r.evaluated}<br>總推送：${r.total} 筆</div></div>`;
       }).join("");
     }
 
     function render() {
       if (!state.data) return;
       const entries = state.data.entries || [];
-      const allTypes = Array.from(new Set(entries.map(e => e.signalType || "-"))).sort((a, b) => a.localeCompare(b, "zh-Hant"));
-      const cur = state.type;
-      typeFilter.innerHTML = `<option value="all">全顯示</option>` + allTypes.map(t => `<option value="${t}">${t}</option>`).join("");
-      if (allTypes.includes(cur)) typeFilter.value = cur; else { state.type = "all"; typeFilter.value = "all"; }
+      const tfMsMap = { '15m': 15 * 60 * 1000, '30m': 30 * 60 * 1000, '1h': 60 * 60 * 1000, '4h': 4 * 60 * 60 * 1000 };
+      const minAgeMs = tfMsMap[state.tf] || 0;
+      const now = Date.now();
 
       const filteredEntries = entries.filter((e) => {
-        if (state.status !== "all" && statusKey(e) !== state.status) return false;
-        if (state.star !== "all" && String(e.stars || 1) !== state.star) return false;
-        if (state.type !== "all" && (e.signalType || "-") !== state.type) return false;
-        return true;
-      });
-      const statsEntries = entries.filter((e) => {
-        if (state.star !== "all" && String(e.stars || 1) !== state.star) return false;
-        if (state.type !== "all" && (e.signalType || "-") !== state.type) return false;
+        if (now - e.timestamp < minAgeMs) return false;
+        // 固定只顯示已達標
+        if (statusKey(e) !== "pass") return false;
+        if ((e.score || 0) < state.minScore) return false;
         return true;
       });
 
       const updatedAt = state.data.updatedAt || Date.now();
-      document.getElementById("meta").textContent = `更新時間 (台灣 GMT+8): ${formatTaipei(updatedAt)} | TF: ${state.tf}`;
+      let tfLabel = state.tf === "15m" ? "15分" : state.tf === "30m" ? "30分" : state.tf === "1h" ? "1小時" : "4小時";
+      document.getElementById("meta").textContent = `最後同步：${formatTaipei(updatedAt)} | 當前週期：${tfLabel}`;
       renderEntries(filteredEntries);
-      renderStarCards(summarizeStarRate60m(statsEntries));
+      renderScoreCards(state.data.summary);
     }
 
     async function loadData() {
       try {
         const res = await fetch("./api/signal_journal.json", { cache: "no-store" });
-        if (!res.ok) { document.getElementById("meta").textContent = `資料讀取失敗: HTTP ${res.status}`; return; }
+        if (!res.ok) return;
         state.data = await res.json();
         render();
-      } catch (err) {
-        document.getElementById("meta").textContent = `資料讀取失敗: ${err.message}`;
-      }
+      } catch (err) {}
     }
 
     loadData();
