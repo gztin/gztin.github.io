@@ -36980,6 +36980,21 @@
       "history": [],
       "rank": 408,
       "evaluations": {}
+    },
+    {
+      "id": "CHILLGUY-USDT_1778256359729",
+      "symbol": "CHILLGUY-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 83.89,
+      "explanation": "15m 成交量高於前 20 根均量 350.25%，速度 3.3x，斜率 0.093%",
+      "entryPrice": 0.015336,
+      "timestamp": 1778256359729,
+      "firstTimestamp": 1778256344198,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 282,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -37162,7 +37177,7 @@
       },
       "80-90": {
         "bracket": "80-90",
-        "total": 135,
+        "total": 136,
         "evaluated": 134,
         "wins": 49,
         "winRate": 36.57
@@ -37176,5 +37191,5 @@
       }
     }
   },
-  "updatedAt": 1778256051639
+  "updatedAt": 1778256359735
 }
