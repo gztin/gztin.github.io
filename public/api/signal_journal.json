@@ -36461,6 +36461,12 @@
           "win": false,
           "threshold": 15,
           "evaluatedAt": 1778251094724
+        },
+        "4h": {
+          "pnlPct": -24.26,
+          "win": false,
+          "threshold": 25,
+          "evaluatedAt": 1778258224965
         }
       }
     },
@@ -36575,6 +36581,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": -12.29,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258224965
         }
       }
     },
@@ -36611,6 +36623,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": -12.29,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258224965
         }
       }
     },
@@ -36648,6 +36666,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": -12.29,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258224965
         }
       }
     },
@@ -36766,6 +36790,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": 2.79,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258305185
         }
       }
     },
@@ -36800,6 +36830,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": 7.56,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258305185
         }
       }
     },
@@ -37129,15 +37165,15 @@
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 437,
+        "total": 442,
         "wins": 14,
-        "winRate": 3.2
+        "winRate": 3.17
       },
       "量能爆發__4h": {
         "signalType": "量能爆發",
         "horizon": "4h",
         "threshold": 25,
-        "total": 432,
+        "total": 433,
         "wins": 8,
         "winRate": 1.85
       },
@@ -37293,5 +37329,5 @@
       }
     }
   },
-  "updatedAt": 1778258198839
+  "updatedAt": 1778258305542
 }
