@@ -23,8 +23,6 @@ RUN npm install --omit=dev
 COPY src/scripts/ ./src/scripts/
 COPY agent/ ./agent/
 COPY backtests/ ./backtests/
-COPY BOT_CHANGELOG.md ./BOT_CHANGELOG.md
-
 # State data directory
 RUN mkdir -p /app/data
 RUN mkdir -p /app/signals

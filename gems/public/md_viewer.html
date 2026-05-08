@@ -3,166 +3,233 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Markdown Viewer</title>
+  <title>Gems 文檔中心 | Markdown Viewer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --line: #2a3242;
-      --text: #f5f7fa;
-      --muted: #9da7b8;
-      --accent: #3ea6ff;
+      --paper: oklch(12% 0 0);
+      --ink: oklch(95% 0 0);
+      --ink-dim: oklch(65% 0 0);
+      --ink-border: oklch(25% 0 0);
+      --accent: oklch(70% 0.1 200);
+      --surface: oklch(16% 0 0);
+      
+      --font-display: "Michroma", sans-serif;
+      --font-body: "Space Grotesk", sans-serif;
+      --font-mono: "Space Grotesk", monospace;
     }
-    * { box-sizing: border-box; }
+
+    :root[data-theme="light"] {
+      --paper: oklch(98% 0 0);
+      --ink: oklch(12% 0 0);
+      --ink-dim: oklch(45% 0 0);
+      --ink-border: oklch(85% 0 0);
+      --surface: oklch(94% 0 0);
+      --accent: oklch(50% 0.15 250);
+    }
+
+    * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      color: var(--ink);
+      background: var(--paper);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      transition: background 0.4s ease, color 0.4s ease;
     }
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 20px;
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
     }
+
+    .sub-brand { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; color: var(--ink-dim); margin-bottom: 4px; }
+    h1 { margin: 0; font-family: var(--font-display); font-size: 28px; letter-spacing: 0.05em; }
+
     .toolbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 16px;
+      background: var(--surface);
+      border: 1px solid var(--ink-border);
+      border-radius: 12px;
       align-items: center;
-      margin-bottom: 14px;
     }
-    .toolbar input, .toolbar select, .toolbar button {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      color: var(--text);
-      padding: 8px 10px;
-      border-radius: 8px;
+
+    .nav-btn {
+      background: var(--paper);
+      border: 1px solid var(--ink-border);
+      color: var(--ink-dim);
+      padding: 8px 16px;
+      font-family: var(--font-body);
       font-size: 14px;
-    }
-    .toolbar input {
-      min-width: 360px;
-      flex: 1 1 360px;
-    }
-    .toolbar button {
       cursor: pointer;
-      border-color: var(--accent);
+      transition: all 0.2s;
+      border-radius: 6px;
+      white-space: nowrap;
     }
-    .hint {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 12px;
+    .nav-btn:hover { border-color: var(--ink); color: var(--ink); }
+    .nav-btn.active { background: #000; color: #fff; border-color: #000; box-shadow: 0 0 0 2px #007bff; }
+    
+    :root[data-theme="light"] .nav-btn.active { background: #000; color: #fff; }
+
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--ink-border);
+      color: var(--ink);
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.2s;
     }
-    .viewer {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      background: var(--panel);
-      padding: 18px;
-      line-height: 1.65;
-      overflow: auto;
+
+    .content-card {
+      background: var(--paper);
+      border: 1px solid var(--ink-border);
+      border-radius: 12px;
+      padding: 40px;
+      min-height: 600px;
     }
-    .viewer h1, .viewer h2, .viewer h3 { line-height: 1.3; }
-    .viewer pre {
-      background: #0d1320;
-      border: 1px solid #22314a;
-      border-radius: 8px;
-      padding: 12px;
-      overflow-x: auto;
-    }
-    .viewer code {
-      font-family: Consolas, "Courier New", monospace;
-    }
-    .viewer table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .viewer th, .viewer td {
-      border: 1px solid var(--line);
-      padding: 6px 8px;
-      text-align: left;
-    }
-    .error {
-      color: #ff8b8b;
-      white-space: pre-wrap;
+
+    /* Markdown Style consistency */
+    .content h1 { font-family: var(--font-display); font-size: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--ink-border); padding-bottom: 12px; }
+    .content h2 { font-family: var(--font-display); font-size: 18px; margin-top: 32px; margin-bottom: 16px; color: var(--accent); }
+    .content table { width: 100%; border-collapse: collapse; margin: 24px 0; border: 1px solid var(--ink-border); }
+    .content th { background: var(--surface); color: var(--ink-dim); text-align: left; padding: 10px; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; }
+    .content td { padding: 10px; border-bottom: 1px solid var(--ink-border); }
+    .content pre { background: var(--surface); padding: 16px; border-radius: 8px; border: 1px solid var(--ink-border); overflow-x: auto; }
+    .content code { font-family: var(--font-mono); font-size: 14px; background: var(--surface); padding: 2px 6px; border-radius: 4px; }
+    
+    .unit { font-size: 0.55em; color: var(--ink-dim); margin-left: 1px; font-weight: 400; vertical-align: baseline; opacity: 0.6; font-family: sans-serif; }
+
+    @media (max-width: 768px) {
+      .wrap { padding: 24px 16px; }
+      header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .content-card { padding: 24px; border-radius: 0; margin: 0 -16px; border-left: none; border-right: none; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div class="toolbar">
-      <select id="quick">
-        <option value="README.md">README.md</option>
-        <option value="BOT_CHANGELOG.md">BOT_CHANGELOG.md</option>
-        <option value="STRUCTURE.md">STRUCTURE.md</option>
-        <option value="docs/signal_scoring_and_winrate.md">docs/signal_scoring_and_winrate.md</option>
-      </select>
-      <input id="path" type="text" placeholder="輸入 md 路徑，例如 docs/signal_scoring_and_winrate.md" />
-      <button id="open">開啟</button>
+    <header>
+      <div>
+        <div class="sub-brand">GEMS // SIGNAL INTEL</div>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <h1>系統文檔</h1>
+          <button id="themeToggleBtn" class="icon-btn">🌙</button>
+        </div>
+      </div>
+      <a href="signal_dashboard.html" style="color: var(--ink-dim); text-decoration: none; font-family: var(--font-mono); font-size: 12px;">← 返回儀表板</a>
+    </header>
+
+    <div class="toolbar" id="navbar">
+      <button class="nav-btn active" data-file="docs/README.md">🏠 首頁</button>
+      <button class="nav-btn" data-file="docs/signal_scoring_and_winrate.md">📊 評分標準</button>
+      <button class="nav-btn" data-file="docs/interface_guide.md">🖥️ 介面指南</button>
+      <button class="nav-btn" data-file="docs/STRUCTURE.md">🏗️ 系統架構</button>
     </div>
-    <div class="hint">可用網址參數：<code>?file=README.md</code>。只允許讀取專案內的 <code>.md</code> 檔案。</div>
-    <div id="viewer" class="viewer">載入中...</div>
+
+    <div class="content-card">
+      <div id="viewer" class="content">載入中...</div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const viewer = document.getElementById("viewer");
-    const pathInput = document.getElementById("path");
-    const quick = document.getElementById("quick");
-    const openBtn = document.getElementById("open");
+    const themeToggleBtn = document.getElementById("themeToggleBtn");
+    const navButtons = document.querySelectorAll(".nav-btn");
 
-    function isSafeMdPath(file) {
-      if (!file) return false;
-      if (!file.toLowerCase().endsWith(".md")) return false;
-      if (file.includes("..")) return false;
-      if (file.startsWith("/") || file.startsWith("\\")) return false;
-      if (/^[a-zA-Z]:/.test(file)) return false;
-      return true;
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("gems_theme", theme);
+      themeToggleBtn.textContent = theme === "dark" ? "🌙" : "☀️";
     }
 
-    function getFileFromQuery() {
-      const params = new URLSearchParams(location.search);
-      return params.get("file");
-    }
+    const savedTheme = localStorage.getItem("gems_theme") || "dark";
+    setTheme(savedTheme);
 
-    function setFileToQuery(file) {
-      const params = new URLSearchParams(location.search);
-      params.set("file", file);
-      history.replaceState(null, "", `${location.pathname}?${params.toString()}`);
+    themeToggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "dark";
+      setTheme(current === "dark" ? "light" : "dark");
+    });
+
+    function wrapPct(html) {
+      return html.replace(/(\d+\.?\d*)%/g, '$1<span class="unit">%</span>');
     }
 
     async function loadMarkdown(file) {
-      if (!isSafeMdPath(file)) {
-        viewer.innerHTML = `<div class="error">路徑不合法：${file || "(空)"}\n僅允許專案內相對路徑且副檔名為 .md</div>`;
-        return;
-      }
+      viewer.innerHTML = "載入中...";
       try {
-        const res = await fetch(`../${file}`, { cache: "no-store" });
-        if (!res.ok) {
-          viewer.innerHTML = `<div class="error">讀取失敗：${res.status} ${res.statusText}\n檔案：${file}</div>`;
-          return;
-        }
+        const res = await fetch(`${file}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const md = await res.text();
-        viewer.innerHTML = marked.parse(md);
+        let html = marked.parse(md);
+        viewer.innerHTML = wrapPct(html);
       } catch (err) {
-        viewer.innerHTML = `<div class="error">讀取例外：${err.message}</div>`;
+        viewer.innerHTML = `<div style="color: var(--bad)">讀取失敗：${err.message}</div>`;
       }
     }
 
-    function openFile(file) {
-      pathInput.value = file;
-      setFileToQuery(file);
-      loadMarkdown(file);
-    }
-
-    quick.addEventListener("change", () => openFile(quick.value));
-    openBtn.addEventListener("click", () => openFile(pathInput.value.trim()));
-    pathInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") openFile(pathInput.value.trim());
+    navButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const file = btn.dataset.file;
+        navButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        
+        const url = new URL(location);
+        url.searchParams.set("file", file);
+        history.pushState(null, "", url);
+        loadMarkdown(file);
+      });
     });
 
-    const initial = getFileFromQuery() || "README.md";
-    openFile(initial);
+    // 攔截內容中的 .md 連結，讓其留在 viewer 內切換
+    viewer.addEventListener("click", (e) => {
+      const link = e.target.closest("a");
+      if (link && link.getAttribute("href")?.endsWith(".md")) {
+        e.preventDefault();
+        const href = link.getAttribute("href");
+        // 取得相對路徑 (假設都在 docs 下)
+        let newFile = href;
+        if (!href.startsWith("docs/")) {
+           // 如果連結在 docs/README.md 指向 signal.md，要把 docs/ 加回去
+           const currentFile = new URLSearchParams(location.search).get("file") || "docs/README.md";
+           const dir = currentFile.substring(0, currentFile.lastIndexOf('/') + 1);
+           newFile = dir + href;
+        }
+        
+        const url = new URL(location);
+        url.searchParams.set("file", newFile);
+        history.pushState(null, "", url);
+        loadMarkdown(newFile);
+        
+        // 同步導航按鈕狀態
+        navButtons.forEach(b => {
+          if (b.dataset.file === newFile) b.classList.add("active");
+          else b.classList.remove("active");
+        });
+      }
+    });
+
+    const params = new URLSearchParams(location.search);
+    const initialFile = params.get("file") || "docs/README.md";
+    navButtons.forEach(b => {
+      if (b.dataset.file === initialFile) b.classList.add("active");
+      else b.classList.remove("active");
+    });
+    loadMarkdown(initialFile);
   </script>
 </body>
 </html>
-

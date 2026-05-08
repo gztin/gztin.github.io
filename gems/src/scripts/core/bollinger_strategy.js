@@ -466,9 +466,9 @@ function buildSignalProfile({ b15m, b1h, k15m, k30m, k1h, vReversal, volChange, 
 function formatSignalExplanation(explanation) {
     if (Array.isArray(explanation)) return explanation.join('\n');
     return String(explanation)
-        .replace(/，/g, '\n')
-        .replace(/\s\/\s/g, '\n')
-        .replace(/ \/ /g, '\n');
+        .replace(/[，,]/g, '\n')
+        .replace(/\n\s+/g, '\n')
+        .trim();
 }
 
 async function evaluatePendingSignals() {
@@ -658,7 +658,6 @@ export async function bollingerScan(coins, ctx) {
                     const lastEntry = journal.entries.slice().reverse().find(e => e.symbol === t.symbol && (now - e.timestamp < 4 * 60 * 60 * 1000));
                     
                     if (lastEntry) {
-                        // 銜接舊追蹤 (如果已經推送過，判斷是否到下個階段)
                         const stageIndex = lastEntry.stageIndex || 0;
                         const firstTimestamp = lastEntry.firstTimestamp || lastEntry.timestamp;
                         const nextStageTime = firstTimestamp + NOTIFY_STAGES[stageIndex + 1] * 60 * 1000;
@@ -668,16 +667,17 @@ export async function bollingerScan(coins, ctx) {
                             nextNotifyAt: stageIndex + 1 < NOTIFY_STAGES.length ? nextStageTime : Infinity, 
                             lastSeenAt: now,
                             entryPrice: lastEntry.entryPrice,
-                            firstTimestamp
+                            firstTimestamp,
+                            history: lastEntry.history || [] // 讀取歷史進度
                         };
                     } else {
-                        // 完全新訊號
                         track = { 
                             stageIndex: 0, 
                             nextNotifyAt: now + NOTIFY_STAGES[1] * 60 * 1000, 
                             lastSeenAt: now,
                             entryPrice: t.price,
-                            firstTimestamp: now
+                            firstTimestamp: now,
+                            history: []
                         };
                         shouldNotify = true;
                     }
@@ -687,17 +687,25 @@ export async function bollingerScan(coins, ctx) {
                     if (now >= track.nextNotifyAt) {
                         track.stageIndex++;
                         if (track.stageIndex < NOTIFY_STAGES.length) {
-                            const wait = (NOTIFY_STAGES[track.stageIndex + 1] || Infinity) - NOTIFY_STAGES[track.stageIndex];
-                            track.nextNotifyAt = wait === Infinity ? Infinity : (now + wait * 60 * 1000);
+                            const nextIndex = track.stageIndex + 1;
+                            track.nextNotifyAt = nextIndex < NOTIFY_STAGES.length 
+                                ? track.firstTimestamp + NOTIFY_STAGES[nextIndex] * 60 * 1000 
+                                : Infinity;
                             shouldNotify = true;
                             
-                            // 計算累積表現
+                            // 計算並記錄目前進度
                             const currentPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
-                            const stageName = NOTIFY_STAGES[track.stageIndex] === 0 ? "首次推送" : `${NOTIFY_STAGES[track.stageIndex]}m 內再次推送`;
+                            const stageMin = NOTIFY_STAGES[track.stageIndex];
+                            const stageLabel = stageMin < 60 ? `${stageMin}m` : `${stageMin / 60}h`;
+                            const reportLine = `${stageLabel.padEnd(4)} 內再次推送｜目前 ${currentPnl > 0 ? '+' : ''}${currentPnl.toFixed(2)}%`;
+                            
+                            track.history.push(reportLine);
+                            
                             progressReport = `\n📊 追蹤表現：\n`;
-                            // 這裡模擬顯示之前的進度（實際應從 journal 拿或記錄在 track）
-                            // 簡化版：只顯示目前相對首次推送的獲利
-                            progressReport += `首次推送以來 ｜ 目前 ${currentPnl > 0 ? '+' : ''}${currentPnl.toFixed(2)}%\n`;
+                            // 顯示包含首次推送在內的所有歷史
+                            const firstPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
+                            progressReport += `15m  內首次推送｜目前 ${firstPnl > 0 ? '+' : ''}${firstPnl.toFixed(2)}%\n`;
+                            progressReport += track.history.join('\n') + '\n';
                         }
                     }
                 }
@@ -763,6 +771,7 @@ export async function bollingerScan(coins, ctx) {
                             timestamp: Date.now(),
                             firstTimestamp: track?.firstTimestamp || Date.now(),
                             stageIndex: track?.stageIndex || 0,
+                            history: track?.history || [],
                             rank: currentRank,
                             evaluations: {},
                         });

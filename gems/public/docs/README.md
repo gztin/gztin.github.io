@@ -11,7 +11,7 @@
 - [**儀表板使用說明**](interface_guide.md)
   介紹前端監控介面、過濾機制與主題切換功能。
 
-- [**系統整體結構 (STRUCTURE.md)**](../STRUCTURE.md)
+- [**系統整體結構 (STRUCTURE.md)**](STRUCTURE.md)
   核心程式碼目錄架構、Docker 部署以及各 Loop 循環的邏輯職責。
 
 ---
