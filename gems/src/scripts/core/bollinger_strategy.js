@@ -50,7 +50,7 @@ const DISCORD_JOURNAL_WEBHOOK_URL = process.env.DISCORD_JOURNAL_WEBHOOK_URL || '
 const JOURNAL_SEND_INTERVAL_MS = 5 * 60 * 1000;
 let lastJournalSentAt = 0;
 let lastGitPushAt = 0;
-const GIT_PUSH_INTERVAL_MS = 5 * 60 * 1000;
+const GIT_PUSH_INTERVAL_MS = 10 * 60 * 1000;
 let latestScanStats = null; // 最近一次掃描結果，供 journal 使用
 
 function maskWebhook(url = '') {
@@ -79,7 +79,7 @@ function syncToGithub() {
         const rootDir = path.join(__dirname, '../../../');
         // 自動配置 Git（避免 Docker 環境權限問題）
         const setupCmd = `git config --global user.name "gztin" && git config --global user.email "atharsfake@gmail.com" && git config --global --add safe.directory /app`;
-        const pushCmd = `git add . && git commit -m "chore: 自動同步系統更新 (數據+介面) [skip ci]" && git push`;
+        const pushCmd = `git add public/api/*.json && git commit -m "chore: 自動更新訊號數據 [skip ci]" && git push`;
         
         execSync(`${setupCmd} && ${pushCmd}`, { cwd: rootDir, stdio: 'inherit' });
         lastGitPushAt = now;
