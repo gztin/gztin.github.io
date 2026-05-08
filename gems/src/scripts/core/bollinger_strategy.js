@@ -812,6 +812,7 @@ export async function bollingerScan(coins, ctx) {
                                      `型態：${signalProfile.type}\n` +
                                      `說明：\n${formatSignalExplanation(signalProfile.explanation)}\n` +
                                      `排名：${rankDesc}\n\n` +
+                                     (progressReport || "") +
                                      `K線變動：30m ${fmtPct(ch30m)} / 1h ${fmtPct(ch1h)} / 4h ${fmtPct(ch4h)}\n` +
                                      `交易量：${fmtPct(volChange)}`;
                                      

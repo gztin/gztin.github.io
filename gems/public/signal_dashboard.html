@@ -177,12 +177,13 @@
       background: var(--surface);
       border: 1px solid var(--ink-border);
       color: var(--ink);
-      width: 40px; height: 40px;
+      width: 36px; height: 36px;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
-      font-size: 18px;
+      font-size: 16px;
       transition: all 0.2s;
+      flex-shrink: 0;
     }
     .icon-btn:hover { border-color: var(--ink); transform: scale(1.05); }
 
@@ -264,14 +265,16 @@
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <div>
+    <header style="margin-bottom: 32px;">
+      <div style="display: flex; flex-direction: column; gap: 4px;">
         <div class="sub-brand">智能監控系統</div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <h1>Gems 訊號</h1>
-          <button id="themeToggleBtn" class="icon-btn" title="切換主題">🌙</button>
-          <button id="helpBtn" class="icon-btn" title="達標標準說明" style="font-family: serif; font-style: italic; font-weight: 800; font-size: 18px;">i</button>
-          <a href="md_viewer.html?file=docs/README.md" class="icon-btn" title="系統文檔" style="text-decoration: none; font-size: 16px;">📖</a>
+        <div style="display: flex; align-items: center; gap: 16px;">
+          <h1 style="margin: 0; line-height: 1.2;">Gems 訊號</h1>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <button id="themeToggleBtn" class="icon-btn" title="切換主題">🌙</button>
+            <button id="helpBtn" class="icon-btn" title="達標標準說明" style="font-family: 'Outfit', sans-serif; font-style: italic; font-weight: 700; font-size: 17px; padding-bottom: 2px;">i</button>
+            <a href="md_viewer.html?file=docs/README.md" class="icon-btn" title="系統文檔" style="text-decoration: none; font-size: 16px;">📖</a>
+          </div>
         </div>
       </div>
     </header>
