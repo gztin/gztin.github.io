@@ -36551,6 +36551,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -0.12,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778252661442
         }
       }
     },
@@ -36575,6 +36581,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -0.12,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778252661442
         }
       }
     },
@@ -36600,6 +36612,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778252339806
+        },
+        "30m": {
+          "pnlPct": -0.12,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778252661442
         }
       }
     },
@@ -36769,9 +36787,9 @@
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 435,
+        "total": 438,
         "wins": 59,
-        "winRate": 13.56
+        "winRate": 13.47
       },
       "量能爆發__1h": {
         "signalType": "量能爆發",
@@ -36949,5 +36967,5 @@
       }
     }
   },
-  "updatedAt": 1778252342516
+  "updatedAt": 1778252662498
 }
