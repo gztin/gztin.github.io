@@ -36870,6 +36870,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": 1.67,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258378756
         }
       }
     },
@@ -37165,9 +37171,9 @@
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 442,
+        "total": 443,
         "wins": 14,
-        "winRate": 3.17
+        "winRate": 3.16
       },
       "量能爆發__4h": {
         "signalType": "量能爆發",
@@ -37329,5 +37335,5 @@
       }
     }
   },
-  "updatedAt": 1778258305542
+  "updatedAt": 1778258378969
 }
