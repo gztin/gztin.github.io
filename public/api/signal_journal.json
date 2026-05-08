@@ -36457,6 +36457,21 @@
           "evaluatedAt": 1778247325710
         }
       }
+    },
+    {
+      "id": "SIREN-USDT_1778248259950",
+      "symbol": "SIREN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 2,
+      "score": 65.23,
+      "explanation": "急跌 -16.08%，低點反彈 +17.20%，量能速度 1.0x",
+      "entryPrice": 1.0938,
+      "timestamp": 1778248259950,
+      "firstTimestamp": 1778248240969,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 209,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -36625,7 +36640,7 @@
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 503,
+        "total": 504,
         "evaluated": 503,
         "wins": 112,
         "winRate": 22.27
@@ -36653,5 +36668,5 @@
       }
     }
   },
-  "updatedAt": 1778247337212
+  "updatedAt": 1778248259955
 }
