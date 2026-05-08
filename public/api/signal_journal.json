@@ -1054,6 +1054,42 @@
       "timestamp": 1778206541910,
       "rank": 18,
       "evaluations": {}
+    },
+    {
+      "id": "BELIEF-USDT_1778206552249",
+      "symbol": "BELIEF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 80.5,
+      "explanation": "15m 成交量高於前 20 根均量 926.12%，價格斜率 0.612% / bar",
+      "entryPrice": 0.0003788,
+      "timestamp": 1778206552249,
+      "rank": 129,
+      "evaluations": {}
+    },
+    {
+      "id": "HIVE-USDT_1778206559179",
+      "symbol": "HIVE-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 81.1,
+      "explanation": "15m 成交量高於前 20 根均量 188.09%，價格斜率 0.202% / bar",
+      "entryPrice": 0.06566,
+      "timestamp": 1778206559179,
+      "rank": 219,
+      "evaluations": {}
+    },
+    {
+      "id": "B-USDT_1778206655788",
+      "symbol": "B-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.84,
+      "explanation": "15m 成交量高於前 20 根均量 574.97%，價格斜率 0.161% / bar",
+      "entryPrice": 0.3646,
+      "timestamp": 1778206655788,
+      "rank": 19,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -1118,5 +1154,5 @@
       }
     }
   },
-  "updatedAt": 1778206541911
+  "updatedAt": 1778206655790
 }
