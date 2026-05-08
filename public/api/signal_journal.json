@@ -36686,6 +36686,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255743954
+        },
+        "2h": {
+          "pnlPct": -12.29,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258197644
         }
       }
     },
@@ -36720,6 +36726,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778255450499
+        },
+        "2h": {
+          "pnlPct": -3.75,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778258197644
         }
       }
     },
@@ -36918,6 +36930,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778255743954
+        },
+        "1h": {
+          "pnlPct": -7.83,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778258197644
         }
       }
     },
@@ -36948,6 +36966,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778255743954
+        },
+        "1h": {
+          "pnlPct": -7.83,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778258197644
         }
       }
     },
@@ -37026,6 +37050,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778257283440
+        },
+        "30m": {
+          "pnlPct": 2.53,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778258197644
         }
       }
     },
@@ -37042,7 +37072,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 246,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 1.22,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778258197644
+        }
+      }
     },
     {
       "id": "D-USDT_1778257968461",
@@ -37076,9 +37113,9 @@
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 445,
-        "wins": 60,
-        "winRate": 13.48
+        "total": 446,
+        "wins": 61,
+        "winRate": 13.68
       },
       "量能爆發__1h": {
         "signalType": "量能爆發",
@@ -37092,9 +37129,9 @@
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 435,
+        "total": 437,
         "wins": 14,
-        "winRate": 3.22
+        "winRate": 3.2
       },
       "量能爆發__4h": {
         "signalType": "量能爆發",
@@ -37148,9 +37185,9 @@
         "signalType": "布林突破",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 344,
-        "wins": 98,
-        "winRate": 28.49
+        "total": 345,
+        "wins": 99,
+        "winRate": 28.7
       },
       "布林突破__30m": {
         "signalType": "布林突破",
@@ -37164,9 +37201,9 @@
         "signalType": "布林突破",
         "horizon": "1h",
         "threshold": 5,
-        "total": 342,
+        "total": 344,
         "wins": 17,
-        "winRate": 4.97
+        "winRate": 4.94
       },
       "布林突破__2h": {
         "signalType": "布林突破",
@@ -37236,9 +37273,9 @@
       "70-80": {
         "bracket": "70-80",
         "total": 171,
-        "evaluated": 170,
-        "wins": 35,
-        "winRate": 20.59
+        "evaluated": 171,
+        "wins": 36,
+        "winRate": 21.05
       },
       "80-90": {
         "bracket": "80-90",
@@ -37256,5 +37293,5 @@
       }
     }
   },
-  "updatedAt": 1778258122534
+  "updatedAt": 1778258198839
 }
