@@ -2296,6 +2296,90 @@
       "timestamp": 1778212109989,
       "rank": 153,
       "evaluations": {}
+    },
+    {
+      "id": "PTB-USDT_1778212303502",
+      "symbol": "PTB-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 85.3,
+      "explanation": "15m 接近布林上軌 (1.08)，1h 動能 1.26，量能 260.45%",
+      "entryPrice": 0.0007697,
+      "timestamp": 1778212303502,
+      "rank": 57,
+      "evaluations": {}
+    },
+    {
+      "id": "KITE-USDT_1778212320655",
+      "symbol": "KITE-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 60.06,
+      "explanation": "15m 成交量高於前 20 根均量 199.45%，價格斜率 0.060% / bar",
+      "entryPrice": 0.15847,
+      "timestamp": 1778212320655,
+      "rank": 214,
+      "evaluations": {}
+    },
+    {
+      "id": "PEOPLE-USDT_1778212323216",
+      "symbol": "PEOPLE-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 60.55,
+      "explanation": "15m 接近布林上軌 (1.23)，1h 動能 1.18，量能 33.35%",
+      "entryPrice": 0.00855,
+      "timestamp": 1778212323216,
+      "rank": 229,
+      "evaluations": {}
+    },
+    {
+      "id": "S-USDT_1778212326653",
+      "symbol": "S-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 79.24,
+      "explanation": "15m 成交量高於前 20 根均量 198.41%，價格斜率 0.015% / bar",
+      "entryPrice": 0.04936,
+      "timestamp": 1778212326653,
+      "rank": 242,
+      "evaluations": {}
+    },
+    {
+      "id": "TA-USDT_1778212338764",
+      "symbol": "TA-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 63.2,
+      "explanation": "15m 成交量高於前 20 根均量 290.09%，價格斜率 0.105% / bar",
+      "entryPrice": 0.05272,
+      "timestamp": 1778212338764,
+      "rank": 364,
+      "evaluations": {}
+    },
+    {
+      "id": "ASTR-USDT_1778212338770",
+      "symbol": "ASTR-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.2,
+      "explanation": "15m 成交量高於前 20 根均量 370.79%，價格斜率 0.000% / bar",
+      "entryPrice": 0.008907,
+      "timestamp": 1778212338770,
+      "rank": 363,
+      "evaluations": {}
+    },
+    {
+      "id": "DOLO-USDT_1778213298182",
+      "symbol": "DOLO-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 60.74,
+      "explanation": "15m 成交量高於前 20 根均量 412.42%，價格斜率 0.065% / bar",
+      "entryPrice": 0.033535,
+      "timestamp": 1778213298182,
+      "rank": 133,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -2392,5 +2476,5 @@
       }
     }
   },
-  "updatedAt": 1778212109991
+  "updatedAt": 1778213298184
 }
