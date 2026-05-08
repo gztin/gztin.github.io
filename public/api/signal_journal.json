@@ -3040,6 +3040,126 @@
       "timestamp": 1778216909230,
       "rank": 44,
       "evaluations": {}
+    },
+    {
+      "id": "WHITEWHALE-USDT_1778216912471",
+      "symbol": "WHITEWHALE-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 73.52,
+      "explanation": "15m 接近布林上軌 (1.12)，1h 動能 1.10，量能 110.95%",
+      "entryPrice": 0.006952,
+      "timestamp": 1778216912471,
+      "rank": 51,
+      "evaluations": {}
+    },
+    {
+      "id": "SAHARA-USDT_1778216916090",
+      "symbol": "SAHARA-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 89.2,
+      "explanation": "15m 接近布林上軌 (1.20)，1h 動能 1.15，量能 340.12%",
+      "entryPrice": 0.02716,
+      "timestamp": 1778216916090,
+      "rank": 80,
+      "evaluations": {}
+    },
+    {
+      "id": "COAI-USDT_1778216916176",
+      "symbol": "COAI-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 72.09,
+      "explanation": "15m 成交量高於前 20 根均量 179.06%，價格斜率 0.159% / bar",
+      "entryPrice": 0.37093,
+      "timestamp": 1778216916176,
+      "rank": 77,
+      "evaluations": {}
+    },
+    {
+      "id": "FLUX-USDT_1778216924808",
+      "symbol": "FLUX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 67.17,
+      "explanation": "15m 成交量高於前 20 根均量 323.86%，價格斜率 0.201% / bar",
+      "entryPrice": 0.0776,
+      "timestamp": 1778216924808,
+      "rank": 121,
+      "evaluations": {}
+    },
+    {
+      "id": "STX-USDT_1778216928534",
+      "symbol": "STX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 64.36,
+      "explanation": "15m 成交量高於前 20 根均量 339.14%，價格斜率 0.110% / bar",
+      "entryPrice": 0.2627,
+      "timestamp": 1778216928534,
+      "rank": 156,
+      "evaluations": {}
+    },
+    {
+      "id": "ACH-USDT_1778216931557",
+      "symbol": "ACH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 66.73,
+      "explanation": "15m 成交量高於前 20 根均量 355.21%，價格斜率 0.039% / bar",
+      "entryPrice": 0.008013,
+      "timestamp": 1778216931557,
+      "rank": 176,
+      "evaluations": {}
+    },
+    {
+      "id": "F-USDT_1778216938908",
+      "symbol": "F-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 61.92,
+      "explanation": "15m 成交量高於前 20 根均量 245.58%，價格斜率 0.014% / bar",
+      "entryPrice": 0.005815,
+      "timestamp": 1778216938908,
+      "rank": 282,
+      "evaluations": {}
+    },
+    {
+      "id": "AVA-USDT_1778216943471",
+      "symbol": "AVA-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 74.93,
+      "explanation": "15m 成交量高於前 20 根均量 180.30%，價格斜率 0.011% / bar",
+      "entryPrice": 0.2841,
+      "timestamp": 1778216943471,
+      "rank": 311,
+      "evaluations": {}
+    },
+    {
+      "id": "FLUID-USDT_1778216952501",
+      "symbol": "FLUID-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 81.37,
+      "explanation": "15m 成交量高於前 20 根均量 345.91%，價格斜率 0.005% / bar",
+      "entryPrice": 1.7212,
+      "timestamp": 1778216952501,
+      "rank": 395,
+      "evaluations": {}
+    },
+    {
+      "id": "FREEDOMMONEY-USDT_1778217299728",
+      "symbol": "FREEDOMMONEY-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 64.43,
+      "explanation": "15m 接近布林上軌 (1.22)，1h 動能 1.00，量能 2.57%",
+      "entryPrice": 0.009787,
+      "timestamp": 1778217299728,
+      "rank": 42,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -3085,56 +3205,36 @@
         "winRate": 0
       }
     },
-    "byStar": {
-      "2__15m": {
-        "stars": 2,
-        "horizon": "15m",
-        "threshold": 0.8,
-        "total": 3,
-        "wins": 2,
-        "winRate": 66.67
+    "byScoreBracket": {
+      "60-70": {
+        "bracket": "60-70",
+        "total": 151,
+        "evaluated": 8,
+        "wins": 4,
+        "winRate": 50
       },
-      "3__15m": {
-        "stars": 3,
-        "horizon": "15m",
-        "threshold": 0.8,
-        "total": 8,
-        "wins": 3,
-        "winRate": 37.5
-      },
-      "3__30m": {
-        "stars": 3,
-        "horizon": "30m",
-        "threshold": 1.5,
-        "total": 3,
+      "70-80": {
+        "bracket": "70-80",
+        "total": 57,
+        "evaluated": 2,
         "wins": 1,
-        "winRate": 33.33
+        "winRate": 50
       },
-      "3__1h": {
-        "stars": 3,
-        "horizon": "1h",
-        "threshold": 5,
-        "total": 3,
+      "80-90": {
+        "bracket": "80-90",
+        "total": 44,
+        "evaluated": 1,
         "wins": 0,
         "winRate": 0
       },
-      "2__30m": {
-        "stars": 2,
-        "horizon": "30m",
-        "threshold": 1.5,
+      "90-100": {
+        "bracket": "90-100",
         "total": 1,
-        "wins": 0,
-        "winRate": 0
-      },
-      "2__1h": {
-        "stars": 2,
-        "horizon": "1h",
-        "threshold": 5,
-        "total": 1,
+        "evaluated": 0,
         "wins": 0,
         "winRate": 0
       }
     }
   },
-  "updatedAt": 1778216909232
+  "updatedAt": 1778217299731
 }
