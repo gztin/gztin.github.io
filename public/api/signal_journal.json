@@ -9236,6 +9236,12 @@
           "win": false,
           "threshold": 15,
           "evaluatedAt": 1778221811741
+        },
+        "4h": {
+          "pnlPct": -7.22,
+          "win": false,
+          "threshold": 25,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -9273,6 +9279,12 @@
           "win": false,
           "threshold": 15,
           "evaluatedAt": 1778222082649
+        },
+        "4h": {
+          "pnlPct": 0.85,
+          "win": false,
+          "threshold": 25,
+          "evaluatedAt": 1778229285113
         }
       }
     },
@@ -14595,6 +14607,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225338409
+        },
+        "2h": {
+          "pnlPct": 1.18,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778228921974
         }
       }
     },
@@ -14626,6 +14644,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225383558
+        },
+        "2h": {
+          "pnlPct": -8.58,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778228981937
         }
       }
     },
@@ -14657,6 +14681,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225383558
+        },
+        "2h": {
+          "pnlPct": -0.68,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14688,6 +14718,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": 0.83,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14719,6 +14755,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": -0.39,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14750,6 +14792,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": 0.05,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14781,6 +14829,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": 0.47,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14812,6 +14866,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": 4.77,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14843,6 +14903,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225423670
+        },
+        "2h": {
+          "pnlPct": -1.14,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -14874,6 +14940,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225711600
+        },
+        "2h": {
+          "pnlPct": -9.57,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -14905,6 +14977,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225779631
+        },
+        "2h": {
+          "pnlPct": 3.41,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -14936,6 +15014,12 @@
           "win": false,
           "threshold": 5,
           "evaluatedAt": 1778225779631
+        },
+        "2h": {
+          "pnlPct": -0.79,
+          "win": false,
+          "threshold": 15,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -17349,6 +17433,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227049551
+        },
+        "1h": {
+          "pnlPct": 0.28,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228846527
         }
       }
     },
@@ -17377,6 +17467,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227049551
+        },
+        "1h": {
+          "pnlPct": 1.46,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228846527
         }
       }
     },
@@ -17405,6 +17501,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227074600
+        },
+        "1h": {
+          "pnlPct": 0.21,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228861730
         }
       }
     },
@@ -17433,6 +17535,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227099682
+        },
+        "1h": {
+          "pnlPct": 1.32,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228896846
         }
       }
     },
@@ -17461,6 +17569,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227099682
+        },
+        "1h": {
+          "pnlPct": -4.24,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228896846
         }
       }
     },
@@ -17489,6 +17603,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227099682
+        },
+        "1h": {
+          "pnlPct": 2.15,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228910033
         }
       }
     },
@@ -17517,6 +17637,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227111768
+        },
+        "1h": {
+          "pnlPct": 1.6,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228910033
         }
       }
     },
@@ -17545,6 +17671,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227147905
+        },
+        "1h": {
+          "pnlPct": -1.49,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228932956
         }
       }
     },
@@ -17573,6 +17705,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227147905
+        },
+        "1h": {
+          "pnlPct": -2.8,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228932956
         }
       }
     },
@@ -17603,6 +17741,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227147905
+        },
+        "1h": {
+          "pnlPct": 1.18,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228947023
         }
       }
     },
@@ -17633,6 +17777,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227147905
+        },
+        "1h": {
+          "pnlPct": -4.29,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228962931
         }
       }
     },
@@ -17663,6 +17813,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227164950
+        },
+        "1h": {
+          "pnlPct": 2.06,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228962931
         }
       }
     },
@@ -17693,6 +17849,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227164950
+        },
+        "1h": {
+          "pnlPct": 1.77,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228962931
         }
       }
     },
@@ -17723,6 +17885,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227181046
+        },
+        "1h": {
+          "pnlPct": -1.54,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778228981937
         }
       }
     },
@@ -17754,6 +17922,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227196063
+        },
+        "1h": {
+          "pnlPct": -4.68,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -17785,6 +17959,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227224157
+        },
+        "1h": {
+          "pnlPct": -1.56,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229047215
         }
       }
     },
@@ -17817,6 +17997,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227237215
+        },
+        "1h": {
+          "pnlPct": -4.32,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229047215
         }
       }
     },
@@ -17849,6 +18035,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227263243
+        },
+        "1h": {
+          "pnlPct": -1.46,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229076347
         }
       }
     },
@@ -17905,6 +18097,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227476917
+        },
+        "1h": {
+          "pnlPct": 0.84,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229285113
         }
       }
     },
@@ -17933,6 +18131,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": 0.63,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229285113
         }
       }
     },
@@ -17961,6 +18165,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": 2.46,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229285113
         }
       }
     },
@@ -17989,6 +18199,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": -0.83,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -18017,6 +18233,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": -0.58,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -18045,6 +18267,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": 5.34,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -18075,6 +18303,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227519059
+        },
+        "1h": {
+          "pnlPct": 0.84,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -18105,6 +18339,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227544230
+        },
+        "1h": {
+          "pnlPct": -0.52,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -18135,6 +18375,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227544230
+        },
+        "1h": {
+          "pnlPct": 5.47,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -18166,6 +18412,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227544230
+        },
+        "1h": {
+          "pnlPct": -0.4,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -18197,6 +18449,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227544230
+        },
+        "1h": {
+          "pnlPct": 5.47,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -18229,6 +18487,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227568293
+        },
+        "1h": {
+          "pnlPct": -0.4,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -18261,6 +18525,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227568293
+        },
+        "1h": {
+          "pnlPct": 5.08,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -18289,6 +18559,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227600357
+        },
+        "1h": {
+          "pnlPct": 10.57,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -18317,6 +18593,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227600357
+        },
+        "1h": {
+          "pnlPct": -0.07,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229439367
         }
       }
     },
@@ -18345,6 +18627,12 @@
           "win": false,
           "threshold": 1.5,
           "evaluatedAt": 1778227611464
+        },
+        "1h": {
+          "pnlPct": 0.35,
+          "win": false,
+          "threshold": 5,
+          "evaluatedAt": 1778229439367
         }
       }
     },
@@ -18375,6 +18663,12 @@
           "win": true,
           "threshold": 1.5,
           "evaluatedAt": 1778227635584
+        },
+        "1h": {
+          "pnlPct": 10.8,
+          "win": true,
+          "threshold": 5,
+          "evaluatedAt": 1778229439367
         }
       }
     },
@@ -20309,6 +20603,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778227923397
+        },
+        "30m": {
+          "pnlPct": 3.24,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228846527
         }
       }
     },
@@ -20335,6 +20635,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778227965616
+        },
+        "30m": {
+          "pnlPct": 3.08,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228861730
         }
       }
     },
@@ -20357,6 +20663,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228037866
+        },
+        "30m": {
+          "pnlPct": -1.65,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228947023
         }
       }
     },
@@ -20379,6 +20691,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228050807
+        },
+        "30m": {
+          "pnlPct": 0.44,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228947023
         }
       }
     },
@@ -20401,6 +20719,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228050807
+        },
+        "30m": {
+          "pnlPct": 0.49,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228947023
         }
       }
     },
@@ -20425,6 +20749,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228081885
+        },
+        "30m": {
+          "pnlPct": -1.65,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228962931
         }
       }
     },
@@ -20449,6 +20779,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228081885
+        },
+        "30m": {
+          "pnlPct": 0.49,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228962931
         }
       }
     },
@@ -20474,6 +20810,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228081885
+        },
+        "30m": {
+          "pnlPct": -1.65,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228981937
         }
       }
     },
@@ -20499,6 +20841,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228081885
+        },
+        "30m": {
+          "pnlPct": 0.49,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778228981937
         }
       }
     },
@@ -20525,6 +20873,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228096111
+        },
+        "30m": {
+          "pnlPct": 0.49,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229013105
         }
       }
     },
@@ -20549,6 +20903,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778228378872
+        },
+        "30m": {
+          "pnlPct": 2.05,
+          "win": true,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229132437
         }
       }
     },
@@ -20571,6 +20931,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228396848
+        },
+        "30m": {
+          "pnlPct": -0.83,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229285113
         }
       }
     },
@@ -20593,6 +20959,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778228396848
+        },
+        "30m": {
+          "pnlPct": 0.07,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -20615,6 +20987,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228396848
+        },
+        "30m": {
+          "pnlPct": 0.11,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -20637,6 +21015,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228407815
+        },
+        "30m": {
+          "pnlPct": 0.04,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229302962
         }
       }
     },
@@ -20659,6 +21043,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228407815
+        },
+        "30m": {
+          "pnlPct": -0.42,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -20681,6 +21071,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228419242
+        },
+        "30m": {
+          "pnlPct": -1.1,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -20703,6 +21099,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228419242
+        },
+        "30m": {
+          "pnlPct": 0.15,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -20727,6 +21129,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228431232
+        },
+        "30m": {
+          "pnlPct": -0.73,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229324063
         }
       }
     },
@@ -20751,6 +21159,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778228431232
+        },
+        "30m": {
+          "pnlPct": 0.12,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -20775,6 +21189,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228443258
+        },
+        "30m": {
+          "pnlPct": -0.33,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -20799,6 +21219,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228443258
+        },
+        "30m": {
+          "pnlPct": -1.1,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -20824,6 +21250,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": -0.63,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -20849,6 +21281,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": 0.12,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229356176
         }
       }
     },
@@ -20874,6 +21312,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": -0.34,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -20899,6 +21343,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": -1.14,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -20925,6 +21375,12 @@
           "win": true,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": 0.07,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -20951,6 +21407,12 @@
           "win": false,
           "threshold": 0.8,
           "evaluatedAt": 1778228490377
+        },
+        "30m": {
+          "pnlPct": -1.14,
+          "win": false,
+          "threshold": 1.5,
+          "evaluatedAt": 1778229389220
         }
       }
     },
@@ -21190,7 +21652,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 471,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.32,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228846527
+        }
+      }
     },
     {
       "id": "OG-USDT_1778227929236",
@@ -21209,7 +21678,14 @@
         "1h   內再次推送｜目前 +7.72%"
       ],
       "rank": 64,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 4.66,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228846527
+        }
+      }
     },
     {
       "id": "ARKM-USDT_1778227932680",
@@ -21226,7 +21702,14 @@
         "15m  內再次推送｜目前 +2.62%"
       ],
       "rank": 90,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 3.06,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228846527
+        }
+      }
     },
     {
       "id": "TIA-USDT_1778227937001",
@@ -21243,7 +21726,14 @@
         "15m  內再次推送｜目前 +0.67%"
       ],
       "rank": 111,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.37,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228846527
+        }
+      }
     },
     {
       "id": "DEEP-USDT_1778227960989",
@@ -21260,7 +21750,14 @@
         "15m  內再次推送｜目前 +0.58%"
       ],
       "rank": 491,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.32,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228861730
+        }
+      }
     },
     {
       "id": "ARKM-USDT_1778227971672",
@@ -21278,7 +21775,14 @@
         "30m  內再次推送｜目前 +2.47%"
       ],
       "rank": 98,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 3.19,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228873714
+        }
+      }
     },
     {
       "id": "DEEP-USDT_1778227988177",
@@ -21296,7 +21800,14 @@
         "30m  內再次推送｜目前 +0.68%"
       ],
       "rank": 481,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.29,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228896846
+        }
+      }
     },
     {
       "id": "ARKM-USDT_1778227995034",
@@ -21315,7 +21826,14 @@
         "1h   內再次推送｜目前 +2.91%"
       ],
       "rank": 86,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 3.13,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228896846
+        }
+      }
     },
     {
       "id": "DEEP-USDT_1778228004519",
@@ -21334,7 +21852,14 @@
         "1h   內再次推送｜目前 +0.71%"
       ],
       "rank": 477,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.29,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228910033
+        }
+      }
     },
     {
       "id": "JASMY-USDT_1778228031696",
@@ -21351,7 +21876,14 @@
         "15m  內再次推送｜目前 +0.47%"
       ],
       "rank": 402,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.52,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228932956
+        }
+      }
     },
     {
       "id": "ASR-USDT_1778228059564",
@@ -21369,7 +21901,14 @@
         "30m  內再次推送｜目前 +1.55%"
       ],
       "rank": 177,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 1.4,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228962931
+        }
+      }
     },
     {
       "id": "YB-USDT_1778228075516",
@@ -21384,7 +21923,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 448,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.91,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778228981937
+        }
+      }
     },
     {
       "id": "ASR-USDT_1778228086260",
@@ -21403,7 +21949,14 @@
         "1h   內再次推送｜目前 +2.32%"
       ],
       "rank": 184,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 1.4,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229013105
+        }
+      }
     },
     {
       "id": "ZRX-USDT_1778228271247",
@@ -21418,7 +21971,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 137,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -1.02,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229174653
+        }
+      }
     },
     {
       "id": "ZKC-USDT_1778228290757",
@@ -21433,7 +21993,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 380,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.39,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229196864
+        }
+      }
     },
     {
       "id": "MTL-USDT_1778228295861",
@@ -21448,7 +22015,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 416,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.03,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229196864
+        }
+      }
     },
     {
       "id": "COW-USDT_1778228301388",
@@ -21463,7 +22037,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 461,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.52,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229231842
+        }
+      }
     },
     {
       "id": "ZRX-USDT_1778228323300",
@@ -21480,7 +22061,14 @@
         "15m  內再次推送｜目前 +1.53%"
       ],
       "rank": 134,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.9,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229231842
+        }
+      }
     },
     {
       "id": "MTL-USDT_1778228343391",
@@ -21497,7 +22085,14 @@
         "15m  內再次推送｜目前 +0.37%"
       ],
       "rank": 438,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.43,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229252913
+        }
+      }
     },
     {
       "id": "ZRX-USDT_1778228361204",
@@ -21515,7 +22110,14 @@
         "30m  內再次推送｜目前 +1.36%"
       ],
       "rank": 141,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.84,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229269056
+        }
+      }
     },
     {
       "id": "MTL-USDT_1778228373720",
@@ -21533,7 +22135,14 @@
         "30m  內再次推送｜目前 +0.31%"
       ],
       "rank": 424,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.4,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229285113
+        }
+      }
     },
     {
       "id": "ZRX-USDT_1778228383802",
@@ -21552,7 +22161,14 @@
         "1h   內再次推送｜目前 +1.62%"
       ],
       "rank": 133,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.84,
+          "win": true,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229285113
+        }
+      }
     },
     {
       "id": "MTL-USDT_1778228391861",
@@ -21571,7 +22187,14 @@
         "1h   內再次推送｜目前 +0.28%"
       ],
       "rank": 420,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.4,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229302962
+        }
+      }
     },
     {
       "id": "DOGE-USDT_1778228444595",
@@ -21586,7 +22209,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 4,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.16,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229356176
+        }
+      }
     },
     {
       "id": "AVAX-USDT_1778228444614",
@@ -21601,7 +22231,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 9,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.22,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229356176
+        }
+      }
     },
     {
       "id": "BNB-USDT_1778228444634",
@@ -21616,7 +22253,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 8,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.03,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229356176
+        }
+      }
     },
     {
       "id": "SUI-USDT_1778228460743",
@@ -21631,7 +22275,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 175,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.52,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229389220
+        }
+      }
     },
     {
       "id": "DYM-USDT_1778228464945",
@@ -21646,7 +22297,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 209,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -2.85,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229389220
+        }
+      }
     },
     {
       "id": "APT-USDT_1778228469013",
@@ -21661,7 +22319,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 245,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.17,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229389220
+        }
+      }
     },
     {
       "id": "BLUR-USDT_1778228472023",
@@ -21676,7 +22341,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 260,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.37,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229389220
+        }
+      }
     },
     {
       "id": "LTC-USDT_1778228478785",
@@ -21691,7 +22363,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 358,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.12,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229389220
+        }
+      }
     },
     {
       "id": "SUI-USDT_1778228497070",
@@ -21708,7 +22387,14 @@
         "15m  內再次推送｜目前 +0.13%"
       ],
       "rank": 171,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.55,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229439367
+        }
+      }
     },
     {
       "id": "DYM-USDT_1778228500053",
@@ -21725,7 +22411,14 @@
         "15m  內再次推送｜目前 -3.05%"
       ],
       "rank": 184,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -2.75,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229439367
+        }
+      }
     },
     {
       "id": "SUI-USDT_1778228515087",
@@ -21743,7 +22436,14 @@
         "30m  內再次推送｜目前 +0.20%"
       ],
       "rank": 174,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.55,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229439367
+        }
+      }
     },
     {
       "id": "DYM-USDT_1778228518206",
@@ -21761,7 +22461,14 @@
         "30m  內再次推送｜目前 -3.05%"
       ],
       "rank": 185,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -2.75,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778229439367
+        }
+      }
     },
     {
       "id": "ACH-USDT_1778228655490",
@@ -21969,6 +22676,307 @@
       ],
       "rank": 317,
       "evaluations": {}
+    },
+    {
+      "id": "NEAR-USDT_1778228854189",
+      "symbol": "NEAR-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 65.19,
+      "explanation": "15m 成交量高於前 20 根均量 230.56%，價格斜率 0.146% / bar",
+      "entryPrice": 1.4961,
+      "timestamp": 1778228854189,
+      "firstTimestamp": 1778225037981,
+      "stageIndex": 3,
+      "history": [
+        "15m  內再次推送｜目前 +2.02%",
+        "30m  內再次推送｜目前 +2.14%",
+        "1h   內再次推送｜目前 +1.34%"
+      ],
+      "rank": 319,
+      "evaluations": {}
+    },
+    {
+      "id": "YB-USDT_1778228971031",
+      "symbol": "YB-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 60.99,
+      "explanation": "15m 接近布林上軌 (1.16)，1h 動能 1.04，量能 34.61%",
+      "entryPrice": 0.1223,
+      "timestamp": 1778228971031,
+      "firstTimestamp": 1778228050801,
+      "stageIndex": 1,
+      "history": [
+        "15m  內再次推送｜目前 +0.82%"
+      ],
+      "rank": 328,
+      "evaluations": {}
+    },
+    {
+      "id": "PENGUIN-USDT_1778229133718",
+      "symbol": "PENGUIN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 2,
+      "score": 70.87,
+      "explanation": "急跌 -28.33%，低點反彈 +30.23%，收復 76%",
+      "entryPrice": 0.00434,
+      "timestamp": 1778229133718,
+      "firstTimestamp": 1778229132430,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 23,
+      "evaluations": {}
+    },
+    {
+      "id": "BCH-USDT_1778229206740",
+      "symbol": "BCH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.93,
+      "explanation": "15m 成交量高於前 20 根均量 6051.20%，價格斜率 0.045% / bar",
+      "entryPrice": 450.01,
+      "timestamp": 1778229206740,
+      "firstTimestamp": 1778227476910,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 213,
+      "evaluations": {}
+    },
+    {
+      "id": "STORJ-USDT_1778229210473",
+      "symbol": "STORJ-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.79,
+      "explanation": "15m 成交量高於前 20 根均量 43998.24%，價格斜率 0.249% / bar",
+      "entryPrice": 0.1157,
+      "timestamp": 1778229210473,
+      "firstTimestamp": 1778224256585,
+      "stageIndex": 2,
+      "history": [
+        "15m  內再次推送｜目前 -0.17%",
+        "30m  內再次推送｜目前 -0.09%"
+      ],
+      "rank": 235,
+      "evaluations": {}
+    },
+    {
+      "id": "WIF-USDT_1778229217220",
+      "symbol": "WIF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.24,
+      "explanation": "15m 成交量高於前 20 根均量 7873.05%，價格斜率 0.090% / bar",
+      "entryPrice": 0.2183,
+      "timestamp": 1778229217220,
+      "firstTimestamp": 1778221788662,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 346,
+      "evaluations": {}
+    },
+    {
+      "id": "ANIME-USDT_1778229227638",
+      "symbol": "ANIME-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 60.6,
+      "explanation": "15m 接近布林上軌 (1.05)，1h 動能 1.07，量能 80.51%",
+      "entryPrice": 0.004875,
+      "timestamp": 1778229227638,
+      "firstTimestamp": 1778229196857,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 488,
+      "evaluations": {}
+    },
+    {
+      "id": "BCH-USDT_1778229237349",
+      "symbol": "BCH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.93,
+      "explanation": "15m 成交量高於前 20 根均量 6051.20%，價格斜率 0.045% / bar",
+      "entryPrice": 450.01,
+      "timestamp": 1778229237349,
+      "firstTimestamp": 1778227476910,
+      "stageIndex": 1,
+      "history": [
+        "15m  內再次推送｜目前 +0.09%"
+      ],
+      "rank": 213,
+      "evaluations": {}
+    },
+    {
+      "id": "STORJ-USDT_1778229240770",
+      "symbol": "STORJ-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.79,
+      "explanation": "15m 成交量高於前 20 根均量 43998.24%，價格斜率 0.249% / bar",
+      "entryPrice": 0.1157,
+      "timestamp": 1778229240770,
+      "firstTimestamp": 1778224256585,
+      "stageIndex": 3,
+      "history": [
+        "15m  內再次推送｜目前 -0.17%",
+        "30m  內再次推送｜目前 -0.09%",
+        "1h   內再次推送｜目前 -0.26%"
+      ],
+      "rank": 233,
+      "evaluations": {}
+    },
+    {
+      "id": "WIF-USDT_1778229245816",
+      "symbol": "WIF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.24,
+      "explanation": "15m 成交量高於前 20 根均量 7873.05%，價格斜率 0.090% / bar",
+      "entryPrice": 0.2183,
+      "timestamp": 1778229245816,
+      "firstTimestamp": 1778221788662,
+      "stageIndex": 1,
+      "history": [
+        "15m  內再次推送｜目前 -0.41%"
+      ],
+      "rank": 350,
+      "evaluations": {}
+    },
+    {
+      "id": "WIF-USDT_1778229262491",
+      "symbol": "WIF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.24,
+      "explanation": "15m 成交量高於前 20 根均量 7873.05%，價格斜率 0.090% / bar",
+      "entryPrice": 0.2183,
+      "timestamp": 1778229262491,
+      "firstTimestamp": 1778221788662,
+      "stageIndex": 2,
+      "history": [
+        "15m  內再次推送｜目前 -0.41%",
+        "30m  內再次推送｜目前 -0.27%"
+      ],
+      "rank": 330,
+      "evaluations": {}
+    },
+    {
+      "id": "WIF-USDT_1778229278343",
+      "symbol": "WIF-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.24,
+      "explanation": "15m 成交量高於前 20 根均量 7873.05%，價格斜率 0.090% / bar",
+      "entryPrice": 0.2183,
+      "timestamp": 1778229278343,
+      "firstTimestamp": 1778221788662,
+      "stageIndex": 3,
+      "history": [
+        "15m  內再次推送｜目前 -0.41%",
+        "30m  內再次推送｜目前 -0.27%",
+        "1h   內再次推送｜目前 -0.37%"
+      ],
+      "rank": 346,
+      "evaluations": {}
+    },
+    {
+      "id": "APE-USDT_1778229291440",
+      "symbol": "APE-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 62.62,
+      "explanation": "15m 成交量高於前 20 根均量 11335.32%，價格斜率 0.078% / bar",
+      "entryPrice": 0.1648,
+      "timestamp": 1778229291440,
+      "firstTimestamp": 1778225671398,
+      "stageIndex": 3,
+      "history": [
+        "15m  內再次推送｜目前 -0.18%",
+        "30m  內再次推送｜目前 -0.36%",
+        "1h   內再次推送｜目前 -0.91%"
+      ],
+      "rank": 171,
+      "evaluations": {}
+    },
+    {
+      "id": "BCH-USDT_1778229294858",
+      "symbol": "BCH-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 63.93,
+      "explanation": "15m 成交量高於前 20 根均量 6051.20%，價格斜率 0.045% / bar",
+      "entryPrice": 450.01,
+      "timestamp": 1778229294858,
+      "firstTimestamp": 1778227476910,
+      "stageIndex": 2,
+      "history": [
+        "15m  內再次推送｜目前 +0.09%",
+        "30m  內再次推送｜目前 +0.09%"
+      ],
+      "rank": 213,
+      "evaluations": {}
+    },
+    {
+      "id": "CHR-USDT_1778229404167",
+      "symbol": "CHR-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 81.8,
+      "explanation": "15m 成交量高於前 20 根均量 969.94%，價格斜率 0.092% / bar",
+      "entryPrice": 0.02691,
+      "timestamp": 1778229404167,
+      "firstTimestamp": 1778218189348,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 130,
+      "evaluations": {}
+    },
+    {
+      "id": "ENSO-USDT_1778229408849",
+      "symbol": "ENSO-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 71.42,
+      "explanation": "15m 接近布林上軌 (1.22)，1h 動能 1.05，量能 60.77%",
+      "entryPrice": 0.9418,
+      "timestamp": 1778229408849,
+      "firstTimestamp": 1778229389212,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 153,
+      "evaluations": {}
+    },
+    {
+      "id": "PYTH-USDT_1778229417230",
+      "symbol": "PYTH-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 65.93,
+      "explanation": "15m 接近布林上軌 (1.10)，1h 動能 1.04，量能 26.29%",
+      "entryPrice": 0.05369,
+      "timestamp": 1778229417230,
+      "firstTimestamp": 1778229389212,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 242,
+      "evaluations": {}
+    },
+    {
+      "id": "CARV-USDT_1778229421084",
+      "symbol": "CARV-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 73.73,
+      "explanation": "15m 接近布林上軌 (1.35)，1h 動能 1.05，量能 124.38%",
+      "entryPrice": 0.0614,
+      "timestamp": 1778229421084,
+      "firstTimestamp": 1778229389212,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 270,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -21977,41 +22985,41 @@
         "signalType": "量能爆發",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 339,
-        "wins": 63,
-        "winRate": 18.58
+        "total": 361,
+        "wins": 66,
+        "winRate": 18.28
       },
       "量能爆發__30m": {
         "signalType": "量能爆發",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 314,
-        "wins": 39,
-        "winRate": 12.42
+        "total": 335,
+        "wins": 40,
+        "winRate": 11.94
       },
       "量能爆發__1h": {
         "signalType": "量能爆發",
         "horizon": "1h",
         "threshold": 5,
-        "total": 257,
-        "wins": 12,
-        "winRate": 4.67
+        "total": 281,
+        "wins": 16,
+        "winRate": 5.69
       },
       "量能爆發__2h": {
         "signalType": "量能爆發",
         "horizon": "2h",
         "threshold": 15,
-        "total": 203,
+        "total": 213,
         "wins": 8,
-        "winRate": 3.94
+        "winRate": 3.76
       },
       "量能爆發__4h": {
         "signalType": "量能爆發",
         "horizon": "4h",
         "threshold": 25,
-        "total": 111,
+        "total": 112,
         "wins": 6,
-        "winRate": 5.41
+        "winRate": 5.36
       },
       "V轉反彈__15m": {
         "signalType": "V轉反彈",
@@ -22041,9 +23049,9 @@
         "signalType": "V轉反彈",
         "horizon": "2h",
         "threshold": 15,
-        "total": 9,
+        "total": 10,
         "wins": 2,
-        "winRate": 22.22
+        "winRate": 20
       },
       "V轉反彈__4h": {
         "signalType": "V轉反彈",
@@ -22057,64 +23065,64 @@
         "signalType": "布林突破",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 225,
-        "wins": 73,
-        "winRate": 32.44
+        "total": 238,
+        "wins": 80,
+        "winRate": 33.61
       },
       "布林突破__30m": {
         "signalType": "布林突破",
         "horizon": "30m",
         "threshold": 1.5,
-        "total": 212,
-        "wins": 59,
-        "winRate": 27.83
+        "total": 219,
+        "wins": 61,
+        "winRate": 27.85
       },
       "布林突破__1h": {
         "signalType": "布林突破",
         "horizon": "1h",
         "threshold": 5,
-        "total": 175,
-        "wins": 4,
-        "winRate": 2.29
+        "total": 186,
+        "wins": 6,
+        "winRate": 3.23
       },
       "布林突破__2h": {
         "signalType": "布林突破",
         "horizon": "2h",
         "threshold": 15,
-        "total": 147,
+        "total": 148,
         "wins": 3,
-        "winRate": 2.04
+        "winRate": 2.03
       },
       "布林突破__4h": {
         "signalType": "布林突破",
         "horizon": "4h",
         "threshold": 25,
-        "total": 94,
+        "total": 95,
         "wins": 1,
-        "winRate": 1.06
+        "winRate": 1.05
       }
     },
     "byScoreBracket": {
       "60-70": {
         "bracket": "60-70",
-        "total": 393,
-        "evaluated": 358,
-        "wins": 84,
-        "winRate": 23.46
+        "total": 407,
+        "evaluated": 386,
+        "wins": 93,
+        "winRate": 24.09
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 125,
-        "evaluated": 119,
+        "total": 128,
+        "evaluated": 124,
         "wins": 22,
-        "winRate": 18.49
+        "winRate": 17.74
       },
       "80-90": {
         "bracket": "80-90",
-        "total": 107,
-        "evaluated": 101,
-        "wins": 36,
-        "winRate": 35.64
+        "total": 108,
+        "evaluated": 103,
+        "wins": 37,
+        "winRate": 35.92
       },
       "90-100": {
         "bracket": "90-100",
@@ -22125,5 +23133,5 @@
       }
     }
   },
-  "updatedAt": 1778228832694
+  "updatedAt": 1778229440544
 }
