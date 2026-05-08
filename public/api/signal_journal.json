@@ -36964,7 +36964,14 @@
       "stageIndex": 0,
       "history": [],
       "rank": 448,
-      "evaluations": {}
+      "evaluations": {
+        "15m": {
+          "pnlPct": -0.49,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778257283440
+        }
+      }
     },
     {
       "id": "FLORKETH-USDT_1778256051633",
@@ -37001,6 +37008,28 @@
       "stageIndex": 0,
       "history": [],
       "rank": 282,
+      "evaluations": {
+        "15m": {
+          "pnlPct": 0.42,
+          "win": false,
+          "threshold": 0.8,
+          "evaluatedAt": 1778257283440
+        }
+      }
+    },
+    {
+      "id": "D-USDT_1778256999733",
+      "symbol": "D-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 73.27,
+      "explanation": "15m 接近布林上軌 (1.03)，1h 動能 1.19，量能速度 1.0x",
+      "entryPrice": 0.015056,
+      "timestamp": 1778256999733,
+      "firstTimestamp": 1778256987205,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 246,
       "evaluations": {}
     }
   ],
@@ -37010,9 +37039,9 @@
         "signalType": "量能爆發",
         "horizon": "15m",
         "threshold": 0.8,
-        "total": 444,
+        "total": 446,
         "wins": 91,
-        "winRate": 20.5
+        "winRate": 20.4
       },
       "量能爆發__30m": {
         "signalType": "量能爆發",
@@ -37177,17 +37206,17 @@
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 170,
-        "evaluated": 169,
+        "total": 171,
+        "evaluated": 170,
         "wins": 35,
-        "winRate": 20.71
+        "winRate": 20.59
       },
       "80-90": {
         "bracket": "80-90",
         "total": 136,
-        "evaluated": 135,
+        "evaluated": 136,
         "wins": 50,
-        "winRate": 37.04
+        "winRate": 36.76
       },
       "90-100": {
         "bracket": "90-100",
@@ -37198,5 +37227,5 @@
       }
     }
   },
-  "updatedAt": 1778256987723
+  "updatedAt": 1778257283709
 }
