@@ -9,11 +9,6 @@ services:
       - .env
     environment:
       - DATA_DIR=/app/data
-      - DISCORD_WEBHOOK_URL_STAR_1=${DISCORD_WEBHOOK_URL_STAR_1}
-      - DISCORD_WEBHOOK_URL_STAR_2=${DISCORD_WEBHOOK_URL_STAR_2}
-      - DISCORD_WEBHOOK_URL_STAR_3=${DISCORD_WEBHOOK_URL_STAR_3}
-      - DISCORD_SUMMARY_WEBHOOK_URL=${DISCORD_SUMMARY_WEBHOOK_URL}
-      - DISCORD_JOURNAL_WEBHOOK_URL=${DISCORD_JOURNAL_WEBHOOK_URL}
     volumes:
       - ./data:/app/data
       - ./src/scripts:/app/src/scripts
