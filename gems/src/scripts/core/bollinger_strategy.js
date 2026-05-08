@@ -660,16 +660,29 @@ export async function bollingerScan(coins, ctx) {
                     if (lastEntry) {
                         const stageIndex = lastEntry.stageIndex || 0;
                         const firstTimestamp = lastEntry.firstTimestamp || lastEntry.timestamp;
-                        const nextStageTime = firstTimestamp + NOTIFY_STAGES[stageIndex + 1] * 60 * 1000;
+                        const elapsedMins = (now - firstTimestamp) / (60 * 1000);
                         
+                        // 1. 如果距離上次推送不到 15 分鐘，且不是因為到達下個階段，則絕對禁止推送
+                        // 2. 只有當經過時間 >= 下一個追蹤階段的時間，才允許 shouldNotify = true
+                        const nextStageMin = NOTIFY_STAGES[stageIndex + 1];
+                        const nextStageTime = nextStageMin ? (firstTimestamp + nextStageMin * 60 * 1000) : Infinity;
+
                         track = { 
                             stageIndex, 
-                            nextNotifyAt: stageIndex + 1 < NOTIFY_STAGES.length ? nextStageTime : Infinity, 
+                            nextNotifyAt: nextStageTime, 
                             lastSeenAt: now,
                             entryPrice: lastEntry.entryPrice,
                             firstTimestamp,
-                            history: lastEntry.history || [] // 讀取歷史進度
+                            history: lastEntry.history || []
                         };
+
+                        if (now >= nextStageTime && stageIndex + 1 < NOTIFY_STAGES.length) {
+                            // 只有真的到了下一個追蹤時間點 (15/30/60/240) 才准許通知
+                            shouldNotify = true;
+                            // 注意：這裡先不加 stageIndex，等下面確定通知後再加
+                        } else {
+                            shouldNotify = false; // 強制不通知
+                        }
                     } else {
                         track = { 
                             stageIndex: 0, 
@@ -687,13 +700,12 @@ export async function bollingerScan(coins, ctx) {
                     if (now >= track.nextNotifyAt) {
                         track.stageIndex++;
                         if (track.stageIndex < NOTIFY_STAGES.length) {
+                            shouldNotify = true;
                             const nextIndex = track.stageIndex + 1;
                             track.nextNotifyAt = nextIndex < NOTIFY_STAGES.length 
                                 ? track.firstTimestamp + NOTIFY_STAGES[nextIndex] * 60 * 1000 
                                 : Infinity;
-                            shouldNotify = true;
                             
-                            // 計算並記錄目前進度
                             const currentPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
                             const stageMin = NOTIFY_STAGES[track.stageIndex];
                             const stageLabel = stageMin < 60 ? `${stageMin}m` : `${stageMin / 60}h`;
@@ -702,7 +714,6 @@ export async function bollingerScan(coins, ctx) {
                             track.history.push(reportLine);
                             
                             progressReport = `\n📊 追蹤表現：\n`;
-                            // 顯示包含首次推送在內的所有歷史
                             const firstPnl = ((t.price - track.entryPrice) / track.entryPrice) * 100;
                             progressReport += `15m  內首次推送｜目前 ${firstPnl > 0 ? '+' : ''}${firstPnl.toFixed(2)}%\n`;
                             progressReport += track.history.join('\n') + '\n';
