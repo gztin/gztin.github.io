@@ -36950,6 +36950,36 @@
           "evaluatedAt": 1778255743954
         }
       }
+    },
+    {
+      "id": "ASTER-USDT_1778255767406",
+      "symbol": "ASTER-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 76.95,
+      "explanation": "15m 成交量高於前 20 根均量 165.45%，速度 5.1x，斜率 0.019%",
+      "entryPrice": 0.6683,
+      "timestamp": 1778255767406,
+      "firstTimestamp": 1778255743766,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 448,
+      "evaluations": {}
+    },
+    {
+      "id": "FLORKETH-USDT_1778256051633",
+      "symbol": "FLORKETH-USDT",
+      "signalType": "V轉反彈",
+      "stars": 2,
+      "score": 85.13,
+      "explanation": "急跌 -15.33%，低點反彈 +16.23%，量能速度 4.4x",
+      "entryPrice": 0.000002622,
+      "timestamp": 1778256051633,
+      "firstTimestamp": 1778256032772,
+      "stageIndex": 0,
+      "history": [],
+      "rank": 408,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -37125,14 +37155,14 @@
       },
       "70-80": {
         "bracket": "70-80",
-        "total": 169,
+        "total": 170,
         "evaluated": 169,
         "wins": 35,
         "winRate": 20.71
       },
       "80-90": {
         "bracket": "80-90",
-        "total": 134,
+        "total": 135,
         "evaluated": 134,
         "wins": 49,
         "winRate": 36.57
@@ -37146,5 +37176,5 @@
       }
     }
   },
-  "updatedAt": 1778255745350
+  "updatedAt": 1778256051639
 }
