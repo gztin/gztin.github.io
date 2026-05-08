@@ -1636,6 +1636,222 @@
       "timestamp": 1778208793679,
       "rank": 468,
       "evaluations": {}
+    },
+    {
+      "id": "CHIP-USDT_1778208873752",
+      "symbol": "CHIP-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 67.89,
+      "explanation": "15m 接近布林上軌 (1.07)，1h 動能 1.06，量能 47.43%",
+      "entryPrice": 0.05918,
+      "timestamp": 1778208873752,
+      "rank": 28,
+      "evaluations": {}
+    },
+    {
+      "id": "SPK-USDT_1778208876909",
+      "symbol": "SPK-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 83.19,
+      "explanation": "15m 成交量高於前 20 根均量 334.23%，價格斜率 0.349% / bar",
+      "entryPrice": 0.0389,
+      "timestamp": 1778208876909,
+      "rank": 45,
+      "evaluations": {}
+    },
+    {
+      "id": "XPIN-USDT_1778208879146",
+      "symbol": "XPIN-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 69.47,
+      "explanation": "15m 接近布林上軌 (1.08)，1h 動能 1.34，量能 99.67%",
+      "entryPrice": 0.0013522,
+      "timestamp": 1778208879146,
+      "rank": 55,
+      "evaluations": {}
+    },
+    {
+      "id": "ACE-USDT_1778208886411",
+      "symbol": "ACE-USDT",
+      "signalType": "V轉反彈",
+      "stars": 1,
+      "score": 63.62,
+      "explanation": "急跌 -11.77%，低點反彈 +11.88%，收復 89%",
+      "entryPrice": 0.1305,
+      "timestamp": 1778208886411,
+      "rank": 145,
+      "evaluations": {}
+    },
+    {
+      "id": "CFX-USDT_1778208893727",
+      "symbol": "CFX-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.71,
+      "explanation": "15m 成交量高於前 20 根均量 1549.08%，價格斜率 0.036% / bar",
+      "entryPrice": 0.06474,
+      "timestamp": 1778208893727,
+      "rank": 269,
+      "evaluations": {}
+    },
+    {
+      "id": "SPORTFUN-USDT_1778209000249",
+      "symbol": "SPORTFUN-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 86.48,
+      "explanation": "15m 成交量高於前 20 根均量 330.14%，價格斜率 0.354% / bar",
+      "entryPrice": 0.06662,
+      "timestamp": 1778209000249,
+      "rank": 23,
+      "evaluations": {}
+    },
+    {
+      "id": "CHR-USDT_1778209011791",
+      "symbol": "CHR-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 64.46,
+      "explanation": "15m 成交量高於前 20 根均量 504.50%，價格斜率 0.083% / bar",
+      "entryPrice": 0.02659,
+      "timestamp": 1778209011791,
+      "rank": 276,
+      "evaluations": {}
+    },
+    {
+      "id": "POWER-USDT_1778209015964",
+      "symbol": "POWER-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 63.01,
+      "explanation": "15m 成交量高於前 20 根均量 219.42%，價格斜率 0.017% / bar",
+      "entryPrice": 0.08554,
+      "timestamp": 1778209015964,
+      "rank": 328,
+      "evaluations": {}
+    },
+    {
+      "id": "SIREN-USDT_1778209108152",
+      "symbol": "SIREN-USDT",
+      "signalType": "V轉反彈",
+      "stars": 2,
+      "score": 65.71,
+      "explanation": "急跌 -14.36%，低點反彈 +15.71%，收復 94%",
+      "entryPrice": 1.07811,
+      "timestamp": 1778209108152,
+      "rank": 6,
+      "evaluations": {}
+    },
+    {
+      "id": "SAFE-USDT_1778209116123",
+      "symbol": "SAFE-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 67.81,
+      "explanation": "15m 成交量高於前 20 根均量 193.98%，價格斜率 0.320% / bar",
+      "entryPrice": 0.1461,
+      "timestamp": 1778209116123,
+      "rank": 81,
+      "evaluations": {}
+    },
+    {
+      "id": "DOLO-USDT_1778209119915",
+      "symbol": "DOLO-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 61.72,
+      "explanation": "15m 成交量高於前 20 根均量 199.73%，價格斜率 0.079% / bar",
+      "entryPrice": 0.033519,
+      "timestamp": 1778209119915,
+      "rank": 117,
+      "evaluations": {}
+    },
+    {
+      "id": "ZKP-USDT_1778209122281",
+      "symbol": "ZKP-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 86,
+      "explanation": "15m 接近布林上軌 (1.19)，1h 動能 1.15，量能 212.87%",
+      "entryPrice": 0.08869,
+      "timestamp": 1778209122281,
+      "rank": 125,
+      "evaluations": {}
+    },
+    {
+      "id": "RECALL-USDT_1778209126070",
+      "symbol": "RECALL-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 60.86,
+      "explanation": "15m 成交量高於前 20 根均量 262.25%，價格斜率 0.081% / bar",
+      "entryPrice": 0.05377,
+      "timestamp": 1778209126070,
+      "rank": 152,
+      "evaluations": {}
+    },
+    {
+      "id": "TIA-USDT_1778209126083",
+      "symbol": "TIA-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 60.74,
+      "explanation": "15m 接近布林上軌 (0.98)，1h 動能 1.02，量能 155.20%",
+      "entryPrice": 0.3924,
+      "timestamp": 1778209126083,
+      "rank": 157,
+      "evaluations": {}
+    },
+    {
+      "id": "BR-USDT_1778209137103",
+      "symbol": "BR-USDT",
+      "signalType": "量能爆發",
+      "stars": 2,
+      "score": 74.09,
+      "explanation": "15m 成交量高於前 20 根均量 208.62%，價格斜率 0.006% / bar",
+      "entryPrice": 0.16417,
+      "timestamp": 1778209137103,
+      "rank": 254,
+      "evaluations": {}
+    },
+    {
+      "id": "XPIN-USDT_1778209241964",
+      "symbol": "XPIN-USDT",
+      "signalType": "布林突破",
+      "stars": 3,
+      "score": 70.7,
+      "explanation": "15m 接近布林上軌 (1.05)，1h 動能 1.32，量能 144.93%",
+      "entryPrice": 0.0013312,
+      "timestamp": 1778209241964,
+      "rank": 82,
+      "evaluations": {}
+    },
+    {
+      "id": "MORPHO-USDT_1778209374369",
+      "symbol": "MORPHO-USDT",
+      "signalType": "量能爆發",
+      "stars": 3,
+      "score": 61.93,
+      "explanation": "15m 成交量高於前 20 根均量 304.37%，價格斜率 0.000% / bar",
+      "entryPrice": 2.0684,
+      "timestamp": 1778209374369,
+      "rank": 118,
+      "evaluations": {}
+    },
+    {
+      "id": "ZKP-USDT_1778209494634",
+      "symbol": "ZKP-USDT",
+      "signalType": "布林突破",
+      "stars": 2,
+      "score": 61.77,
+      "explanation": "15m 接近布林上軌 (1.05)，1h 動能 1.04，量能 62.20%",
+      "entryPrice": 0.08878,
+      "timestamp": 1778209494634,
+      "rank": 124,
+      "evaluations": {}
     }
   ],
   "summary": {
@@ -1732,5 +1948,5 @@
       }
     }
   },
-  "updatedAt": 1778208793683
+  "updatedAt": 1778209494637
 }
