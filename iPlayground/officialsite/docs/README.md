@@ -8,6 +8,7 @@
 |------|------|
 | [data/README.md](data/README.md) | JSON 檔用途、欄位與編輯方式（實際 JSON 仍在 repo 根目錄的 `data/`） |
 | [data/JSON_DATA_STRUCTURE.md](data/JSON_DATA_STRUCTURE.md) | 議程、工作坊、講者等結構速查 |
+| [data/PHOTOWALL.md](data/PHOTOWALL.md) | 照片牆參數說明（照片清單、速度、透明度、遮罩） |
 
 ## 靜態資源
 
