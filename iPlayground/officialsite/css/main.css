@@ -3243,6 +3243,11 @@
     #sponsors.section-sponsors,
     html[data-mode="dark"] #sponsors.section-sponsors {
       background: #eef1f4 !important;
+      background-color: #eef1f4 !important;
+      color: #111111;
+    }
+    #sponsors.section-sponsors .wrap {
+      background: transparent !important;
     }
     #sponsors.section-sponsors .section-title,
     #sponsors.section-sponsors .section-eyebrow,
