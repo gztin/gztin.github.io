@@ -69,6 +69,8 @@
   "agenda_sort_desc":    { "zh": "時間由遠到近",                      "en": "Latest first" },
   "agenda_meta":         { "zh": "議程公布後即時更新",                "en": "Updates as sessions confirm" },
   "agenda_speaker_tba":  { "zh": "TBA",                               "en": "TBA" },
+  "agenda_hackmd_btn":   { "zh": "HackMD 共筆",                       "en": "HackMD Notes" },
+  "agenda_watch_btn":    { "zh": "線上看",                             "en": "Watch Online" },
 
   "stat_dates_value":    { "zh": "7.25–26",                           "en": "7.25–26" },
   "stat_dates_sub":      { "zh": "2026 · 週六–週日",                 "en": "2026 · SAT–SUN" },

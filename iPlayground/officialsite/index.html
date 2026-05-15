@@ -20,8 +20,8 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <link rel="stylesheet" href="css/shared.css?v=20260504-tag-case-fix-3">
-  <link rel="stylesheet" href="css/main.css?v=20260504-tag-case-fix-3">
+  <link rel="stylesheet" href="css/shared.css?v=20260516-sponsor-refresh-5">
+  <link rel="stylesheet" href="css/main.css?v=20260516-sponsor-refresh-5">
 </head>
 
 <body>
@@ -92,7 +92,7 @@
     </ul>
   </div>
 
-  <link rel="stylesheet" href="css/confetti.css?v=20260503-speaker-size-fix-8">
+  <link rel="stylesheet" href="css/confetti.css?v=20260516-sponsor-refresh-5">
   <!-- Hero -->
   <header class="hero" id="hero" data-screen-label="01 Hero" data-state="open">
 
@@ -452,19 +452,14 @@
   </section>
 
   <!-- Sponsors -->
-  <section class="section section-sponsors" id="sponsors" data-screen-label="06 Sponsors" hidden>
+  <section class="section section-sponsors" id="sponsors" data-screen-label="06 Sponsors">
     <div class="wrap center">
       <header class="section-head">
         <span class="section-eyebrow">// 06</span>
         <h2 class="section-title section-title--zh" data-i18n="sponsors_title">贊助廠商</h2>
         <span class="section-meta"></span>
       </header>
-      <div class="construction">
-        <h3 data-i18n="construction">建構中</h3>
-        <p data-i18n="sponsors_wip">正在邀請優秀的夥伴加入我們</p>
-        <a class="btn-primary" href="#" data-link="sponsor_referral" target="_blank" rel="noopener"
-          data-i18n="sponsors_cta" style="display:inline-block;margin-top:28px;">🔗 徵求贊助廠商 →</a>
-      </div>
+      <div id="sponsorTiers" class="sponsor-tiers"></div>
     </div>
   </section>
 
@@ -595,18 +590,26 @@
       <!-- 說明 -->
       <p class="am-desc" id="amDesc"></p>
 
-      <!-- HackMD -->
-      <a class="am-hackmd" id="amHackmd" href="#" target="_blank" rel="noopener" style="display:none;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="16" y1="13" x2="8" y2="13" />
-          <line x1="16" y1="17" x2="8" y2="17" />
-          <polyline points="10 9 9 9 8 9" />
-        </svg>
-        HackMD 共筆
-      </a>
+      <div class="am-links">
+        <!-- HackMD -->
+        <a class="am-hackmd" id="amHackmd" href="#" target="_blank" rel="noopener" style="display:none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+            <polyline points="14 2 14 8 20 8" />
+            <line x1="16" y1="13" x2="8" y2="13" />
+            <line x1="16" y1="17" x2="8" y2="17" />
+            <polyline points="10 9 9 9 8 9" />
+          </svg>
+          <span data-i18n="agenda_hackmd_btn">HackMD 共筆</span>
+        </a>
+        <a class="am-watch" id="amWatch" href="https://youtube.com/@iplaygroundtaiwan" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M8 6v12l10-6z" />
+          </svg>
+          <span data-i18n="agenda_watch_btn">線上看</span>
+        </a>
+      </div>
 
       <!-- 社群連結 -->
       <div class="am-social" id="amSocial"></div>
@@ -1064,7 +1067,9 @@
               }
               : null,
             description,
-            hackmd: row.hackMD || enRow.hackMD || ""
+            hackmd: row.hackMD || row.hackmd || enRow.hackMD || enRow.hackmd || "",
+            video: row.video || row.videoUrl || row.videoURL || row.youtube || row.youtubeUrl
+              || enRow.video || enRow.videoUrl || enRow.videoURL || enRow.youtube || enRow.youtubeUrl || ""
           });
         });
       });
@@ -1130,33 +1135,75 @@
     function renderSponsors() {
       const section = document.getElementById("sponsors");
       if (!section) return;
-      if (!Array.isArray(SPONSORS) || SPONSORS.length === 0) {
-        section.setAttribute("hidden", "");
-        return;
-      }
-
       section.removeAttribute("hidden");
-      const wrap = section.querySelector(".construction");
+      const wrap = document.getElementById("sponsorTiers");
       if (!wrap) return;
 
-      const cards = SPONSORS.map((s) => {
-        const name = localized(s.name) || s.name || "";
-        const logo = s.logo || "";
-        const link = s.website || s.url || "#";
-        const tier = localized(s.tier) || s.tier || "";
+      const tiers = [
+        { key: "diamond", zh: "鑽石", en: "Diamond" },
+        { key: "gold", zh: "黃金", en: "Gold" },
+        { key: "silver", zh: "白銀", en: "Silver" },
+        { key: "bronze", zh: "青銅", en: "Bronze" },
+      ];
+      const tierBuckets = Object.fromEntries(tiers.map(t => [t.key, []]));
+
+      const normalizeTier = (s) => {
+        const raw = String(localized(s.tier) || s.tier || s.level || s.type || "").toLowerCase();
+        if (raw.includes("鑽") || raw.includes("diamond")) return "diamond";
+        if (raw.includes("金") || raw.includes("gold")) return "gold";
+        if (raw.includes("銀") || raw.includes("silver")) return "silver";
+        if (raw.includes("銅") || raw.includes("bronze")) return "bronze";
+        return "bronze";
+      };
+
+      if (Array.isArray(SPONSORS)) {
+        SPONSORS.forEach((s) => tierBuckets[normalizeTier(s)].push(s));
+      }
+
+      wrap.innerHTML = tiers.map((tier, tierIdx) => {
+        const sponsors = tierBuckets[tier.key] || [];
+        const demoCount = tierIdx + 1; // diamond=1, gold=2, silver=3, bronze=4
+        const previewSponsors = Array.from({ length: demoCount }, (_, i) => {
+          const base = sponsors[i] || {};
+          return {
+            ...base,
+            name: base.name || `${tier.key}-demo-${i + 1}`,
+            website: base.website || base.url || "#"
+          };
+        });
+        const tierLabel = currentLang === "en" ? tier.en : tier.zh;
+        const demoLogos = [
+          "img/sponsor/logo_kktix.png",
+          "img/sponsor/logo_HackMD.png",
+          "img/sponsor/logo_revenuecat.png"
+        ];
+        const logoList = previewSponsors.map((s) => {
+            const name = localized(s.name) || s.name || "";
+            const logo = demoLogos[(tierIdx + (s.name?.length || 0)) % demoLogos.length];
+            const link = s.website || s.url || "#";
+            return `
+              <a class="sponsor-logo-card" href="${link}" target="_blank" rel="noopener" aria-label="${name}">
+                ${logo ? `<img src="${logo}" alt="${name}" loading="lazy">` : `<span class="sponsor-logo-fallback">${name}</span>`}
+              </a>
+            `;
+          }).join("");
+
         return `
-          <a href="${link}" target="_blank" rel="noopener" style="display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;padding:18px 12px;border:1px solid var(--rule);border-radius:14px;background:var(--surface);text-decoration:none;">
-            ${logo ? `<img src="${logo}" alt="${name}" style="max-width:160px;max-height:56px;width:auto;height:auto;object-fit:contain;">` : `<strong style="font-size:16px;">${name}</strong>`}
-            ${tier ? `<span style="font-size:12px;color:var(--ink-2);">${tier}</span>` : ""}
-          </a>
+          <section class="sponsor-tier-row sponsor-tier-${tier.key}">
+            <div class="sponsor-tier-name-wrap">
+              <div class="sponsor-tier-name">
+                <span class="sponsor-tier-rank-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l2.9 5.88 6.5.95-4.7 4.58 1.1 6.47L12 16.9l-5.8 3.05 1.1-6.47-4.7-4.58 6.5-.95L12 2z"/>
+                  </svg>
+                </span>
+                <span>${tierLabel}</span>
+              </div>
+            </div>
+            <div class="sponsor-tier-logos" data-count="${previewSponsors.length}">${logoList}</div>
+          </section>
         `;
       }).join("");
-
-      wrap.innerHTML = `
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;">
-          ${cards}
-        </div>
-      `;
     }
 
     function parseTime(timeStr) {
@@ -1201,6 +1248,12 @@
           : (currentLang === "en" ? "Sort earliest first" : "切換為時間正序"));
         sortBtn.title = sortBtn.getAttribute("aria-label");
       }
+    }
+
+    function isNoVideoSpeaker(speaker) {
+      const zh = String(speaker?.name?.zh || "").toLowerCase();
+      const en = String(speaker?.name?.en || "").toLowerCase();
+      return zh.includes("鄭宇哲") || zh.includes("uj cheng") || en.includes("uj cheng");
     }
 
     function renderAgenda(day) {
@@ -1256,6 +1309,17 @@
             return `<span class="session-tag${isKeynote ? " is-keynote" : ""}${isRoom ? " is-room" : ""}">${String(tag)}</span>`;
           }).join("");
           const speakerName = localized(r.speaker?.name) || tbaLabel;
+          const noVideoText = currentLang === "en" ? "No Recording" : "禁止攝影";
+          const noVideoBadge = isNoVideoSpeaker(r.speaker)
+            ? `<span class="session-no-video" title="${noVideoText}" aria-label="${noVideoText}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M23 7l-7 5 7 5V7z"></path>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <span>${noVideoText}</span>
+              </span>`
+            : "";
           const startTime = (r.time || "").split(/[–\-]/)[0].trim();
           const desc = localized(r.description) || "";
 
@@ -1272,7 +1336,7 @@
             ${desc ? `<p class="session-desc">${desc}</p>` : ""}
           </div>
           <div class="session-meta">
-            ${!isBreak ? `<span class="session-speaker"><span class="session-speaker-label">${speakerPrefix}</span><span>${speakerName}</span></span>` : ""}
+            ${!isBreak ? `<div class="session-speaker-wrap"><span class="session-speaker"><span class="session-speaker-label">${speakerPrefix}</span><span>${speakerName}</span></span>${noVideoBadge}</div>` : ""}
             <span class="session-tags">${tagHTML}</span>
           </div>
         </div>`;
@@ -1326,6 +1390,8 @@
       web: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`
     };
 
+    const DEFAULT_WATCH_URL = "https://youtube.com/@iplaygroundtaiwan";
+
     function showAgendaModal(item) {
       const modal = document.getElementById("agendaModal");
       if (!modal) return;
@@ -1349,10 +1415,24 @@
       const sp = item.speaker || {};
       const avatarSrc = sp.avatar || "img/staff/staff_sample.png";
       const speakerName = localized(sp.name);
+      const noVideoText = currentLang === "en" ? "No Recording" : "禁止攝影";
+      const modalNoVideoBadge = isNoVideoSpeaker(sp)
+        ? `<span class="am-no-video" title="${noVideoText}" aria-label="${noVideoText}">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M23 7l-7 5 7 5V7z"></path>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+            <span>${noVideoText}</span>
+          </span>`
+        : "";
       document.getElementById("amSpeaker").innerHTML = `
         <img class="am-speaker-avatar" src="${avatarSrc}" alt="${speakerName}"
           onerror="this.onerror=null;this.src='img/staff/staff_sample.png'">
-        <span class="am-speaker-name">${speakerName}</span>
+        <span class="am-speaker-name-wrap">
+          <span class="am-speaker-name">${speakerName}</span>
+          ${modalNoVideoBadge}
+        </span>
       `;
 
       // 說明
@@ -1365,6 +1445,15 @@
         hackmdEl.style.display = "inline-flex";
       } else {
         hackmdEl.style.display = "none";
+      }
+
+      // 線上看（每場固定顯示）
+      const watchEl = document.getElementById("amWatch");
+      if (watchEl) {
+        const videoUrl = item.watch || item.video || "";
+        const isFallback = !videoUrl;
+        watchEl.href = videoUrl || DEFAULT_WATCH_URL;
+        watchEl.dataset.fallback = isFallback ? "1" : "0";
       }
 
       // 社群連結
@@ -1929,6 +2018,15 @@
       if (btn) applyAppearance(btn.dataset.mode);
     });
 
+    document.getElementById("amWatch")?.addEventListener("click", (e) => {
+      const isFallback = e.currentTarget?.dataset?.fallback === "1";
+      if (!isFallback) return;
+      const message = currentLang === "en"
+        ? "No session video link is available yet. You will be redirected to the default YouTube page. Continue?"
+        : "目前尚未提供此場次的影片連結，將前往預設 YouTube 首頁，是否繼續？";
+      if (!window.confirm(message)) e.preventDefault();
+    });
+
     // Bus tag click (works even after i18n re-renders trans_bus_desc)
     document.addEventListener("click", (e) => {
       const tag = e.target.closest(".bus-tag");
@@ -2381,7 +2479,7 @@
     </button>
   </div>
 
-  <link rel="stylesheet" href="css/fab.css?v=20260503-speaker-size-fix-8">
+  <link rel="stylesheet" href="css/fab.css?v=20260516-sponsor-refresh-5">
   <script>
     // ===== FAB: Mode cycle (auto → light → dark → auto) =====
     const modeOrder = ["auto", "light", "dark"];
