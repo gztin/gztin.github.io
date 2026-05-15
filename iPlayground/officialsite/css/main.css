@@ -3242,8 +3242,8 @@
     /* ============ Sponsors ============ */
     #sponsors.section-sponsors,
     html[data-mode="dark"] #sponsors.section-sponsors {
-      background: #eef1f4 !important;
-      background-color: #eef1f4 !important;
+      background: #ffffff !important;
+      background-color: #ffffff !important;
       color: #111111;
     }
     #sponsors.section-sponsors .wrap {
@@ -3346,7 +3346,7 @@
     }
     .sponsor-logo-card {
       min-height: 86px;
-      border: 1px solid #cfd4da;
+      border: 1px solid #e1e1e1;
       border-radius: 4px;
       display: flex;
       align-items: center;
@@ -3380,7 +3380,7 @@
     /* ============ Personal Sponsors ============ */
     #personalSponsors.section-personal-sponsors,
     html[data-mode="dark"] #personalSponsors.section-personal-sponsors {
-      background: #eef1f4 !important;
+      background: #ffffff !important;
     }
     #personalSponsors.section-personal-sponsors .section-title,
     #personalSponsors.section-personal-sponsors .section-eyebrow,
