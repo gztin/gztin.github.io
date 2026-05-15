@@ -3371,3 +3371,66 @@
       background: color-mix(in oklab, var(--surface) 64%, transparent);
     }
     @media (max-width: 768px) { .sponsor-tier-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+    /* ============ Personal Sponsors ============ */
+    #personalSponsors.section-personal-sponsors,
+    html[data-mode="dark"] #personalSponsors.section-personal-sponsors {
+      background: #eef1f4 !important;
+    }
+    #personalSponsors.section-personal-sponsors .section-title,
+    #personalSponsors.section-personal-sponsors .section-eyebrow,
+    #personalSponsors.section-personal-sponsors .section-meta {
+      color: #111111;
+    }
+    #personalSponsors.section-personal-sponsors .section-head {
+      border-color: #d5dbe3;
+    }
+    #personalSponsorGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+    }
+    .personal-sponsor-card {
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .personal-sponsor-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 3px solid #2f3742;
+      background: #1d232c;
+      margin: 0 auto 12px;
+    }
+    .personal-sponsor-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      max-width: none;
+      max-height: none;
+    }
+    .personal-sponsor-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0;
+    }
+    .personal-sponsor-name {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.1;
+      color: #111111;
+    }
+    .personal-sponsor-role {
+      margin: 6px 0 0;
+      color: #3f4650;
+      font-size: 13px;
+    }

@@ -463,6 +463,18 @@
     </div>
   </section>
 
+  <!-- Personal Sponsors -->
+  <section class="section section-personal-sponsors" id="personalSponsors" data-screen-label="04.5 Personal Sponsors">
+    <div class="wrap center">
+      <header class="section-head">
+        <span class="section-eyebrow">// 04.5</span>
+        <h2 class="section-title section-title--zh">個人贊助者</h2>
+        <span class="section-meta"></span>
+      </header>
+      <div class="personal-sponsor-grid" id="personalSponsorGrid"></div>
+    </div>
+  </section>
+
   <div id="register"></div>
 
   <!-- Footer -->
@@ -2931,6 +2943,30 @@
           if (typeof showSpeakerModal === 'function') showSpeakerModal(speakers[idx]);
         });
       });
+    })();
+  </script>
+
+  <script>
+    // ============ Personal Sponsor Grid ============
+    (function () {
+      const grid = document.getElementById('personalSponsorGrid');
+      if (!grid) return;
+
+      const personalSponsors = [
+        { name: 'Hokila', logo: 'img/staff/staff_hokila.jpg' },
+      ];
+
+      grid.innerHTML = personalSponsors.map((s) => `
+        <article class="personal-sponsor-card">
+          <div class="personal-sponsor-photo">
+            <img src="${s.logo}" alt="${s.name}" loading="lazy">
+          </div>
+          <div class="personal-sponsor-meta">
+            <h3 class="personal-sponsor-name">${s.name}</h3>
+            <p class="personal-sponsor-role">${currentLang === "en" ? "Personal Sponsor" : "個人贊助者"}</p>
+          </div>
+        </article>
+      `).join('');
     })();
   </script>
 
