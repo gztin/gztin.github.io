@@ -1155,6 +1155,10 @@
     let TICKETS_DATA = null;
     let CONFIG = {};
     let I18N_DATA = {};  // key → { zh, en }
+    const FOOTER_TAGLINE_FALLBACK = {
+      zh: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C，以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師發起，希望為台灣的 Apple 開發者社群，打造一個深入且多元的交流舞台。",
+      en: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, app development, and UI/UX design. Founded by senior engineers to build a deep, diverse stage for Taiwan's Apple developer community."
+    };
 
     let parkingMode = false;
     let VENUE_MAP = "";
@@ -2063,11 +2067,17 @@
       Object.entries(I18N_DATA).forEach(([k, v]) => {
         // footer_tagline 特殊處理：從 CONFIG 取值
         if (k === 'footer_tagline') {
-          dict[k] = CONFIG.footerTagline ? CONFIG.footerTagline[l] : '';
+          dict[k] = (CONFIG.footerTagline && (CONFIG.footerTagline[l] || CONFIG.footerTagline.zh))
+            || FOOTER_TAGLINE_FALLBACK[l]
+            || FOOTER_TAGLINE_FALLBACK.zh;
         } else {
           dict[k] = (v && v[l]) || (v && v['zh']) || '';
         }
       });
+      dict.footer_tagline = dict.footer_tagline
+        || (CONFIG.footerTagline && (CONFIG.footerTagline[l] || CONFIG.footerTagline.zh))
+        || FOOTER_TAGLINE_FALLBACK[l]
+        || FOOTER_TAGLINE_FALLBACK.zh;
       // countdown_units 組合成舊格式供 syncCountdownUnits 使用
       dict.countdown_units = {
         days:    (I18N_DATA.countdown_days    && I18N_DATA.countdown_days[l])    || '天',
@@ -3068,7 +3078,7 @@
 
 <script>
   (async function () {
-    const SPONSOR_DATA_URL = "data/sponsors.json?v=20260603-sponsor-onbrand";
+    const SPONSOR_DATA_URL = "https://raw.githubusercontent.com/iplayground/SessionData/develop/sponsors.json";
     const tierContainer = document.getElementById("sponsorTierList");
     const personalGrid = document.getElementById("individualSponsorGrid");
     if (!tierContainer || !personalGrid) return;

@@ -19,11 +19,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Michroma&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="css/shared.css?v=20260503-speaker-fixed-size">
-  <link rel="stylesheet" href="css/news.css?v=20260503-speaker-fixed-size">
-  <link rel="stylesheet" href="css/fab.css?v=20260503-speaker-fixed-size">
+  <link rel="stylesheet" href="css/shared.css?v=20260510-trust-bar-glass">
+  <link rel="stylesheet" href="css/news.css?v=20260504-news-only">
+  <link rel="stylesheet" href="css/fab.css?v=20260504-news-only">
 </head>
 <body>
+
+<!-- Trust bar — Apple Let's Vision 2026 community calendar listing -->
+<a
+  class="trust-bar"
+  href="#"
+  data-link="apple_event_calendar"
+  target="_blank"
+  rel="noopener"
+  aria-label="Trusted by Apple — featured on Apple's developer community calendar"
+>
+  <span class="trust-bar-mark" aria-hidden="true">
+    <svg viewBox="0 0 12 12" width="11" height="11" focusable="false" aria-hidden="true">
+      <path d="M6 0 L7.05 4.95 L12 6 L7.05 7.05 L6 12 L4.95 7.05 L0 6 L4.95 4.95 Z" fill="currentColor"/>
+    </svg>
+  </span>
+  <span class="trust-bar-label" data-i18n="trust_bar_label">Trusted by Apple</span>
+  <span class="trust-bar-mark" aria-hidden="true">
+    <svg viewBox="0 0 12 12" width="11" height="11" focusable="false" aria-hidden="true">
+      <path d="M6 0 L7.05 4.95 L12 6 L7.05 7.05 L6 12 L4.95 7.05 L0 6 L4.95 4.95 Z" fill="currentColor"/>
+    </svg>
+  </span>
+  <span class="trust-bar-sep" aria-hidden="true">·</span>
+  <span class="trust-bar-desc" data-i18n="trust_bar_desc">iPlayground 2026 已收錄於蘋果開發者社群活動日曆</span>
+</a>
 
 <!-- Nav -->
 <nav class="top">
@@ -78,6 +102,7 @@
           <li><a href="#" data-link="social_facebook" target="_blank" rel="noopener">Facebook</a></li>
           <li><a href="#" data-link="social_twitter" target="_blank" rel="noopener">Twitter / X</a></li>
           <li><a href="#" data-link="social_youtube" target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href="#" data-link="social_instagram" target="_blank" rel="noopener">Instagram</a></li>
         </ul>
       </div>
       <div>
@@ -87,6 +112,13 @@
           <li><a href="#" data-link="contact_cfp" data-i18n="footer_cfp">講者投稿</a></li>
           <li><a href="#" data-link="contact_sponsor" data-i18n="footer_sponsor">贊助合作</a></li>
           <li><a href="#" data-link="coc" target="_blank" rel="noopener" data-i18n="footer_coc">行為準則</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 data-i18n="footer_previous_years">歷年活動</h4>
+        <ul>
+          <li><a href="#" data-link="iplayground_2025" target="_blank" rel="noopener">iPlayground 2025</a></li>
+          <li><a href="#" data-link="iplayground_2024" target="_blank" rel="noopener">iPlayground 2024</a></li>
         </ul>
       </div>
     </div>
@@ -106,8 +138,33 @@ const FOOTER_TAGLINE_LOCAL = {
   zh: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C、以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師創辦，目的是彌補台灣在 iOS 開發領域的研討會不足，並為開發者們提供更深入且多樣化的議程。",
   en: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, as well as app development and UI/UX design. Founded by a group of senior engineers to fill the gap in iOS-focused conferences in Taiwan."
 };
+const FOOTER_TAGLINE_FALLBACK = {
+  zh: "iPlayground 是從 2018 年開始專為蘋果軟體開發者設計的研討會，主題涵蓋 iOS 和 macOS 開發、Swift 和 Objective-C，以及 app 軟體開發與 UI/UX 設計的經驗分享。這個活動由一群資深工程師發起，希望為台灣的 Apple 開發者社群，打造一個深入且多元的交流舞台。",
+  en: "iPlayground is a conference designed for Apple software developers since 2018, covering iOS and macOS development, Swift and Objective-C, app development, and UI/UX design. Founded by senior engineers to build a deep, diverse stage for Taiwan's Apple developer community."
+};
+const I18N_FALLBACK = {
+  nav_about: { zh: "活動資訊", en: "Event Info" },
+  nav_agenda: { zh: "議程", en: "Agenda" },
+  trust_bar_label: { zh: "Trusted by Apple", en: "Trusted by Apple" },
+  trust_bar_desc: { zh: "iPlayground 2026 已收錄於蘋果開發者社群活動日曆", en: "iPlayground 2026 is featured on Apple's developer community calendar" },
+  footer_event: { zh: "活動", en: "Event" },
+  footer_news: { zh: "最新消息", en: "Latest News" },
+  footer_community: { zh: "社群", en: "Community" },
+  footer_contact: { zh: "聯絡", en: "Contact" },
+  footer_support: { zh: "一般支援", en: "General Support" },
+  footer_cfp: { zh: "講者投稿", en: "Speaker Submissions" },
+  footer_sponsor: { zh: "贊助合作", en: "Sponsorship" },
+  footer_coc: { zh: "行為準則", en: "Code of Conduct" },
+  footer_previous_years: { zh: "歷年活動", en: "Previous Years" },
+  news_back: { zh: "← 回到主頁", en: "← Back to Home" },
+  news_all_news: { zh: "全部消息", en: "All News" },
+  news_all_news_sub: { zh: "iPlayground 2026 的所有公告與最新動態。", en: "All announcements and updates for iPlayground 2026." },
+  news_sidebar_heading: { zh: "所有消息", en: "All Posts" },
+  news_not_found: { zh: "找不到這則消息。", en: "Post not found." },
+  news_back_home: { zh: "回到主頁", en: "Back to Home" }
+};
 const DATA_VERSION = "20260504-sessiondata-develop";
-const SESSION_DATA_BASE = "https://raw.githubusercontent.com/iplayground/SessionData/develop";
+const SESSION_DATA_BASE = "https://raw.githubusercontent.com/iplayground/SessionData/2026/v1";
 const SESSION_DATA_URLS = {
   news: `${SESSION_DATA_BASE}/news.json`,
   newsEn: `${SESSION_DATA_BASE}/news_en.json`,
@@ -124,8 +181,8 @@ async function fetchJson(url) {
   return response.json();
 }
 const NEWS_DATA_URLS = {
-  zh: SESSION_DATA_URLS.news,
-  en: SESSION_DATA_URLS.newsEn,
+  zh: "https://raw.githubusercontent.com/iplayground/SessionData/2026/v1/news.json",
+  en: "https://raw.githubusercontent.com/iplayground/SessionData/2026/v1/news_en.json",
 };
 let NEWS_DATA_BY_LANG = { zh: [], en: [] };
 let NEWS_DATA = [];   // 從 GitHub raw HTTPS 來源載入
@@ -134,15 +191,70 @@ let LINKS     = {};
 
 // ===== i18n helpers =====
 function t(key) {
+  if (key === 'footer_tagline') {
+    return (CONFIG.footerTagline && (CONFIG.footerTagline[currentLang] || CONFIG.footerTagline.zh))
+      || FOOTER_TAGLINE_FALLBACK[currentLang]
+      || FOOTER_TAGLINE_FALLBACK.zh;
+  }
   const entry = I18N_DATA[key];
-  if (!entry) return key;
-  if (key === 'footer_tagline') return FOOTER_TAGLINE_LOCAL[currentLang] || FOOTER_TAGLINE_LOCAL.zh;
+  if (!entry) {
+    const fallback = I18N_FALLBACK[key];
+    return (fallback && (fallback[currentLang] || fallback.zh)) || key;
+  }
   return entry[currentLang] || entry['zh'] || key;
 }
 
 function getVal(obj) {
   if (typeof obj === 'string') return obj;
   return obj[currentLang] || obj.zh || "";
+}
+
+function normalizeLang(lang) {
+  return lang === "en" ? "en" : "zh";
+}
+
+function getLangFromUrl() {
+  const lang = new URLSearchParams(window.location.search).get("lang");
+  return lang === "en" || lang === "zh" ? lang : null;
+}
+
+function getSavedLang() {
+  try {
+    const lang = localStorage.getItem("lang");
+    return lang === "en" || lang === "zh" ? lang : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function getBrowserLang() {
+  const langs = navigator.languages || [navigator.language || ""];
+  return langs.some(lang => String(lang).toLowerCase().startsWith("zh")) ? "zh" : "en";
+}
+
+function getInitialLang() {
+  return getLangFromUrl() || getSavedLang() || getBrowserLang();
+}
+
+function shouldPersistInitialLang() {
+  return Boolean(getLangFromUrl() || getSavedLang());
+}
+
+function updateLangUrl(lang) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("lang", normalizeLang(lang));
+  window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+}
+
+function preserveUrlLang(url) {
+  const lang = getLangFromUrl();
+  if (lang) url.searchParams.set("lang", lang);
+  return url;
+}
+
+function applyUserLang(lang) {
+  applyLang(lang);
+  updateLangUrl(lang);
 }
 
 function getContentHtml(content) {
@@ -165,6 +277,14 @@ function applyLinks(links) {
   Object.entries(links.important || {}).forEach(([key, value]) => { map[key] = value; });
   Object.entries(links.contact || {}).forEach(([key, value]) => { map[`contact_${key}`] = value; });
   (links.social || []).forEach(item => { map[`social_${item.id}`] = item.url; });
+
+  // Fallbacks to keep footer contact links valid even when upstream keys are missing.
+  if (!map.contact_support) map.contact_support = "mailto:support@iplayground.io";
+  if (!map.contact_cfp) map.contact_cfp = "mailto:session@iplayground.io";
+  if (!map.contact_sponsor) map.contact_sponsor = "mailto:support@iplayground.io";
+  if (!map.coc) map.coc = "https://github.com/iplayground/code_of_conduct";
+  if (!map.iplayground_2025) map.iplayground_2025 = "https://iplayground.io/2025";
+  if (!map.iplayground_2024) map.iplayground_2024 = "https://iplayground.io/2024";
 
   document.querySelectorAll("[data-link]").forEach(el => {
     const url = map[el.dataset.link];
@@ -255,12 +375,14 @@ function applyAppearance(pref) {
 mql.addEventListener("change", () => {});
 
 // ===== i18n apply =====
-function applyLang(lang) {
-  currentLang = lang;
-  NEWS_DATA = NEWS_DATA_BY_LANG[lang] || NEWS_DATA_BY_LANG.zh || [];
-  document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
+function applyLang(lang, options = {}) {
+  const l = normalizeLang(lang);
+  const persist = options.persist !== false;
+  currentLang = l;
+  NEWS_DATA = NEWS_DATA_BY_LANG[l] || NEWS_DATA_BY_LANG.zh || [];
+  document.documentElement.lang = l === "zh" ? "zh-Hant" : "en";
   document.querySelectorAll("#langSwitch button").forEach(b =>
-    b.classList.toggle("active", b.dataset.lang === lang)
+    b.classList.toggle("active", b.dataset.lang === l)
   );
   document.getElementById("backLink").textContent = t("news_back");
   document.querySelectorAll("[data-i18n]").forEach(el => {
@@ -268,13 +390,15 @@ function applyLang(lang) {
   });
   const footerTagline = document.getElementById("footerTagline");
   if (footerTagline) footerTagline.textContent = t("footer_tagline");
-  if (typeof syncFabLang === "function") syncFabLang(lang);
-  try { localStorage.setItem("lang", lang); } catch(e) {}
+  if (typeof syncFabLang === "function") syncFabLang(l);
+  if (persist) {
+    try { localStorage.setItem("lang", l); } catch(e) {}
+  }
   renderPage();
 }
 document.getElementById("langSwitch").addEventListener("click", (e) => {
   const btn = e.target.closest("button[data-lang]");
-  if (btn) applyLang(btn.dataset.lang);
+  if (btn) applyUserLang(btn.dataset.lang);
 });
 
 // ===== Routing & Render =====
@@ -354,6 +478,7 @@ function renderPage() {
   document.querySelectorAll(".sidebar-item").forEach(link => {
     link.addEventListener("click", (event) => {
       const target = new URL(link.href, window.location.href);
+      preserveUrlLang(target);
       event.preventDefault();
       history.pushState(null, "", target.pathname + target.search);
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -378,14 +503,17 @@ function renderPage() {
       document.title = `${iTitle} · iPlayground 2026`;
       updateArticleMeta(newId, iTitle, item);
       bindShareButtons();
-      history.replaceState(null, "", `news.html?id=${newId}`);
+      const url = preserveUrlLang(new URL("news.html", window.location.href));
+      url.searchParams.set("id", String(newId));
+      history.replaceState(null, "", `${url.pathname}${url.search}`);
       window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     });
   }
 }
 
 // ===== Init — 並行載入所有資料後初始化 =====
-const savedLang = (() => { try { return localStorage.getItem("lang"); } catch(e) { return null; } })() || "zh";
+const savedLang = getInitialLang();
+const persistInitialLang = shouldPersistInitialLang();
 const savedAppearance = "dark";
 const savedHue = (() => { try { return localStorage.getItem("hue"); } catch(e) { return null; } })() || 230;
 document.documentElement.style.setProperty("--hue", savedHue);
@@ -393,8 +521,8 @@ applyAppearance(savedAppearance);
 
 Promise.all([
   fetchJson(withVersion(SESSION_DATA_URLS.i18n)).catch(() => ({})),
-  fetchJson(withVersion(NEWS_DATA_URLS.zh)),
-  fetchJson(withVersion(NEWS_DATA_URLS.en)),
+  fetchJson(withVersion(NEWS_DATA_URLS.zh)).catch(() => []),
+  fetchJson(withVersion(NEWS_DATA_URLS.en)).catch(() => []),
   fetchJson(withVersion(SESSION_DATA_URLS.config)).catch(() => ({})),
   fetchJson(withVersion(SESSION_DATA_URLS.links)).catch(() => ({})),
 ]).then(([i18n, newsZh, newsEn, config, links]) => {
@@ -403,11 +531,11 @@ Promise.all([
   CONFIG     = config;
   LINKS      = links;
   applyLinks(LINKS);
-  applyLang(savedLang);
+  applyLang(savedLang, { persist: persistInitialLang });
 }).catch(e => {
   console.warn("遠端資料載入失敗", e);
   NEWS_DATA_BY_LANG = { zh: [], en: [] };
-  applyLang(savedLang);
+  applyLang(savedLang, { persist: persistInitialLang });
 });
 </script>
 
@@ -457,7 +585,7 @@ fabMode?.addEventListener("click", () => {
 });
 
 fabLang?.addEventListener("click", () => {
-  applyLang(currentLang === "zh" ? "en" : "zh");
+  applyUserLang(currentLang === "zh" ? "en" : "zh");
 });
 
 fabTop?.addEventListener("click", () => {
