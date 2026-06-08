@@ -3051,8 +3051,10 @@
       }
     }
 
-    grid.innerHTML = staff.map(({ name, role, photo, link }) => {
+    grid.innerHTML = staff.map(({ name, role, title, photo, link, url }) => {
       const src = photo || FALLBACK_PHOTO;
+      const staffLink = link || url || "";
+      const staffRole = role || title || "";
       const avatar = `
         <div class="staff-avatar-wrap">
           <div class="staff-avatar-inner">
@@ -3062,15 +3064,15 @@
         </div>`;
 
       // 有 link 就包 <a>，沒有就用 <div>
-      const inner = link
-        ? `<a class="staff-card-link" href="${link}" target="_blank" rel="noopener noreferrer">${avatar}</a>`
+      const inner = staffLink
+        ? `<a class="staff-card-link" href="${staffLink}" target="_blank" rel="noopener noreferrer">${avatar}</a>`
         : avatar;
 
       return `
         <div class="staff-card">
           ${inner}
           <p class="staff-name">${name}</p>
-          <p class="staff-role">${role}</p>
+          ${staffRole ? `<p class="staff-role">${staffRole}</p>` : ""}
         </div>`;
     }).join('');
   })();
