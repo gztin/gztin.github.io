@@ -1,810 +1,1669 @@
 <!doctype html>
-<html lang="zh-Hant" data-mode="dark">
+<html lang="zh-Hant">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Design System · Swift in the Wild</title>
+<title>iPlayground 2026 Design Guidelines</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Michroma&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --hue: 28;
-    --accent: oklch(0.72 0.19 var(--hue));
-    --accent-2: oklch(0.78 0.18 calc(var(--hue) + 40));
-    --accent-3: oklch(0.68 0.20 calc(var(--hue) - 60));
-    --bg: #000; --surface: #0a0a0a; --surface-2: #131313;
-    --ink: #f5f5f7; --ink-2: #a1a1a6; --ink-3: #6e6e73;
-    --rule: rgba(255,255,255,0.12); --rule-2: rgba(255,255,255,0.06);
-    --f-sans: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-    --f-mono: 'JetBrains Mono', ui-monospace, monospace;
-    --maxw: 1200px; --gutter: 48px;
+    --bg: #050505;
+    --bg-2: #0b0b0b;
+    --surface: rgba(18, 18, 18, 0.88);
+    --surface-2: rgba(28, 28, 28, 0.92);
+    --ink: #f2f2f2;
+    --ink-2: #b5b5b5;
+    --ink-3: #818181;
+    --line: rgba(255, 255, 255, 0.12);
+    --line-soft: rgba(255, 255, 255, 0.06);
+    --accent: #d7ff00;
+    --accent-soft: rgba(215, 255, 0, 0.16);
+    --accent-glow: rgba(215, 255, 0, 0.34);
+    --card-blur: blur(20px);
+    --sidebar-w: 280px;
+    --content-w: 960px;
+    --radius-sm: 10px;
+    --radius-md: 18px;
+    --radius-lg: 28px;
+    --shadow-accent: 0 0 0 1px rgba(215, 255, 0, 0.12), 0 0 24px rgba(215, 255, 0, 0.08);
+    --font-display: "Michroma", "Geist Mono", monospace;
+    --font-body: "Geist", "Noto Sans TC", system-ui, sans-serif;
+    --font-mono: "Geist Mono", ui-monospace, monospace;
   }
-  html[data-mode="light"] {
-    --bg: #fbfbfd; --surface: #fff; --surface-2: #f5f5f7;
-    --ink: #1d1d1f; --ink-2: #515154; --ink-3: #86868b;
-    --rule: rgba(0,0,0,0.12); --rule-2: rgba(0,0,0,0.06);
-  }
+
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
   body {
-    font-family: var(--f-sans); background: var(--bg); color: var(--ink);
-    font-size: 15px; line-height: 1.55; letter-spacing: -0.01em;
+    margin: 0;
+    background:
+      radial-gradient(circle at top right, rgba(215, 255, 0, 0.08), transparent 28%),
+      radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.05), transparent 18%),
+      linear-gradient(180deg, #040404 0%, #090909 100%);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
-  a { color: inherit; }
-  code { font-family: var(--f-mono); font-size: 12px; }
 
-  /* ============ Header ============ */
-  header.top {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--bg) 80%, transparent);
-    backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid var(--rule-2);
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.55) 18%, rgba(0,0,0,0.9) 100%);
+    opacity: 0.18;
   }
-  header.top .row {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 56px;
-  }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 13px; }
-  .brand .mark {
-    width: 22px; height: 22px; border-radius: 6px;
-    background: conic-gradient(from 180deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent));
-  }
-  .brand .sep { color: var(--ink-3); }
-  .brand .crumb { color: var(--ink-2); font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
 
-  .mode-switch {
-    display: inline-flex; background: var(--surface);
-    border: 1px solid var(--rule); border-radius: 999px;
-    padding: 3px; font-family: var(--f-mono); font-size: 11px;
-  }
-  .mode-switch button {
-    font: inherit; color: var(--ink-2); background: none; border: 0;
-    padding: 6px 12px; border-radius: 999px; cursor: pointer;
-  }
-  .mode-switch button.active { background: var(--ink); color: var(--bg); }
+  a { color: inherit; text-decoration: none; }
 
-  /* ============ Hero ============ */
+  .layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    padding: 28px 22px 24px;
+    border-right: 1px solid var(--line-soft);
+    background: rgba(4, 4, 4, 0.92);
+    backdrop-filter: blur(14px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .brand-lockup {
+    padding: 8px 8px 0;
+  }
+
+  .brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .brand-mark .ring,
+  .brand-mark .diamond,
+  .brand-mark .tri {
+    flex: 0 0 auto;
+  }
+
+  .ring {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+  }
+
+  .tri {
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 26px solid var(--accent);
+    transform: rotate(-90deg);
+  }
+
+  .diamond {
+    width: 20px;
+    height: 20px;
+    background: var(--accent);
+    transform: rotate(45deg);
+  }
+
+  .brand-title {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.85vw, 26px);
+    line-height: 1.1;
+    letter-spacing: 0.06em;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .brand-sub {
+    margin-top: 8px;
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .sidebar-note {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+
+  .sidebar-note strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .toc {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow: auto;
+    padding-right: 4px;
+  }
+
+  .toc a {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 12px 12px;
+    border-radius: 14px;
+    color: var(--ink-2);
+    transition: 180ms ease;
+  }
+
+  .toc a:hover,
+  .toc a.is-active {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--ink);
+    box-shadow: inset 0 0 0 1px rgba(215, 255, 0, 0.14);
+  }
+
+  .toc a.is-active .toc-num {
+    color: var(--accent);
+  }
+
+  .toc-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.12em;
+  }
+
+  .toc-label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    color: var(--ink-3);
+    font-size: 12px;
+    padding: 0 8px;
+  }
+
+  .content {
+    min-width: 0;
+    padding: 36px clamp(24px, 4vw, 48px) 80px;
+  }
+
+  .content-inner {
+    max-width: var(--content-w);
+    margin: 0 auto;
+  }
+
   .hero {
-    padding: 72px 0 56px;
-    border-bottom: 1px solid var(--rule-2);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 28px;
+    padding: 44px;
+    border: 1px solid var(--line);
+    border-radius: 32px;
+    background:
+      radial-gradient(circle at 75% 18%, rgba(215, 255, 0, 0.12), transparent 18%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    box-shadow: var(--shadow-accent);
   }
-  .hero .eyebrow {
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-2);
-    letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 20px;
-    display: inline-flex; align-items: center; gap: 10px;
+
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -12% -24% -12%;
+    height: 48%;
+    background:
+      radial-gradient(120% 100% at 50% 0%, transparent 44%, rgba(255,255,255,0.11) 44.5%, transparent 45%) center/100% 100% no-repeat,
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.11) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 28px);
+    transform: perspective(520px) rotateX(70deg);
+    opacity: 0.3;
+    pointer-events: none;
   }
-  .hero .eyebrow .dot {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 10px var(--accent);
+
+  .hero-top {
+    display: grid;
+    grid-template-columns: 1.4fr auto;
+    gap: 24px;
+    align-items: start;
   }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent-glow);
+  }
+
   .hero h1 {
-    font-size: clamp(40px, 6vw, 72px);
-    font-weight: 600; letter-spacing: -0.035em; line-height: 1;
-    margin: 0; max-width: 18ch;
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(44px, 8vw, 92px);
+    line-height: 0.98;
+    letter-spacing: 0.06em;
   }
-  .hero h1 .gradient {
-    background: linear-gradient(110deg, var(--accent), var(--accent-2) 45%, var(--accent-3));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+
+  .hero h1 span {
+    color: var(--accent);
+    text-shadow: 0 0 24px rgba(215, 255, 0, 0.2);
   }
+
   .hero p {
-    margin-top: 20px; max-width: 640px;
-    font-size: 17px; color: var(--ink-2);
+    max-width: 620px;
+    margin: 20px 0 0;
+    color: var(--ink-2);
+    font-size: 18px;
   }
-  .hero .meta {
-    margin-top: 36px; display: flex; gap: 28px; flex-wrap: wrap;
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
-    letter-spacing: 0.08em; text-transform: uppercase;
-  }
-  .hero .meta span strong { color: var(--ink); font-weight: 500; margin-left: 6px; }
 
-  /* ============ Section ============ */
-  section.ds {
-    padding: 72px 0;
-    border-bottom: 1px solid var(--rule-2);
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
   }
-  .sec-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 40px; flex-wrap: wrap; }
-  .sec-head .num {
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
+
+  .hero-badges span {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.03);
+    color: var(--ink-2);
+    font-size: 12px;
+  }
+
+  .year-lock {
+    justify-self: end;
+    font-family: var(--font-display);
+    font-size: clamp(48px, 7vw, 110px);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-shadow: 0 0 28px rgba(215, 255, 0, 0.18);
+  }
+
+  .meta-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+
+  .meta-card {
+    padding: 16px 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .meta-card .label {
+    margin-bottom: 8px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
     letter-spacing: 0.14em;
-  }
-  .sec-head h2 {
-    font-size: 32px; font-weight: 500; letter-spacing: -0.03em; margin: 0;
-  }
-  .sec-head .desc { color: var(--ink-2); font-size: 14px; margin-left: auto; max-width: 420px; }
-
-  /* ============ Color ============ */
-  .pal-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
-  }
-  .pal-grid.ink { grid-template-columns: repeat(3, 1fr); }
-  .swatch {
-    border: 1px solid var(--rule); border-radius: 12px; overflow: hidden;
-    background: var(--surface);
-  }
-  .swatch .chip { height: 120px; }
-  .swatch .body { padding: 14px 16px; }
-  .swatch .name { font-weight: 500; font-size: 14px; }
-  .swatch .token { font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); margin-top: 3px; }
-  .swatch .val { font-family: var(--f-mono); font-size: 10px; color: var(--ink-3); margin-top: 8px; letter-spacing: 0.04em; }
-
-  .accent-row {
-    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 16px; margin-bottom: 16px;
-  }
-  .hue-control {
-    display: flex; align-items: center; gap: 16px; padding: 16px;
-    background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
-    margin-bottom: 24px;
-  }
-  .hue-control label { font-family: var(--f-mono); font-size: 11px; color: var(--ink-2); letter-spacing: 0.1em; text-transform: uppercase; }
-  .hue-control input[type="range"] { flex: 1; accent-color: var(--accent); }
-  .hue-control .val { font-family: var(--f-mono); font-size: 13px; color: var(--ink); min-width: 48px; text-align: right; }
-
-  /* ============ Typography ============ */
-  .type-row {
-    display: grid; grid-template-columns: 160px 1fr; gap: 32px;
-    padding: 24px 0; border-bottom: 1px solid var(--rule-2);
-  }
-  .type-row:last-child { border-bottom: 0; }
-  .type-meta .name { font-weight: 500; font-size: 14px; }
-  .type-meta .spec { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); margin-top: 4px; letter-spacing: 0.04em; }
-  .type-sample { overflow: hidden; }
-  .type-sample.display { font-size: clamp(48px, 7vw, 96px); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; }
-  .type-sample.display .gradient {
-    background: linear-gradient(110deg, var(--accent), var(--accent-2) 45%, var(--accent-3));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .type-sample.h1 { font-size: 56px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
-  .type-sample.h2 { font-size: 36px; font-weight: 500; letter-spacing: -0.025em; }
-  .type-sample.h3 { font-size: 22px; font-weight: 500; letter-spacing: -0.015em; }
-  .type-sample.lead { font-size: 19px; color: var(--ink-2); line-height: 1.5; }
-  .type-sample.body { font-size: 16px; line-height: 1.55; color: var(--ink); }
-  .type-sample.small { font-size: 13px; color: var(--ink-2); }
-  .type-sample.mono {
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-2);
-    letter-spacing: 0.14em; text-transform: uppercase;
+    text-transform: uppercase;
   }
 
-  /* ============ Spacing / Radii ============ */
-  .scale-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  .meta-card strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
   }
-  .scale-card {
-    padding: 20px; border: 1px solid var(--rule); border-radius: 12px;
-    background: var(--surface); display: flex; flex-direction: column; gap: 14px;
-  }
-  .scale-card .demo {
-    background: var(--surface-2); border: 1px dashed var(--rule);
-    height: 80px; display: grid; place-items: center;
-  }
-  .scale-card .box {
-    background: var(--accent); opacity: 0.9;
-  }
-  .scale-card .label { display: flex; justify-content: space-between; align-items: center; }
-  .scale-card .name { font-weight: 500; font-size: 13px; }
-  .scale-card .val { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); }
 
-  .radii-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .radii-card {
-    padding: 24px; border: 1px solid var(--rule);
-    background: var(--surface); text-align: center;
+  .chapter {
+    margin-top: 24px;
+    padding: 28px 0 0;
+    scroll-margin-top: 24px;
   }
-  .radii-card .shape {
-    width: 72px; height: 72px; margin: 0 auto 16px;
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  }
-  .radii-card .name { font-weight: 500; font-size: 13px; }
-  .radii-card .val { font-family: var(--f-mono); font-size: 11px; color: var(--ink-3); margin-top: 4px; }
 
-  /* ============ Components ============ */
-  .comp-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  .chapter-head {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 22px;
   }
-  .comp-card {
-    border: 1px solid var(--rule); border-radius: 12px; background: var(--surface);
+
+  .chapter-num {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+
+  .chapter-head h2 {
+    margin: 0 0 10px;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+
+  .chapter-head p {
+    margin: 0;
+    max-width: 760px;
+    color: var(--ink-2);
+    font-size: 16px;
+  }
+
+  .panel {
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    backdrop-filter: var(--card-blur);
     overflow: hidden;
   }
-  .comp-card .head {
-    padding: 14px 18px; border-bottom: 1px solid var(--rule-2);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .comp-card .head .title { font-weight: 500; font-size: 13px; }
-  .comp-card .head .tag { font-family: var(--f-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.1em; }
-  .comp-card .demo {
-    padding: 40px 24px; background: var(--surface-2);
-    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-items: center; min-height: 140px;
+
+  .panel-body {
+    padding: 24px;
   }
 
-  /* Buttons */
+  .split-2,
+  .split-3 {
+    display: grid;
+    gap: 18px;
+  }
+
+  .split-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+  .section-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .mini-title {
+    margin: 0 0 14px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .swatch {
+    min-width: 0;
+  }
+
+  .swatch-color {
+    aspect-ratio: 1 / 1;
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .swatch-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+  }
+
+  .swatch-name {
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 13px;
+  }
+
+  .type-shelf {
+    display: grid;
+    gap: 18px;
+  }
+
+  .audit-intro {
+    margin: 0 0 18px;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+
+  .audit-group + .audit-group {
+    margin-top: 20px;
+  }
+
+  .audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .audit-table th,
+  .audit-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line-soft);
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+
+  .audit-table tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .audit-table th {
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .audit-table td strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .audit-table code {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .type-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 20px;
+    padding: 20px;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .type-card .spec {
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .type-sample-display {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 5vw, 54px);
+    line-height: 1.08;
+    letter-spacing: 0.06em;
+  }
+
+  .type-sample-heading {
+    font-size: 38px;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .type-sample-body {
+    font-size: 18px;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+
+  .glyphs {
+    margin-top: 10px;
+    color: var(--ink-2);
+    font-family: var(--font-display);
+    font-size: 18px;
+    letter-spacing: 0.16em;
+  }
+
+  .bullet-list {
+    margin: 0;
+    padding-left: 18px;
+    color: var(--ink-2);
+  }
+
+  .bullet-list li + li { margin-top: 8px; }
+
+  .style-visual {
+    min-height: 220px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 72% 70%, rgba(255,255,255,0.18), transparent 10%),
+      linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .style-visual::before {
+    content: "";
+    position: absolute;
+    inset: auto -8% -34% -8%;
+    height: 72%;
+    background:
+      radial-gradient(120% 100% at 50% 0%, transparent 44%, rgba(255,255,255,0.12) 44.5%, transparent 45%) center/100% 100% no-repeat,
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.14) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 24px);
+    transform: perspective(420px) rotateX(72deg);
+    opacity: 0.52;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .btn-demo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-width: 240px;
+    padding: 18px 28px;
+    border-radius: 14px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   .btn-primary {
-    padding: 12px 24px; border-radius: 999px;
-    background: var(--ink); color: var(--bg);
-    font-size: 14px; font-weight: 500;
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; border: 0; cursor: pointer;
-  }
-  .btn-ghost {
-    padding: 12px 24px; border-radius: 999px;
-    border: 1px solid var(--rule); color: var(--ink);
-    font-size: 14px; font-weight: 500;
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; background: transparent; cursor: pointer;
-  }
-  .btn-accent {
-    padding: 12px 24px; border-radius: 999px;
-    background: var(--accent); color: #000;
-    font-size: 14px; font-weight: 600;
-    display: inline-flex; align-items: center; gap: 8px;
-    text-decoration: none; border: 0; cursor: pointer;
+    background: var(--accent);
+    color: #050505;
+    box-shadow: 0 0 20px rgba(215, 255, 0, 0.16);
   }
 
-  /* Eyebrow pill */
-  .eyebrow-pill {
-    font-family: var(--f-mono); font-size: 12px;
-    color: var(--ink-2); letter-spacing: 0.12em; text-transform: uppercase;
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 8px 16px; border: 1px solid var(--rule); border-radius: 999px;
-    background: color-mix(in srgb, var(--surface) 60%, transparent);
-  }
-  .eyebrow-pill .dot {
-    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.5);
+    color: var(--ink);
+    background: transparent;
   }
 
-  /* Date stripe */
-  .date-stripe {
-    display: inline-flex; align-items: center; gap: 20px;
-    padding: 12px 24px; border-radius: 999px;
-    border: 1px solid var(--rule);
-    background: color-mix(in srgb, var(--surface) 70%, transparent);
-    font-family: var(--f-mono); font-size: 12px;
-  }
-  .date-stripe .sep { width: 1px; height: 12px; background: var(--rule); }
-  .date-stripe strong { font-weight: 500; color: var(--ink); }
-  .date-stripe .label { color: var(--ink-3); text-transform: uppercase; font-size: 10px; letter-spacing: 0.1em; margin-right: 4px; }
-
-  /* Countdown */
-  .countdown {
-    display: flex; gap: 0; border: 1px solid var(--rule); border-radius: 12px;
-    background: var(--surface); overflow: hidden;
-  }
-  .countdown .cell {
-    flex: 1; padding: 20px 28px; text-align: center;
-    border-right: 1px solid var(--rule-2);
-  }
-  .countdown .cell:last-child { border-right: 0; }
-  .countdown .cell .num {
-    font-size: 36px; font-weight: 300; letter-spacing: -0.03em; line-height: 1;
-    font-variant-numeric: tabular-nums; color: var(--ink);
-  }
-  .countdown .cell .lab {
-    margin-top: 8px; font-family: var(--f-mono); font-size: 10px;
-    color: var(--ink-3); letter-spacing: 0.12em; text-transform: uppercase;
+  .button-spec {
+    color: var(--ink-2);
+    font-size: 14px;
   }
 
-  /* Card */
-  .preview-card {
-    width: 280px; padding: 24px; border-radius: 16px;
-    background: var(--surface); border: 1px solid var(--rule);
+  .card-demo {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
+    align-items: stretch;
   }
-  .preview-card .tag { font-family: var(--f-mono); font-size: 10px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; }
-  .preview-card h3 { margin: 10px 0 8px; font-size: 20px; font-weight: 500; letter-spacing: -0.02em; }
-  .preview-card p { margin: 0; color: var(--ink-2); font-size: 13px; }
 
-  /* Segmented */
-  .segmented {
-    display: inline-flex; background: var(--surface-2);
-    border: 1px solid var(--rule); border-radius: 999px; padding: 3px;
-    font-family: var(--f-mono); font-size: 11px;
+  .sample-card {
+    min-height: 220px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    background:
+      radial-gradient(circle at 18% 8%, rgba(255,255,255,0.06), transparent 22%),
+      rgba(23, 23, 23, 0.74);
+    backdrop-filter: blur(22px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
   }
-  .segmented button {
-    font: inherit; color: var(--ink-2); background: none; border: 0;
-    padding: 8px 16px; border-radius: 999px; cursor: pointer; letter-spacing: 0.04em;
-  }
-  .segmented button.active { background: var(--ink); color: var(--bg); }
 
-  /* Footer */
-  footer {
-    padding: 48px 0 64px;
-    font-family: var(--f-mono); font-size: 11px; color: var(--ink-3);
-    letter-spacing: 0.08em; text-transform: uppercase;
+  .sample-card h3 {
+    margin: 0 0 12px;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
   }
-  footer .row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
-  footer a { color: var(--ink-2); text-decoration: none; }
-  footer a:hover { color: var(--ink); }
 
-  @media (max-width: 860px) {
-    :root { --gutter: 24px; }
-    .pal-grid, .pal-grid.ink { grid-template-columns: repeat(2, 1fr); }
-    .scale-grid, .radii-grid { grid-template-columns: repeat(2, 1fr); }
-    .comp-grid { grid-template-columns: 1fr; }
-    .type-row { grid-template-columns: 1fr; gap: 12px; }
-    .accent-row { grid-template-columns: 1fr; }
+  .sample-card p {
+    margin: 0;
+    max-width: 28ch;
+    color: var(--ink-2);
+    font-size: 18px;
+  }
+
+  .card-link {
+    display: inline-flex;
+    gap: 10px;
+    margin-top: 28px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .spec-grid {
+    display: grid;
+    gap: 14px;
+    align-content: start;
+  }
+
+  .spec-item {
+    padding: 16px 18px;
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .spec-item strong {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .logo-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .logo-mark-big {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-height: 210px;
+    padding: 24px;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .logo-word {
+    font-size: 34px;
+    letter-spacing: -0.04em;
+  }
+
+  .logo-donts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .dont-card {
+    padding: 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .dont-card .mini-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 78px;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+
+  .dont-card small {
+    display: block;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  .dont-card .x {
+    color: #ff5e5e;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mockup {
+    min-height: 420px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at 80% 14%, rgba(215,255,0,0.14), transparent 16%),
+      linear-gradient(180deg, #0b0b0b 0%, #070707 100%);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mockup::after {
+    content: "";
+    position: absolute;
+    inset: auto -8% -28% -8%;
+    height: 65%;
+    background:
+      radial-gradient(120% 100% at 50% 0%, transparent 44%, rgba(255,255,255,0.12) 44.5%, transparent 45%) center/100% 100% no-repeat,
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 28px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 24px);
+    transform: perspective(420px) rotateX(72deg);
+    opacity: 0.42;
+  }
+
+  .mockup-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 28px 28px 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .mockup-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 52px);
+    letter-spacing: 0.04em;
+  }
+
+  .mockup-year {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 4vw, 58px);
+    color: var(--accent);
+  }
+
+  .mockup-sub {
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+
+  .mockup-bottom {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 14px;
+    align-items: end;
+    padding: 22px 28px 28px;
+  }
+
+  .chip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .chip-btn.primary {
+    background: var(--accent);
+    color: #050505;
+  }
+
+  .chip-btn.secondary {
+    border: 1px solid rgba(255,255,255,0.4);
+    color: var(--ink);
+  }
+
+  .count-box {
+    justify-self: end;
+    min-width: 280px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 18px;
+    background: rgba(10,10,10,0.74);
+    backdrop-filter: blur(18px);
+  }
+
+  .count-digits {
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: 26px;
+  }
+
+  .count-labels {
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    margin-top: 8px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tone-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .tone-item {
+    padding: 18px 14px;
+    border: 1px solid var(--line-soft);
+    border-radius: 18px;
+    background: rgba(255,255,255,0.02);
+    text-align: center;
+  }
+
+  .tone-icon {
+    color: var(--accent);
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .tone-item strong {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .tone-item span {
+    color: var(--ink-3);
+    font-size: 13px;
+  }
+
+  .closing {
+    margin-top: 26px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    color: var(--ink-2);
+    font-size: 17px;
+  }
+
+  @media (max-width: 1180px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      height: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--line-soft);
+      padding-bottom: 18px;
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .content {
+      padding-top: 24px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero,
+    .panel-body {
+      padding: 24px;
+    }
+
+    .hero-top,
+    .meta-strip,
+    .split-2,
+    .split-3,
+    .card-demo,
+    .logo-board,
+    .mockup-bottom,
+    .tone-grid,
+    .type-card {
+      grid-template-columns: 1fr;
+    }
+
+    .swatches,
+    .logo-donts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chapter-head {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .year-lock,
+    .count-box {
+      justify-self: start;
+    }
+
+    .toc {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .sidebar {
+      padding-inline: 16px;
+    }
+
+    .content {
+      padding: 18px 16px 56px;
+    }
+
+    .hero h1 {
+      font-size: 38px;
+    }
+
+    .hero p,
+    .type-sample-body,
+    .closing {
+      font-size: 16px;
+    }
+
+    .swatches,
+    .logo-donts,
+    .toc {
+      grid-template-columns: 1fr;
+    }
+
+    .btn-demo,
+    .chip-btn {
+      width: 100%;
+      justify-content: center;
+    }
   }
 </style>
 </head>
 <body>
-
-<header class="top">
-  <div class="wrap row">
-    <div class="brand">
-      <div class="mark"></div>
-      <span>Swift in the Wild</span>
-      <span class="sep">/</span>
-      <span class="crumb">Design System v1.0</span>
-    </div>
-    <div class="mode-switch" id="modeSwitch">
-      <button data-mode="light">Light</button>
-      <button data-mode="dark" class="active">Dark</button>
-    </div>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> FOUNDATIONS · COMPONENTS · PATTERNS</div>
-    <h1><span class="gradient">Design System.</span><br/>Tokens & building blocks.</h1>
-    <p>The visual language behind the iPlayground 2026 CFP site — color, type, spacing, and the reusable patterns that hold it together. Tweak the hue to see the whole system retheme live.</p>
-    <div class="meta">
-      <span>Version <strong>1.0</strong></span>
-      <span>Tokens <strong>42</strong></span>
-      <span>Components <strong>12</strong></span>
-      <span>Modes <strong>Light · Dark</strong></span>
-    </div>
-  </div>
-</section>
-
-<!-- ============ COLOR ============ -->
-<section class="ds" id="color">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">01 / COLOR</span>
-      <h2>Color</h2>
-      <p class="desc">A single brand hue drives three accents via OKLCH. Surface + ink roles stay consistent across light/dark.</p>
-    </div>
-
-    <div class="hue-control">
-      <label>Brand Hue</label>
-      <input type="range" id="hueSlider" min="0" max="360" value="28" step="1" />
-      <span class="val" id="hueVal">28°</span>
-    </div>
-
-    <!-- Accents -->
-    <div class="pal-grid" style="margin-bottom: 32px;">
-      <div class="swatch">
-        <div class="chip" style="background: var(--accent);"></div>
-        <div class="body">
-          <div class="name">Accent</div>
-          <div class="token">--accent</div>
-          <div class="val">oklch(0.72 0.19 H)</div>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand-lockup">
+        <div class="brand-mark">
+          <span class="ring"></span>
+          <span class="tri"></span>
+          <span class="diamond"></span>
         </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--accent-2);"></div>
-        <div class="body">
-          <div class="name">Accent 2</div>
-          <div class="token">--accent-2</div>
-          <div class="val">oklch(0.78 0.18 H+40)</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--accent-3);"></div>
-        <div class="body">
-          <div class="name">Accent 3</div>
-          <div class="token">--accent-3</div>
-          <div class="val">oklch(0.68 0.20 H−60)</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: linear-gradient(110deg, var(--accent), var(--accent-2) 45%, var(--accent-3));"></div>
-        <div class="body">
-          <div class="name">Gradient</div>
-          <div class="token">text-gradient</div>
-          <div class="val">110deg · accent → 2 → 3</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Surfaces -->
-    <div class="pal-grid" style="margin-bottom: 32px;">
-      <div class="swatch">
-        <div class="chip" style="background: var(--bg); border-bottom: 1px solid var(--rule);"></div>
-        <div class="body">
-          <div class="name">Background</div>
-          <div class="token">--bg</div>
-          <div class="val">page base</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--surface); border-bottom: 1px solid var(--rule);"></div>
-        <div class="body">
-          <div class="name">Surface</div>
-          <div class="token">--surface</div>
-          <div class="val">cards · nav</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--surface-2); border-bottom: 1px solid var(--rule);"></div>
-        <div class="body">
-          <div class="name">Surface 2</div>
-          <div class="token">--surface-2</div>
-          <div class="val">raised · insets</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--surface); position: relative;">
-          <div style="position:absolute;top:50%;left:10%;right:10%;height:1px;background:var(--rule);"></div>
-          <div style="position:absolute;top:70%;left:10%;right:10%;height:1px;background:var(--rule-2);"></div>
-        </div>
-        <div class="body">
-          <div class="name">Rules</div>
-          <div class="token">--rule / --rule-2</div>
-          <div class="val">12% / 6% alpha</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ink -->
-    <div class="pal-grid ink">
-      <div class="swatch">
-        <div class="chip" style="background: var(--ink); color: var(--bg); display: grid; place-items: center; font-size: 48px; font-weight: 700; letter-spacing: -0.04em;">Aa</div>
-        <div class="body">
-          <div class="name">Ink</div>
-          <div class="token">--ink</div>
-          <div class="val">primary text</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--surface); color: var(--ink-2); display: grid; place-items: center; font-size: 48px; font-weight: 500; letter-spacing: -0.04em;">Aa</div>
-        <div class="body">
-          <div class="name">Ink 2</div>
-          <div class="token">--ink-2</div>
-          <div class="val">secondary</div>
-        </div>
-      </div>
-      <div class="swatch">
-        <div class="chip" style="background: var(--surface); color: var(--ink-3); display: grid; place-items: center; font-size: 48px; font-weight: 400; letter-spacing: -0.04em;">Aa</div>
-        <div class="body">
-          <div class="name">Ink 3</div>
-          <div class="token">--ink-3</div>
-          <div class="val">labels · meta</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ TYPE ============ -->
-<section class="ds" id="type">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">02 / TYPE</span>
-      <h2>Typography</h2>
-      <p class="desc">Inter for everything, JetBrains Mono for eyebrow labels, timestamps, and anything systemy.</p>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">Display</div>
-        <div class="spec">Inter / 700 / clamp(64, 10vw, 160)<br/>tracking −0.045em / leading 0.92</div>
-      </div>
-      <div class="type-sample display"><span class="gradient">Swift in the Wild.</span></div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">H1 · Section</div>
-        <div class="spec">Inter / 600 / 56px<br/>tracking −0.03em</div>
-      </div>
-      <div class="type-sample h1">Tokens & building blocks</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">H2 · Section head</div>
-        <div class="spec">Inter / 500 / 36px<br/>tracking −0.025em</div>
-      </div>
-      <div class="type-sample h2">The visual language</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">H3 · Card title</div>
-        <div class="spec">Inter / 500 / 22px</div>
-      </div>
-      <div class="type-sample h3">Session · Keynote</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">Lead</div>
-        <div class="spec">Inter / 400 / 19px<br/>ink-2 / leading 1.5</div>
-      </div>
-      <div class="type-sample lead">A warm-up paragraph under hero titles that invites people in without shouting. Generous line-height, muted ink.</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">Body</div>
-        <div class="spec">Inter / 400 / 16px<br/>leading 1.55</div>
-      </div>
-      <div class="type-sample body">Regular paragraph text for explanations, FAQ answers, and everything in between. Comfortable to read in long blocks.</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">Small</div>
-        <div class="spec">Inter / 400 / 13px<br/>ink-2</div>
-      </div>
-      <div class="type-sample small">Meta details, secondary UI copy, footnotes.</div>
-    </div>
-
-    <div class="type-row">
-      <div class="type-meta">
-        <div class="name">Mono · Eyebrow</div>
-        <div class="spec">JetBrains Mono / 11px<br/>tracking 0.14em / UPPERCASE</div>
-      </div>
-      <div class="type-sample mono">CALL FOR PROPOSALS · 徵稿正式開跑</div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ SPACING / RADII ============ -->
-<section class="ds" id="spacing">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">03 / SPACING</span>
-      <h2>Spacing & Radii</h2>
-      <p class="desc">Spacing is freeform — we scale sections generously with 48/72/96/120 and cards with 16/20/24. Radii are opinionated.</p>
-    </div>
-
-    <h3 style="font-weight:500;font-size:16px;margin:0 0 16px;color:var(--ink-2);font-family:var(--f-mono);letter-spacing:0.1em;text-transform:uppercase;">Spacing scale</h3>
-    <div class="scale-grid" style="margin-bottom: 48px;">
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 8px; height: 8px;"></div></div>
-        <div class="label"><span class="name">xs</span><span class="val">8px</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 16px; height: 16px;"></div></div>
-        <div class="label"><span class="name">sm</span><span class="val">16px</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 24px; height: 24px;"></div></div>
-        <div class="label"><span class="name">md</span><span class="val">24px</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 48px; height: 48px;"></div></div>
-        <div class="label"><span class="name">lg</span><span class="val">48px (gutter)</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 72px; height: 72px;"></div></div>
-        <div class="label"><span class="name">xl</span><span class="val">72px</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 72px; height: 72px; background: var(--accent-2);"></div></div>
-        <div class="label"><span class="name">2xl</span><span class="val">96px</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo"><div class="box" style="width: 72px; height: 72px; background: var(--accent-3);"></div></div>
-        <div class="label"><span class="name">3xl</span><span class="val">120px (section)</span></div>
-      </div>
-      <div class="scale-card">
-        <div class="demo" style="padding: 0; position: relative;">
-          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(90deg, var(--rule) 0, var(--rule) 1px, transparent 1px, transparent 80px);"></div>
-          <div class="box" style="width: 60%; height: 20px; position: relative; z-index: 1;"></div>
-        </div>
-        <div class="label"><span class="name">max-w</span><span class="val">1280px</span></div>
-      </div>
-    </div>
-
-    <h3 style="font-weight:500;font-size:16px;margin:0 0 16px;color:var(--ink-2);font-family:var(--f-mono);letter-spacing:0.1em;text-transform:uppercase;">Radii</h3>
-    <div class="radii-grid">
-      <div class="radii-card">
-        <div class="shape" style="border-radius: 6px;"></div>
-        <div class="name">Small</div>
-        <div class="val">6px</div>
-      </div>
-      <div class="radii-card">
-        <div class="shape" style="border-radius: 12px;"></div>
-        <div class="name">Medium</div>
-        <div class="val">12px</div>
-      </div>
-      <div class="radii-card">
-        <div class="shape" style="border-radius: 20px;"></div>
-        <div class="name">Large</div>
-        <div class="val">20px</div>
-      </div>
-      <div class="radii-card">
-        <div class="shape" style="border-radius: 999px;"></div>
-        <div class="name">Pill</div>
-        <div class="val">999px</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ COMPONENTS ============ -->
-<section class="ds" id="components">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">04 / COMPONENTS</span>
-      <h2>Components</h2>
-      <p class="desc">The reusable patterns. All adapt to light/dark and re-tint with the brand hue.</p>
-    </div>
-
-    <div class="comp-grid">
-      <div class="comp-card">
-        <div class="head"><span class="title">Buttons</span><span class="tag">PILL · 999px</span></div>
-        <div class="demo">
-          <button class="btn-primary">Primary action</button>
-          <button class="btn-ghost">Secondary</button>
-          <button class="btn-accent">Accent CTA</button>
-        </div>
+        <div class="brand-title">IPLAYGROUND</div>
+        <div class="brand-sub">Design Guideline 2026</div>
       </div>
 
-      <div class="comp-card">
-        <div class="head"><span class="title">Eyebrow pill</span><span class="tag">MONO · 12PX</span></div>
-        <div class="demo">
-          <div class="eyebrow-pill"><span class="dot"></span> CALL FOR PROPOSALS · 徵稿開跑</div>
-        </div>
+      <div class="sidebar-note">
+        <strong>Reading Mode</strong>
+        這份文件採用電子書式閱讀結構，左側可快速切換章節，右側整理品牌視覺與網站介面規範。
       </div>
 
-      <div class="comp-card">
-        <div class="head"><span class="title">Date stripe</span><span class="tag">PILL</span></div>
-        <div class="demo">
-          <div class="date-stripe">
-            <span><span class="label">When</span><strong>2026.05.24</strong></span>
-            <span class="sep"></span>
-            <span><span class="label">Where</span><strong>Taipei</strong></span>
-            <span class="sep"></span>
-            <span><span class="label">Deadline</span><strong>06.19</strong></span>
+      <nav class="toc" aria-label="章節目錄">
+        <a href="#overview"><span class="toc-num">00</span><span class="toc-label">總覽</span></a>
+        <a href="#color"><span class="toc-num">01</span><span class="toc-label">色彩系統</span></a>
+        <a href="#type"><span class="toc-num">02</span><span class="toc-label">字體規範</span></a>
+        <a href="#audit"><span class="toc-num">03</span><span class="toc-label">網站文字盤點</span></a>
+        <a href="#style"><span class="toc-num">04</span><span class="toc-label">介面風格</span></a>
+        <a href="#buttons"><span class="toc-num">05</span><span class="toc-label">按鈕設計</span></a>
+        <a href="#card"><span class="toc-num">06</span><span class="toc-label">卡片與面板</span></a>
+        <a href="#logo"><span class="toc-num">07</span><span class="toc-label">Logo 規範</span></a>
+        <a href="#application"><span class="toc-num">08</span><span class="toc-label">應用示例</span></a>
+        <a href="#tone"><span class="toc-num">09</span><span class="toc-label">整體語氣</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        iPlayground 2026<br>
+        Futuristic / Minimal / High Contrast
+      </div>
+    </aside>
+
+    <main class="content">
+      <div class="content-inner">
+        <section class="hero" id="overview">
+          <div class="hero-top">
+            <div>
+              <div class="eyebrow">Tech Conference Visual Language</div>
+              <h1>IPLAYGROUND <span>2026</span></h1>
+              <p>一份為 iPlayground 官方網站整理的設計規範文件，聚焦於未來感、極簡、高對比，以及 Apple 開發者社群活動應有的精準與質感。</p>
+              <div class="hero-badges">
+                <span>Futuristic</span>
+                <span>Minimal</span>
+                <span>High Contrast</span>
+                <span>Apple Developer Community</span>
+              </div>
+            </div>
+            <div class="year-lock">2026</div>
           </div>
-        </div>
-      </div>
+        </section>
 
-      <div class="comp-card">
-        <div class="head"><span class="title">Countdown</span><span class="tag">TABULAR-NUMS</span></div>
-        <div class="demo">
-          <div class="countdown">
-            <div class="cell"><div class="num">58</div><div class="lab">Days</div></div>
-            <div class="cell"><div class="num">12</div><div class="lab">Hours</div></div>
-            <div class="cell"><div class="num">34</div><div class="lab">Min</div></div>
-            <div class="cell"><div class="num">07</div><div class="lab">Sec</div></div>
+        <section class="meta-strip" aria-label="摘要資訊">
+          <div class="meta-card">
+            <div class="label">Theme</div>
+            <strong>Dark-first interface</strong>
           </div>
-        </div>
-      </div>
-
-      <div class="comp-card">
-        <div class="head"><span class="title">Preview card</span><span class="tag">RADIUS 16</span></div>
-        <div class="demo">
-          <div class="preview-card">
-            <div class="tag">TRACK · iOS</div>
-            <h3>SwiftUI in production</h3>
-            <p>What we learned shipping a SwiftUI-first app to 200k users — the wins, the surprises, and a few rewrites we regret.</p>
+          <div class="meta-card">
+            <div class="label">Accent</div>
+            <strong>Neon Lime as focus cue</strong>
           </div>
-        </div>
-      </div>
-
-      <div class="comp-card">
-        <div class="head"><span class="title">Segmented control</span><span class="tag">MONO</span></div>
-        <div class="demo">
-          <div class="segmented">
-            <button class="active">All</button>
-            <button>iOS</button>
-            <button>AI</button>
-            <button>Product</button>
+          <div class="meta-card">
+            <div class="label">Reading</div>
+            <strong>Sidebar-driven chapters</strong>
           </div>
-        </div>
+          <div class="meta-card">
+            <div class="label">Use Case</div>
+            <strong>Conference website guideline</strong>
+          </div>
+        </section>
+
+        <section class="chapter" id="color">
+          <div class="chapter-head">
+            <div class="chapter-num">01</div>
+            <div>
+              <h2>Color Palette</h2>
+              <p>網站視覺以深黑背景與螢光萊姆綠作為核心識別。黑色負責建立沉浸感與科技舞台，亮綠僅用於引導注意力、品牌亮點與主要互動。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body">
+              <div class="swatches">
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#050505;"></div>
+                  <div class="swatch-code">#050505</div>
+                  <div class="swatch-name">Black / Background</div>
+                </div>
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#171717;"></div>
+                  <div class="swatch-code">#171717</div>
+                  <div class="swatch-name">Dark Gray / Surface</div>
+                </div>
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#2e2e2e;"></div>
+                  <div class="swatch-code">#2E2E2E</div>
+                  <div class="swatch-name">Gray / Grid & Line</div>
+                </div>
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#f2f2f2;"></div>
+                  <div class="swatch-code">#F2F2F2</div>
+                  <div class="swatch-name">White / Main Text</div>
+                </div>
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#8a8a8a;"></div>
+                  <div class="swatch-code">#8A8A8A</div>
+                  <div class="swatch-name">Light Gray / Secondary</div>
+                </div>
+                <div class="swatch">
+                  <div class="swatch-color" style="background:#d7ff00;"></div>
+                  <div class="swatch-code">#D7FF00</div>
+                  <div class="swatch-name">Neon Lime / Accent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="type">
+          <div class="chapter-head">
+            <div class="chapter-num">02</div>
+            <div>
+              <h2>Typography</h2>
+              <p>字體策略分成兩條軸線：顯示型字體負責建立科技感品牌氣質，內文則以高可讀性為優先，確保議程、說明與 CTA 在資訊密度高的情境下依然清楚。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body type-shelf">
+              <div class="type-card">
+                <div class="spec">
+                  Heading System<br>
+                  Michroma / uppercase feeling<br>
+                  Large tracking<br>
+                  High contrast hero and section titles
+                </div>
+                <div>
+                  <div class="mini-title">Heading</div>
+                  <div class="type-sample-display">FUTURISTIC<br>TECH STYLE</div>
+                  <div class="glyphs">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>0123456789</div>
+                </div>
+              </div>
+              <div class="type-card">
+                <div class="spec">
+                  Body Text<br>
+                  Geist / Noto Sans TC<br>
+                  Clean hierarchy<br>
+                  UI copy and long-form content
+                </div>
+                <div>
+                  <div class="mini-title">Body Text</div>
+                  <div class="type-sample-heading">Readable, calm, and precise.</div>
+                  <p class="type-sample-body">建議用於導讀、章節說明、議程細節與各類資訊型內容。中文介面維持清楚筆畫與舒適行距，英文則延續俐落科技感。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="audit">
+          <div class="chapter-head">
+            <div class="chapter-num">03</div>
+            <div>
+              <h2>網站文字規格盤點</h2>
+              <p>這一章整理目前網站實作中的主要文字規格，目的是補齊設計文件中「實際落地怎麼用字」的說明。內容以首頁與新聞頁最常使用的區塊為主，包含字級、字距與主要 RWD 行為。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body">
+              <p class="audit-intro">盤點來源以網站現況為準，優先涵蓋 Hero、Section 標題、議程、最新消息、講者卡與新聞頁。這裡是文件化摘要，不是要更動正式站點樣式。</p>
+
+              <div class="audit-group">
+                <div class="mini-title">Global / Hero</div>
+                <table class="audit-table">
+                  <thead>
+                    <tr>
+                      <th>區塊</th>
+                      <th>文字層級</th>
+                      <th>目前設定</th>
+                      <th>RWD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>全站基底</strong><code>body</code></td>
+                      <td>內文基準</td>
+                      <td>16px、letter-spacing -0.01em；news 頁中文模式會回到 0</td>
+                      <td>多數區塊沿用這組基準值</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Hero 主標</strong><code>.hero .wordmark .wm-mark</code></td>
+                      <td>品牌標題</td>
+                      <td>font-size <code>clamp(28px, 8vw, 112px)</code>、letter-spacing -0.08em、word-spacing -0.1em</td>
+                      <td>880px 以下版型改單欄，但主標仍由 clamp 自適應</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Hero 年份</strong><code>.hero .wordmark .wm-year</code></td>
+                      <td>年份強調</td>
+                      <td>font-size <code>clamp(44px, 9.5vw, 136px)</code>、letter-spacing -0.04em</td>
+                      <td>880px 以下取消偏移效果，回到正常流式排列</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Hero 導語</strong><code>.hero .lede</code></td>
+                      <td>主視覺說明</td>
+                      <td>font-size <code>clamp(17px, 1.1vw + 0.8rem, 22px)</code>、line-height 1.55，中文 1.7</td>
+                      <td>尺寸依 clamp 收斂，沒有額外硬切字級</td>
+                    </tr>
+                    <tr>
+                      <td><strong>Hero CTA</strong><code>.hero .cta</code></td>
+                      <td>按鈕文案</td>
+                      <td>Geist Mono、13px、font-weight 500、letter-spacing 0.08em、uppercase</td>
+                      <td>880px 以下主 CTA 文案提升為 22px 並置中</td>
+                    </tr>
+                    <tr>
+                      <td><strong>倒數標籤</strong><code>.hero .cd-label</code></td>
+                      <td>時間單位</td>
+                      <td>11px、mono、uppercase</td>
+                      <td>540px 以下縮到 9px</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="audit-group">
+                <div class="mini-title">Navigation / Section Heading</div>
+                <table class="audit-table">
+                  <thead>
+                    <tr>
+                      <th>區塊</th>
+                      <th>文字層級</th>
+                      <th>目前設定</th>
+                      <th>RWD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>導覽 Logo</strong><code>.nav-logo</code></td>
+                      <td>品牌圖像</td>
+                      <td>固定高度 28px，寬度 auto</td>
+                      <td>980px 以下置中，導覽改由漢堡選單主導</td>
+                    </tr>
+                    <tr>
+                      <td><strong>導覽連結</strong><code>nav.top ul.nav-menu a</code></td>
+                      <td>主導覽文字</td>
+                      <td>繼承 nav 13px 基底，font-weight 500</td>
+                      <td>980px 以下隱藏桌機選單</td>
+                    </tr>
+                    <tr>
+                      <td><strong>切換器</strong><code>.nav-switch</code></td>
+                      <td>模式 / 語言切換</td>
+                      <td>11px 到 12px 的 mono 小字系統</td>
+                      <td>窄版保留主要功能，部分按鈕收斂</td>
+                    </tr>
+                    <tr>
+                      <td><strong>段落眉角</strong><code>.section-eyebrow</code></td>
+                      <td>章節編號 / eyebrow</td>
+                      <td>11px、Geist Mono、letter-spacing 0.16em、uppercase</td>
+                      <td>720px 以下改雙欄排列，字級不變</td>
+                    </tr>
+                    <tr>
+                      <td><strong>段落標題</strong><code>.section-title</code></td>
+                      <td>首頁主章節標題</td>
+                      <td>font-size <code>clamp(28px, 4.2vw, 56px)</code>、weight 700、letter-spacing -0.02em；中文版 -0.01em</td>
+                      <td>靠 clamp 自適應</td>
+                    </tr>
+                    <tr>
+                      <td><strong>段落 meta</strong><code>.section-meta</code></td>
+                      <td>輔助說明</td>
+                      <td>11px、mono、letter-spacing 0.1em、uppercase</td>
+                      <td>720px 以下換到下一列，opacity 0.7</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="audit-group">
+                <div class="mini-title">Agenda / Session Detail</div>
+                <table class="audit-table">
+                  <thead>
+                    <tr>
+                      <th>區塊</th>
+                      <th>文字層級</th>
+                      <th>目前設定</th>
+                      <th>RWD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>議程 tab</strong><code>.agenda-tab</code></td>
+                      <td>Day / Type 切換</td>
+                      <td>12px、Geist Mono、letter-spacing 0.14em、uppercase</td>
+                      <td>720px 以下改成滿版二欄 grid</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程 tab 日期</strong><code>.agenda-tab .tab-date</code></td>
+                      <td>次層日期</td>
+                      <td>9px、opacity 0.7</td>
+                      <td>維持原字級</td>
+                    </tr>
+                    <tr>
+                      <td><strong>搜尋欄</strong><code>.agenda-search input</code></td>
+                      <td>搜尋文字</td>
+                      <td>12px、Geist Mono、letter-spacing 0.08em</td>
+                      <td>720px 以下寬度改 100%</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程時間</strong><code>.session-time</code></td>
+                      <td>時間欄</td>
+                      <td>18px、Michroma / Mono、letter-spacing -0.02em</td>
+                      <td>720px 以下欄寬從 80px 改 60px</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程標題</strong><code>.session-title</code></td>
+                      <td>議程主標</td>
+                      <td>font-size <code>clamp(17px, 0.5vw + 0.95rem, 22px)</code>、weight 500、line-height 1.35、letter-spacing -0.01em</td>
+                      <td>靠 clamp 適應，小螢幕未另設固定字級</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程內文</strong><code>.session-desc</code></td>
+                      <td>摘要說明</td>
+                      <td>14px、line-height 1.55、次要文字色</td>
+                      <td>未另設字級變化</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程 meta</strong><code>.session-meta</code></td>
+                      <td>講者 / tags 容器</td>
+                      <td>11px、Geist Mono</td>
+                      <td>720px 以下改成縱向堆疊</td>
+                    </tr>
+                    <tr>
+                      <td><strong>議程 tag</strong><code>.session-tag</code></td>
+                      <td>分類標籤</td>
+                      <td>11px、letter-spacing 0.14em、高度 30px</td>
+                      <td>小螢幕保留同字級，改以換行排列</td>
+                    </tr>
+                    <tr>
+                      <td><strong>講者 label</strong><code>.session-speaker-label</code></td>
+                      <td>Speaker / 講者前綴</td>
+                      <td>9px、letter-spacing 0.16em</td>
+                      <td>跟隨 meta 容器轉為縱向排列</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="audit-group">
+                <div class="mini-title">News / Speaker / News Page</div>
+                <table class="audit-table">
+                  <thead>
+                    <tr>
+                      <th>區塊</th>
+                      <th>文字層級</th>
+                      <th>目前設定</th>
+                      <th>RWD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><strong>最新消息日期</strong><code>.news-date</code></td>
+                      <td>首頁列表日期</td>
+                      <td>13px、Geist Mono、letter-spacing 0.04em</td>
+                      <td>720px 以下縮到 12px</td>
+                    </tr>
+                    <tr>
+                      <td><strong>最新消息標題</strong><code>.news-title</code></td>
+                      <td>首頁消息標題</td>
+                      <td>font-size <code>clamp(15px, 0.4vw + 0.85rem, 18px)</code>、weight 500</td>
+                      <td>720px 以下固定 15px</td>
+                    </tr>
+                    <tr>
+                      <td><strong>講者姓名</strong><code>.speaker-name</code></td>
+                      <td>講者卡名稱</td>
+                      <td>14px、display 字體、letter-spacing -0.02em、uppercase</td>
+                      <td>目前未見額外字級縮放</td>
+                    </tr>
+                    <tr>
+                      <td><strong>講者職稱</strong><code>.speaker-role</code></td>
+                      <td>講者卡職稱</td>
+                      <td>11px、Geist Mono、letter-spacing 0.08em、uppercase</td>
+                      <td>目前未見額外字級縮放</td>
+                    </tr>
+                    <tr>
+                      <td><strong>新聞頁標題</strong><code>.listing-header h1</code></td>
+                      <td>news.html 列表主標</td>
+                      <td>font-size <code>clamp(28px, 4.2vw, 56px)</code>、weight 700、letter-spacing -0.02em</td>
+                      <td>900px 以下改為 36px</td>
+                    </tr>
+                    <tr>
+                      <td><strong>新聞頁副標</strong><code>.listing-header p</code></td>
+                      <td>archive eyebrow</td>
+                      <td>11px、mono、letter-spacing 0.1em、uppercase</td>
+                      <td>維持小字規則</td>
+                    </tr>
+                    <tr>
+                      <td><strong>新聞列表標題</strong><code>.listing-row .l-title</code></td>
+                      <td>news.html 列表標題</td>
+                      <td>17px、weight 500、line-height 1.4</td>
+                      <td>520px 以下改 15px</td>
+                    </tr>
+                    <tr>
+                      <td><strong>新聞列表日期</strong><code>.listing-row .l-date</code></td>
+                      <td>news.html 列表日期</td>
+                      <td>13px、mono、letter-spacing 0.04em</td>
+                      <td>520px 以下改 12px 並獨立成一列</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="style">
+          <div class="chapter-head">
+            <div class="chapter-num">04</div>
+            <div>
+              <h2>UI Style</h2>
+              <p>介面語氣偏向黑夜場域、太空地景與精密儀表板。使用細網格、輕微光暈、玻璃霧化面板與大量留白，但避免過度炫技，讓科技感服務內容而不是喧賓奪主。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body split-2">
+              <div class="style-visual"></div>
+              <div class="section-stack">
+                <div>
+                  <div class="mini-title">Visual Traits</div>
+                  <ul class="bullet-list">
+                    <li>Dark theme 為主要視覺情境，建立沉浸式舞台感。</li>
+                    <li>Grid lines 與 horizon 形成科技地景與空間深度。</li>
+                    <li>Neon accent 僅用於重點呼叫與狀態強調。</li>
+                    <li>Panel 使用半透明深色與輕度 blur，保留高級感。</li>
+                  </ul>
+                </div>
+                <div>
+                  <div class="mini-title">Interaction Tone</div>
+                  <ul class="bullet-list">
+                    <li>hover 與 focus 效果以輕微發光與位移為主。</li>
+                    <li>動態應精準、克制，不做浮誇動效堆疊。</li>
+                    <li>大標題與主要 CTA 要保持足夠呼吸感。</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="buttons">
+          <div class="chapter-head">
+            <div class="chapter-num">05</div>
+            <div>
+              <h2>Buttons</h2>
+              <p>按鈕分成主要與次要兩種層級。主要按鈕使用亮綠實心，負責驅動報名、投稿與關鍵轉換；次要按鈕採用描邊透明樣式，維持視覺秩序與高對比平衡。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body split-2">
+              <div>
+                <div class="mini-title">Primary Button</div>
+                <div class="btn-row">
+                  <div class="btn-demo btn-primary">Primary Button <span>→</span></div>
+                </div>
+                <p class="button-spec">Background: <strong>#D7FF00</strong><br>Text: <strong>#050505</strong></p>
+              </div>
+              <div>
+                <div class="mini-title">Secondary Button</div>
+                <div class="btn-row">
+                  <div class="btn-demo btn-secondary">Secondary Button <span>→</span></div>
+                </div>
+                <p class="button-spec">Border: <strong>#F2F2F2</strong><br>Background: <strong>Transparent</strong></p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="card">
+          <div class="chapter-head">
+            <div class="chapter-num">06</div>
+            <div>
+              <h2>Card / Panel</h2>
+              <p>內容卡片應該像懸浮在夜色中的資訊模組。邊框要細、面板要暗、模糊要輕，讓內容層次明顯但不沉重。這是議程卡、倒數卡與資訊面板的基礎語彙。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body card-demo">
+              <div class="sample-card">
+                <h3>Card Title</h3>
+                <p>這是一張示範用資訊卡片，代表網站中的倒數、議程摘要或活動資訊模組。</p>
+                <div class="card-link">More Info <span>→</span></div>
+              </div>
+              <div class="spec-grid">
+                <div class="spec-item">
+                  <strong>Background</strong>
+                  rgba(23, 23, 23, 0.74)
+                </div>
+                <div class="spec-item">
+                  <strong>Border</strong>
+                  1px solid rgba(255, 255, 255, 0.12)
+                </div>
+                <div class="spec-item">
+                  <strong>Effect</strong>
+                  Backdrop blur + subtle highlight
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="logo">
+          <div class="chapter-head">
+            <div class="chapter-num">07</div>
+            <div>
+              <h2>Logo Guideline</h2>
+              <p>Logo 應維持幾何圖形與字標之間的簡潔關係。使用時要保留清楚留白，不應任意縮放比例、改變排列或替 logo 加上多餘特效，以免削弱品牌識別的一致性。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body logo-board">
+              <div class="section-stack">
+                <div class="mini-title">Logo Composition</div>
+                <div class="logo-mark-big">
+                  <span class="ring"></span>
+                  <span class="tri"></span>
+                  <span class="diamond"></span>
+                  <div class="logo-word">IPLAYGROUND</div>
+                </div>
+                <div class="spec-item">
+                  <strong>Safe Area</strong>
+                  Logo 四周至少保留等於圓形外框直徑 25% 的淨空，避免靠近版面邊緣或其他高亮元素。
+                </div>
+              </div>
+              <div class="section-stack">
+                <div class="mini-title">Do Not</div>
+                <div class="logo-donts">
+                  <div class="dont-card">
+                    <div class="mini-logo"><span class="ring"></span><span class="tri" style="transform:rotate(-90deg) scaleY(1.4);"></span><span class="diamond"></span></div>
+                    <div class="x">Don't</div>
+                    <small>拉伸或壓縮比例</small>
+                  </div>
+                  <div class="dont-card">
+                    <div class="mini-logo"><span class="diamond"></span><span class="tri"></span><span class="ring"></span></div>
+                    <div class="x">Don't</div>
+                    <small>任意改變圖形排列</small>
+                  </div>
+                  <div class="dont-card">
+                    <div class="mini-logo"><span class="ring" style="border-color:#8ec5ff;"></span><span class="tri" style="border-bottom-color:#ffb44d;"></span><span class="diamond" style="background:#ff7f7f;"></span></div>
+                    <div class="x">Don't</div>
+                    <small>自行更換品牌色</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="application">
+          <div class="chapter-head">
+            <div class="chapter-num">08</div>
+            <div>
+              <h2>Application Example</h2>
+              <p>以下示意這套 guidelines 套用到實際網站畫面時的氛圍。重點在於強烈的標題辨識、清楚的 CTA 階層，以及資訊卡片與地景背景之間的對比關係。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body">
+              <div class="mockup">
+                <div class="mockup-top">
+                  <div>
+                    <div class="mockup-title">IPLAYGROUND</div>
+                    <div class="mockup-sub">Taipei · 07.25-26 · 政大公企中心</div>
+                  </div>
+                  <div class="mockup-year">2026</div>
+                </div>
+                <div class="mockup-bottom">
+                  <div class="chip-btn primary">立即購票 <span>→</span></div>
+                  <div class="chip-btn secondary">了解更多 <span>→</span></div>
+                  <div class="count-box">
+                    <div class="count-digits"><span>22</span><span>01</span><span>29</span><span>08</span></div>
+                    <div class="count-labels"><span>天</span><span>時</span><span>分</span><span>秒</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="chapter" id="tone">
+          <div class="chapter-head">
+            <div class="chapter-num">09</div>
+            <div>
+              <h2>Overall Tone</h2>
+              <p>iPlayground 的整體氣質不是冰冷的科技展示，而是高規格、克制、帶有社群溫度的開發者活動。畫面應該傳遞「專業、前瞻、可信任、值得參與」的綜合感受。</p>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-body">
+              <div class="tone-grid">
+                <div class="tone-item">
+                  <div class="tone-icon">✦</div>
+                  <strong>Futuristic</strong>
+                  <span>未來感但不科幻浮誇</span>
+                </div>
+                <div class="tone-item">
+                  <div class="tone-icon">&lt;/&gt;</div>
+                  <strong>Tech</strong>
+                  <span>清楚傳達開發者導向</span>
+                </div>
+                <div class="tone-item">
+                  <div class="tone-icon">◎</div>
+                  <strong>Community</strong>
+                  <span>帶出社群交流與連結</span>
+                </div>
+                <div class="tone-item">
+                  <div class="tone-icon"></div>
+                  <strong>Apple Dev</strong>
+                  <span>細節精準、講究質感</span>
+                </div>
+                <div class="tone-item">
+                  <div class="tone-icon">◌</div>
+                  <strong>Premium</strong>
+                  <span>留白充足、資訊有秩序</span>
+                </div>
+              </div>
+              <div class="closing">
+                iPlayground 2026 的網站設計應聚焦在高對比資訊傳達、節制的視覺效果與明確的內容層級。這份 guidelines 的目的，是讓品牌識別、活動頁面與前端實作能朝同一套語言收斂，而不是只做出一張好看的主視覺。
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </main>
   </div>
-</section>
 
-<!-- ============ PATTERNS ============ -->
-<section class="ds" id="patterns">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">05 / PATTERNS</span>
-      <h2>Patterns</h2>
-      <p class="desc">Compositions where the pieces come together.</p>
-    </div>
+  <script>
+    const tocLinks = [...document.querySelectorAll('.toc a')];
+    const sections = tocLinks
+      .map(link => document.querySelector(link.getAttribute('href')))
+      .filter(Boolean);
 
-    <!-- Hero pattern mini -->
-    <div style="border:1px solid var(--rule);border-radius:16px;background:var(--surface-2);padding:80px 40px;text-align:center;position:relative;overflow:hidden;isolation:isolate;margin-bottom:32px;">
-      <div style="position:absolute;inset:-100px;z-index:-1;background:radial-gradient(circle at 30% 30%,var(--accent) 0%,transparent 50%),radial-gradient(circle at 70% 60%,var(--accent-2) 0%,transparent 50%),radial-gradient(circle at 50% 90%,var(--accent-3) 0%,transparent 50%);filter:blur(60px);opacity:.35;"></div>
-      <div class="eyebrow-pill" style="margin-bottom:24px;"><span class="dot"></span> HERO PATTERN</div>
-      <div style="font-size:clamp(36px,6vw,72px);font-weight:700;letter-spacing:-0.04em;line-height:0.95;max-width:16ch;margin:0 auto;">
-        <span style="background:linear-gradient(110deg,var(--accent),var(--accent-2) 45%,var(--accent-3));-webkit-background-clip:text;background-clip:text;color:transparent;">Big gradient title</span><br/>
-        <span style="font-weight:300;color:var(--ink-2);">with a muted subtitle underneath.</span>
-      </div>
-      <p style="color:var(--ink-2);max-width:480px;margin:24px auto 0;">Key ingredients: eyebrow pill, gradient display type, thin-weight subtitle in ink-2, soft blurred color blobs as key art.</p>
-      <div style="margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-        <button class="btn-primary">Primary CTA →</button>
-        <button class="btn-ghost">Learn more</button>
-      </div>
-    </div>
+    const setActive = (id) => {
+      tocLinks.forEach(link => {
+        const active = link.getAttribute('href') === `#${id}`;
+        link.classList.toggle('is-active', active);
+      });
+    };
 
-    <!-- Footer pattern mini -->
-    <div style="background:var(--ink);color:var(--bg);padding:80px 40px;border-radius:16px;position:relative;overflow:hidden;">
-      <div class="eyebrow-pill" style="margin-bottom:24px;border-color:rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);"><span class="dot"></span> FOOTER PATTERN · HIGH CONTRAST</div>
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;">
-        <div>
-          <div style="font-size:20px;font-weight:600;margin-bottom:12px;">iPlayground</div>
-          <p style="color:color-mix(in srgb, var(--bg) 60%, transparent);font-size:14px;line-height:1.6;">High contrast finish using inverted roles. The footer always uses a heavy weight compared to the main content.</p>
-        </div>
-        <div>
-          <h4 style="font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--bg);opacity:0.9;">Links</h4>
-          <ul style="list-style:none;padding:0;margin:12px 0 0;font-size:14px;color:color-mix(in srgb, var(--bg) 70%, transparent);display:flex;flex-direction:column;gap:8px;">
-            <li>Link item</li>
-            <li>Link item</li>
-          </ul>
-        </div>
-        <div>
-          <h4 style="font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--bg);opacity:0.9;">Social</h4>
-          <ul style="list-style:none;padding:0;margin:12px 0 0;font-size:14px;color:color-mix(in srgb, var(--bg) 70%, transparent);display:flex;flex-direction:column;gap:8px;">
-            <li>Twitter</li>
-            <li>Discord</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, {
+      rootMargin: '-20% 0px -60% 0px',
+      threshold: [0.2, 0.45, 0.7]
+    });
 
-<!-- ============ DOWNLOAD ============ -->
-<section class="ds" id="download" style="border-bottom:0;">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="num">06 / EXPORT</span>
-      <h2>Get the tokens</h2>
-      <p class="desc">Drop this into any project to inherit the whole palette, typography, and spacing system.</p>
-    </div>
-    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
-      <p style="color:var(--ink-2);">Design tokens are now integrated into <code>shared.css</code>.</p>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap row">
-    <span>Design System · Swift in the Wild — iPlayground 2026</span>
-    <span>Tokens integrated into <strong style="color:var(--ink-2);font-weight:500;">css/shared.css</strong></span>
-  </div>
-</footer>
-
-<script>
-// ===== Init =====
-const mqlDS = window.matchMedia("(prefers-color-scheme: dark)");
-function setDSMode(m) {
-  document.documentElement.dataset.mode = m;
-  document.querySelectorAll("#modeSwitch button").forEach(b => b.classList.toggle("active", b.dataset.mode === m));
-  try { localStorage.setItem("appearance", m); } catch(e) {}
-}
-
-const savedDSMode = (() => { try { return localStorage.getItem("appearance"); } catch(e) { return null; } })();
-const savedHue = (() => { try { return localStorage.getItem("hue"); } catch(e) { return null; } })() || 28;
-
-setDSMode(savedDSMode || (mqlDS.matches ? "dark" : "light"));
-document.documentElement.style.setProperty("--hue", savedHue);
-document.getElementById("hueSlider").value = savedHue;
-document.getElementById("hueVal").textContent = savedHue + "°";
-
-document.getElementById("modeSwitch").addEventListener("click", (e) => {
-  if (e.target.tagName === "BUTTON") setDSMode(e.target.dataset.mode);
-});
-
-// Hue slider
-const slider = document.getElementById("hueSlider");
-const hueVal = document.getElementById("hueVal");
-slider.addEventListener("input", (e) => {
-  const h = Number(e.target.value);
-  document.documentElement.style.setProperty("--hue", h);
-  hueVal.textContent = h + "°";
-  try { localStorage.setItem("hue", h); } catch(e) {}
-});
-</script>
-
+    sections.forEach(section => observer.observe(section));
+    setActive('overview');
+  </script>
 </body>
 </html>
