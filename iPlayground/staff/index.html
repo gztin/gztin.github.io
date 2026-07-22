@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="7/25、7/26 工作人員離線任務查詢" />
+    <title>工作人員任務站｜離線版</title>
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/filters.css?v=20260722-5" />
+  </head>
+  <body>
+    <div id="app" v-cloak>
+      <section v-if="activeStaff" class="results wrap" aria-live="polite">
+        <div class="result-heading">
+          <button class="home-link" @click="clearSearch" aria-label="返回首頁"><span class="home-label">← 返回首頁</span><span class="home-icon" aria-hidden="true">⌂</span></button>
+          <div class="day-tabs" aria-label="日期篩選">
+            <button v-for="value in ['D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
+          </div>
+        </div>
+        <div class="fixed-task-controls">
+          <div class="summary-grid">
+            <div class="person-summary"><strong>{{ activeStaff.person }}</strong><span>人員名稱</span></div>
+            <div><strong>{{ visibleTasks.length }}</strong><span>段任務</span></div>
+            <div><strong>{{ durationLabel }}</strong><span>排定時間</span></div>
+            <div class="roles"><strong>{{ roleLabel }}</strong><span>負責職務</span></div>
+          </div>
+        </div>
+        <div class="mobile-controls-spacer" aria-hidden="true"></div>
+        <div class="main-tasks-view">
+          <div class="timeline">
+            <article v-for="(task, index) in visibleTasks" :key="task.day + task.start + task.role + index" class="task-card" :class="{ 'is-vacancy': task.assignment === '待補充' }">
+              <div class="day-badge" :class="task.day.toLowerCase()">{{ dayLabel(task.day) }}</div>
+              <div class="time"><strong>{{ task.start }}</strong><span>↓</span><strong>{{ task.endPending ? '待定' : task.end }}</strong></div>
+              <div class="task-body">
+                <div class="task-top"><h3>{{ task.role }}</h3><span>{{ task.endPending ? '結束時間待定' : taskDuration(task) + ' 分鐘' }}</span></div>
+                <div v-if="taskPartners(task).length" class="task-card-partners">
+                  <span>同時段夥伴</span>
+                  <button v-for="partner in taskPartners(task)" :key="partner" @click="choose(partner)">{{ partner }}</button>
+                </div>
+                <p v-if="task.assignment === '待補充'" class="vacancy-note">待補充｜需求人數：{{ task.requiredLabel }}</p>
+                <p class="duty">{{ task.duty || `請於此時段負責「${task.role}」相關工作與現場交接。` }}</p>
+                <details>
+                  <summary>查看同時段議程 <span>＋</span></summary>
+                  <ul><li v-for="item in task.agenda" :key="item">{{ item }}</li></ul>
+                </details>
+              </div>
+            </article>
+            <div v-if="!visibleTasks.length" class="empty">這個日期沒有排定任務。</div>
+          </div>
+        </div>
+        <section v-if="activeStaff.missions.length" class="side-missions" aria-labelledby="side-missions-title">
+          <div class="mission-heading">
+            <p class="section-label">SIDE MISSIONS</p>
+            <h2 id="side-missions-title">支線任務</h2>
+          </div>
+          <div class="mission-grid">
+            <article v-for="(mission, index) in activeStaff.missions" :key="mission.title + index" class="mission-card">
+              <span class="mission-number">{{ String(index + 1).padStart(2, '0') }}</span>
+              <div>
+                <h3>{{ mission.title }}</h3>
+                <p>{{ mission.detail }}</p>
+                <a v-if="mission.link" :href="mission.link" target="_blank" rel="noopener">開啟相關資料 →</a>
+              </div>
+            </article>
+          </div>
+        </section>
+        <nav class="mobile-task-nav" aria-label="日期切換">
+          <div class="mobile-task-dates" aria-label="日期篩選">
+            <button v-for="value in ['D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
+          </div>
+        </nav>
+      </section>
+
+      <section v-else class="directory wrap">
+        <div class="directory-heading">
+          <div><p class="section-label">人員一覽</p><h2 class="system-title">IMS <small>iPlayground Mission Search System</small></h2></div>
+          <p>共 {{ filteredDirectory.length }} 位人員<br>資料涵蓋 7/25 與 7/26</p>
+        </div>
+        <div class="directory-tools">
+          <div class="search-shell directory-search">
+            <div class="search-row">
+              <span class="search-icon" aria-hidden="true">⌕</span>
+              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋姓名，例如 Hokila" autocomplete="off">
+              <button v-if="query" class="clear" @click="clearSearch" aria-label="清除搜尋">×</button>
+            </div>
+            <div v-if="query && !activeName" class="suggestions" role="listbox" aria-label="搜尋建議">
+              <button v-for="(name, index) in suggestions" :key="name" :class="{ highlighted: index === highlighted }" @click="choose(name)">
+                <span>{{ name }}</span><small>查看任務 →</small>
+              </button>
+              <p v-if="!suggestions.length">找不到符合「{{ query }}」的人員</p>
+            </div>
+          </div>
+        </div>
+        <div class="staff-grid">
+          <button v-for="staff in filteredDirectory" :key="staff.person" :class="'person-type-' + staff.type" @click="choose(staff.person)">
+            <span class="staff-info"><strong>{{ staff.person }}</strong><small>{{ staff.rolePreview }}</small></span>
+            <span class="count">{{ staff.merged.length }}<small>任務</small></span>
+          </button>
+        </div>
+      </section>
+      <button v-show="showScrollTop" class="scroll-top" :class="{ 'directory-scroll-top': !activeStaff }" @click="scrollToTop" aria-label="回到頁面頂端">↑</button>
+      <footer class="wrap"><span>資料來源：7/25 / 7/26 場務進度追蹤表</span><span>如有異動，請以現場總指揮通知為準</span></footer>
+    </div>
+    <noscript>此離線網頁需要啟用 JavaScript 才能查詢。</noscript>
+    <script src="vendor/vue.global.prod.js"></script>
+    <script src="data/schedule.js"></script>
+    <script src="data/corrections.js"></script>
+    <script src="assets/app.js"></script>
+  </body>
+</html>
