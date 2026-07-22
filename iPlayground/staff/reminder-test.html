@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="任務提醒彈窗互動測試" />
+    <meta name="theme-color" content="#111111" />
     <title>任務提醒測試｜IMS</title>
+    <link rel="manifest" href="manifest.webmanifest" />
     <style>
       :root {
         --ink: #111111;
@@ -225,6 +227,183 @@
 
       .status-line span:last-child { color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; }
 
+      .push-status {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .live-simulator {
+        margin-top: 32px;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #ffffff;
+      }
+
+      .simulator-heading {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 24px;
+      }
+
+      .simulator-heading p { margin: 0 0 7px; color: var(--muted); font: 800 11px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .12em; }
+      .simulator-heading h2 { margin: 0; font-size: clamp(22px, 3vw, 32px); }
+
+      .preview-tabs {
+        display: flex;
+        gap: 4px;
+        padding: 4px;
+        border-radius: 10px;
+        background: #efefec;
+      }
+
+      .preview-tabs button {
+        border: 0;
+        border-radius: 7px;
+        padding: 9px 13px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .preview-tabs button.active { background: var(--ink); color: #ffffff; }
+
+      .simulator-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 390px) 1fr;
+        align-items: center;
+        gap: clamp(28px, 6vw, 72px);
+      }
+
+      .phone-preview {
+        position: relative;
+        width: min(100%, 360px);
+        min-height: 620px;
+        margin: 0 auto;
+        overflow: hidden;
+        border: 8px solid #171717;
+        border-radius: 48px;
+        background:
+          radial-gradient(circle at 75% 18%, rgba(210, 255, 0, .3), transparent 34%),
+          linear-gradient(145deg, #34403d 0%, #747c76 48%, #171918 100%);
+        box-shadow: 0 24px 55px rgba(0, 0, 0, .22), inset 0 0 0 1px rgba(255, 255, 255, .16);
+        color: #ffffff;
+      }
+
+      .phone-status {
+        display: flex;
+        justify-content: space-between;
+        padding: 17px 28px 0;
+        font: 700 12px/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .phone-status span:last-child { letter-spacing: .1em; }
+
+      .dynamic-island {
+        position: relative;
+        z-index: 3;
+        display: block;
+        width: 116px;
+        height: 34px;
+        margin: -13px auto 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 22px;
+        background: #000000;
+        color: #ffffff;
+        cursor: default;
+        transition: width .34s ease, height .34s ease, border-radius .34s ease;
+      }
+
+      .dynamic-island.is-enabled { width: 218px; cursor: pointer; }
+      .dynamic-island.is-expanded { width: calc(100% - 32px); height: 152px; border-radius: 30px; }
+      .dynamic-island.is-now { box-shadow: 0 0 0 2px var(--accent), 0 0 28px rgba(210, 255, 0, .28); }
+
+      .island-compact {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        height: 34px;
+        padding: 0 13px;
+        opacity: 0;
+        transition: opacity .18s ease;
+      }
+
+      .dynamic-island.is-enabled .island-compact { opacity: 1; }
+      .dynamic-island.is-expanded .island-compact { opacity: 0; }
+      .island-compact span:first-child { color: var(--accent); font-size: 13px; }
+      .island-compact strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+      .island-compact time { color: var(--accent); font: 800 11px/1 "SFMono-Regular", Consolas, monospace; }
+
+      .island-expanded {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-content: center;
+        gap: 9px 16px;
+        padding: 23px 24px;
+        opacity: 0;
+        pointer-events: none;
+        text-align: left;
+        transition: opacity .2s ease .08s;
+      }
+
+      .dynamic-island.is-expanded .island-expanded { opacity: 1; }
+      .island-expanded small { color: var(--accent); font: 800 10px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .1em; }
+      .island-expanded h3 { grid-column: 1; margin: 0; font-size: 20px; }
+      .island-expanded time { grid-row: 1 / 3; grid-column: 2; align-self: center; color: var(--accent); font: 800 23px/1 "SFMono-Regular", Consolas, monospace; }
+      .island-expanded p { grid-column: 1 / -1; margin: 0; color: #b7b7b2; font-size: 12px; }
+
+      .lock-clock { margin-top: 70px; text-align: center; text-shadow: 0 2px 16px rgba(0, 0, 0, .28); }
+      .lock-clock span { display: block; font-size: 15px; font-weight: 700; }
+      .lock-clock strong { display: block; margin-top: 4px; font: 300 74px/.95 -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: -.06em; }
+
+      .lock-activity {
+        position: absolute;
+        right: 14px;
+        bottom: 76px;
+        left: 14px;
+        padding: 17px;
+        border: 1px solid rgba(255, 255, 255, .24);
+        border-radius: 22px;
+        background: rgba(24, 25, 24, .72);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, .22);
+        opacity: 0;
+        transform: translateY(14px);
+        backdrop-filter: blur(20px);
+        transition: opacity .28s ease, transform .28s ease;
+      }
+
+      .phone-preview[data-mode="lock"] .lock-activity.is-enabled { opacity: 1; transform: none; }
+      .lock-activity.is-now { border-color: var(--accent); }
+      .lock-activity-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .lock-app { display: flex; align-items: center; gap: 8px; color: #d7d7d1; font-size: 11px; font-weight: 800; }
+      .lock-app span { display: grid; width: 24px; height: 24px; place-items: center; border-radius: 7px; background: var(--accent); color: #111111; }
+      .lock-activity time { color: var(--accent); font: 800 13px/1 "SFMono-Regular", Consolas, monospace; }
+      .lock-activity h3 { margin: 13px 0 5px; font-size: 20px; }
+      .lock-activity p { margin: 0; color: #c8c8c3; font-size: 12px; line-height: 1.55; }
+      .live-progress { height: 4px; margin-top: 15px; overflow: hidden; border-radius: 99px; background: rgba(255, 255, 255, .14); }
+      .live-progress span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--accent); transition: width .25s linear; }
+
+      .home-indicator { position: absolute; bottom: 9px; left: 50%; width: 122px; height: 5px; border-radius: 99px; background: rgba(255, 255, 255, .75); transform: translateX(-50%); }
+      .simulation-caption { position: absolute; right: 0; bottom: 34px; left: 0; text-align: center; color: rgba(255, 255, 255, .64); font: 700 9px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .1em; }
+
+      .simulator-copy { max-width: 460px; }
+      .simulator-copy .eyebrow { color: var(--muted); font: 800 11px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .1em; }
+      .simulator-copy h3 { margin: 12px 0; font-size: clamp(25px, 4vw, 42px); line-height: 1.1; }
+      .simulator-copy > p { margin: 0; color: var(--muted); line-height: 1.75; }
+      .simulator-rules { display: grid; gap: 10px; margin-top: 24px; }
+      .simulator-rule { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 9px; font-size: 13px; font-weight: 750; }
+      .simulator-rule span { display: grid; flex: 0 0 26px; height: 26px; place-items: center; border-radius: 50%; background: var(--ink); color: var(--accent); font: 800 10px/1 "SFMono-Regular", Consolas, monospace; }
+
       .modal-backdrop {
         position: fixed;
         inset: 0;
@@ -293,6 +472,10 @@
         .reminder-control { flex-wrap: wrap; justify-content: flex-end; }
         .countdown { order: 3; }
         .duty { font-size: 15px; }
+        .live-simulator { padding: 20px 14px; }
+        .simulator-heading { align-items: flex-start; flex-direction: column; }
+        .simulator-layout { grid-template-columns: 1fr; }
+        .simulator-copy { margin: 0 auto; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -310,7 +493,7 @@
         <a class="back-link" href="index.html">← 返回人員一覽</a>
       </header>
 
-      <p class="test-note">打開任務卡右上角的提醒開關後，將從 1 分鐘開始倒數；倒數歸零時會顯示提醒彈窗。關閉開關可隨時重設。</p>
+      <p class="test-note">打開任務卡右上角的提醒開關後，將從 15 秒開始倒數；Cloudflare 連線完成後，即使鎖定螢幕也會收到系統通知。關閉開關可隨時取消。</p>
 
       <article class="task-card" aria-label="7月22日測試任務卡">
         <div class="day-badge">7/22</div>
@@ -327,7 +510,7 @@
                 <input id="reminder-switch" type="checkbox" aria-label="啟動報到桌佈置提醒" />
                 <span class="switch-track"></span>
               </label>
-              <span class="countdown" id="countdown" aria-live="polite">1:00</span>
+              <span class="countdown" id="countdown" aria-live="polite">0:15</span>
             </div>
           </div>
 
@@ -338,8 +521,61 @@
 
           <p class="duty">負責執行「報到桌佈置」，地點：政大公企中心 2F；工作內容：名牌分類、放置周邊小物、搬桌子。</p>
           <div class="status-line"><span id="status-text">提醒尚未啟動</span><span id="taipei-clock">台灣時間 --:--:--</span></div>
+          <p class="push-status" id="push-status" aria-live="polite">系統推播尚未連接 Cloudflare；目前仍可測試前景彈窗與提示音。</p>
         </div>
       </article>
+
+      <section class="live-simulator" aria-labelledby="live-simulator-title">
+        <header class="simulator-heading">
+          <div>
+            <p>WEB LIVE ACTIVITY SIMULATION</p>
+            <h2 id="live-simulator-title">鎖定畫面與動態島預覽</h2>
+          </div>
+          <div class="preview-tabs" aria-label="預覽模式">
+            <button id="dynamic-mode" class="active" type="button" aria-pressed="true">動態島</button>
+            <button id="lock-mode" type="button" aria-pressed="false">鎖定畫面</button>
+          </div>
+        </header>
+
+        <div class="simulator-layout">
+          <div class="phone-preview" id="phone-preview" data-mode="dynamic">
+            <div class="phone-status"><span id="phone-time">9:41</span><span>▮▮▮ ◒ ▰</span></div>
+            <button class="dynamic-island" id="dynamic-island" type="button" aria-label="展開任務動態島" aria-expanded="false">
+              <span class="island-compact"><span aria-hidden="true">●</span><strong>報到桌佈置</strong><time id="island-countdown">0:15</time></span>
+              <span class="island-expanded">
+                <small id="island-state">即將開始</small>
+                <h3>報到桌佈置</h3>
+                <time id="island-expanded-countdown">0:15</time>
+                <p>政大公企中心 2F · 請確認工作物品</p>
+              </span>
+            </button>
+
+            <div class="lock-clock"><span>7月22日 星期三</span><strong id="lock-time">9:41</strong></div>
+            <article class="lock-activity" id="lock-activity" aria-label="模擬鎖定畫面任務提醒">
+              <div class="lock-activity-top">
+                <div class="lock-app"><span aria-hidden="true">IMS</span>任務提醒</div>
+                <time id="lock-countdown">0:15</time>
+              </div>
+              <h3>報到桌佈置</h3>
+              <p><span id="lock-state">即將開始</span> · 政大公企中心 2F</p>
+              <div class="live-progress" aria-hidden="true"><span id="live-progress-bar"></span></div>
+            </article>
+            <div class="simulation-caption">網頁效果模擬 · 非 iOS 系統畫面</div>
+            <div class="home-indicator" aria-hidden="true"></div>
+          </div>
+
+          <div class="simulator-copy">
+            <p class="eyebrow">DISPLAY RULE</p>
+            <h3 id="simulator-status">開啟提醒後，任務才會出現在動態島。</h3>
+            <p>這個預覽直接跟隨上方任務卡的提醒開關。動態島只呈現使用者主動開啟提醒的工作卡片；關閉後立即移除。</p>
+            <div class="simulator-rules">
+              <div class="simulator-rule"><span>01</span>只有開啟提醒的卡片會顯示</div>
+              <div class="simulator-rule"><span>02</span>開始前顯示倒數，時間到切換為現在開始</div>
+              <div class="simulator-rule"><span>03</span>點擊動態島可展開或收合任務資訊</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <div class="modal-backdrop" id="modal-backdrop" hidden>
@@ -352,16 +588,33 @@
       </section>
     </div>
 
+    <script src="assets/push-config.js"></script>
+    <script src="assets/push-client.js"></script>
     <script>
       (function () {
         "use strict";
 
-        var TEST_SECONDS = 60;
+        var TEST_SECONDS = 15;
         var reminderSwitch = document.getElementById("reminder-switch");
         var reminderControl = document.getElementById("reminder-control");
         var countdown = document.getElementById("countdown");
         var statusText = document.getElementById("status-text");
+        var pushStatus = document.getElementById("push-status");
         var taipeiClock = document.getElementById("taipei-clock");
+        var phoneTime = document.getElementById("phone-time");
+        var lockTime = document.getElementById("lock-time");
+        var phonePreview = document.getElementById("phone-preview");
+        var dynamicIsland = document.getElementById("dynamic-island");
+        var dynamicMode = document.getElementById("dynamic-mode");
+        var lockMode = document.getElementById("lock-mode");
+        var islandCountdown = document.getElementById("island-countdown");
+        var islandExpandedCountdown = document.getElementById("island-expanded-countdown");
+        var islandState = document.getElementById("island-state");
+        var lockActivity = document.getElementById("lock-activity");
+        var lockCountdown = document.getElementById("lock-countdown");
+        var lockState = document.getElementById("lock-state");
+        var liveProgressBar = document.getElementById("live-progress-bar");
+        var simulatorStatus = document.getElementById("simulator-status");
         var startTime = document.getElementById("start-time");
         var endTime = document.getElementById("end-time");
         var modalBackdrop = document.getElementById("modal-backdrop");
@@ -422,6 +675,42 @@
           return Math.max(0, Math.ceil((endsAt - now.getTime()) / 1000));
         }
 
+        function setPreviewMode(mode) {
+          var showLock = mode === "lock";
+          phonePreview.dataset.mode = showLock ? "lock" : "dynamic";
+          dynamicMode.classList[showLock ? "remove" : "add"]("active");
+          lockMode.classList[showLock ? "add" : "remove"]("active");
+          dynamicMode.setAttribute("aria-pressed", String(!showLock));
+          lockMode.setAttribute("aria-pressed", String(showLock));
+        }
+
+        function setLiveActivityEnabled(enabled) {
+          dynamicIsland.classList[enabled ? "add" : "remove"]("is-enabled");
+          lockActivity.classList[enabled ? "add" : "remove"]("is-enabled");
+          if (!enabled) {
+            dynamicIsland.classList.remove("is-expanded", "is-now");
+            lockActivity.classList.remove("is-now");
+            dynamicIsland.setAttribute("aria-expanded", "false");
+            simulatorStatus.textContent = "開啟提醒後，任務才會出現在動態島。";
+          } else {
+            simulatorStatus.textContent = "報到桌佈置已加入動態島候選清單。";
+          }
+        }
+
+        function updateLiveActivity(remaining) {
+          var label = remaining === 0 ? "現在開始" : formatRemaining(remaining);
+          var isNow = remaining === 0;
+          islandCountdown.textContent = label;
+          islandExpandedCountdown.textContent = label;
+          lockCountdown.textContent = label;
+          islandState.textContent = isNow ? "現在開始" : "即將開始";
+          lockState.textContent = isNow ? "現在開始" : "即將開始";
+          dynamicIsland.classList[isNow ? "add" : "remove"]("is-now");
+          lockActivity.classList[isNow ? "add" : "remove"]("is-now");
+          liveProgressBar.style.width = Math.min(100, Math.max(0, (TEST_SECONDS - remaining) / TEST_SECONDS * 100)) + "%";
+          if (isNow) simulatorStatus.textContent = "任務時間已到，動態島切換為「現在開始」。";
+        }
+
         function showReminder() {
           if (triggered) return;
           triggered = true;
@@ -435,6 +724,9 @@
           var remaining = remainingSeconds(now);
           countdown.textContent = formatRemaining(remaining);
           taipeiClock.textContent = "台灣時間 " + taipeiTime(now, true);
+          phoneTime.textContent = taipeiTime(now, false);
+          lockTime.textContent = taipeiTime(now, false);
+          updateLiveActivity(remaining);
           if (remaining === 0) {
             showReminder();
             window.clearInterval(intervalId);
@@ -452,6 +744,7 @@
           startTime.textContent = taipeiTime(now, false);
           endTime.textContent = taipeiTime(new Date(endsAt), false);
           reminderControl.classList.add("is-on");
+          setLiveActivityEnabled(true);
           statusText.textContent = "提醒已啟動，請保持裝置音量開啟";
           updateCountdown(now);
           intervalId = window.setInterval(function () { updateCountdown(new Date()); }, 250);
@@ -463,7 +756,9 @@
           endsAt = 0;
           triggered = false;
           reminderControl.classList.remove("is-on");
-          countdown.textContent = "1:00";
+          setLiveActivityEnabled(false);
+          countdown.textContent = "0:15";
+          updateLiveActivity(TEST_SECONDS);
           statusText.textContent = "提醒尚未啟動";
           modalBackdrop.hidden = true;
           var now = new Date();
@@ -473,16 +768,38 @@
 
         reminderSwitch.addEventListener("change", function () {
           if (reminderSwitch.checked) {
-            prepareAudio().then(function () {
-              if (reminderSwitch.checked) startReminder();
-            });
+            startReminder();
+            prepareAudio();
+            if (window.PushReminder && window.PushReminder.isConfigured()) {
+              pushStatus.textContent = "正在向系統註冊 15 秒後的鎖定畫面通知…";
+              window.PushReminder.scheduleTestReminder().then(function (result) {
+                if (!reminderSwitch.checked) return;
+                pushStatus.textContent = "系統通知已排程，預計於 " + taipeiTime(new Date(result.sendAt), true) + " 送達。";
+              }).catch(function (error) {
+                pushStatus.textContent = "系統通知設定失敗：" + error.message + "。前景彈窗與提示音仍會執行。";
+              });
+            } else {
+              pushStatus.textContent = "Cloudflare Worker 尚未部署；目前只執行前景彈窗與提示音。";
+            }
+          } else {
+            resetReminder();
+            pushStatus.textContent = "提醒已關閉。";
+            if (window.PushReminder) window.PushReminder.cancelTestReminder().catch(function () {});
           }
-          else resetReminder();
         });
 
         modalClose.addEventListener("click", function () {
           modalBackdrop.hidden = true;
           reminderSwitch.focus();
+        });
+
+        dynamicMode.addEventListener("click", function () { setPreviewMode("dynamic"); });
+        lockMode.addEventListener("click", function () { setPreviewMode("lock"); });
+        dynamicIsland.addEventListener("click", function () {
+          if (!reminderSwitch.checked) return;
+          var expanded = !dynamicIsland.classList.contains("is-expanded");
+          dynamicIsland.classList[expanded ? "add" : "remove"]("is-expanded");
+          dynamicIsland.setAttribute("aria-expanded", String(expanded));
         });
 
         document.addEventListener("keydown", function (event) {
@@ -494,6 +811,7 @@
 
         window.addEventListener("beforeunload", function () { window.clearInterval(intervalId); });
         window.setInterval(function () { taipeiClock.textContent = "台灣時間 " + taipeiTime(new Date(), true); }, 1000);
+        setPreviewMode("dynamic");
         resetReminder();
       })();
     </script>

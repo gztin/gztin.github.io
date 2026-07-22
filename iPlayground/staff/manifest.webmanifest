@@ -1,0 +1,19 @@
+{
+  "name": "IMS 工作人員任務站",
+  "short_name": "IMS 任務站",
+  "description": "iPlayground 工作人員任務與提醒",
+  "lang": "zh-Hant",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f3f0",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
