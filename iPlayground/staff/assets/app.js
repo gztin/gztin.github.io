@@ -32,14 +32,17 @@
   }
 
   function mergeTasks(tasks) {
-    return tasks.map(function (task) {
+    return tasks.filter(function (task) {
+      return String(task.content || "").trim() !== "休息(10)";
+    }).map(function (task) {
       return Object.assign({}, task, { agenda: [agendaLabel(task)] });
     }).sort(function (a, b) {
       return a.day.localeCompare(b.day) || minutes(a.start) - minutes(b.start) || a.role.localeCompare(b.role, "zh-Hant");
     });
   }
 
-  function personType(tasks) {
+  function personType(tasks, person) {
+    if ((person === "Joy" || person === "Jess") && tasks.some(function (task) { return task.role !== "講者" && task.role !== "工作坊講者"; })) return "staff";
     if (tasks.some(function (task) { return task.role === "工作坊講者"; })) return "workshop";
     if (tasks.some(function (task) { return task.role === "講者"; })) return "session";
     return "staff";
@@ -98,7 +101,7 @@
     var roles = Array.from(new Set(tasks.map(function (task) { return task.role; })));
     return {
       person: person,
-      type: personType(tasks),
+      type: personType(tasks, person),
       missions: missions,
       merged: mergeTasks(tasks),
       roles: roles,
