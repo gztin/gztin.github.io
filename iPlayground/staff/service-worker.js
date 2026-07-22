@@ -1,6 +1,6 @@
 "use strict";
 
-var SERVICE_WORKER_VERSION = "2026-07-22.1";
+var SERVICE_WORKER_VERSION = "2026-07-22.2";
 
 function reportToClients(message) {
   return self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {
@@ -48,8 +48,8 @@ self.addEventListener("push", function (event) {
 
   var notificationOptions = {
     body: data.body,
-    icon: "assets/app-icon.svg",
-    badge: "assets/app-icon.svg",
+    icon: "assets/icon-192.png?v=20260722-2",
+    badge: "assets/icon-192.png?v=20260722-2",
     tag: data.tag || "ims-task-reminder",
     renotify: true,
     data: { url: data.url || "./" }
