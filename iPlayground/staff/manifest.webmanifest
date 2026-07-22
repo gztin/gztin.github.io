@@ -1,6 +1,6 @@
 {
-  "name": "IMS 工作人員任務站",
-  "short_name": "IMS 任務站",
+  "name": "iPlayground 任務助手",
+  "short_name": "iPlayground 任務助手",
   "description": "iPlayground 工作人員任務與提醒",
   "lang": "zh-Hant",
   "start_url": "./",
