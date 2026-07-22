@@ -47,6 +47,11 @@ function validateSubscription(subscription) {
     typeof subscription.keys.auth === "string";
 }
 
+function normalizeTaskTitle(value) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").slice(0, 60);
+}
+
 async function saveTestReminder(request, env) {
   const input = await request.json().catch(() => null);
   if (!input || !validateSubscription(input.subscription)) {
@@ -57,6 +62,10 @@ async function saveTestReminder(request, env) {
   const nowIso = now.toISOString();
   const sendAt = new Date(now.getTime() + TEST_DELAY_MS).toISOString();
   const subscription = input.subscription;
+  const taskTitle = normalizeTaskTitle(input.taskTitle);
+  const notificationBody = taskTitle
+    ? `${taskTitle}工作即將在兩分鐘後開始`
+    : "任務即將於兩分鐘後開始";
   const id = await subscriptionId(subscription.endpoint);
 
   await env.REMINDERS.prepare(`
@@ -81,8 +90,8 @@ async function saveTestReminder(request, env) {
     reminderId,
     id,
     sendAt,
-    "IMS｜節目即將開始",
-    "測試任務「報到桌佈置」即將開始，請確認工作物品並前往集合。",
+    "iPlayground 任務通知",
+    notificationBody,
     TEST_TARGET_URL,
     nowIso
   ).run();

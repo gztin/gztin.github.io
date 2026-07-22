@@ -329,7 +329,7 @@
         <div class="task-body">
           <div class="task-top">
             <div class="task-title">
-              <h2>報到桌佈置</h2>
+              <h2 id="task-title">報到桌佈置</h2>
               <p>測試用任務卡片</p>
             </div>
             <div class="reminder-control" id="reminder-control">
@@ -366,7 +366,7 @@
     </div>
 
     <script src="assets/push-config.js"></script>
-    <script src="assets/push-client.js?v=20260722-1"></script>
+    <script src="assets/push-client.js?v=20260722-2"></script>
     <script>
       (function () {
         "use strict";
@@ -377,6 +377,7 @@
         var countdown = document.getElementById("countdown");
         var statusText = document.getElementById("status-text");
         var pushStatus = document.getElementById("push-status");
+        var taskTitle = document.getElementById("task-title");
         var taipeiClock = document.getElementById("taipei-clock");
         var startTime = document.getElementById("start-time");
         var endTime = document.getElementById("end-time");
@@ -493,7 +494,7 @@
             prepareAudio();
             if (window.PushReminder && window.PushReminder.isConfigured()) {
               pushStatus.textContent = "正在向系統註冊 15 秒後的鎖定畫面通知…";
-              window.PushReminder.scheduleTestReminder().then(function (result) {
+              window.PushReminder.scheduleTestReminder(taskTitle.textContent.trim()).then(function (result) {
                 if (!reminderSwitch.checked) return;
                 pushStatus.textContent = "系統通知已排程，預計於 " + taipeiTime(new Date(result.sendAt), true) + " 送達。";
               }).catch(function (error) {

@@ -1,6 +1,6 @@
 "use strict";
 
-var SERVICE_WORKER_VERSION = "2026-07-22.2";
+var SERVICE_WORKER_VERSION = "2026-07-22.3";
 
 function reportToClients(message) {
   return self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {
@@ -32,8 +32,8 @@ self.addEventListener("message", function (event) {
 self.addEventListener("push", function (event) {
   var receivedAt = new Date().toISOString();
   var fallback = {
-    title: "IMS 任務提醒",
-    body: "你的工作任務即將開始，請回到任務站確認。",
+    title: "iPlayground 任務通知",
+    body: "任務即將於兩分鐘後開始",
     url: "./"
   };
   var data = fallback;
