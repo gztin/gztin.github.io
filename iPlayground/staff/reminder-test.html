@@ -285,12 +285,45 @@
         gap: 20px;
       }
 
+      .browser-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 6px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #eeeeeb;
+      }
+
+      .browser-tab {
+        min-height: 46px;
+        border: 0;
+        border-radius: 7px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 900;
+      }
+
+      .browser-tab[aria-selected="true"] {
+        background: var(--ink);
+        color: #ffffff;
+        box-shadow: 0 5px 16px rgba(17, 17, 17, .14);
+      }
+
+      .browser-tab:focus-visible {
+        outline: 3px solid rgba(17, 17, 17, .2);
+        outline-offset: 2px;
+      }
+
       .install-platform {
         padding: 24px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fafaf8;
       }
+
+      .install-platform[hidden] { display: none; }
 
       .install-platform-head {
         display: flex;
@@ -568,7 +601,12 @@
         </div>
 
         <div class="install-platforms">
-          <section class="install-platform" aria-labelledby="ios-install-title">
+          <div class="browser-tabs" role="tablist" aria-label="選擇 iPhone 瀏覽器">
+            <button class="browser-tab" id="safari-tab" type="button" role="tab" aria-selected="true" aria-controls="safari-panel" data-browser-tab="safari">Safari</button>
+            <button class="browser-tab" id="chrome-tab" type="button" role="tab" aria-selected="false" aria-controls="chrome-panel" data-browser-tab="chrome" tabindex="-1">Chrome</button>
+          </div>
+
+          <section class="install-platform" id="safari-panel" role="tabpanel" aria-labelledby="safari-tab" data-browser-panel="safari">
             <div class="install-platform-head">
               <h3 id="ios-install-title">iPhone</h3>
               <span class="platform-tag">SAFARI</span>
@@ -622,56 +660,56 @@
             </div>
           </section>
 
-          <section class="install-platform" aria-labelledby="android-install-title">
+          <section class="install-platform" id="chrome-panel" role="tabpanel" aria-labelledby="chrome-tab" data-browser-panel="chrome" hidden>
             <div class="install-platform-head">
-              <h3 id="android-install-title">Android</h3>
+              <h3>iPhone</h3>
               <span class="platform-tag">CHROME</span>
             </div>
-            <div class="visual-steps" data-carousel tabindex="0" role="region" aria-roledescription="輪播" aria-label="Android 安裝步驟">
+            <div class="visual-steps" data-carousel tabindex="0" role="region" aria-roledescription="輪播" aria-label="iPhone Chrome 安裝步驟">
               <div class="carousel-viewport">
                 <div class="carousel-track">
               <article class="visual-step">
-                <img src="assets/guide-android-menu-realistic.png" alt="Chrome 右上角更多選單的操作示意圖" width="1024" height="1536" />
+                <img src="assets/guide-iphone-chrome-menu.png" alt="iPhone Chrome 右下角更多選單的操作示意圖" width="1086" height="1448" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">01</span>
                   <div class="visual-step-text">
-                    <h4>使用 Chrome 開啟</h4>
-                    <p>在 Chrome 開啟本頁，點選右上角的更多選單（⋮）。</p>
+                    <h4>使用 iPhone Chrome 開啟</h4>
+                    <p>在 Chrome 開啟本頁，點選右下角的更多選單（•••）。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-android-install-realistic.png" alt="Chrome 選單中安裝應用程式的操作示意圖" width="1024" height="1536" />
+                <img src="assets/guide-iphone-chrome-add-home.png" alt="iPhone Chrome 選單中加入主畫面的操作示意圖" width="1086" height="1448" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">02</span>
                   <div class="visual-step-text">
-                    <h4>安裝任務助手</h4>
-                    <p>選擇「安裝應用程式」或「加到主畫面」並確認。</p>
+                    <h4>加入手機主畫面</h4>
+                    <p>在選單中找到「加入主畫面」，點選後確認加入。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-android-notification-realistic.png" alt="Android 允許任務助手傳送通知的操作示意圖" width="1024" height="1536" />
+                <img src="assets/guide-iphone-chrome-notification.png" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="1086" height="1448" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">03</span>
                   <div class="visual-step-text">
                     <h4>從桌面開啟並允許通知</h4>
-                    <p>從桌面開啟任務助手，打開提醒並允許傳送通知。</p>
+                    <p>回到桌面開啟任務助手，打開提醒並選擇允許通知。</p>
                   </div>
                 </div>
               </article>
                 </div>
               </div>
               <div class="carousel-controls">
-                <button class="carousel-arrow" type="button" data-carousel-prev aria-label="上一個 Android 步驟">←</button>
-                <div class="carousel-dots" aria-label="選擇 Android 步驟">
-                  <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="Android 步驟 1" aria-current="true"></button>
-                  <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="Android 步驟 2" aria-current="false"></button>
-                  <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="Android 步驟 3" aria-current="false"></button>
+                <button class="carousel-arrow" type="button" data-carousel-prev aria-label="上一個 iPhone Chrome 步驟">←</button>
+                <div class="carousel-dots" aria-label="選擇 iPhone Chrome 步驟">
+                  <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="iPhone Chrome 步驟 1" aria-current="true"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="iPhone Chrome 步驟 2" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="iPhone Chrome 步驟 3" aria-current="false"></button>
                 </div>
-                <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 Android 步驟">→</button>
+                <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 iPhone Chrome 步驟">→</button>
               </div>
             </div>
           </section>
@@ -815,6 +853,34 @@
           modalBackdrop.hidden = true;
         }
 
+        function initBrowserTabs() {
+          var tabs = Array.from(document.querySelectorAll("[data-browser-tab]"));
+          var panels = Array.from(document.querySelectorAll("[data-browser-panel]"));
+
+          function activateTab(name, moveFocus) {
+            tabs.forEach(function (tab) {
+              var isActive = tab.dataset.browserTab === name;
+              tab.setAttribute("aria-selected", String(isActive));
+              tab.tabIndex = isActive ? 0 : -1;
+              if (isActive && moveFocus) tab.focus();
+            });
+            panels.forEach(function (panel) {
+              panel.hidden = panel.dataset.browserPanel !== name;
+            });
+          }
+
+          tabs.forEach(function (tab, index) {
+            tab.addEventListener("click", function () { activateTab(tab.dataset.browserTab, false); });
+            tab.addEventListener("keydown", function (event) {
+              if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              var targetIndex = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+              activateTab(tabs[targetIndex].dataset.browserTab, true);
+            });
+          });
+          activateTab("safari", false);
+        }
+
         function initCarousels() {
           document.querySelectorAll("[data-carousel]").forEach(function (carousel) {
             var viewport = carousel.querySelector(".carousel-viewport");
@@ -912,6 +978,7 @@
 
         window.addEventListener("beforeunload", function () { window.clearInterval(intervalId); });
         window.setInterval(function () { taipeiClock.textContent = "台灣時間 " + taipeiTime(new Date(), true); }, 1000);
+        initBrowserTabs();
         initCarousels();
         resetReminder();
       })();
