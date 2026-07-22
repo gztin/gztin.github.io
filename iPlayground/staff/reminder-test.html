@@ -81,6 +81,7 @@
       }
 
       .task-card {
+        position: relative;
         display: grid;
         grid-template-columns: 88px 120px 1fr;
         gap: 24px;
@@ -131,6 +132,9 @@
       }
 
       .reminder-control {
+        position: absolute;
+        top: 38px;
+        right: 38px;
         display: flex;
         align-items: center;
         gap: 10px;
@@ -192,18 +196,6 @@
       .switch input:checked + .switch-track { background: var(--ink); }
       .switch input:checked + .switch-track::after { transform: translateX(24px); background: var(--accent); }
       .switch input:focus-visible + .switch-track { outline: 3px solid rgba(17, 17, 17, .2); outline-offset: 3px; }
-
-      .countdown {
-        min-width: 58px;
-        padding: 9px 10px;
-        border-radius: 99px;
-        background: #eeeeeb;
-        color: var(--muted);
-        text-align: center;
-        font: 800 12px/1 "SFMono-Regular", Consolas, monospace;
-      }
-
-      .reminder-control.is-on .countdown { background: var(--accent); color: var(--ink); }
 
       .partners { margin-top: 19px; }
       .partners > span { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; font-weight: 800; }
@@ -317,14 +309,29 @@
       }
 
       .visual-steps {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
+        position: relative;
+        max-width: 520px;
         margin-top: 20px;
+        margin-inline: auto;
       }
 
+      .carousel-viewport {
+        overflow: hidden;
+        border-radius: 8px;
+        touch-action: pan-y;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform .48s cubic-bezier(.22, .78, .22, 1);
+        will-change: transform;
+      }
+
+      .carousel-track.is-dragging { transition: none; }
+
       .visual-step {
-        min-width: 0;
+        min-width: 100%;
+        flex: 0 0 100%;
         padding: 12px;
         border: 1px solid #ddddda;
         border-radius: 8px;
@@ -334,9 +341,11 @@
       .visual-step img {
         display: block;
         width: 100%;
-        height: auto;
+        max-height: 590px;
+        aspect-ratio: 3 / 4;
+        object-fit: contain;
         border-radius: 7px;
-        background: var(--ink);
+        background: #f3f3f1;
       }
 
       .visual-step-copy {
@@ -371,6 +380,60 @@
         color: var(--muted);
         font-size: 12px;
         line-height: 1.65;
+      }
+
+      .carousel-controls {
+        display: grid;
+        grid-template-columns: 42px 1fr 42px;
+        align-items: center;
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .carousel-arrow,
+      .carousel-dot {
+        border: 0;
+        cursor: pointer;
+      }
+
+      .carousel-arrow {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: #ffffff;
+        font-size: 20px;
+      }
+
+      .carousel-arrow:hover,
+      .carousel-arrow:focus-visible {
+        background: var(--accent);
+        color: var(--ink);
+      }
+
+      .carousel-arrow:disabled {
+        cursor: default;
+        opacity: .28;
+      }
+
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .carousel-dot {
+        width: 9px;
+        height: 9px;
+        padding: 0;
+        border-radius: 50%;
+        background: #c8c8c3;
+      }
+
+      .carousel-dot[aria-current="true"] {
+        width: 28px;
+        border-radius: 99px;
+        background: var(--ink);
       }
 
       .modal-backdrop {
@@ -438,8 +501,7 @@
         .task-card { grid-template-columns: 68px 1fr; gap: 18px; padding: 22px; }
         .task-body { grid-column: 1 / -1; }
         .task-top { align-items: flex-start; }
-        .reminder-control { flex-wrap: wrap; justify-content: flex-end; }
-        .countdown { order: 3; }
+        .reminder-control { top: 22px; right: 22px; }
         .duty { font-size: 15px; }
         .install-guide { padding: 22px; }
         .focus-notice { align-items: flex-start; }
@@ -467,19 +529,18 @@
       <article class="task-card" aria-label="7月22日測試任務卡">
         <div class="day-badge">7/22</div>
         <div class="time"><strong id="start-time">--:--</strong><span>↓</span><strong id="end-time">--:--</strong></div>
+        <div class="reminder-control" id="reminder-control">
+          <span class="bell" aria-hidden="true">🔔</span>
+          <label class="switch">
+            <input id="reminder-switch" type="checkbox" aria-label="啟動報到桌佈置提醒" />
+            <span class="switch-track"></span>
+          </label>
+        </div>
         <div class="task-body">
           <div class="task-top">
             <div class="task-title">
               <h2 id="task-title">報到桌佈置</h2>
               <p>測試用任務卡片</p>
-            </div>
-            <div class="reminder-control" id="reminder-control">
-              <span class="bell" aria-hidden="true">🔔</span>
-              <label class="switch">
-                <input id="reminder-switch" type="checkbox" aria-label="啟動報到桌佈置提醒" />
-                <span class="switch-track"></span>
-              </label>
-              <span class="countdown" id="countdown" aria-live="polite">--:--</span>
             </div>
           </div>
 
@@ -512,9 +573,11 @@
               <h3 id="ios-install-title">iPhone</h3>
               <span class="platform-tag">SAFARI</span>
             </div>
-            <div class="visual-steps">
+            <div class="visual-steps" data-carousel tabindex="0" role="region" aria-roledescription="輪播" aria-label="iPhone 安裝步驟">
+              <div class="carousel-viewport">
+                <div class="carousel-track">
               <article class="visual-step">
-                <img src="assets/guide-ios-share.svg" alt="Safari 下方分享按鈕的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-ios-share-realistic.png" alt="Safari 下方分享按鈕的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">01</span>
                   <div class="visual-step-text">
@@ -525,7 +588,7 @@
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-ios-add-home.svg" alt="Safari 分享選單中加入主畫面的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-ios-add-home-realistic.png" alt="Safari 分享選單中加入主畫面的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">02</span>
                   <div class="visual-step-text">
@@ -536,7 +599,7 @@
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-ios-notification.svg" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-ios-notification-realistic.png" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">03</span>
                   <div class="visual-step-text">
@@ -545,6 +608,17 @@
                   </div>
                 </div>
               </article>
+                </div>
+              </div>
+              <div class="carousel-controls">
+                <button class="carousel-arrow" type="button" data-carousel-prev aria-label="上一個 iPhone 步驟">←</button>
+                <div class="carousel-dots" aria-label="選擇 iPhone 步驟">
+                  <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="iPhone 步驟 1" aria-current="true"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="iPhone 步驟 2" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="iPhone 步驟 3" aria-current="false"></button>
+                </div>
+                <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 iPhone 步驟">→</button>
+              </div>
             </div>
           </section>
 
@@ -553,9 +627,11 @@
               <h3 id="android-install-title">Android</h3>
               <span class="platform-tag">CHROME</span>
             </div>
-            <div class="visual-steps">
+            <div class="visual-steps" data-carousel tabindex="0" role="region" aria-roledescription="輪播" aria-label="Android 安裝步驟">
+              <div class="carousel-viewport">
+                <div class="carousel-track">
               <article class="visual-step">
-                <img src="assets/guide-android-menu.svg" alt="Chrome 右上角更多選單的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-android-menu-realistic.png" alt="Chrome 右上角更多選單的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">01</span>
                   <div class="visual-step-text">
@@ -566,7 +642,7 @@
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-android-install.svg" alt="Chrome 選單中安裝應用程式的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-android-install-realistic.png" alt="Chrome 選單中安裝應用程式的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">02</span>
                   <div class="visual-step-text">
@@ -577,7 +653,7 @@
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-android-notification.svg" alt="Android 允許任務助手傳送通知的操作示意圖" width="480" height="300" />
+                <img src="assets/guide-android-notification-realistic.png" alt="Android 允許任務助手傳送通知的操作示意圖" width="1024" height="1536" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">03</span>
                   <div class="visual-step-text">
@@ -586,6 +662,17 @@
                   </div>
                 </div>
               </article>
+                </div>
+              </div>
+              <div class="carousel-controls">
+                <button class="carousel-arrow" type="button" data-carousel-prev aria-label="上一個 Android 步驟">←</button>
+                <div class="carousel-dots" aria-label="選擇 Android 步驟">
+                  <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="Android 步驟 1" aria-current="true"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="Android 步驟 2" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="Android 步驟 3" aria-current="false"></button>
+                </div>
+                <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 Android 步驟">→</button>
+              </div>
             </div>
           </section>
         </div>
@@ -615,7 +702,6 @@
         var MINUTE_MS = 60 * 1000;
         var reminderSwitch = document.getElementById("reminder-switch");
         var reminderControl = document.getElementById("reminder-control");
-        var countdown = document.getElementById("countdown");
         var statusText = document.getElementById("status-text");
         var pushStatus = document.getElementById("push-status");
         var taskTitle = document.getElementById("task-title");
@@ -673,11 +759,6 @@
           }).format(date);
         }
 
-        function formatRemaining(seconds) {
-          var safe = Math.max(0, seconds);
-          return Math.floor(safe / 60) + ":" + String(safe % 60).padStart(2, "0");
-        }
-
         function createTestSchedule(now) {
           var baseMinute = Math.floor(now.getTime() / MINUTE_MS) * MINUTE_MS;
           eventStartsAt = baseMinute + EVENT_START_DELAY_MINUTES * MINUTE_MS;
@@ -702,7 +783,6 @@
 
         function updateCountdown(now) {
           var remaining = remainingSeconds(now);
-          countdown.textContent = formatRemaining(remaining);
           taipeiClock.textContent = "台灣時間 " + taipeiTime(now, true);
           if (remaining === 0) {
             showReminder();
@@ -731,9 +811,69 @@
           reminderControl.classList.remove("is-on");
           var now = new Date();
           if (!eventStartsAt || reminderAt <= now.getTime()) createTestSchedule(now);
-          countdown.textContent = formatRemaining(remainingSeconds(now));
           statusText.textContent = "提醒尚未啟動";
           modalBackdrop.hidden = true;
+        }
+
+        function initCarousels() {
+          document.querySelectorAll("[data-carousel]").forEach(function (carousel) {
+            var viewport = carousel.querySelector(".carousel-viewport");
+            var track = carousel.querySelector(".carousel-track");
+            var slides = Array.from(carousel.querySelectorAll(".visual-step"));
+            var dots = Array.from(carousel.querySelectorAll("[data-carousel-dot]"));
+            var previous = carousel.querySelector("[data-carousel-prev]");
+            var next = carousel.querySelector("[data-carousel-next]");
+            var activeIndex = 0;
+            var touchStartX = 0;
+            var touchStartY = 0;
+            var touchDistance = 0;
+
+            function showSlide(index) {
+              activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+              track.classList.remove("is-dragging");
+              track.style.transform = "translate3d(" + (-activeIndex * 100) + "%, 0, 0)";
+              slides.forEach(function (slide, slideIndex) {
+                var isActive = slideIndex === activeIndex;
+                slide.setAttribute("aria-hidden", String(!isActive));
+              });
+              dots.forEach(function (dot, dotIndex) {
+                dot.setAttribute("aria-current", String(dotIndex === activeIndex));
+              });
+              previous.disabled = activeIndex === 0;
+              next.disabled = activeIndex === slides.length - 1;
+            }
+
+            previous.addEventListener("click", function () { showSlide(activeIndex - 1); });
+            next.addEventListener("click", function () { showSlide(activeIndex + 1); });
+            dots.forEach(function (dot) {
+              dot.addEventListener("click", function () { showSlide(Number(dot.dataset.carouselDot)); });
+            });
+            carousel.addEventListener("keydown", function (event) {
+              if (event.key === "ArrowLeft") showSlide(activeIndex - 1);
+              if (event.key === "ArrowRight") showSlide(activeIndex + 1);
+            });
+            carousel.addEventListener("touchstart", function (event) {
+              touchStartX = event.changedTouches[0].clientX;
+              touchStartY = event.changedTouches[0].clientY;
+              touchDistance = 0;
+              track.classList.add("is-dragging");
+            }, { passive: true });
+            carousel.addEventListener("touchmove", function (event) {
+              var deltaX = event.changedTouches[0].clientX - touchStartX;
+              var deltaY = event.changedTouches[0].clientY - touchStartY;
+              if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+              event.preventDefault();
+              if ((activeIndex === 0 && deltaX > 0) || (activeIndex === slides.length - 1 && deltaX < 0)) deltaX *= .28;
+              touchDistance = deltaX;
+              track.style.transform = "translate3d(" + ((-activeIndex * viewport.clientWidth) + deltaX) + "px, 0, 0)";
+            }, { passive: false });
+            carousel.addEventListener("touchend", function (event) {
+              var threshold = Math.min(70, viewport.clientWidth * .16);
+              if (Math.abs(touchDistance) < threshold) return showSlide(activeIndex);
+              showSlide(activeIndex + (touchDistance < 0 ? 1 : -1));
+            }, { passive: true });
+            showSlide(0);
+          });
         }
 
         reminderSwitch.addEventListener("change", function () {
@@ -772,6 +912,7 @@
 
         window.addEventListener("beforeunload", function () { window.clearInterval(intervalId); });
         window.setInterval(function () { taipeiClock.textContent = "台灣時間 " + taipeiTime(new Date(), true); }, 1000);
+        initCarousels();
         resetReminder();
       })();
     </script>
