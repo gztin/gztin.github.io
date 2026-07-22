@@ -1,6 +1,7 @@
 import webpush from "web-push";
 
-const TEST_DELAY_MS = 15 * 1000;
+const REMINDER_LEAD_MS = 2 * 60 * 1000;
+const MAX_TEST_START_DELAY_MS = 30 * 60 * 1000;
 const TEST_TARGET_URL = "https://gztin.github.io/iPlayground/staff/reminder-test.html";
 
 function json(data, status, extraHeaders) {
@@ -60,7 +61,19 @@ async function saveTestReminder(request, env) {
 
   const now = new Date();
   const nowIso = now.toISOString();
-  const sendAt = new Date(now.getTime() + TEST_DELAY_MS).toISOString();
+  const startsAtMs = Date.parse(input.startsAt);
+  if (!Number.isFinite(startsAtMs)) {
+    return { errorResponse: json({ error: "任務開始時間格式不正確" }, 400) };
+  }
+  const sendAtMs = startsAtMs - REMINDER_LEAD_MS;
+  if (sendAtMs <= now.getTime()) {
+    return { errorResponse: json({ error: "提醒時間已過，請重新整理頁面" }, 400) };
+  }
+  if (startsAtMs > now.getTime() + MAX_TEST_START_DELAY_MS) {
+    return { errorResponse: json({ error: "測試任務開始時間超出允許範圍" }, 400) };
+  }
+  const sendAt = new Date(sendAtMs).toISOString();
+  const startsAt = new Date(startsAtMs).toISOString();
   const subscription = input.subscription;
   const taskTitle = normalizeTaskTitle(input.taskTitle);
   const notificationBody = taskTitle
@@ -96,7 +109,7 @@ async function saveTestReminder(request, env) {
     nowIso
   ).run();
 
-  return { reminderId, sendAt };
+  return { reminderId, sendAt, startsAt };
 }
 
 async function cancelTestReminder(request, env) {
@@ -159,12 +172,6 @@ async function claimAndSendReminder(env, reminderId) {
   return true;
 }
 
-async function sendTestReminderAt(env, reminderId, sendAt) {
-  const delay = Math.max(0, new Date(sendAt).getTime() - Date.now());
-  await new Promise(resolve => setTimeout(resolve, delay));
-  await claimAndSendReminder(env, reminderId);
-}
-
 async function sendDueReminders(env) {
   const due = await env.REMINDERS.prepare(`
     SELECT id
@@ -203,8 +210,7 @@ export default {
       if (scheduled.errorResponse) {
         response = scheduled.errorResponse;
       } else {
-        ctx.waitUntil(sendTestReminderAt(env, scheduled.reminderId, scheduled.sendAt));
-        response = json({ ok: true, sendAt: scheduled.sendAt });
+        response = json({ ok: true, sendAt: scheduled.sendAt, startsAt: scheduled.startsAt });
       }
     } else if (request.method === "DELETE" && url.pathname === "/api/test-reminder") {
       response = await cancelTestReminder(request, env);

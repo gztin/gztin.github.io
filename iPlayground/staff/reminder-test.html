@@ -236,6 +236,121 @@
         line-height: 1.6;
       }
 
+      .install-guide {
+        margin-top: 28px;
+        padding: 32px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--paper);
+      }
+
+      .install-guide-heading > p:first-child {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font: 800 11px/1.4 "SFMono-Regular", Consolas, monospace;
+        letter-spacing: .12em;
+      }
+
+      .install-guide-heading h2 {
+        margin: 0;
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.2;
+        letter-spacing: -.035em;
+      }
+
+      .install-guide-intro {
+        max-width: 720px;
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .focus-notice {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin: 24px 0;
+        padding: 18px 20px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .focus-notice span {
+        flex: none;
+        color: var(--accent);
+        font: 900 11px/1 "SFMono-Regular", Consolas, monospace;
+        letter-spacing: .08em;
+      }
+
+      .focus-notice strong { color: var(--accent); }
+
+      .install-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .install-platform {
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fafaf8;
+      }
+
+      .install-platform-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .install-platform h3 { margin: 0; font-size: 19px; }
+
+      .platform-tag {
+        padding: 7px 9px;
+        border-radius: 99px;
+        background: var(--accent);
+        font: 900 10px/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .install-steps {
+        margin: 18px 0 0;
+        padding: 0;
+        list-style: none;
+        counter-reset: install-step;
+      }
+
+      .install-steps li {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        gap: 10px;
+        align-items: start;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+        counter-increment: install-step;
+      }
+
+      .install-steps li + li { margin-top: 12px; }
+
+      .install-steps li::before {
+        content: counter(install-step);
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--accent);
+        font: 900 11px/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .install-steps strong { color: var(--ink); }
+
       .modal-backdrop {
         position: fixed;
         inset: 0;
@@ -304,6 +419,9 @@
         .reminder-control { flex-wrap: wrap; justify-content: flex-end; }
         .countdown { order: 3; }
         .duty { font-size: 15px; }
+        .install-guide { padding: 22px; }
+        .focus-notice { align-items: flex-start; }
+        .install-grid { grid-template-columns: 1fr; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -321,7 +439,7 @@
         <a class="back-link" href="index.html">← 返回人員一覽</a>
       </header>
 
-      <p class="test-note">打開任務卡右上角的提醒開關後，將從 15 秒開始倒數；Cloudflare 連線完成後，即使鎖定螢幕也會收到系統通知。關閉開關可隨時取消。</p>
+      <p class="test-note">進入頁面後會自動建立 5 分鐘後開始、持續 20 分鐘的測試任務；開啟提醒後，系統會在任務開始前 2 分鐘發送通知。關閉開關可隨時取消。</p>
 
       <article class="task-card" aria-label="7月22日測試任務卡">
         <div class="day-badge">7/22</div>
@@ -338,7 +456,7 @@
                 <input id="reminder-switch" type="checkbox" aria-label="啟動報到桌佈置提醒" />
                 <span class="switch-track"></span>
               </label>
-              <span class="countdown" id="countdown" aria-live="polite">0:15</span>
+              <span class="countdown" id="countdown" aria-live="polite">--:--</span>
             </div>
           </div>
 
@@ -353,6 +471,49 @@
         </div>
       </article>
 
+      <section class="install-guide" aria-labelledby="install-guide-title">
+        <div class="install-guide-heading">
+          <p>ADD TO HOME SCREEN</p>
+          <h2 id="install-guide-title">把任務助手加入手機桌面</h2>
+          <p class="install-guide-intro">從手機桌面開啟後，再啟用任務卡的提醒開關並允許通知，鎖定螢幕時也能收到任務通知。</p>
+        </div>
+
+        <div class="focus-notice">
+          <span>IMPORTANT</span>
+          <div>測試系統推播前，請先<strong>關閉手機的「專注模式／勿擾模式」</strong>，並確認已允許 iPlayground 任務助手傳送通知。</div>
+        </div>
+
+        <div class="install-grid">
+          <section class="install-platform" aria-labelledby="ios-install-title">
+            <div class="install-platform-head">
+              <h3 id="ios-install-title">iPhone</h3>
+              <span class="platform-tag">SAFARI</span>
+            </div>
+            <ol class="install-steps">
+              <li>使用 <strong>Safari</strong> 開啟本頁。</li>
+              <li>點選瀏覽器下方的<strong>分享</strong>按鈕。</li>
+              <li>向下找到並點選<strong>加入主畫面</strong>。</li>
+              <li>確認名稱為「iPlayground 任務助手」，再點選<strong>加入</strong>。</li>
+              <li>從手機桌面開啟任務助手，打開提醒並允許通知。</li>
+            </ol>
+          </section>
+
+          <section class="install-platform" aria-labelledby="android-install-title">
+            <div class="install-platform-head">
+              <h3 id="android-install-title">Android</h3>
+              <span class="platform-tag">CHROME</span>
+            </div>
+            <ol class="install-steps">
+              <li>使用 <strong>Chrome</strong> 開啟本頁。</li>
+              <li>點選右上角的<strong>更多選單（⋮）</strong>。</li>
+              <li>選擇<strong>安裝應用程式</strong>或<strong>加到主畫面</strong>。</li>
+              <li>依畫面指示確認安裝或新增捷徑。</li>
+              <li>從手機桌面開啟任務助手，打開提醒並允許通知。</li>
+            </ol>
+          </section>
+        </div>
+      </section>
+
     </main>
 
     <div class="modal-backdrop" id="modal-backdrop" hidden>
@@ -366,12 +527,15 @@
     </div>
 
     <script src="assets/push-config.js"></script>
-    <script src="assets/push-client.js?v=20260722-2"></script>
+    <script src="assets/push-client.js?v=20260722-3"></script>
     <script>
       (function () {
         "use strict";
 
-        var TEST_SECONDS = 15;
+        var EVENT_START_DELAY_MINUTES = 5;
+        var EVENT_DURATION_MINUTES = 20;
+        var REMINDER_LEAD_MINUTES = 2;
+        var MINUTE_MS = 60 * 1000;
         var reminderSwitch = document.getElementById("reminder-switch");
         var reminderControl = document.getElementById("reminder-control");
         var countdown = document.getElementById("countdown");
@@ -384,7 +548,9 @@
         var modalBackdrop = document.getElementById("modal-backdrop");
         var modalClose = document.getElementById("modal-close");
         var intervalId = null;
-        var endsAt = 0;
+        var eventStartsAt = 0;
+        var eventEndsAt = 0;
+        var reminderAt = 0;
         var triggered = false;
         var audioContext = null;
 
@@ -435,8 +601,17 @@
           return Math.floor(safe / 60) + ":" + String(safe % 60).padStart(2, "0");
         }
 
+        function createTestSchedule(now) {
+          var baseMinute = Math.floor(now.getTime() / MINUTE_MS) * MINUTE_MS;
+          eventStartsAt = baseMinute + EVENT_START_DELAY_MINUTES * MINUTE_MS;
+          eventEndsAt = eventStartsAt + EVENT_DURATION_MINUTES * MINUTE_MS;
+          reminderAt = eventStartsAt - REMINDER_LEAD_MINUTES * MINUTE_MS;
+          startTime.textContent = taipeiTime(new Date(eventStartsAt), false);
+          endTime.textContent = taipeiTime(new Date(eventEndsAt), false);
+        }
+
         function remainingSeconds(now) {
-          return Math.max(0, Math.ceil((endsAt - now.getTime()) / 1000));
+          return Math.max(0, Math.ceil((reminderAt - now.getTime()) / 1000));
         }
 
         function showReminder() {
@@ -465,11 +640,9 @@
           triggered = false;
           modalBackdrop.hidden = true;
           var now = new Date();
-          endsAt = now.getTime() + TEST_SECONDS * 1000;
-          startTime.textContent = taipeiTime(now, false);
-          endTime.textContent = taipeiTime(new Date(endsAt), false);
+          if (reminderAt <= now.getTime()) createTestSchedule(now);
           reminderControl.classList.add("is-on");
-          statusText.textContent = "提醒已啟動，請保持裝置音量開啟";
+          statusText.textContent = "提醒已啟動，將於任務開始前 2 分鐘通知";
           updateCountdown(now);
           intervalId = window.setInterval(function () { updateCountdown(new Date()); }, 250);
         }
@@ -477,15 +650,13 @@
         function resetReminder() {
           window.clearInterval(intervalId);
           intervalId = null;
-          endsAt = 0;
           triggered = false;
           reminderControl.classList.remove("is-on");
-          countdown.textContent = "0:15";
+          var now = new Date();
+          if (!eventStartsAt || reminderAt <= now.getTime()) createTestSchedule(now);
+          countdown.textContent = formatRemaining(remainingSeconds(now));
           statusText.textContent = "提醒尚未啟動";
           modalBackdrop.hidden = true;
-          var now = new Date();
-          startTime.textContent = taipeiTime(now, false);
-          endTime.textContent = taipeiTime(new Date(now.getTime() + TEST_SECONDS * 1000), false);
         }
 
         reminderSwitch.addEventListener("change", function () {
@@ -493,8 +664,8 @@
             startReminder();
             prepareAudio();
             if (window.PushReminder && window.PushReminder.isConfigured()) {
-              pushStatus.textContent = "正在向系統註冊 15 秒後的鎖定畫面通知…";
-              window.PushReminder.scheduleTestReminder(taskTitle.textContent.trim()).then(function (result) {
+              pushStatus.textContent = "正在註冊任務開始前 2 分鐘的鎖定畫面通知…";
+              window.PushReminder.scheduleTestReminder(taskTitle.textContent.trim(), new Date(eventStartsAt).toISOString()).then(function (result) {
                 if (!reminderSwitch.checked) return;
                 pushStatus.textContent = "系統通知已排程，預計於 " + taipeiTime(new Date(result.sendAt), true) + " 送達。";
               }).catch(function (error) {

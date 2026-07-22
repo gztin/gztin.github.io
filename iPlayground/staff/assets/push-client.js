@@ -134,13 +134,14 @@
     return function () { navigator.serviceWorker.removeEventListener("message", handler); };
   }
 
-  async function scheduleTestReminder(taskTitle) {
+  async function scheduleTestReminder(taskTitle, startsAt) {
     var subscription = await getSubscription();
     return requestJson("/api/test-reminder", {
       method: "POST",
       body: JSON.stringify({
         subscription: subscription.toJSON(),
-        taskTitle: String(taskTitle || "").trim()
+        taskTitle: String(taskTitle || "").trim(),
+        startsAt: startsAt
       })
     });
   }
