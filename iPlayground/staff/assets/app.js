@@ -12,6 +12,20 @@
     return parts[0] * 60 + parts[1];
   }
 
+  function defaultDayForTaipei(date) {
+    var parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Taipei",
+      month: "2-digit",
+      day: "2-digit"
+    }).formatToParts(date || new Date());
+    var month = Number(parts.find(function (part) { return part.type === "month"; }).value);
+    var day = Number(parts.find(function (part) { return part.type === "day"; }).value);
+    var monthDay = month * 100 + day;
+    if (monthDay <= 724) return "D0";
+    if (monthDay === 725) return "D1";
+    return "D2";
+  }
+
   function agendaLabel(task) {
     if (task.title) return task.speaker ? task.speaker + "｜" + task.title : task.title;
     return task.content;
@@ -118,7 +132,7 @@
 
   Vue.createApp({
     data: function () {
-      return { query: "", selected: "", day: "D1", highlighted: 0, showScrollTop: false, people: people, staffDirectory: directory };
+      return { query: "", selected: "", day: defaultDayForTaipei(), highlighted: 0, showScrollTop: false, people: people, staffDirectory: directory };
     },
     computed: {
       suggestions: function () {
@@ -175,8 +189,8 @@
       }
     },
     methods: {
-      choose: function (name) { this.selected = name; this.query = name; this.day = "D1"; this.highlighted = 0; },
-      clearSearch: function () { this.query = ""; this.selected = ""; this.day = "D1"; this.highlighted = 0; },
+      choose: function (name) { this.selected = name; this.query = name; this.day = defaultDayForTaipei(); this.highlighted = 0; },
+      clearSearch: function () { this.query = ""; this.selected = ""; this.day = defaultDayForTaipei(); this.highlighted = 0; },
       scrollToTop: function () { window.scrollTo({ top: 0, behavior: "smooth" }); },
       updateScrollState: function () { this.showScrollTop = window.scrollY >= 360; },
       moveSuggestion: function (step) {
@@ -184,7 +198,7 @@
         this.highlighted = (this.highlighted + step + this.suggestions.length) % this.suggestions.length;
       },
       chooseHighlighted: function () { if (this.suggestions[this.highlighted]) this.choose(this.suggestions[this.highlighted]); },
-      dayLabel: function (value) { return value === "D1" ? "7/25" : value === "D2" ? "7/26" : value; },
+      dayLabel: function (value) { return value === "D0" ? "7/24" : value === "D1" ? "7/25" : value === "D2" ? "7/26" : value; },
       taskPartners: function (task) {
         var self = this;
         var category = roleCategory(task.role);

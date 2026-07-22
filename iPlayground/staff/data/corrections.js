@@ -143,6 +143,66 @@
     if (!exists) source.schedule.push(task);
   });
 
+  var setupWorkItems = [
+    { area: "大會議室", item: "測試休息時間畫面｜全畫面（A）", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "測試投影組合畫面｜子母畫面（B、C）", detail: "需輸出講桌聲音。", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "測試開場影片", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "測試休息時間影片", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "測試導播室、主持人與講者上台流程", detail: "主持人：Jess、Shirley、Amy。", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "確認燈光與講桌位置", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "確認導播室 layout A4 示意圖放講桌", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "協助講者投放投影片與時間控管", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "確認 iPad 倒數計時器安裝完成", people: ["Michelle", "UJ", "Joy"] },
+    { area: "大會議室", item: "協助講者導覽、招呼", people: ["Dawei", "Michelle", "Joy"] },
+    { area: "大會議室", item: "製作工作人員保留位置告示牌", detail: "放置於講桌前方第一排。", people: ["Dawei", "Joy"] },
+    { area: "大會議室", item: "製作倒數提醒手牌", detail: "20、10、5、時間到。", people: ["Dawei", "Joy"] },
+    { area: "場外區", item: "講者衣服禮物打包", people: ["Will", "Joy"] },
+    { area: "場外區", item: "切割 workshop 候補號碼牌", people: ["Will", "Joy"] },
+    { area: "場外區", item: "切割講者導覽流程手稿", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "切割主持人手稿", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "水籤海報黏磁鐵與相關項目確認", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "非工作人員請勿進入告示黏磁鐵", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "Workshop 相關告示黏磁鐵", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "確認三份名單", detail: "Workshop 報名名單、會眾所有名單、水壺／個人贊助／尊享領取紀錄名單。", people: ["Ethan", "Jeff", "Ricky", "Joy"] },
+    { area: "場外區", item: "A1 立牌", people: ["Terry", "Tank", "以丹", "Evelyn", "Hokila"] },
+    { area: "場外區", item: "製作動線引導手牌", people: ["Terry", "Tank", "以丹", "Evelyn", "Hokila"] },
+    { area: "場外區", item: "桌子排列、鋪桌巾並放好桌牌", people: ["Terry", "Tank", "以丹", "Evelyn", "Hokila"] },
+    { area: "場外區", item: "衣服與 badge 分類分箱並鎖起來", detail: "確認 badge 都有綁撲克牌，一個人只會有一張。", people: ["Terry", "Tank", "以丹", "Evelyn", "Hokila"] },
+    { area: "場外區", item: "將水壺分三類放置", detail: "分為會眾中籤、工作人員、尊享贊助票／個人贊助；避免現場誤售或其他中籤會眾拿不到。工作人員預計從倉庫拿送講者的水壺。", people: ["Terry", "Tank", "以丹", "Evelyn", "Hokila"] },
+    { area: "導播室", item: "測試休息時間畫面｜全畫面（A）", people: ["Andy", "David"] },
+    { area: "導播室", item: "測試投影組合畫面｜子母畫面（B、C）", detail: "確認是否可以 preview B／C。", people: ["Andy", "David"] },
+    { area: "導播室", item: "測試翻譯字幕輸出", people: ["Andy", "David"] },
+    { area: "導播室", item: "測試開場影片", people: ["Andy", "David"] },
+    { area: "導播室", item: "測試休息時間影片", people: ["Andy", "David"] },
+    { area: "導播室", item: "練習主持人介紹講者上台時追焦的功力", detail: "分鏡：主持人在講台旁介紹時，追焦在主持人身上；等講者走到講台、投放設定完成後，再追焦到講者。", people: ["Andy", "David"] },
+    { area: "中庭展廳", item: "排贊助商桌子", people: ["YuYu", "DinDin"] },
+    { area: "中庭展廳", item: "協助贊助商場佈", people: ["YuYu", "DinDin"] },
+    { area: "其他", item: "X 展架與拍照牆", detail: "廠商執行，Hao 協調確認。", people: ["Hao"] },
+    { area: "其他", item: "布簾 × 2、演講桌、麥克風手牌", detail: "廠商執行，Hao 協調確認。", people: ["Hao"] }
+  ];
+
+  setupWorkItems.forEach(function (item, index) {
+    item.people.forEach(function (person) {
+      var task = {
+        person: person,
+        role: "場佈｜" + item.area,
+        day: "D0",
+        start: "18:00",
+        end: "23:59",
+        content: item.item,
+        duty: "負責執行「" + item.item + "」，地點：" + item.area + (item.detail ? "；" + item.detail : "") + "。",
+        assignment: "工作人員",
+        speaker: "",
+        title: "",
+        row: "setup-D0-" + (index + 1)
+      };
+      var exists = source.schedule.some(function (current) {
+        return String(current.person) === task.person && current.row === task.row;
+      });
+      if (!exists) source.schedule.push(task);
+    });
+  });
+
   source.sideMissions = [
     { person: "DinDin", title: "準備倒數工具", detail: "準備倒數小工具與倒數用途；工具限制 iOS 26 以上，並以原生計時器作為備案。" },
     { person: "ggt", title: "攜帶 iPad 完成演練", detail: "活動前一天記得帶 iPad，進行倒數工具演練並安裝 App。" },

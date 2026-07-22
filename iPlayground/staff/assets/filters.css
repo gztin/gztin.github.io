@@ -1326,9 +1326,9 @@ footer {
 }
 
 .day-badge.d2 {
-  border: 1px solid #111111;
-  background: #ffffff;
-  color: #111111;
+  border: 0;
+  background: #111111;
+  color: #ffffff;
 }
 
 .task-top > span {
