@@ -49,7 +49,9 @@ function validateSubscription(subscription) {
 
 async function saveTestReminder(request, env) {
   const input = await request.json().catch(() => null);
-  if (!input || !validateSubscription(input.subscription)) return json({ error: "訂閱資料格式不正確" }, 400);
+  if (!input || !validateSubscription(input.subscription)) {
+    return { errorResponse: json({ error: "訂閱資料格式不正確" }, 400) };
+  }
 
   const now = new Date();
   const nowIso = now.toISOString();
@@ -70,11 +72,13 @@ async function saveTestReminder(request, env) {
     "DELETE FROM reminders WHERE subscription_id = ? AND kind = 'test' AND status = 'pending'"
   ).bind(id).run();
 
+  const reminderId = crypto.randomUUID();
+
   await env.REMINDERS.prepare(`
     INSERT INTO reminders (id, subscription_id, kind, send_at, title, body, target_url, status, created_at)
     VALUES (?, ?, 'test', ?, ?, ?, ?, 'pending', ?)
   `).bind(
-    crypto.randomUUID(),
+    reminderId,
     id,
     sendAt,
     "IMS｜節目即將開始",
@@ -83,7 +87,7 @@ async function saveTestReminder(request, env) {
     nowIso
   ).run();
 
-  return json({ ok: true, sendAt });
+  return { reminderId, sendAt };
 }
 
 async function cancelTestReminder(request, env) {
@@ -96,42 +100,76 @@ async function cancelTestReminder(request, env) {
   return json({ ok: true });
 }
 
-async function sendDueReminders(env) {
+async function claimAndSendReminder(env, reminderId) {
   webpush.setVapidDetails(env.VAPID_SUBJECT, env.VAPID_PUBLIC_KEY, env.VAPID_PRIVATE_KEY);
-  const due = await env.REMINDERS.prepare(`
+
+  const claimed = await env.REMINDERS.prepare(`
+    UPDATE reminders
+    SET status = 'sending', error = NULL
+    WHERE id = ? AND status = 'pending'
+  `).bind(reminderId).run();
+
+  if (!claimed.success || claimed.meta?.changes !== 1) return false;
+
+  const reminder = await env.REMINDERS.prepare(`
     SELECT reminders.*, subscriptions.endpoint, subscriptions.p256dh, subscriptions.auth
     FROM reminders
     JOIN subscriptions ON subscriptions.id = reminders.subscription_id
-    WHERE reminders.status = 'pending' AND reminders.send_at <= ?
-    ORDER BY reminders.send_at
+    WHERE reminders.id = ? AND reminders.status = 'sending'
+  `).bind(reminderId).first();
+
+  if (!reminder) return false;
+
+  const subscription = {
+    endpoint: reminder.endpoint,
+    keys: { p256dh: reminder.p256dh, auth: reminder.auth }
+  };
+  const payload = JSON.stringify({
+    title: reminder.title,
+    body: reminder.body,
+    url: reminder.target_url,
+    tag: "ims-" + reminder.id
+  });
+
+  try {
+    await webpush.sendNotification(subscription, payload, { TTL: 300, urgency: "high" });
+    await env.REMINDERS.prepare(
+      "UPDATE reminders SET status = 'sent', sent_at = ?, error = NULL WHERE id = ?"
+    ).bind(new Date().toISOString(), reminder.id).run();
+  } catch (error) {
+    const expired = error && (error.statusCode === 404 || error.statusCode === 410);
+    await env.REMINDERS.prepare(
+      "UPDATE reminders SET status = 'failed', error = ? WHERE id = ?"
+    ).bind(String(error && error.message || "Push delivery failed").slice(0, 500), reminder.id).run();
+    if (expired) {
+      await env.REMINDERS.prepare("DELETE FROM subscriptions WHERE id = ?").bind(reminder.subscription_id).run();
+    }
+    throw error;
+  }
+
+  return true;
+}
+
+async function sendTestReminderAt(env, reminderId, sendAt) {
+  const delay = Math.max(0, new Date(sendAt).getTime() - Date.now());
+  await new Promise(resolve => setTimeout(resolve, delay));
+  await claimAndSendReminder(env, reminderId);
+}
+
+async function sendDueReminders(env) {
+  const due = await env.REMINDERS.prepare(`
+    SELECT id
+    FROM reminders
+    WHERE status = 'pending' AND send_at <= ?
+    ORDER BY send_at
     LIMIT 50
   `).bind(new Date().toISOString()).all();
 
   for (const reminder of due.results || []) {
-    const subscription = {
-      endpoint: reminder.endpoint,
-      keys: { p256dh: reminder.p256dh, auth: reminder.auth }
-    };
-    const payload = JSON.stringify({
-      title: reminder.title,
-      body: reminder.body,
-      url: reminder.target_url,
-      tag: "ims-" + reminder.id
-    });
-
     try {
-      await webpush.sendNotification(subscription, payload, { TTL: 300, urgency: "high" });
-      await env.REMINDERS.prepare(
-        "UPDATE reminders SET status = 'sent', sent_at = ?, error = NULL WHERE id = ?"
-      ).bind(new Date().toISOString(), reminder.id).run();
+      await claimAndSendReminder(env, reminder.id);
     } catch (error) {
-      const expired = error && (error.statusCode === 404 || error.statusCode === 410);
-      await env.REMINDERS.prepare(
-        "UPDATE reminders SET status = 'failed', error = ? WHERE id = ?"
-      ).bind(String(error && error.message || "Push delivery failed").slice(0, 500), reminder.id).run();
-      if (expired) {
-        await env.REMINDERS.prepare("DELETE FROM subscriptions WHERE id = ?").bind(reminder.subscription_id).run();
-      }
+      console.error("Push delivery failed", reminder.id, error);
     }
   }
 
@@ -141,7 +179,7 @@ async function sendDueReminders(env) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     if (!validBrowserRequest(request, env)) return json({ error: "Origin not allowed" }, 403);
     if (request.method === "OPTIONS") return withCors(new Response(null, { status: 204 }), request, env);
 
@@ -152,7 +190,13 @@ export default {
     } else if (request.method === "GET" && url.pathname === "/api/config") {
       response = json({ vapidPublicKey: env.VAPID_PUBLIC_KEY });
     } else if (request.method === "POST" && url.pathname === "/api/test-reminder") {
-      response = await saveTestReminder(request, env);
+      const scheduled = await saveTestReminder(request, env);
+      if (scheduled.errorResponse) {
+        response = scheduled.errorResponse;
+      } else {
+        ctx.waitUntil(sendTestReminderAt(env, scheduled.reminderId, scheduled.sendAt));
+        response = json({ ok: true, sendAt: scheduled.sendAt });
+      }
     } else if (request.method === "DELETE" && url.pathname === "/api/test-reminder") {
       response = await cancelTestReminder(request, env);
     } else {

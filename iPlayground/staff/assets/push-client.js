@@ -15,6 +15,11 @@
   }
 
   function supportStatus() {
+    var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+      (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    if (isIOS && !navigator.standalone) {
+      return { supported: false, reason: "請先用 Safari 將網站加入主畫面，再從主畫面開啟 IMS" };
+    }
     if (!("serviceWorker" in navigator)) return { supported: false, reason: "此瀏覽器不支援 Service Worker" };
     if (!("PushManager" in window)) return { supported: false, reason: "此瀏覽器不支援 Web Push" };
     if (!("Notification" in window)) return { supported: false, reason: "此瀏覽器不支援系統通知" };
@@ -35,11 +40,11 @@
   async function getSubscription() {
     var support = supportStatus();
     if (!support.supported) throw new Error(support.reason);
-    var registration = await navigator.serviceWorker.register("./service-worker.js");
-    var ready = await navigator.serviceWorker.ready;
     var permission = Notification.permission;
     if (permission === "default") permission = await Notification.requestPermission();
     if (permission !== "granted") throw new Error("通知權限未開啟");
+    await navigator.serviceWorker.register("./service-worker.js");
+    var ready = await navigator.serviceWorker.ready;
     var existing = await ready.pushManager.getSubscription();
     if (existing) return existing;
     var remoteConfig = await requestJson("/api/config", { method: "GET", headers: {} });

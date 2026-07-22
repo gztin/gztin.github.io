@@ -5,14 +5,13 @@
   "compatibility_date": "2026-07-22",
   "compatibility_flags": ["nodejs_compat"],
   "vars": {
-    "ALLOWED_ORIGIN": "https://gztin.github.io",
-    "VAPID_PUBLIC_KEY": "REPLACE_WITH_VAPID_PUBLIC_KEY"
+    "ALLOWED_ORIGIN": "https://gztin.github.io"
   },
   "d1_databases": [
     {
       "binding": "REMINDERS",
       "database_name": "iplayground-reminders",
-      "database_id": "REPLACE_AFTER_D1_CREATE"
+      "database_id": "57744f04-cc41-4fbc-bcb6-721a040fd11f"
     }
   ],
   "triggers": {
