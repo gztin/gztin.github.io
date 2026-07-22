@@ -26,6 +26,25 @@
     return { supported: true, reason: "" };
   }
 
+  function endpointHost(subscription) {
+    if (!subscription || !subscription.endpoint) return "尚未建立";
+    try {
+      return new URL(subscription.endpoint).host;
+    } catch (error) {
+      return "無法辨識";
+    }
+  }
+
+  async function getRegistration(options) {
+    var support = supportStatus();
+    if (!support.supported) throw new Error(support.reason);
+    var registration = await navigator.serviceWorker.register("./service-worker.js");
+    if (!options || options.update !== false) {
+      await registration.update().catch(function () {});
+    }
+    return navigator.serviceWorker.ready;
+  }
+
   async function requestJson(path, options) {
     var apiBase = normalizedApiBase();
     if (!apiBase) throw new Error("尚未設定 Cloudflare Worker 網址");
@@ -43,8 +62,7 @@
     var permission = Notification.permission;
     if (permission === "default") permission = await Notification.requestPermission();
     if (permission !== "granted") throw new Error("通知權限未開啟");
-    await navigator.serviceWorker.register("./service-worker.js");
-    var ready = await navigator.serviceWorker.ready;
+    var ready = await getRegistration();
     var existing = await ready.pushManager.getSubscription();
     if (existing) return existing;
     var remoteConfig = await requestJson("/api/config", { method: "GET", headers: {} });
@@ -52,6 +70,68 @@
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(remoteConfig.vapidPublicKey)
     });
+  }
+
+  async function getDiagnostics() {
+    var support = supportStatus();
+    var result = {
+      supported: support.supported,
+      supportReason: support.reason,
+      permission: "Notification" in window ? Notification.permission : "unsupported",
+      serviceWorkerState: "尚未註冊",
+      serviceWorkerScope: "—",
+      endpointHost: "尚未建立",
+      notificationCount: 0
+    };
+    if (!support.supported) return result;
+
+    var registration = await navigator.serviceWorker.getRegistration("./service-worker.js");
+    if (!registration) return result;
+    await registration.update().catch(function () {});
+    var ready = await navigator.serviceWorker.ready;
+    var worker = ready.active || ready.waiting || ready.installing;
+    var subscription = await ready.pushManager.getSubscription();
+    var notifications = await ready.getNotifications();
+    result.serviceWorkerState = worker ? worker.state : "狀態未知";
+    result.serviceWorkerScope = ready.scope;
+    result.endpointHost = endpointHost(subscription);
+    result.notificationCount = notifications.length;
+    if (worker) worker.postMessage({ type: "IMS_DIAGNOSTIC_PING" });
+    return result;
+  }
+
+  async function runLocalNotificationTest() {
+    var support = supportStatus();
+    if (!support.supported) throw new Error(support.reason);
+    var permission = Notification.permission;
+    if (permission === "default") permission = await Notification.requestPermission();
+    if (permission !== "granted") throw new Error("通知權限未開啟");
+
+    var registration = await getRegistration();
+    var tag = "ims-local-test-" + Date.now();
+    await registration.showNotification("IMS 本機通知測試", {
+      body: "若你看到這則通知，代表 Chrome 與 macOS 的通知顯示功能正常。",
+      tag: tag,
+      renotify: true,
+      requireInteraction: true,
+      data: { url: window.location.href }
+    });
+    var notifications = await registration.getNotifications({ tag: tag });
+    return {
+      permission: permission,
+      notificationCount: notifications.length,
+      tag: tag
+    };
+  }
+
+  function onDiagnosticMessage(listener) {
+    if (!("serviceWorker" in navigator) || typeof listener !== "function") return function () {};
+    function handler(event) {
+      var data = event.data || {};
+      if (String(data.type || "").indexOf("IMS_") === 0) listener(data);
+    }
+    navigator.serviceWorker.addEventListener("message", handler);
+    return function () { navigator.serviceWorker.removeEventListener("message", handler); };
   }
 
   async function scheduleTestReminder() {
@@ -78,6 +158,9 @@
   window.PushReminder = {
     isConfigured: function () { return Boolean(normalizedApiBase()); },
     supportStatus: supportStatus,
+    getDiagnostics: getDiagnostics,
+    runLocalNotificationTest: runLocalNotificationTest,
+    onDiagnosticMessage: onDiagnosticMessage,
     scheduleTestReminder: scheduleTestReminder,
     cancelTestReminder: cancelTestReminder
   };

@@ -234,6 +234,79 @@
         line-height: 1.6;
       }
 
+      .diagnostic-panel {
+        margin-top: 24px;
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--paper);
+      }
+
+      .diagnostic-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .diagnostic-title p {
+        margin: 0 0 7px;
+        color: var(--muted);
+        font: 800 10px/1.4 "SFMono-Regular", Consolas, monospace;
+        letter-spacing: .12em;
+      }
+
+      .diagnostic-title h2 { margin: 0; font-size: 22px; }
+
+      .diagnostic-button {
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--ink);
+        border-radius: 7px;
+        background: var(--ink);
+        color: #ffffff;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .diagnostic-button:hover { background: #2d2d2b; }
+      .diagnostic-button:disabled { cursor: wait; opacity: .55; }
+      .diagnostic-button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+      .diagnostic-summary {
+        margin: 18px 0 0;
+        padding: 12px 14px;
+        border-radius: 7px;
+        background: #f1f1ee;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      .diagnostic-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1px;
+        margin: 20px 0 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--line);
+      }
+
+      .diagnostic-item { min-width: 0; padding: 16px; background: var(--paper); }
+      .diagnostic-item dt { color: var(--muted); font-size: 11px; font-weight: 800; }
+      .diagnostic-item dd {
+        margin: 7px 0 0;
+        overflow-wrap: anywhere;
+        font: 750 12px/1.55 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .diagnostic-item dd[data-state="success"] { color: #257000; }
+      .diagnostic-item dd[data-state="warning"] { color: #9b5b00; }
+      .diagnostic-item dd[data-state="error"] { color: #b42318; }
+
       .modal-backdrop {
         position: fixed;
         inset: 0;
@@ -302,6 +375,9 @@
         .reminder-control { flex-wrap: wrap; justify-content: flex-end; }
         .countdown { order: 3; }
         .duty { font-size: 15px; }
+        .diagnostic-head { align-items: stretch; flex-direction: column; }
+        .diagnostic-button { width: 100%; }
+        .diagnostic-grid { grid-template-columns: 1fr; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -351,6 +427,25 @@
         </div>
       </article>
 
+      <section class="diagnostic-panel" aria-labelledby="diagnostic-title">
+        <div class="diagnostic-head">
+          <div class="diagnostic-title">
+            <p>WEB PUSH DIAGNOSTICS</p>
+            <h2 id="diagnostic-title">系統通知診斷</h2>
+          </div>
+          <button class="diagnostic-button" id="local-notification-test" type="button">立即測試系統通知</button>
+        </div>
+        <p class="diagnostic-summary" id="diagnostic-summary" aria-live="polite">正在讀取瀏覽器通知狀態…</p>
+        <dl class="diagnostic-grid">
+          <div class="diagnostic-item"><dt>通知權限</dt><dd id="diagnostic-permission">讀取中</dd></div>
+          <div class="diagnostic-item"><dt>Service Worker</dt><dd id="diagnostic-worker">讀取中</dd></div>
+          <div class="diagnostic-item"><dt>推播端點</dt><dd id="diagnostic-endpoint">讀取中</dd></div>
+          <div class="diagnostic-item"><dt>最近收到 Push</dt><dd id="diagnostic-push">尚未收到</dd></div>
+          <div class="diagnostic-item"><dt>通知顯示結果</dt><dd id="diagnostic-display">尚未測試</dd></div>
+          <div class="diagnostic-item"><dt>已建立通知數</dt><dd id="diagnostic-count">0</dd></div>
+        </dl>
+      </section>
+
     </main>
 
     <div class="modal-backdrop" id="modal-backdrop" hidden>
@@ -364,7 +459,7 @@
     </div>
 
     <script src="assets/push-config.js"></script>
-    <script src="assets/push-client.js"></script>
+    <script src="assets/push-client.js?v=20260722-1"></script>
     <script>
       (function () {
         "use strict";
@@ -380,10 +475,19 @@
         var endTime = document.getElementById("end-time");
         var modalBackdrop = document.getElementById("modal-backdrop");
         var modalClose = document.getElementById("modal-close");
+        var localNotificationTest = document.getElementById("local-notification-test");
+        var diagnosticSummary = document.getElementById("diagnostic-summary");
+        var diagnosticPermission = document.getElementById("diagnostic-permission");
+        var diagnosticWorker = document.getElementById("diagnostic-worker");
+        var diagnosticEndpoint = document.getElementById("diagnostic-endpoint");
+        var diagnosticPush = document.getElementById("diagnostic-push");
+        var diagnosticDisplay = document.getElementById("diagnostic-display");
+        var diagnosticCount = document.getElementById("diagnostic-count");
         var intervalId = null;
         var endsAt = 0;
         var triggered = false;
         var audioContext = null;
+        var diagnosticScope = "";
 
         function prepareAudio() {
           var AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -430,6 +534,50 @@
         function formatRemaining(seconds) {
           var safe = Math.max(0, seconds);
           return Math.floor(safe / 60) + ":" + String(safe % 60).padStart(2, "0");
+        }
+
+        function setDiagnosticValue(element, text, state) {
+          element.textContent = text;
+          if (state) element.dataset.state = state;
+          else element.removeAttribute("data-state");
+        }
+
+        function diagnosticTime(value) {
+          if (!value) return "尚未收到";
+          return taipeiTime(new Date(value), true);
+        }
+
+        function permissionLabel(value) {
+          if (value === "granted") return "已允許";
+          if (value === "denied") return "已封鎖";
+          if (value === "default") return "尚未選擇";
+          return "不支援";
+        }
+
+        function refreshDiagnostics(options) {
+          var preserveSummary = options && options.preserveSummary;
+          if (!window.PushReminder) {
+            if (!preserveSummary) diagnosticSummary.textContent = "推播診斷程式尚未載入。";
+            return Promise.resolve();
+          }
+          return window.PushReminder.getDiagnostics().then(function (result) {
+            var permissionState = result.permission === "granted" ? "success" : (result.permission === "denied" ? "error" : "warning");
+            setDiagnosticValue(diagnosticPermission, permissionLabel(result.permission), permissionState);
+            diagnosticScope = result.serviceWorkerScope === "—" ? "" : new URL(result.serviceWorkerScope).pathname;
+            setDiagnosticValue(diagnosticWorker, result.serviceWorkerState + (diagnosticScope ? " · " + diagnosticScope : ""), result.serviceWorkerState === "activated" ? "success" : "warning");
+            setDiagnosticValue(diagnosticEndpoint, result.endpointHost, result.endpointHost === "尚未建立" ? "warning" : "success");
+            setDiagnosticValue(diagnosticCount, String(result.notificationCount), result.notificationCount > 0 ? "success" : "warning");
+            if (preserveSummary) return;
+            if (!result.supported) {
+              diagnosticSummary.textContent = result.supportReason;
+            } else if (result.permission !== "granted") {
+              diagnosticSummary.textContent = "請先按下立即測試按鈕並允許網站通知。";
+            } else {
+              diagnosticSummary.textContent = "瀏覽器基礎條件已就緒；可先做本機通知，再測試 15 秒雲端推播。";
+            }
+          }).catch(function (error) {
+            if (!preserveSummary) diagnosticSummary.textContent = "讀取診斷資訊失敗：" + error.message;
+          });
         }
 
         function remainingSeconds(now) {
@@ -494,6 +642,7 @@
               window.PushReminder.scheduleTestReminder().then(function (result) {
                 if (!reminderSwitch.checked) return;
                 pushStatus.textContent = "系統通知已排程，預計於 " + taipeiTime(new Date(result.sendAt), true) + " 送達。";
+                refreshDiagnostics();
               }).catch(function (error) {
                 pushStatus.textContent = "系統通知設定失敗：" + error.message + "。前景彈窗與提示音仍會執行。";
               });
@@ -506,6 +655,51 @@
             if (window.PushReminder) window.PushReminder.cancelTestReminder().catch(function () {});
           }
         });
+
+        localNotificationTest.addEventListener("click", function () {
+          localNotificationTest.disabled = true;
+          localNotificationTest.textContent = "測試中…";
+          diagnosticSummary.textContent = "正在直接呼叫 Chrome 的系統通知，不經過 Cloudflare 或 FCM。";
+          setDiagnosticValue(diagnosticDisplay, "正在建立通知", "warning");
+          window.PushReminder.runLocalNotificationTest().then(function (result) {
+            setDiagnosticValue(diagnosticPermission, permissionLabel(result.permission), "success");
+            setDiagnosticValue(diagnosticCount, String(result.notificationCount), result.notificationCount > 0 ? "success" : "warning");
+            if (result.notificationCount > 0) {
+              setDiagnosticValue(diagnosticDisplay, "Chrome 已建立通知", "success");
+              diagnosticSummary.textContent = "Chrome 已建立本機通知；若畫面仍未出現，問題位於 macOS 通知中心或 Chrome Alerts Helper。";
+            } else {
+              setDiagnosticValue(diagnosticDisplay, "Chrome 未保留通知", "error");
+              diagnosticSummary.textContent = "showNotification 已完成，但 Chrome 查不到通知，請記錄此結果。";
+            }
+          }).catch(function (error) {
+            setDiagnosticValue(diagnosticDisplay, "建立失敗：" + error.message, "error");
+            diagnosticSummary.textContent = "本機通知測試失敗，問題不在 Cloudflare 或 FCM。";
+          }).finally(function () {
+            localNotificationTest.disabled = false;
+            localNotificationTest.textContent = "立即測試系統通知";
+            refreshDiagnostics({ preserveSummary: true });
+          });
+        });
+
+        if (window.PushReminder) {
+          window.PushReminder.onDiagnosticMessage(function (data) {
+            if (data.serviceWorkerVersion) {
+              setDiagnosticValue(diagnosticWorker, "activated · " + data.serviceWorkerVersion + (diagnosticScope ? " · " + diagnosticScope : ""), "success");
+            }
+            if (data.type === "IMS_PUSH_RECEIVED") {
+              setDiagnosticValue(diagnosticPush, diagnosticTime(data.receivedAt), "success");
+              setDiagnosticValue(diagnosticDisplay, "已收到 Push，正在建立通知", "warning");
+              diagnosticSummary.textContent = "Service Worker 已收到 FCM 推播，正在交給 Chrome 顯示。";
+            } else if (data.type === "IMS_NOTIFICATION_DISPLAYED") {
+              setDiagnosticValue(diagnosticDisplay, "showNotification 已完成", "success");
+              setDiagnosticValue(diagnosticCount, String(data.notificationCount), data.notificationCount > 0 ? "success" : "warning");
+              diagnosticSummary.textContent = "Service Worker 已執行通知顯示；若畫面沒出現，問題位於 Chrome／macOS 顯示層。";
+            } else if (data.type === "IMS_NOTIFICATION_ERROR") {
+              setDiagnosticValue(diagnosticDisplay, "顯示失敗：" + data.error, "error");
+              diagnosticSummary.textContent = "Service Worker 收到推播，但建立通知時發生錯誤。";
+            }
+          });
+        }
 
         modalClose.addEventListener("click", function () {
           modalBackdrop.hidden = true;
@@ -522,6 +716,7 @@
         window.addEventListener("beforeunload", function () { window.clearInterval(intervalId); });
         window.setInterval(function () { taipeiClock.textContent = "台灣時間 " + taipeiTime(new Date(), true); }, 1000);
         resetReminder();
+        refreshDiagnostics();
       })();
     </script>
   </body>
