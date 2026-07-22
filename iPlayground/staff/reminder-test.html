@@ -288,14 +288,13 @@
 
       .focus-notice strong { color: var(--accent); }
 
-      .install-grid {
+      .install-platforms {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
+        gap: 20px;
       }
 
       .install-platform {
-        padding: 22px;
+        padding: 24px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fafaf8;
@@ -317,30 +316,40 @@
         font: 900 10px/1 "SFMono-Regular", Consolas, monospace;
       }
 
-      .install-steps {
-        margin: 18px 0 0;
-        padding: 0;
-        list-style: none;
-        counter-reset: install-step;
-      }
-
-      .install-steps li {
+      .visual-steps {
         display: grid;
-        grid-template-columns: 28px 1fr;
-        gap: 10px;
-        align-items: start;
-        color: var(--muted);
-        font-size: 13px;
-        line-height: 1.65;
-        counter-increment: install-step;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 20px;
       }
 
-      .install-steps li + li { margin-top: 12px; }
+      .visual-step {
+        min-width: 0;
+        padding: 12px;
+        border: 1px solid #ddddda;
+        border-radius: 8px;
+        background: var(--paper);
+      }
 
-      .install-steps li::before {
-        content: counter(install-step);
-        width: 28px;
-        height: 28px;
+      .visual-step img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 7px;
+        background: var(--ink);
+      }
+
+      .visual-step-copy {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 11px;
+        align-items: start;
+        padding: 16px 4px 5px;
+      }
+
+      .visual-step-number {
+        width: 34px;
+        height: 34px;
         display: grid;
         place-items: center;
         border-radius: 50%;
@@ -349,7 +358,20 @@
         font: 900 11px/1 "SFMono-Regular", Consolas, monospace;
       }
 
-      .install-steps strong { color: var(--ink); }
+      .visual-step-text { min-width: 0; }
+
+      .visual-step h4 {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .visual-step p {
+        margin: 6px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.65;
+      }
 
       .modal-backdrop {
         position: fixed;
@@ -421,7 +443,8 @@
         .duty { font-size: 15px; }
         .install-guide { padding: 22px; }
         .focus-notice { align-items: flex-start; }
-        .install-grid { grid-template-columns: 1fr; }
+        .install-platform { padding: 16px; }
+        .visual-steps { grid-template-columns: 1fr; }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -483,19 +506,46 @@
           <div>測試系統推播前，請先<strong>關閉手機的「專注模式／勿擾模式」</strong>，並確認已允許 iPlayground 任務助手傳送通知。</div>
         </div>
 
-        <div class="install-grid">
+        <div class="install-platforms">
           <section class="install-platform" aria-labelledby="ios-install-title">
             <div class="install-platform-head">
               <h3 id="ios-install-title">iPhone</h3>
               <span class="platform-tag">SAFARI</span>
             </div>
-            <ol class="install-steps">
-              <li>使用 <strong>Safari</strong> 開啟本頁。</li>
-              <li>點選瀏覽器下方的<strong>分享</strong>按鈕。</li>
-              <li>向下找到並點選<strong>加入主畫面</strong>。</li>
-              <li>確認名稱為「iPlayground 任務助手」，再點選<strong>加入</strong>。</li>
-              <li>從手機桌面開啟任務助手，打開提醒並允許通知。</li>
-            </ol>
+            <div class="visual-steps">
+              <article class="visual-step">
+                <img src="assets/guide-ios-share.svg" alt="Safari 下方分享按鈕的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">01</span>
+                  <div class="visual-step-text">
+                    <h4>使用 Safari 開啟</h4>
+                    <p>在 Safari 開啟本頁，點選畫面下方的分享按鈕。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img src="assets/guide-ios-add-home.svg" alt="Safari 分享選單中加入主畫面的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">02</span>
+                  <div class="visual-step-text">
+                    <h4>加入手機主畫面</h4>
+                    <p>向下找到「加入主畫面」，確認名稱後點選加入。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img src="assets/guide-ios-notification.svg" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">03</span>
+                  <div class="visual-step-text">
+                    <h4>從桌面開啟並允許通知</h4>
+                    <p>回到桌面開啟任務助手，打開提醒並選擇允許通知。</p>
+                  </div>
+                </div>
+              </article>
+            </div>
           </section>
 
           <section class="install-platform" aria-labelledby="android-install-title">
@@ -503,13 +553,40 @@
               <h3 id="android-install-title">Android</h3>
               <span class="platform-tag">CHROME</span>
             </div>
-            <ol class="install-steps">
-              <li>使用 <strong>Chrome</strong> 開啟本頁。</li>
-              <li>點選右上角的<strong>更多選單（⋮）</strong>。</li>
-              <li>選擇<strong>安裝應用程式</strong>或<strong>加到主畫面</strong>。</li>
-              <li>依畫面指示確認安裝或新增捷徑。</li>
-              <li>從手機桌面開啟任務助手，打開提醒並允許通知。</li>
-            </ol>
+            <div class="visual-steps">
+              <article class="visual-step">
+                <img src="assets/guide-android-menu.svg" alt="Chrome 右上角更多選單的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">01</span>
+                  <div class="visual-step-text">
+                    <h4>使用 Chrome 開啟</h4>
+                    <p>在 Chrome 開啟本頁，點選右上角的更多選單（⋮）。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img src="assets/guide-android-install.svg" alt="Chrome 選單中安裝應用程式的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">02</span>
+                  <div class="visual-step-text">
+                    <h4>安裝任務助手</h4>
+                    <p>選擇「安裝應用程式」或「加到主畫面」並確認。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img src="assets/guide-android-notification.svg" alt="Android 允許任務助手傳送通知的操作示意圖" width="480" height="300" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">03</span>
+                  <div class="visual-step-text">
+                    <h4>從桌面開啟並允許通知</h4>
+                    <p>從桌面開啟任務助手，打開提醒並允許傳送通知。</p>
+                  </div>
+                </div>
+              </article>
+            </div>
           </section>
         </div>
       </section>

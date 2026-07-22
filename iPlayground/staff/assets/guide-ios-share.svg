@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-labelledby="title desc">
+  <title id="title">iPhone Safari 分享按鈕示意圖</title>
+  <desc id="desc">Safari 畫面下方的分享按鈕以螢光綠標示。</desc>
+  <rect width="480" height="300" rx="28" fill="#111"/>
+  <rect x="66" y="26" width="348" height="248" rx="30" fill="#f4f4f1"/>
+  <rect x="86" y="48" width="308" height="144" rx="17" fill="#fff"/>
+  <circle cx="116" cy="76" r="8" fill="#d2ff00"/>
+  <rect x="138" y="68" width="166" height="16" rx="8" fill="#d6d6d1"/>
+  <rect x="106" y="108" width="206" height="18" rx="9" fill="#111"/>
+  <rect x="106" y="138" width="258" height="12" rx="6" fill="#c9c9c4"/>
+  <rect x="106" y="160" width="204" height="12" rx="6" fill="#deded9"/>
+  <rect x="86" y="208" width="308" height="46" rx="16" fill="#e5e5e1"/>
+  <circle cx="240" cy="231" r="29" fill="#d2ff00"/>
+  <path d="M240 239v-26m0 0-9 9m9-9 9 9M226 232v12h28v-12" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M96 231h30m228 0h30" stroke="#8b8b86" stroke-width="7" stroke-linecap="round"/>
+</svg>

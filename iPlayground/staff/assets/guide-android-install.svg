@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-labelledby="title desc">
+  <title id="title">Android 安裝應用程式選項示意圖</title>
+  <desc id="desc">Chrome 選單中的安裝應用程式選項以螢光綠標示。</desc>
+  <rect width="480" height="300" rx="28" fill="#111"/>
+  <rect x="110" y="22" width="284" height="256" rx="24" fill="#f4f4f1"/>
+  <rect x="132" y="48" width="240" height="38" rx="11" fill="#fff"/>
+  <circle cx="154" cy="67" r="10" fill="#d1d1cc"/>
+  <rect x="174" y="60" width="112" height="14" rx="7" fill="#bcbcb7"/>
+  <rect x="132" y="96" width="240" height="62" rx="14" fill="#d2ff00"/>
+  <circle cx="160" cy="127" r="17" fill="#111"/>
+  <path d="M160 116v18m-7-7 7 7 7-7m-14 12h14" fill="none" stroke="#d2ff00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="190" y="116" width="132" height="14" rx="7" fill="#111"/>
+  <rect x="190" y="137" width="88" height="8" rx="4" fill="#768c00"/>
+  <rect x="132" y="168" width="240" height="38" rx="11" fill="#fff"/>
+  <circle cx="154" cy="187" r="10" fill="#d1d1cc"/>
+  <rect x="174" y="180" width="142" height="14" rx="7" fill="#c6c6c1"/>
+  <rect x="132" y="216" width="240" height="38" rx="11" fill="#fff"/>
+  <circle cx="154" cy="235" r="10" fill="#d1d1cc"/>
+  <rect x="174" y="228" width="98" height="14" rx="7" fill="#c6c6c1"/>
+</svg>

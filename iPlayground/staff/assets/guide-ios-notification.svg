@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 300" role="img" aria-labelledby="title desc">
+  <title id="title">iPhone 允許通知示意圖</title>
+  <desc id="desc">iPlayground 任務助手的通知權限對話框，允許按鈕以螢光綠標示。</desc>
+  <rect width="480" height="300" rx="28" fill="#111"/>
+  <rect x="82" y="30" width="316" height="240" rx="32" fill="#242422" stroke="#464641" stroke-width="2"/>
+  <circle cx="240" cy="82" r="34" fill="#d2ff00"/>
+  <path d="M240 60c-12 0-20 9-20 22v13l-7 9h54l-7-9V82c0-13-8-22-20-22Zm-8 51c2 8 14 8 16 0" fill="#111"/>
+  <rect x="134" y="132" width="212" height="18" rx="9" fill="#fff"/>
+  <rect x="154" y="164" width="172" height="10" rx="5" fill="#898984"/>
+  <rect x="116" y="201" width="248" height="46" rx="14" fill="#d2ff00"/>
+  <rect x="193" y="218" width="94" height="13" rx="6.5" fill="#111"/>
+</svg>
