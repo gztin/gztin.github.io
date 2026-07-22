@@ -86,6 +86,30 @@
   width: auto;
 }
 
+.reminder-test-link {
+  min-height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 20px;
+  border: 1px solid #111111;
+  border-radius: 8px;
+  background: #111111;
+  color: #ffffff;
+  text-decoration: none;
+  font: 800 13px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  white-space: nowrap;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+
+.reminder-test-link:hover,
+.reminder-test-link:focus-visible {
+  background: #d2ff00;
+  color: #111111;
+  transform: translateY(-2px);
+}
+
 .directory-search .search-row {
   height: 52px;
   border: 1px solid var(--line);
@@ -1449,11 +1473,19 @@ footer {
   }
 
   .directory-tools {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
     padding: 0;
     border: 0;
     background: transparent;
     box-shadow: none;
     backdrop-filter: none;
+  }
+
+  .reminder-test-link {
+    width: 100%;
+    min-height: 48px;
   }
 
   .directory-tools .directory-search .search-row {

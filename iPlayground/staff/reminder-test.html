@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="任務提醒彈窗互動測試" />
+    <title>任務提醒測試｜IMS</title>
+    <style>
+      :root {
+        --ink: #111111;
+        --paper: #ffffff;
+        --ground: #f3f3f0;
+        --muted: #686864;
+        --line: #d2d2ce;
+        --accent: #d2ff00;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { color-scheme: light; }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background:
+          linear-gradient(rgba(17, 17, 17, .035) 1px, transparent 1px) 0 0 / 100% 96px,
+          var(--ground);
+        color: var(--ink);
+        font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      }
+
+      button, input { font: inherit; }
+
+      .test-page {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+        padding: 48px 0 80px;
+      }
+
+      .test-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 38px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .back-link {
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+      }
+
+      .test-heading p {
+        margin: 0 0 8px;
+        color: var(--muted);
+        font: 800 11px/1.4 "SFMono-Regular", Consolas, monospace;
+        letter-spacing: .12em;
+      }
+
+      .test-heading h1 {
+        margin: 0;
+        font-size: clamp(34px, 5vw, 60px);
+        line-height: 1;
+        letter-spacing: -.045em;
+      }
+
+      .test-note {
+        max-width: 530px;
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .task-card {
+        display: grid;
+        grid-template-columns: 88px 120px 1fr;
+        gap: 24px;
+        padding: 38px;
+        border: 1px solid var(--line);
+        border-left: 5px solid #777773;
+        border-radius: 10px;
+        background: var(--paper);
+        box-shadow: 0 18px 50px rgba(17, 17, 17, .055);
+      }
+
+      .day-badge {
+        align-self: start;
+        padding: 11px 0;
+        border-radius: 6px;
+        background: var(--ink);
+        color: #ffffff;
+        text-align: center;
+        font: 900 14px/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .time {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+        font: 800 18px/1.35 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .time span { padding-left: 15px; color: #a1a19c; }
+
+      .task-body { min-width: 0; }
+
+      .task-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      .task-title h2 { margin: 0; font-size: 27px; line-height: 1.2; }
+
+      .task-title p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .reminder-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex: none;
+      }
+
+      .bell {
+        width: 34px;
+        height: 34px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #eeeeeb;
+        font-size: 17px;
+        transition: background .2s ease, transform .2s ease;
+      }
+
+      .reminder-control.is-on .bell {
+        background: var(--accent);
+        animation: bell-ring 1.1s ease-in-out infinite;
+      }
+
+      .switch {
+        position: relative;
+        width: 54px;
+        height: 30px;
+        display: inline-block;
+      }
+
+      .switch input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+      }
+
+      .switch-track {
+        position: absolute;
+        inset: 0;
+        border-radius: 99px;
+        background: #d7d7d3;
+        cursor: pointer;
+        transition: background .2s ease;
+      }
+
+      .switch-track::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #ffffff;
+        box-shadow: 0 2px 7px rgba(17, 17, 17, .25);
+        transition: transform .2s ease;
+      }
+
+      .switch input:checked + .switch-track { background: var(--ink); }
+      .switch input:checked + .switch-track::after { transform: translateX(24px); background: var(--accent); }
+      .switch input:focus-visible + .switch-track { outline: 3px solid rgba(17, 17, 17, .2); outline-offset: 3px; }
+
+      .countdown {
+        min-width: 58px;
+        padding: 9px 10px;
+        border-radius: 99px;
+        background: #eeeeeb;
+        color: var(--muted);
+        text-align: center;
+        font: 800 12px/1 "SFMono-Regular", Consolas, monospace;
+      }
+
+      .reminder-control.is-on .countdown { background: var(--accent); color: var(--ink); }
+
+      .partners { margin-top: 19px; }
+      .partners > span { display: block; margin-bottom: 8px; color: var(--muted); font-size: 12px; font-weight: 800; }
+      .partners-list { display: flex; flex-wrap: wrap; gap: 8px; }
+      .partners-list span { padding: 8px 12px; border-radius: 7px; background: #eeeeeb; font: 750 12px/1 "SFMono-Regular", Consolas, monospace; }
+
+      .duty {
+        margin: 20px 0 24px;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .status-line {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        padding-top: 18px;
+        border-top: 1px solid #ddddda;
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .status-line span:last-child { color: var(--muted); font-family: "SFMono-Regular", Consolas, monospace; }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: rgba(10, 10, 9, .72);
+        backdrop-filter: blur(8px);
+        animation: fade-in .28s ease both;
+      }
+
+      .modal-backdrop[hidden] { display: none; }
+
+      .reminder-modal {
+        width: min(520px, 100%);
+        padding: 34px;
+        border: 1px solid rgba(255, 255, 255, .18);
+        border-radius: 16px;
+        background: var(--ink);
+        color: #ffffff;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, .45);
+        animation: modal-in .42s cubic-bezier(.18, .9, .3, 1.15) both;
+      }
+
+      .modal-icon {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 26px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: var(--ink);
+        font-size: 27px;
+        animation: bell-ring 1s ease-in-out infinite;
+      }
+
+      .reminder-modal small { color: var(--accent); font: 800 11px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .14em; }
+      .reminder-modal h2 { margin: 10px 0 12px; font-size: 34px; line-height: 1.15; }
+      .reminder-modal p { margin: 0; color: #c8c8c3; line-height: 1.75; }
+      .reminder-modal strong { color: #ffffff; }
+
+      .modal-close {
+        width: 100%;
+        margin-top: 28px;
+        padding: 14px 18px;
+        border: 0;
+        border-radius: 8px;
+        background: var(--accent);
+        color: var(--ink);
+        cursor: pointer;
+        font-weight: 900;
+      }
+
+      @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes modal-in { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
+      @keyframes bell-ring { 0%, 45%, 100% { transform: rotate(0); } 12% { transform: rotate(12deg); } 24% { transform: rotate(-12deg); } 36% { transform: rotate(7deg); } }
+
+      @media (max-width: 720px) {
+        .test-page { width: min(100% - 24px, 1180px); padding-top: 24px; }
+        .test-header { align-items: flex-start; flex-direction: column-reverse; }
+        .task-card { grid-template-columns: 68px 1fr; gap: 18px; padding: 22px; }
+        .task-body { grid-column: 1 / -1; }
+        .task-top { align-items: flex-start; }
+        .reminder-control { flex-wrap: wrap; justify-content: flex-end; }
+        .countdown { order: 3; }
+        .duty { font-size: 15px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="test-page">
+      <header class="test-header">
+        <div class="test-heading">
+          <p>REMINDER INTERACTION TEST · 7/22</p>
+          <h1>任務提醒預覽</h1>
+        </div>
+        <a class="back-link" href="index.html">← 返回人員一覽</a>
+      </header>
+
+      <p class="test-note">打開任務卡右上角的提醒開關後，將從 1 分鐘開始倒數；倒數歸零時會顯示提醒彈窗。關閉開關可隨時重設。</p>
+
+      <article class="task-card" aria-label="7月22日測試任務卡">
+        <div class="day-badge">7/22</div>
+        <div class="time"><strong id="start-time">--:--</strong><span>↓</span><strong id="end-time">--:--</strong></div>
+        <div class="task-body">
+          <div class="task-top">
+            <div class="task-title">
+              <h2>報到桌佈置</h2>
+              <p>測試用任務卡片</p>
+            </div>
+            <div class="reminder-control" id="reminder-control">
+              <span class="bell" aria-hidden="true">🔔</span>
+              <label class="switch">
+                <input id="reminder-switch" type="checkbox" aria-label="啟動報到桌佈置提醒" />
+                <span class="switch-track"></span>
+              </label>
+              <span class="countdown" id="countdown" aria-live="polite">1:00</span>
+            </div>
+          </div>
+
+          <div class="partners">
+            <span>同時段夥伴</span>
+            <div class="partners-list"><span>大軍</span><span>承諺</span><span>柏謙</span><span>DinDin</span><span>Henry</span><span>Tank</span></div>
+          </div>
+
+          <p class="duty">負責執行「報到桌佈置」，地點：政大公企中心 2F；工作內容：名牌分類、放置周邊小物、搬桌子。</p>
+          <div class="status-line"><span id="status-text">提醒尚未啟動</span><span id="taipei-clock">台灣時間 --:--:--</span></div>
+        </div>
+      </article>
+    </main>
+
+    <div class="modal-backdrop" id="modal-backdrop" hidden>
+      <section class="reminder-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-describedby="modal-description">
+        <div class="modal-icon" aria-hidden="true">🔔</div>
+        <small>7/22 · TASK REMINDER</small>
+        <h2 id="modal-title">節目即將開始</h2>
+        <p id="modal-description"><strong>報到桌佈置</strong>已到預定提醒時間，請確認工作物品並前往政大公企中心 2F。</p>
+        <button class="modal-close" id="modal-close" type="button">我知道了</button>
+      </section>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var TEST_SECONDS = 60;
+        var reminderSwitch = document.getElementById("reminder-switch");
+        var reminderControl = document.getElementById("reminder-control");
+        var countdown = document.getElementById("countdown");
+        var statusText = document.getElementById("status-text");
+        var taipeiClock = document.getElementById("taipei-clock");
+        var startTime = document.getElementById("start-time");
+        var endTime = document.getElementById("end-time");
+        var modalBackdrop = document.getElementById("modal-backdrop");
+        var modalClose = document.getElementById("modal-close");
+        var intervalId = null;
+        var endsAt = 0;
+        var triggered = false;
+        var audioContext = null;
+
+        function prepareAudio() {
+          var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (!AudioContextClass) return Promise.resolve(false);
+          if (!audioContext) audioContext = new AudioContextClass();
+          var resume = audioContext.state === "suspended" ? audioContext.resume() : Promise.resolve();
+          return resume.then(function () {
+            var source = audioContext.createBufferSource();
+            source.buffer = audioContext.createBuffer(1, 1, audioContext.sampleRate);
+            source.connect(audioContext.destination);
+            source.start(0);
+            return true;
+          }).catch(function () { return false; });
+        }
+
+        function playReminderSound() {
+          if (!audioContext || audioContext.state !== "running") return;
+          var now = audioContext.currentTime;
+          [0, 0.38].forEach(function (delay, index) {
+            var oscillator = audioContext.createOscillator();
+            var gain = audioContext.createGain();
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(index === 0 ? 740 : 988, now + delay);
+            gain.gain.setValueAtTime(0.0001, now + delay);
+            gain.gain.exponentialRampToValueAtTime(0.32, now + delay + 0.025);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.3);
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+            oscillator.start(now + delay);
+            oscillator.stop(now + delay + 0.32);
+          });
+        }
+
+        function taipeiTime(date, withSeconds) {
+          return new Intl.DateTimeFormat("zh-TW", {
+            timeZone: "Asia/Taipei",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: withSeconds ? "2-digit" : undefined,
+            hour12: false
+          }).format(date);
+        }
+
+        function formatRemaining(seconds) {
+          var safe = Math.max(0, seconds);
+          return Math.floor(safe / 60) + ":" + String(safe % 60).padStart(2, "0");
+        }
+
+        function remainingSeconds(now) {
+          return Math.max(0, Math.ceil((endsAt - now.getTime()) / 1000));
+        }
+
+        function showReminder() {
+          if (triggered) return;
+          triggered = true;
+          modalBackdrop.hidden = false;
+          statusText.textContent = "提醒已觸發";
+          playReminderSound();
+          modalClose.focus();
+        }
+
+        function updateCountdown(now) {
+          var remaining = remainingSeconds(now);
+          countdown.textContent = formatRemaining(remaining);
+          taipeiClock.textContent = "台灣時間 " + taipeiTime(now, true);
+          if (remaining === 0) {
+            showReminder();
+            window.clearInterval(intervalId);
+            intervalId = null;
+          }
+          return remaining;
+        }
+
+        function startReminder() {
+          window.clearInterval(intervalId);
+          triggered = false;
+          modalBackdrop.hidden = true;
+          var now = new Date();
+          endsAt = now.getTime() + TEST_SECONDS * 1000;
+          startTime.textContent = taipeiTime(now, false);
+          endTime.textContent = taipeiTime(new Date(endsAt), false);
+          reminderControl.classList.add("is-on");
+          statusText.textContent = "提醒已啟動，請保持裝置音量開啟";
+          updateCountdown(now);
+          intervalId = window.setInterval(function () { updateCountdown(new Date()); }, 250);
+        }
+
+        function resetReminder() {
+          window.clearInterval(intervalId);
+          intervalId = null;
+          endsAt = 0;
+          triggered = false;
+          reminderControl.classList.remove("is-on");
+          countdown.textContent = "1:00";
+          statusText.textContent = "提醒尚未啟動";
+          modalBackdrop.hidden = true;
+          var now = new Date();
+          startTime.textContent = taipeiTime(now, false);
+          endTime.textContent = taipeiTime(new Date(now.getTime() + TEST_SECONDS * 1000), false);
+        }
+
+        reminderSwitch.addEventListener("change", function () {
+          if (reminderSwitch.checked) {
+            prepareAudio().then(function () {
+              if (reminderSwitch.checked) startReminder();
+            });
+          }
+          else resetReminder();
+        });
+
+        modalClose.addEventListener("click", function () {
+          modalBackdrop.hidden = true;
+          reminderSwitch.focus();
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !modalBackdrop.hidden) {
+            modalBackdrop.hidden = true;
+            reminderSwitch.focus();
+          }
+        });
+
+        window.addEventListener("beforeunload", function () { window.clearInterval(intervalId); });
+        window.setInterval(function () { taipeiClock.textContent = "台灣時間 " + taipeiTime(new Date(), true); }, 1000);
+        resetReminder();
+      })();
+    </script>
+  </body>
+</html>

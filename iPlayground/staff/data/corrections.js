@@ -85,18 +85,29 @@
 
   function addSupplementalTask(item, person, assignment) {
     if (!person) return;
-    var dutyPrefix = assignment === "負責人" ? "負責現場協調" : assignment === "拍照手" ? "負責拍照紀錄" : "負責執行";
-    var duty = dutyPrefix + "「" + item.item + "」";
-    if (item.location) duty += "，地點：" + item.location;
-    if (item.detail) duty += "；工作內容：" + item.detail;
-    duty += "。";
+    var isPhoto = assignment === "拍照手";
+    var duty;
+    if (isPhoto) {
+      duty = "主要任務：拍照紀錄。拍攝項目：「" + item.item + "」";
+      if (item.location) duty += "；拍攝地點：" + item.location;
+      if (item.detail) duty += "；被拍攝工作內容：" + item.detail;
+      if (item.workers.length) duty += "；現場執行人員：" + item.workers.join("、");
+      if (item.owner) duty += "；現場負責人：" + item.owner;
+      duty += "。被拍攝工作內容由現場工作人員負責，非攝影人員工作。";
+    } else {
+      var dutyPrefix = assignment === "負責人" ? "負責現場協調" : "負責執行";
+      duty = dutyPrefix + "「" + item.item + "」";
+      if (item.location) duty += "，地點：" + item.location;
+      if (item.detail) duty += "；工作內容：" + item.detail;
+      duty += "。";
+    }
     var task = {
       person: person,
-      role: item.item,
+      role: isPhoto ? "拍照紀錄" : item.item,
       day: item.day,
       start: item.start,
       end: item.end,
-      content: [assignment, item.location, item.detail].filter(Boolean).join("｜"),
+      content: isPhoto ? item.item : [assignment, item.location, item.detail].filter(Boolean).join("｜"),
       duty: duty,
       assignment: assignment,
       speaker: "",
@@ -104,7 +115,7 @@
       row: "supplemental-" + item.day + "-" + item.row
     };
     var exists = source.schedule.some(function (current) {
-      return String(current.person) === task.person && current.role === task.role && current.day === task.day && current.start === task.start && current.end === task.end && current.assignment === task.assignment;
+      return String(current.person) === task.person && current.row === task.row && current.assignment === task.assignment;
     });
     if (!exists) source.schedule.push(task);
   }

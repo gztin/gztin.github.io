@@ -90,6 +90,7 @@
               <p v-if="!suggestions.length">找不到符合「{{ query }}」的人員</p>
             </div>
           </div>
+          <a class="reminder-test-link" href="reminder-test.html"><span aria-hidden="true">🔔</span> 測試提醒</a>
         </div>
         <div class="staff-grid">
           <button v-for="staff in filteredDirectory" :key="staff.person" :class="'person-type-' + staff.type" @click="choose(staff.person)">
