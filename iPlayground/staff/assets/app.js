@@ -12,6 +12,47 @@
     return parts[0] * 60 + parts[1];
   }
 
+  var REMINDER_LEAD_MINUTES = 2;
+  var EVENT_DATES = { D0: "2026-07-24", D1: "2026-07-25", D2: "2026-07-26" };
+  var REMINDER_STORAGE_KEY = "ims-task-reminders-v1";
+
+  function taskKey(task) {
+    return [task.person || "", task.day, task.start, task.end, task.role, task.row || ""].join("::");
+  }
+
+  function taskStartsAt(task) {
+    var date = EVENT_DATES[task.day];
+    if (!date || !/^\d{1,2}:\d{2}$/.test(task.start || "")) return null;
+    var time = task.start.split(":").map(Number);
+    return new Date(date + "T" + String(time[0]).padStart(2, "0") + ":" + String(time[1]).padStart(2, "0") + ":00+08:00");
+  }
+
+  function reminderAt(task) {
+    var startsAt = taskStartsAt(task);
+    return startsAt ? new Date(startsAt.getTime() - REMINDER_LEAD_MINUTES * 60 * 1000) : null;
+  }
+
+  function notificationTimeLabel(date) {
+    if (!date) return "";
+    return new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei",
+      month: "numeric",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false
+    }).format(date);
+  }
+
+  function loadReminderState() {
+    try {
+      var value = JSON.parse(window.localStorage.getItem(REMINDER_STORAGE_KEY) || "{}");
+      return value && typeof value === "object" ? value : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
   function defaultDayForTaipei(date) {
     var parts = new Intl.DateTimeFormat("en-US", {
       timeZone: "Asia/Taipei",
@@ -31,9 +72,14 @@
     return task.content;
   }
 
+  function excludedTaskContent(task) {
+    var content = String(task.content || "").trim();
+    return content === "休息(10)" || content === "午餐(30)" || content === "午餐(35)";
+  }
+
   function mergeTasks(tasks) {
     return tasks.filter(function (task) {
-      return String(task.content || "").trim() !== "休息(10)";
+      return !excludedTaskContent(task);
     }).map(function (task) {
       return Object.assign({}, task, { agenda: [agendaLabel(task)] });
     }).sort(function (a, b) {
@@ -135,7 +181,10 @@
 
   Vue.createApp({
     data: function () {
-      return { query: "", selected: "", day: defaultDayForTaipei(), highlighted: 0, showScrollTop: false, people: people, staffDirectory: directory };
+      return {
+        query: "", selected: "", day: defaultDayForTaipei(), highlighted: 0, showScrollTop: false,
+        people: people, staffDirectory: directory, taskReminders: loadReminderState(), reminderBusyKeys: {}, reminderErrors: {}
+      };
     },
     computed: {
       suggestions: function () {
@@ -212,7 +261,57 @@
           return a.localeCompare(b, "zh-Hant", { numeric: false });
         });
       },
-      taskDuration: function (task) { return minutes(task.end) - minutes(task.start); }
+      taskDuration: function (task) { return minutes(task.end) - minutes(task.start); },
+      reminderEnabled: function (task) { return Boolean(this.taskReminders[taskKey(task)]) && !this.reminderExpired(task); },
+      reminderBusy: function (task) { return Boolean(this.reminderBusyKeys[taskKey(task)]); },
+      reminderExpired: function (task) {
+        var at = reminderAt(task);
+        return !at || at.getTime() <= Date.now();
+      },
+      reminderError: function (task) { return Boolean(this.reminderErrors[taskKey(task)]); },
+      reminderMessage: function (task) {
+        var key = taskKey(task);
+        if (this.reminderErrors[key]) return this.reminderErrors[key];
+        if (this.reminderBusyKeys[key]) return "正在設定通知…";
+        if (this.reminderExpired(task)) return "通知時間已過";
+        if (this.taskReminders[key]) return "預計通知：" + notificationTimeLabel(reminderAt(task));
+        return "";
+      },
+      saveReminderState: function () {
+        window.localStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(this.taskReminders));
+      },
+      toggleTaskReminder: async function (task, event) {
+        var key = taskKey(task);
+        var enabled = Boolean(event.target.checked);
+        this.reminderErrors[key] = "";
+        this.reminderBusyKeys[key] = true;
+        try {
+          if (!window.PushReminder || !window.PushReminder.isConfigured()) throw new Error("通知服務尚未設定");
+          if (enabled) {
+            var startsAt = taskStartsAt(task);
+            if (!startsAt || reminderAt(task).getTime() <= Date.now()) throw new Error("通知時間已過");
+            await window.PushReminder.scheduleTaskReminder({
+              taskId: key,
+              taskTitle: task.role,
+              startsAt: startsAt.toISOString(),
+              targetUrl: window.location.href.split("#")[0]
+            });
+            this.taskReminders[key] = { startsAt: startsAt.toISOString() };
+          } else {
+            await window.PushReminder.cancelTaskReminder(key);
+            delete this.taskReminders[key];
+          }
+          this.taskReminders = Object.assign({}, this.taskReminders);
+          this.saveReminderState();
+        } catch (error) {
+          event.target.checked = !enabled;
+          this.reminderErrors[key] = "通知設定失敗：" + error.message;
+        } finally {
+          this.reminderBusyKeys[key] = false;
+          this.reminderBusyKeys = Object.assign({}, this.reminderBusyKeys);
+          this.reminderErrors = Object.assign({}, this.reminderErrors);
+        }
+      }
     },
     mounted: function () {
       this.updateScrollState();

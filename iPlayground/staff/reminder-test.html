@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="任務提醒彈窗互動測試" />
+    <meta name="description" content="任務通知設定互動教學" />
     <meta name="theme-color" content="#111111" />
-    <title>任務提醒測試｜IMS</title>
+    <title>通知設定教學｜IMS</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=20260722-2" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20260722-2" />
     <link rel="manifest" href="manifest.webmanifest?v=20260722-3" />
@@ -532,6 +532,28 @@
         font-weight: 900;
       }
 
+      .permission-modal {
+        width: min(420px, 100%);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, .7);
+        border-radius: 18px;
+        background: rgba(248, 248, 248, .96);
+        color: var(--ink);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, .35);
+        text-align: center;
+        animation: modal-in .32s cubic-bezier(.18, .9, .3, 1.1) both;
+      }
+
+      .permission-content { padding: 30px 28px 24px; }
+      .permission-icon { margin-bottom: 14px; font-size: 36px; }
+      .permission-modal small { color: #71716d; font: 800 10px/1 "SFMono-Regular", Consolas, monospace; letter-spacing: .12em; }
+      .permission-modal h2 { margin: 10px 0 9px; font-size: 21px; line-height: 1.35; }
+      .permission-modal p { margin: 0; color: #666662; font-size: 14px; line-height: 1.65; }
+      .permission-actions { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #d5d5d1; }
+      .permission-actions button { min-height: 54px; border: 0; background: transparent; color: #1673d1; cursor: pointer; font-weight: 800; }
+      .permission-actions button + button { border-left: 1px solid #d5d5d1; }
+      .permission-actions button:hover, .permission-actions button:focus-visible { background: #ececea; }
+
       @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
       @keyframes modal-in { from { opacity: 0; transform: translateY(24px) scale(.96); } to { opacity: 1; transform: none; } }
       @keyframes bell-ring { 0%, 45%, 100% { transform: rotate(0); } 12% { transform: rotate(12deg); } 24% { transform: rotate(-12deg); } 36% { transform: rotate(7deg); } }
@@ -559,15 +581,15 @@
     <main class="test-page">
       <header class="test-header">
         <div class="test-heading">
-          <p>REMINDER INTERACTION TEST · 7/22</p>
-          <h1>任務提醒預覽</h1>
+          <p>NOTIFICATION SETUP GUIDE</p>
+          <h1>通知設定教學</h1>
         </div>
         <a class="back-link" href="index.html">← 返回人員一覽</a>
       </header>
 
-      <p class="test-note">進入頁面後會自動建立 5 分鐘後開始、持續 20 分鐘的測試任務；開啟提醒後，系統會在任務開始前 2 分鐘發送通知。關閉開關可隨時取消。</p>
+      <p class="test-note">這是一段純前端教學示範。頁面會建立 5 分鐘後開始、持續 20 分鐘的示範任務；操作過程不會要求真實系統權限，也不會加入正式推播排程。</p>
 
-      <article class="task-card" aria-label="7月22日測試任務卡">
+      <article class="task-card" aria-label="7月22日示範任務卡">
         <div class="day-badge">7/22</div>
         <div class="time"><strong id="start-time">--:--</strong><span>↓</span><strong id="end-time">--:--</strong></div>
         <div class="reminder-control" id="reminder-control">
@@ -581,7 +603,7 @@
           <div class="task-top">
             <div class="task-title">
               <h2 id="task-title">報到桌佈置</h2>
-              <p>測試用任務卡片</p>
+              <p>通知設定示範卡片</p>
             </div>
           </div>
 
@@ -592,7 +614,7 @@
 
           <p class="duty">負責執行「報到桌佈置」，地點：政大公企中心 2F；工作內容：名牌分類、放置周邊小物、搬桌子。</p>
           <div class="status-line"><span id="status-text">提醒尚未啟動</span><span id="taipei-clock">台灣時間 --:--:--</span></div>
-          <p class="push-status" id="push-status" aria-live="polite">系統推播尚未連接 Cloudflare；目前仍可測試前景彈窗與提示音。</p>
+          <p class="push-status" id="push-status" aria-live="polite">教學模式不會建立真實推播；開啟後可體驗權限詢問、倒數、提示音與頁內彈窗。</p>
         </div>
       </article>
 
@@ -605,7 +627,7 @@
 
         <div class="focus-notice">
           <span>IMPORTANT</span>
-          <div>測試系統推播前，請先<strong>關閉手機的「專注模式／勿擾模式」</strong>，並確認已允許 iPlayground 任務助手傳送通知。</div>
+          <div>正式使用時，請先<strong>關閉手機的「專注模式／勿擾模式」</strong>，並允許 iPlayground 任務助手傳送通知；本頁只會模擬設定流程。</div>
         </div>
 
         <div class="install-platforms">
@@ -760,8 +782,21 @@
       </section>
     </div>
 
-    <script src="assets/push-config.js"></script>
-    <script src="assets/push-client.js?v=20260722-3"></script>
+    <div class="modal-backdrop" id="permission-backdrop" hidden>
+      <section class="permission-modal" role="dialog" aria-modal="true" aria-labelledby="permission-title" aria-describedby="permission-description">
+        <div class="permission-content">
+          <div class="permission-icon" aria-hidden="true">🔔</div>
+          <small>教學模擬 · 不會存取系統權限</small>
+          <h2 id="permission-title">「任務助手」想要傳送通知</h2>
+          <p id="permission-description">允許後，正式任務會在開始前提醒你。本頁只示範初次設定流程，不會建立真正的系統通知。</p>
+        </div>
+        <div class="permission-actions">
+          <button id="permission-deny" type="button">不允許</button>
+          <button id="permission-allow" type="button">允許</button>
+        </div>
+      </section>
+    </div>
+
     <script>
       (function () {
         "use strict";
@@ -774,12 +809,14 @@
         var reminderControl = document.getElementById("reminder-control");
         var statusText = document.getElementById("status-text");
         var pushStatus = document.getElementById("push-status");
-        var taskTitle = document.getElementById("task-title");
         var taipeiClock = document.getElementById("taipei-clock");
         var startTime = document.getElementById("start-time");
         var endTime = document.getElementById("end-time");
         var modalBackdrop = document.getElementById("modal-backdrop");
         var modalClose = document.getElementById("modal-close");
+        var permissionBackdrop = document.getElementById("permission-backdrop");
+        var permissionAllow = document.getElementById("permission-allow");
+        var permissionDeny = document.getElementById("permission-deny");
         var intervalId = null;
         var eventStartsAt = 0;
         var eventEndsAt = 0;
@@ -870,6 +907,7 @@
           if (reminderAt <= now.getTime()) createTestSchedule(now);
           reminderControl.classList.add("is-on");
           statusText.textContent = "提醒已啟動，將於任務開始前 2 分鐘通知";
+          pushStatus.textContent = "教學提醒已設定，預計於 " + taipeiTime(new Date(reminderAt), true) + " 顯示頁內示範通知。";
           updateCountdown(now);
           intervalId = window.setInterval(function () { updateCountdown(new Date()); }, 250);
         }
@@ -883,6 +921,14 @@
           if (!eventStartsAt || reminderAt <= now.getTime()) createTestSchedule(now);
           statusText.textContent = "提醒尚未啟動";
           modalBackdrop.hidden = true;
+        }
+
+        function closePermissionDemo(message) {
+          permissionBackdrop.hidden = true;
+          reminderSwitch.checked = false;
+          resetReminder();
+          pushStatus.textContent = message;
+          reminderSwitch.focus();
         }
 
         function initBrowserTabs() {
@@ -976,24 +1022,26 @@
 
         reminderSwitch.addEventListener("change", function () {
           if (reminderSwitch.checked) {
-            startReminder();
-            prepareAudio();
-            if (window.PushReminder && window.PushReminder.isConfigured()) {
-              pushStatus.textContent = "正在註冊任務開始前 2 分鐘的鎖定畫面通知…";
-              window.PushReminder.scheduleTestReminder(taskTitle.textContent.trim(), new Date(eventStartsAt).toISOString()).then(function (result) {
-                if (!reminderSwitch.checked) return;
-                pushStatus.textContent = "系統通知已排程，預計於 " + taipeiTime(new Date(result.sendAt), true) + " 送達。";
-              }).catch(function (error) {
-                pushStatus.textContent = "系統通知設定失敗：" + error.message + "。前景彈窗與提示音仍會執行。";
-              });
-            } else {
-              pushStatus.textContent = "Cloudflare Worker 尚未部署；目前只執行前景彈窗與提示音。";
-            }
+            reminderSwitch.checked = false;
+            permissionBackdrop.hidden = false;
+            pushStatus.textContent = "請在模擬權限視窗中選擇是否允許通知。";
+            permissionAllow.focus();
           } else {
             resetReminder();
-            pushStatus.textContent = "提醒已關閉。";
-            if (window.PushReminder) window.PushReminder.cancelTestReminder().catch(function () {});
+            pushStatus.textContent = "教學提醒已關閉；本次操作沒有建立任何真實推播。";
           }
+        });
+
+        permissionAllow.addEventListener("click", function () {
+          permissionBackdrop.hidden = true;
+          reminderSwitch.checked = true;
+          startReminder();
+          prepareAudio();
+          reminderSwitch.focus();
+        });
+
+        permissionDeny.addEventListener("click", function () {
+          closePermissionDemo("你在教學中選擇了不允許；可以再次開啟通知重新體驗設定流程。");
         });
 
         modalClose.addEventListener("click", function () {
@@ -1002,6 +1050,10 @@
         });
 
         document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && !permissionBackdrop.hidden) {
+            closePermissionDemo("已取消模擬權限設定；本次操作沒有建立任何真實推播。");
+            return;
+          }
           if (event.key === "Escape" && !modalBackdrop.hidden) {
             modalBackdrop.hidden = true;
             reminderSwitch.focus();

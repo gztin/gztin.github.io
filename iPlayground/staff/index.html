@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20260722-2" />
     <link rel="manifest" href="manifest.webmanifest?v=20260722-3" />
     <link rel="stylesheet" href="assets/style.css" />
-    <link rel="stylesheet" href="assets/filters.css?v=20260722-5" />
+    <link rel="stylesheet" href="assets/filters.css?v=20260723-1" />
   </head>
   <body>
     <div id="app" v-cloak>
@@ -36,7 +36,18 @@
               <div class="day-badge" :class="task.day.toLowerCase()">{{ dayLabel(task.day) }}</div>
               <div class="time"><strong>{{ task.start }}</strong><span>↓</span><strong>{{ task.endPending ? '待定' : task.end }}</strong></div>
               <div class="task-body">
-                <div class="task-top"><h3>{{ task.role }}</h3><span>{{ task.endPending ? '結束時間待定' : taskDuration(task) + ' 分鐘' }}</span></div>
+                <div class="task-top">
+                  <h3>{{ task.role }}</h3>
+                  <div class="task-actions">
+                    <span class="task-duration">{{ task.endPending ? '結束時間待定' : taskDuration(task) + ' 分鐘' }}</span>
+                    <label class="task-reminder" :class="{ 'is-on': reminderEnabled(task), 'is-disabled': reminderExpired(task) }">
+                      <span class="task-reminder-bell" aria-hidden="true">🔔</span>
+                      <input type="checkbox" :checked="reminderEnabled(task)" :disabled="reminderExpired(task) || reminderBusy(task)" :aria-label="task.role + '通知提醒'" @change="toggleTaskReminder(task, $event)" />
+                      <span class="task-reminder-switch" aria-hidden="true"></span>
+                    </label>
+                  </div>
+                </div>
+                <p v-if="reminderMessage(task)" class="task-reminder-status" :class="{ 'is-error': reminderError(task) }">{{ reminderMessage(task) }}</p>
                 <div v-if="taskPartners(task).length" class="task-card-partners">
                   <span>同時段夥伴</span>
                   <button v-for="partner in taskPartners(task)" :key="partner" @click="choose(partner)">{{ partner }}</button>
@@ -94,7 +105,7 @@
               <p v-if="!suggestions.length">找不到符合「{{ query }}」的人員</p>
             </div>
           </div>
-          <a class="reminder-test-link" href="reminder-test.html"><span aria-hidden="true">🔔</span> 測試提醒</a>
+          <a class="reminder-test-link" href="reminder-test.html"><span aria-hidden="true">🔔</span> 通知設定教學</a>
         </div>
         <div class="staff-grid">
           <button v-for="staff in filteredDirectory" :key="staff.person" :class="'person-type-' + staff.type" @click="choose(staff.person)">
@@ -110,6 +121,8 @@
     <script src="vendor/vue.global.prod.js"></script>
     <script src="data/schedule.js"></script>
     <script src="data/corrections.js"></script>
-    <script src="assets/app.js"></script>
+    <script src="assets/push-config.js"></script>
+    <script src="assets/push-client.js?v=20260723-1"></script>
+    <script src="assets/app.js?v=20260723-1"></script>
   </body>
 </html>

@@ -1,8 +1,8 @@
 import webpush from "web-push";
 
 const REMINDER_LEAD_MS = 2 * 60 * 1000;
-const MAX_TEST_START_DELAY_MS = 30 * 60 * 1000;
-const TEST_TARGET_URL = "https://gztin.github.io/iPlayground/staff/reminder-test.html";
+const MAX_TASK_START_DELAY_MS = 14 * 24 * 60 * 60 * 1000;
+const TASK_TARGET_URL = "https://gztin.github.io/iPlayground/staff/";
 
 function json(data, status, extraHeaders) {
   return new Response(JSON.stringify(data), {
@@ -53,34 +53,22 @@ function normalizeTaskTitle(value) {
   return value.trim().replace(/\s+/g, " ").slice(0, 60);
 }
 
-async function saveTestReminder(request, env) {
-  const input = await request.json().catch(() => null);
-  if (!input || !validateSubscription(input.subscription)) {
-    return { errorResponse: json({ error: "訂閱資料格式不正確" }, 400) };
-  }
+function normalizeTaskId(value) {
+  if (typeof value !== "string") return "";
+  return value.trim().replace(/\s+/g, " ").slice(0, 180);
+}
 
-  const now = new Date();
-  const nowIso = now.toISOString();
-  const startsAtMs = Date.parse(input.startsAt);
-  if (!Number.isFinite(startsAtMs)) {
-    return { errorResponse: json({ error: "任務開始時間格式不正確" }, 400) };
+function taskTargetUrl(value, env) {
+  try {
+    const url = new URL(value || TASK_TARGET_URL);
+    return url.origin === env.ALLOWED_ORIGIN ? url.href : TASK_TARGET_URL;
+  } catch (error) {
+    return TASK_TARGET_URL;
   }
-  const sendAtMs = startsAtMs - REMINDER_LEAD_MS;
-  if (sendAtMs <= now.getTime()) {
-    return { errorResponse: json({ error: "提醒時間已過，請重新整理頁面" }, 400) };
-  }
-  if (startsAtMs > now.getTime() + MAX_TEST_START_DELAY_MS) {
-    return { errorResponse: json({ error: "測試任務開始時間超出允許範圍" }, 400) };
-  }
-  const sendAt = new Date(sendAtMs).toISOString();
-  const startsAt = new Date(startsAtMs).toISOString();
-  const subscription = input.subscription;
-  const taskTitle = normalizeTaskTitle(input.taskTitle);
-  const notificationBody = taskTitle
-    ? `${taskTitle}工作即將在兩分鐘後開始`
-    : "任務即將於兩分鐘後開始";
+}
+
+async function saveSubscription(subscription, nowIso, env) {
   const id = await subscriptionId(subscription.endpoint);
-
   await env.REMINDERS.prepare(`
     INSERT INTO subscriptions (id, endpoint, p256dh, auth, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?)
@@ -89,36 +77,61 @@ async function saveTestReminder(request, env) {
       auth = excluded.auth,
       updated_at = excluded.updated_at
   `).bind(id, subscription.endpoint, subscription.keys.p256dh, subscription.keys.auth, nowIso, nowIso).run();
-
-  await env.REMINDERS.prepare(
-    "DELETE FROM reminders WHERE subscription_id = ? AND kind = 'test' AND status = 'pending'"
-  ).bind(id).run();
-
-  const reminderId = crypto.randomUUID();
-
-  await env.REMINDERS.prepare(`
-    INSERT INTO reminders (id, subscription_id, kind, send_at, title, body, target_url, status, created_at)
-    VALUES (?, ?, 'test', ?, ?, ?, ?, 'pending', ?)
-  `).bind(
-    reminderId,
-    id,
-    sendAt,
-    "iPlayground 任務通知",
-    notificationBody,
-    TEST_TARGET_URL,
-    nowIso
-  ).run();
-
-  return { reminderId, sendAt, startsAt };
+  return id;
 }
 
-async function cancelTestReminder(request, env) {
+async function saveTaskReminder(request, env) {
   const input = await request.json().catch(() => null);
-  if (!input || typeof input.endpoint !== "string") return json({ error: "缺少訂閱 endpoint" }, 400);
+  if (!input || !validateSubscription(input.subscription)) {
+    return { errorResponse: json({ error: "訂閱資料格式不正確" }, 400) };
+  }
+  const taskId = normalizeTaskId(input.taskId);
+  if (!taskId) return { errorResponse: json({ error: "缺少任務識別碼" }, 400) };
+
+  const now = new Date();
+  const startsAtMs = Date.parse(input.startsAt);
+  if (!Number.isFinite(startsAtMs)) return { errorResponse: json({ error: "任務開始時間格式不正確" }, 400) };
+  const sendAtMs = startsAtMs - REMINDER_LEAD_MS;
+  if (sendAtMs <= now.getTime()) return { errorResponse: json({ error: "通知時間已過" }, 400) };
+  if (startsAtMs > now.getTime() + MAX_TASK_START_DELAY_MS) {
+    return { errorResponse: json({ error: "任務開始時間超出允許範圍" }, 400) };
+  }
+
+  const nowIso = now.toISOString();
+  const subscriptionIdValue = await saveSubscription(input.subscription, nowIso, env);
+  const kind = "task:" + taskId;
+  await env.REMINDERS.prepare(
+    "DELETE FROM reminders WHERE subscription_id = ? AND kind = ? AND status = 'pending'"
+  ).bind(subscriptionIdValue, kind).run();
+
+  const reminderId = crypto.randomUUID();
+  const taskTitle = normalizeTaskTitle(input.taskTitle);
+  const sendAt = new Date(sendAtMs).toISOString();
+  const startsAt = new Date(startsAtMs).toISOString();
+  await env.REMINDERS.prepare(`
+    INSERT INTO reminders (id, subscription_id, kind, send_at, title, body, target_url, status, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?)
+  `).bind(
+    reminderId,
+    subscriptionIdValue,
+    kind,
+    sendAt,
+    "iPlayground 任務通知",
+    taskTitle ? `${taskTitle}工作即將在兩分鐘後開始` : "任務即將於兩分鐘後開始",
+    taskTargetUrl(input.targetUrl, env),
+    nowIso
+  ).run();
+  return { reminderId, sendAt, startsAt, taskId };
+}
+
+async function cancelTaskReminder(request, env) {
+  const input = await request.json().catch(() => null);
+  const taskId = normalizeTaskId(input && input.taskId);
+  if (!input || typeof input.endpoint !== "string" || !taskId) return json({ error: "缺少訂閱 endpoint 或任務識別碼" }, 400);
   const id = await subscriptionId(input.endpoint);
   await env.REMINDERS.prepare(
-    "DELETE FROM reminders WHERE subscription_id = ? AND kind = 'test' AND status = 'pending'"
-  ).bind(id).run();
+    "DELETE FROM reminders WHERE subscription_id = ? AND kind = ? AND status = 'pending'"
+  ).bind(id, "task:" + taskId).run();
   return json({ ok: true });
 }
 
@@ -205,15 +218,17 @@ export default {
       response = json({ ok: true, service: "iplayground-reminders" });
     } else if (request.method === "GET" && url.pathname === "/api/config") {
       response = json({ vapidPublicKey: env.VAPID_PUBLIC_KEY });
-    } else if (request.method === "POST" && url.pathname === "/api/test-reminder") {
-      const scheduled = await saveTestReminder(request, env);
-      if (scheduled.errorResponse) {
-        response = scheduled.errorResponse;
-      } else {
-        response = json({ ok: true, sendAt: scheduled.sendAt, startsAt: scheduled.startsAt });
-      }
-    } else if (request.method === "DELETE" && url.pathname === "/api/test-reminder") {
-      response = await cancelTestReminder(request, env);
+    } else if (request.method === "POST" && url.pathname === "/api/task-reminder") {
+      const scheduled = await saveTaskReminder(request, env);
+      response = scheduled.errorResponse || json({
+        ok: true,
+        reminderId: scheduled.reminderId,
+        sendAt: scheduled.sendAt,
+        startsAt: scheduled.startsAt,
+        taskId: scheduled.taskId
+      });
+    } else if (request.method === "DELETE" && url.pathname === "/api/task-reminder") {
+      response = await cancelTaskReminder(request, env);
     } else {
       response = json({ error: "Not found" }, 404);
     }

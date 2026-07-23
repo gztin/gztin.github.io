@@ -134,28 +134,30 @@
     return function () { navigator.serviceWorker.removeEventListener("message", handler); };
   }
 
-  async function scheduleTestReminder(taskTitle, startsAt) {
+  async function scheduleTaskReminder(task) {
     var subscription = await getSubscription();
-    return requestJson("/api/test-reminder", {
+    return requestJson("/api/task-reminder", {
       method: "POST",
       body: JSON.stringify({
         subscription: subscription.toJSON(),
-        taskTitle: String(taskTitle || "").trim(),
-        startsAt: startsAt
+        taskId: String(task.taskId || ""),
+        taskTitle: String(task.taskTitle || "").trim(),
+        startsAt: task.startsAt,
+        targetUrl: task.targetUrl
       })
     });
   }
 
-  async function cancelTestReminder() {
+  async function cancelTaskReminder(taskId) {
     var support = supportStatus();
     if (!support.supported || !normalizedApiBase()) return;
     var registration = await navigator.serviceWorker.getRegistration("./service-worker.js");
     if (!registration) return;
     var subscription = await registration.pushManager.getSubscription();
     if (!subscription) return;
-    await requestJson("/api/test-reminder", {
+    await requestJson("/api/task-reminder", {
       method: "DELETE",
-      body: JSON.stringify({ endpoint: subscription.endpoint })
+      body: JSON.stringify({ endpoint: subscription.endpoint, taskId: String(taskId || "") })
     });
   }
 
@@ -165,7 +167,7 @@
     getDiagnostics: getDiagnostics,
     runLocalNotificationTest: runLocalNotificationTest,
     onDiagnosticMessage: onDiagnosticMessage,
-    scheduleTestReminder: scheduleTestReminder,
-    cancelTestReminder: cancelTestReminder
+    scheduleTaskReminder: scheduleTaskReminder,
+    cancelTaskReminder: cancelTaskReminder
   };
 })();
