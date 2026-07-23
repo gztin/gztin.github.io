@@ -381,6 +381,14 @@
         background: #f3f3f1;
       }
 
+      .visual-step img.phone-capture {
+        width: auto;
+        height: min(590px, 68vh);
+        max-width: 100%;
+        margin-inline: auto;
+        aspect-ratio: auto;
+      }
+
       .visual-step-copy {
         display: grid;
         grid-template-columns: 34px minmax(0, 1fr);
@@ -615,34 +623,45 @@
               <div class="carousel-viewport">
                 <div class="carousel-track">
               <article class="visual-step">
-                <img src="assets/guide-ios-share-realistic.png" alt="Safari 下方分享按鈕的操作示意圖" width="1024" height="1536" />
+                <img class="phone-capture" src="assets/guide-safari-share-menu.jpg" alt="Safari 選單中分享功能的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">01</span>
                   <div class="visual-step-text">
-                    <h4>使用 Safari 開啟</h4>
-                    <p>在 Safari 開啟本頁，點選畫面下方的分享按鈕。</p>
+                    <h4>開啟分享選單</h4>
+                    <p>在 Safari 開啟本頁，點選選單中的「分享」。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-ios-add-home-realistic.png" alt="Safari 分享選單中加入主畫面的操作示意圖" width="1024" height="1536" />
+                <img class="phone-capture" src="assets/guide-safari-add-home.jpg" alt="Safari 分享選單中加入主畫面的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">02</span>
                   <div class="visual-step-text">
-                    <h4>加入手機主畫面</h4>
-                    <p>向下找到「加入主畫面」，確認名稱後點選加入。</p>
+                    <h4>選擇加入主畫面</h4>
+                    <p>在分享選單中向下找到並點選「加入主畫面」。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-ios-notification-realistic.png" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="1024" height="1536" />
+                <img class="phone-capture" src="assets/guide-safari-confirm-add.jpg" alt="iPhone 確認任務助手名稱並加入主畫面的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">03</span>
                   <div class="visual-step-text">
-                    <h4>從桌面開啟並允許通知</h4>
-                    <p>回到桌面開啟任務助手，打開提醒並選擇允許通知。</p>
+                    <h4>確認並加入</h4>
+                    <p>確認名稱為「任務助手」，再點選右上角的「加入」。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img class="phone-capture" src="assets/guide-safari-home-screen.jpg" alt="iPhone 主畫面顯示任務助手圖示的實際畫面" width="1179" height="2556" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">04</span>
+                  <div class="visual-step-text">
+                    <h4>從主畫面開啟</h4>
+                    <p>回到 iPhone 主畫面，點選「任務助手」即可開啟。</p>
                   </div>
                 </div>
               </article>
@@ -654,6 +673,7 @@
                   <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="iPhone 步驟 1" aria-current="true"></button>
                   <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="iPhone 步驟 2" aria-current="false"></button>
                   <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="iPhone 步驟 3" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="3" aria-label="iPhone 步驟 4" aria-current="false"></button>
                 </div>
                 <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 iPhone 步驟">→</button>
               </div>
@@ -669,34 +689,45 @@
               <div class="carousel-viewport">
                 <div class="carousel-track">
               <article class="visual-step">
-                <img src="assets/guide-iphone-chrome-menu.png" alt="iPhone Chrome 右下角更多選單的操作示意圖" width="1086" height="1448" />
+                <img class="phone-capture" src="assets/guide-chrome-share.jpg" alt="iPhone Chrome 右上方分享按鈕的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">01</span>
                   <div class="visual-step-text">
-                    <h4>使用 iPhone Chrome 開啟</h4>
-                    <p>在 Chrome 開啟本頁，點選右下角的更多選單（•••）。</p>
+                    <h4>開啟分享選單</h4>
+                    <p>在 Chrome 開啟本頁，點選網址列右側的分享按鈕。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-iphone-chrome-add-home.png" alt="iPhone Chrome 選單中加入主畫面的操作示意圖" width="1086" height="1448" />
+                <img class="phone-capture" src="assets/guide-safari-add-home.jpg" alt="iPhone 分享選單中加入主畫面的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">02</span>
                   <div class="visual-step-text">
-                    <h4>加入手機主畫面</h4>
-                    <p>在選單中找到「加入主畫面」，點選後確認加入。</p>
+                    <h4>選擇加入主畫面</h4>
+                    <p>在分享選單中向下找到並點選「加入主畫面」。</p>
                   </div>
                 </div>
               </article>
 
               <article class="visual-step">
-                <img src="assets/guide-iphone-chrome-notification.png" alt="iPhone 允許任務助手傳送通知的操作示意圖" width="1086" height="1448" />
+                <img class="phone-capture" src="assets/guide-safari-confirm-add.jpg" alt="iPhone 確認任務助手名稱並加入主畫面的實際操作畫面" width="1179" height="2556" />
                 <div class="visual-step-copy">
                   <span class="visual-step-number">03</span>
                   <div class="visual-step-text">
-                    <h4>從桌面開啟並允許通知</h4>
-                    <p>回到桌面開啟任務助手，打開提醒並選擇允許通知。</p>
+                    <h4>確認並加入</h4>
+                    <p>確認名稱為「任務助手」，再點選右上角的「加入」。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="visual-step">
+                <img class="phone-capture" src="assets/guide-safari-home-screen.jpg" alt="iPhone 主畫面顯示任務助手圖示的實際畫面" width="1179" height="2556" />
+                <div class="visual-step-copy">
+                  <span class="visual-step-number">04</span>
+                  <div class="visual-step-text">
+                    <h4>從主畫面開啟</h4>
+                    <p>回到 iPhone 主畫面，點選「任務助手」即可開啟。</p>
                   </div>
                 </div>
               </article>
@@ -708,6 +739,7 @@
                   <button class="carousel-dot" type="button" data-carousel-dot="0" aria-label="iPhone Chrome 步驟 1" aria-current="true"></button>
                   <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="iPhone Chrome 步驟 2" aria-current="false"></button>
                   <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="iPhone Chrome 步驟 3" aria-current="false"></button>
+                  <button class="carousel-dot" type="button" data-carousel-dot="3" aria-label="iPhone Chrome 步驟 4" aria-current="false"></button>
                 </div>
                 <button class="carousel-arrow" type="button" data-carousel-next aria-label="下一個 iPhone Chrome 步驟">→</button>
               </div>
