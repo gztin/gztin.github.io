@@ -116,7 +116,7 @@ async function saveTaskReminder(request, env) {
     subscriptionIdValue,
     kind,
     sendAt,
-    "iPlayground 任務通知",
+    "夏令營任務通知",
     taskTitle ? `${taskTitle}工作即將在兩分鐘後開始` : "任務即將於兩分鐘後開始",
     taskTargetUrl(input.targetUrl, env),
     nowIso

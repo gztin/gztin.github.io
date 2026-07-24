@@ -1,6 +1,6 @@
 "use strict";
 
-var SERVICE_WORKER_VERSION = "2026-07-22.3";
+var SERVICE_WORKER_VERSION = "2026-07-24.1";
 
 function reportToClients(message) {
   return self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {
@@ -32,9 +32,9 @@ self.addEventListener("message", function (event) {
 self.addEventListener("push", function (event) {
   var receivedAt = new Date().toISOString();
   var fallback = {
-    title: "iPlayground 任務通知",
+    title: "夏令營任務通知",
     body: "任務即將於兩分鐘後開始",
-    url: "./"
+    url: "./app.html"
   };
   var data = fallback;
 
@@ -52,7 +52,7 @@ self.addEventListener("push", function (event) {
     badge: "assets/icon-192.png?v=20260722-2",
     tag: data.tag || "ims-task-reminder",
     renotify: true,
-    data: { url: data.url || "./" }
+    data: { url: data.url || "./app.html" }
   };
 
   var displayNotification = reportToClients({
@@ -82,7 +82,7 @@ self.addEventListener("push", function (event) {
 
 self.addEventListener("notificationclick", function (event) {
   event.notification.close();
-  var target = new URL(event.notification.data.url || "./", self.location.href).href;
+  var target = new URL(event.notification.data.url || "./app.html", self.location.href).href;
   event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {
     var matchingClient = clients.find(function (client) { return client.url === target; });
     if (matchingClient) return matchingClient.focus();

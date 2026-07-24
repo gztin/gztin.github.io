@@ -3,7 +3,7 @@
 
   var source = window.OFFLINE_SCHEDULE;
   if (!window.Vue || !source) {
-    document.body.innerHTML = "<p style='padding:24px;font-family:sans-serif'>離線檔案不完整，請確認 vendor 與 data 資料夾仍與 index.html 放在一起。</p>";
+    document.body.innerHTML = "<p style='padding:24px;font-family:sans-serif'>離線檔案不完整，請確認 vendor 與 data 資料夾仍與任務頁放在一起。</p>";
     return;
   }
 
@@ -74,7 +74,7 @@
 
   function excludedTaskContent(task) {
     var content = String(task.content || "").trim();
-    return content === "休息(10)" || content === "午餐(30)" || content === "午餐(35)";
+    return content.includes("小隊休息") || content.includes("午間野餐");
   }
 
   function mergeTasks(tasks) {
@@ -88,24 +88,21 @@
   }
 
   function personType(tasks, person) {
-    if ((person === "Joy" || person === "Jess") && tasks.some(function (task) { return task.role !== "講者" && task.role !== "工作坊講者"; })) return "staff";
-    if (tasks.some(function (task) { return task.role === "工作坊講者"; })) return "workshop";
-    if (tasks.some(function (task) { return task.role === "講者"; })) return "session";
+    if (tasks.some(function (task) { return task.role !== "活動講師" && task.role !== "手作課程講師"; })) return "staff";
+    if (tasks.some(function (task) { return task.role === "手作課程講師"; })) return "workshop";
+    if (tasks.some(function (task) { return task.role === "活動講師"; })) return "session";
     return "staff";
   }
 
   function roleCategory(role) {
-    if (role === "講者" || role === "工作坊講者") return "";
+    if (role === "活動講師" || role === "手作課程講師") return "";
     if (role.startsWith("待補充｜")) return "";
-    if (role.includes("攝影")) return "攝影";
-    if (role.startsWith("便當組")) return "便當組";
-    if (role === "講者便當") return "講者便當";
-    if (role === "計時＋舉牌") return "計時／舉牌";
-    if (role === "計時＋驗票" || role.includes("工作坊主持") || role.includes("工作坊組長")) return "工作坊場務";
-    if (role.startsWith("中控室") || role.startsWith("中控3") || role.startsWith("中控(實習）")) return "中控室";
-    if (role.includes("櫃檯") || role.includes("販售") || role.includes("抽獎") || role.includes("補水")) return "櫃檯";
-    if (role.includes("採訪")) return "採訪";
-    if (role === "技術活動" || role === "學生活動") return "活動支援";
+    if (role === "活動紀錄") return "活動紀錄";
+    if (role === "營隊餐務") return "營隊餐務";
+    if (role === "活動引導") return "活動引導";
+    if (role === "器材與音控") return "器材與音控";
+    if (role === "營隊服務站") return "營隊服務站";
+    if (role === "小隊活動支援") return "小隊活動支援";
     return role.trim();
   }
 

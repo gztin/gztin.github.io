@@ -3,126 +3,281 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="7/24、7/25、7/26 工作人員離線任務查詢" />
-    <meta name="theme-color" content="#111111" />
-    <title>工作人員任務站｜離線版</title>
+    <meta name="description" content="活動任務站協助研討會與小型活動快速匯入班表、分派任務，讓工作人員掃碼查看任務與接收提醒。" />
+    <meta name="theme-color" content="#edf5fc" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:title" content="活動任務站｜短期活動的任務分派工具" />
+    <meta property="og:description" content="匯入班表、完成分組與任務發布，讓工作人員掃碼查看任務並接收提醒。" />
+    <meta property="og:url" content="https://gztin.github.io/iPlayground/staff/" />
+    <meta property="og:image" content="https://gztin.github.io/iPlayground/staff/assets/og-blue-infographic.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="活動任務站｜短期活動的任務分派工具" />
+    <meta name="twitter:description" content="讓每位工作人員，都知道現在該做什麼。" />
+    <meta name="twitter:image" content="https://gztin.github.io/iPlayground/staff/assets/og-blue-infographic.jpg" />
+    <title>活動任務站｜短期活動的任務分派工具</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=20260722-2" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20260722-2" />
-    <link rel="manifest" href="manifest.webmanifest?v=20260722-3" />
-    <link rel="stylesheet" href="assets/style.css" />
-    <link rel="stylesheet" href="assets/filters.css?v=20260723-1" />
+    <link rel="stylesheet" href="assets/landing.css?v=20260724-8" />
   </head>
   <body>
-    <div id="app" v-cloak>
-      <section v-if="activeStaff" class="results wrap" aria-live="polite">
-        <div class="result-heading">
-          <button class="home-link" @click="clearSearch" aria-label="返回首頁"><span class="home-label">← 返回首頁</span><span class="home-icon" aria-hidden="true">⌂</span></button>
-          <div class="day-tabs" aria-label="日期篩選">
-            <button v-for="value in ['D0','D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
+    <a class="skip-link" href="#main-content">跳至主要內容</a>
+
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="活動任務站首頁">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>活動任務站</span>
+      </a>
+      <nav class="desktop-nav" aria-label="主要導覽">
+        <a href="#problems">適用活動</a>
+        <a href="#how-it-works">使用方式</a>
+        <a href="#faq">常見問題</a>
+      </nav>
+      <div class="header-actions">
+        <a class="text-link" href="app.html">工作人員入口</a>
+        <a class="button button-dark button-small" href="#launch">舉辦活動</a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section id="top" class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> SHORT-TERM EVENT OPERATIONS</p>
+          <h1>讓每位工作人員，<br><em>都知道現在該做什麼</em></h1>
+          <p class="hero-lead">為研討會與小型活動設計的任務分派工具。匯入班表、完成分組與任務發布，工作人員掃描 QR Code 就能查看任務、接收提醒並進行活動內聯繫。</p>
+          <div class="hero-actions">
+            <a class="button button-accent" href="#launch">舉辦活動 <span aria-hidden="true">↗</span></a>
+            <a class="button button-outline" href="#how-it-works">看看如何運作 <span aria-hidden="true">↓</span></a>
           </div>
+          <ul class="hero-notes" aria-label="產品特色摘要">
+            <li>免下載 App</li>
+            <li>CSV 快速匯入</li>
+            <li>最多 100 位工作人員</li>
+          </ul>
         </div>
-        <div class="fixed-task-controls">
-          <div class="summary-grid">
-            <div class="person-summary"><strong>{{ activeStaff.person }}</strong><span>人員名稱</span></div>
-            <div><strong>{{ visibleTasks.length }}</strong><span>段任務</span></div>
-            <div><strong>{{ durationLabel }}</strong><span>排定時間</span></div>
-            <div class="roles"><strong>{{ roleLabel }}</strong><span>負責職務</span></div>
-          </div>
-        </div>
-        <div class="mobile-controls-spacer" aria-hidden="true"></div>
-        <div class="main-tasks-view">
-          <div class="timeline">
-            <article v-for="(task, index) in visibleTasks" :key="task.day + task.start + task.role + index" class="task-card" :class="{ 'is-vacancy': task.assignment === '待補充' }">
-              <div class="day-badge" :class="task.day.toLowerCase()">{{ dayLabel(task.day) }}</div>
-              <div class="time"><strong>{{ task.start }}</strong><span>↓</span><strong>{{ task.endPending ? '待定' : task.end }}</strong></div>
-              <div class="task-body">
-                <div class="task-top">
-                  <h3>{{ task.role }}</h3>
-                  <div class="task-actions">
-                    <span class="task-duration">{{ task.endPending ? '結束時間待定' : taskDuration(task) + ' 分鐘' }}</span>
-                    <label class="task-reminder" :class="{ 'is-on': reminderEnabled(task), 'is-disabled': reminderExpired(task) }">
-                      <span class="task-reminder-bell" aria-hidden="true">🔔</span>
-                      <input type="checkbox" :checked="reminderEnabled(task)" :disabled="reminderExpired(task) || reminderBusy(task)" :aria-label="task.role + '通知提醒'" @change="toggleTaskReminder(task, $event)" />
-                      <span class="task-reminder-switch" aria-hidden="true"></span>
-                    </label>
-                  </div>
+
+        <div class="product-stage" aria-label="活動主辦人後台與工作人員手機任務畫面示意">
+          <div class="dashboard-mockup">
+            <div class="mockup-bar">
+              <span class="mockup-logo"><i></i><i></i><i></i></span>
+              <span>夏令營執行總覽</span>
+              <small>活動進行中</small>
+            </div>
+            <div class="dashboard-body">
+              <aside>
+                <b>任務總覽</b>
+                <span>工作人員</span>
+                <span>組別管理</span>
+                <span>訊息中心</span>
+              </aside>
+              <div class="dashboard-content">
+                <div class="dashboard-heading">
+                  <div><small>7 月 25 日</small><strong>今日任務</strong></div>
+                  <b>24 <small>項</small></b>
                 </div>
-                <p v-if="reminderMessage(task)" class="task-reminder-status" :class="{ 'is-error': reminderError(task) }">{{ reminderMessage(task) }}</p>
-                <div v-if="taskPartners(task).length" class="task-card-partners">
-                  <span>同時段夥伴</span>
-                  <button v-for="partner in taskPartners(task)" :key="partner" @click="choose(partner)">{{ partner }}</button>
+                <div class="progress-row"><span style="--progress: 82%"></span><small>19 項已確認</small></div>
+                <div class="assignment-list">
+                  <div><time>07:30</time><p><b>服務台準備</b><span>接待組 · 3 人</span></p><i>已確認</i></div>
+                  <div><time>08:00</time><p><b>場地與設備確認</b><span>場務組 · 4 人</span></p><i>已確認</i></div>
+                  <div><time>09:20</time><p><b>講師接待與引導</b><span>議程組 · 2 人</span></p><i class="waiting">待確認</i></div>
                 </div>
-                <p v-if="task.assignment === '待補充'" class="vacancy-note">待補充｜需求人數：{{ task.requiredLabel }}</p>
-                <p class="duty">{{ task.duty || `請於此時段負責「${task.role}」相關工作與現場交接。` }}</p>
-                <details>
-                  <summary>查看同時段議程 <span>＋</span></summary>
-                  <ul><li v-for="item in task.agenda" :key="item">{{ item }}</li></ul>
-                </details>
               </div>
+            </div>
+          </div>
+
+          <div class="phone-mockup">
+            <div class="phone-status"><span>9:41</span><i></i><span>5G ◒</span></div>
+            <div class="phone-heading"><small>7/25 星期五</small><strong>早安，營隊夥伴 12</strong><span>今天有 4 項任務</span></div>
+            <article class="mini-task">
+              <div><time>07:30</time><span>↓</span><time>08:00</time></div>
+              <section>
+                <p><span>下一項任務</span><i>🔔</i></p>
+                <h2>服務台準備</h2>
+                <small>一樓大廳 · 與 2 位夥伴共同執行</small>
+              </section>
             </article>
-            <div v-if="!visibleTasks.length" class="empty">這個日期沒有排定任務。</div>
+            <div class="phone-alert"><span>✓</span><p><b>提醒已設定</b><small>預計於 07:28 通知</small></p></div>
+            <nav aria-label="手機任務示意導覽"><b>任務</b><span>全體</span><span>訊息</span></nav>
+          </div>
+
+          <div class="qr-chip" aria-hidden="true">
+            <span class="qr-pattern"></span>
+            <p><b>掃碼領取任務</b><small>不必建立永久帳號</small></p>
           </div>
         </div>
-        <section v-if="activeStaff.missions.length" class="side-missions" aria-labelledby="side-missions-title">
-          <div class="mission-heading">
-            <p class="section-label">SIDE MISSIONS</p>
-            <h2 id="side-missions-title">支線任務</h2>
-          </div>
-          <div class="mission-grid">
-            <article v-for="(mission, index) in activeStaff.missions" :key="mission.title + index" class="mission-card">
-              <span class="mission-number">{{ String(index + 1).padStart(2, '0') }}</span>
-              <div>
-                <h3>{{ mission.title }}</h3>
-                <p>{{ mission.detail }}</p>
-                <a v-if="mission.link" :href="mission.link" target="_blank" rel="noopener">開啟相關資料 →</a>
-              </div>
-            </article>
-          </div>
-        </section>
-        <nav class="mobile-task-nav" aria-label="日期切換">
-          <div class="mobile-task-dates" aria-label="日期篩選">
-            <button v-for="value in ['D0','D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
-          </div>
-        </nav>
       </section>
 
-      <section v-else class="directory wrap">
-        <div class="directory-heading">
-          <div><p class="section-label">人員一覽</p><h2 class="system-title">IMS <small>iPlayground Mission Search System</small></h2></div>
-          <p>共 {{ filteredDirectory.length }} 位人員<br>資料涵蓋 7/24、7/25 與 7/26</p>
-        </div>
-        <div class="directory-tools">
-          <div class="search-shell directory-search">
-            <div class="search-row">
-              <span class="search-icon" aria-hidden="true">⌕</span>
-              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋姓名，例如 Hokila" autocomplete="off">
-              <button v-if="query" class="clear" @click="clearSearch" aria-label="清除搜尋">×</button>
-            </div>
-            <div v-if="query && !activeName" class="suggestions" role="listbox" aria-label="搜尋建議">
-              <button v-for="(name, index) in suggestions" :key="name" :class="{ highlighted: index === highlighted }" @click="choose(name)">
-                <span>{{ name }}</span><small>查看任務 →</small>
-              </button>
-              <p v-if="!suggestions.length">找不到符合「{{ query }}」的人員</p>
-            </div>
+      <section class="trust-strip" aria-label="適用活動類型">
+        <span>適用於</span>
+        <ul>
+          <li>研討會</li>
+          <li>工作坊</li>
+          <li>夏令營</li>
+          <li>市集</li>
+          <li>展覽</li>
+          <li>尾牙活動</li>
+        </ul>
+      </section>
+
+      <section id="problems" class="problem-section">
+        <div class="section-shell split-heading">
+          <div>
+            <p class="eyebrow eyebrow-light"><span></span> WHY IT MATTERS</p>
+            <h2>活動規模不大，<br>協調工作卻一點都不少</h2>
           </div>
-          <a class="reminder-test-link" href="reminder-test.html"><span aria-hidden="true">🔔</span> 通知設定教學</a>
+          <p>二十到一百人的活動，通常沒有大型活動的系統預算，卻同樣需要處理人員、時間、地點與臨時異動。</p>
         </div>
-        <div class="staff-grid">
-          <button v-for="staff in filteredDirectory" :key="staff.person" :class="'person-type-' + staff.type" @click="choose(staff.person)">
-            <span class="staff-info"><strong>{{ staff.person }}</strong><small>{{ staff.rolePreview }}</small></span>
-            <span class="count">{{ staff.merged.length }}<small>任務</small></span>
-          </button>
+        <div class="section-shell problem-grid">
+          <article>
+            <figure class="problem-image">
+              <img src="assets/problem-scattered-schedules-illustration.jpg" width="1100" height="825" alt="工作人員面對多份不同版本班表、電腦表格與手機訊息的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>班表四處散落</h3>
+            <p>Excel、紙本與群組訊息各有一份，活動前一天仍在確認哪個版本才是最新資料。</p>
+          </article>
+          <article>
+            <figure class="problem-image">
+              <img src="assets/problem-unclear-handoff-illustration.jpg" width="1100" height="825" alt="活動工作人員交接器材與清單，卻不確定下一步方向的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>現場交接不清楚</h3>
+            <p>工作人員知道職務，卻不知道時間、地點、合作對象與完成後要交接給誰。</p>
+          </article>
+          <article>
+            <figure class="problem-image">
+              <img src="assets/problem-sync-changes-illustration.jpg" width="1100" height="825" alt="分散在不同區域的工作人員無法同步收到任務異動的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>異動難以同步</h3>
+            <p>臨時換班或調整任務，只能逐一私訊，仍無法確認每個人是否已經看到。</p>
+          </article>
+          <article>
+            <figure class="problem-image">
+              <img src="assets/problem-personal-contact-illustration.jpg" width="1100" height="825" alt="短期合作的工作人員交換私人聯絡方式並擔心個資的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>短期合作也要加好友</h3>
+            <p>只合作一天，卻得互加私人 LINE。活動結束後，聯絡關係與個資仍持續留下。</p>
+          </article>
         </div>
       </section>
-      <button v-show="showScrollTop" class="scroll-top" :class="{ 'directory-scroll-top': !activeStaff }" @click="scrollToTop" aria-label="回到頁面頂端">↑</button>
-      <footer class="wrap"><span>資料來源：7/24 場佈任務、7/25 / 7/26 場務進度追蹤表</span><span>如有異動，請以現場總指揮通知為準</span></footer>
-    </div>
-    <noscript>此離線網頁需要啟用 JavaScript 才能查詢。</noscript>
-    <script src="vendor/vue.global.prod.js"></script>
-    <script src="data/schedule.js"></script>
-    <script src="data/corrections.js"></script>
-    <script src="assets/push-config.js"></script>
-    <script src="assets/push-client.js?v=20260723-1"></script>
-    <script src="assets/app.js?v=20260723-1"></script>
+
+      <section id="how-it-works" class="steps-section section-shell">
+        <div class="section-heading centered">
+          <p class="eyebrow"><span></span> HOW IT WORKS</p>
+          <h2>從創建活動到現場協作，<br>四個步驟就能開始</h2>
+          <p>活動總召先建立活動，工作人員再透過手機領取身分、確認任務並共享現場情報。</p>
+        </div>
+        <ol class="steps-grid">
+          <li>
+            <span>01</span>
+            <figure class="step-visual step-image">
+              <img src="assets/step-create-event-illustration.jpg" width="1100" height="825" alt="活動總召建立活動並將工作人員分成不同組別的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>創建活動</h3>
+            <p>註冊成為活動總召，建立活動並完成組別設定。</p>
+          </li>
+          <li>
+            <span>02</span>
+            <figure class="step-visual step-image">
+              <img src="assets/step-claim-identity-illustration.jpg" width="1100" height="825" alt="工作人員使用手機掃描活動 QR Code 並領取身分的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>領取身份</h3>
+            <p>工作人員掃描 QR Code，完成驗證後領取活動人員身份。</p>
+          </li>
+          <li>
+            <span>03</span>
+            <figure class="step-visual step-image">
+              <img src="assets/step-check-tasks-illustration.jpg" width="1100" height="825" alt="工作人員在手機上查看活動任務卡片資訊的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>檢查任務</h3>
+            <p>從個人任務卡片查看時間、地點、工作內容與合作人員。</p>
+          </li>
+          <li>
+            <span>04</span>
+            <figure class="step-visual step-image">
+              <img src="assets/step-share-info-illustration.jpg" width="1100" height="825" alt="活動人員透過內建聊天室傳遞全體、小組與私人訊息的漫畫示意圖" loading="lazy" decoding="async" />
+            </figure>
+            <h3>情報共享</h3>
+            <p>使用內建聊天室聯繫全體、小組或指定人員，不必另外註冊或互加好友。</p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="security-section section-shell">
+        <div class="security-panel">
+          <div class="security-copy">
+            <p class="eyebrow eyebrow-light"><span></span> TEMPORARY BY DESIGN</p>
+            <h2>為短期活動而生，<br>身分與資料也不必永久留下</h2>
+            <p>工作人員使用既有名單與 Email 驗證領取身分，不需要另外建立一個長期帳號。</p>
+          </div>
+          <ul>
+            <li><span>✓</span><p><b>不必建立永久帳號</b><small>活動結束後不留下多餘登入關係</small></p></li>
+            <li><span>✓</span><p><b>名單比對與 Email 驗證</b><small>確認身分後才會啟用人員額度</small></p></li>
+            <li><span>✓</span><p><b>不公開私人聯絡資料</b><small>手機、Email 與 LINE 不顯示給其他成員</small></p></li>
+            <li><span>✓</span><p><b>活動資料有明確生命週期</b><small>活動結束後轉為唯讀並依規則刪除</small></p></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section section-shell">
+        <div class="section-heading centered">
+          <p class="eyebrow"><span></span> FAQ</p>
+          <h2>開始之前，你可能想知道</h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>需要下載 App 嗎？<span>＋</span></summary>
+            <p>不用。活動任務站是手機網頁，工作人員掃描 QR Code 就能進入；也可以加入 iPhone 或 Android 主畫面。</p>
+          </details>
+          <details>
+            <summary>可以匯入目前使用的班表嗎？<span>＋</span></summary>
+            <p>可以。系統提供 CSV 格式範本，將現有排班資料整理成對應欄位後即可匯入。</p>
+          </details>
+          <details>
+            <summary>工作人員需要另外註冊嗎？<span>＋</span></summary>
+            <p>不需要建立永久帳號。工作人員以活動 QR Code 進入，完成名單比對與 Email 驗證後即可領取身分。</p>
+          </details>
+          <details>
+            <summary>一場活動最多支援多少人？<span>＋</span></summary>
+            <p>MVP 以中小型短期活動為主，一場活動最多支援 100 位已啟用的工作人員。</p>
+          </details>
+          <details>
+            <summary>活動結束後，資料會如何處理？<span>＋</span></summary>
+            <p>活動資料會先轉為唯讀並撤銷工作人員存取，個人資料與訊息則依服務規則於期限後刪除。</p>
+          </details>
+        </div>
+      </section>
+
+      <section id="launch" class="final-cta section-shell">
+        <div>
+          <p class="eyebrow eyebrow-light"><span></span> READY FOR YOUR NEXT EVENT</p>
+          <h2>下一場活動，不必再逐一解釋每個人的班表</h2>
+          <p>建立活動後，即可匯入人員與任務班表。</p>
+        </div>
+        <button class="button button-accent button-large" type="button" disabled>
+          舉辦活動 <span aria-hidden="true">↗</span>
+        </button>
+        <small>活動主辦人註冊功能即將開放</small>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main">
+        <div>
+          <a class="brand brand-light" href="#top">
+            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>活動任務站</span>
+          </a>
+          <p>給研討會與小型活動的短期任務分派工具。</p>
+        </div>
+        <nav aria-label="頁尾導覽">
+          <div><b>產品</b><a href="#how-it-works">使用方式</a><a href="#faq">常見問題</a></div>
+          <div><b>使用入口</b><a href="#launch">舉辦活動</a><a href="app.html">工作人員入口</a></div>
+          <div><b>法律資訊</b><a href="#" aria-disabled="true">服務條款</a><a href="#" aria-disabled="true">隱私權政策</a></div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 活動任務站</span>
+        <span>短期合作，清楚分工。</span>
+      </div>
+    </footer>
   </body>
 </html>
