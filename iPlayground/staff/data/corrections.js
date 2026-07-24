@@ -103,7 +103,7 @@
       start: "15:15",
       end: "16:45",
       speaker: "Kevin Chiu",
-      title: "Stitch × Antigravity 實戰指南：讓 AI 助你從視覺設計精準落地 iOS App",
+      title: "Stitch × Antigravity 實戰指南",
       assignments: { "主持": "Evelyn", "組長": "Jeff", "驗票": "ggt" },
       hostIntro: [
         "接下來要帶領大家實作的講者，是 Cloud AI GDE，也是 GDG Taipei Organizer—— Kevin Chiu。",
