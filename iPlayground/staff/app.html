@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="夏令營工作人員任務查詢與提醒展示版" />
+    <meta name="description" content="7/24、7/25、7/26 工作人員離線任務查詢" />
     <meta name="theme-color" content="#111111" />
-    <title>夏令營任務站｜展示版</title>
+    <title>工作人員任務站｜離線版</title>
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=20260722-2" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20260722-2" />
     <link rel="manifest" href="manifest.webmanifest?v=20260722-3" />
     <link rel="stylesheet" href="assets/style.css" />
-    <link rel="stylesheet" href="assets/filters.css?v=20260723-1" />
+    <link rel="stylesheet" href="assets/filters.css?v=20260725-4" />
   </head>
   <body>
     <div id="app" v-cloak>
@@ -54,8 +54,53 @@
                 </div>
                 <p v-if="task.assignment === '待補充'" class="vacancy-note">待補充｜需求人數：{{ task.requiredLabel }}</p>
                 <p class="duty">{{ task.duty || `請於此時段負責「${task.role}」相關工作與現場交接。` }}</p>
-                <details>
-                  <summary>查看同時段議程 <span>＋</span></summary>
+                <details v-if="task.hostIntro" class="workshop-resource workshop-host-intro">
+                  <summary>
+                    <span class="resource-summary-copy"><strong>主持人講者介紹</strong><small>{{ task.speaker }}</small></span>
+                    <span class="resource-chevron" aria-hidden="true"></span>
+                  </summary>
+                  <div class="workshop-intro-copy">
+                    <p v-for="(paragraph, paragraphIndex) in task.hostIntro" :key="paragraphIndex">{{ paragraph }}</p>
+                  </div>
+                </details>
+                <details v-if="task.registration" class="workshop-resource workshop-registration">
+                  <summary>
+                    <span class="resource-summary-copy"><strong>本場錄取與備取名單</strong><small>錄取 {{ task.registration.accepted.length }} 人</small></span>
+                    <span class="resource-chevron" aria-hidden="true"></span>
+                  </summary>
+                  <div class="registration-section">
+                    <div class="registration-heading">
+                      <h4>錄取名單</h4>
+                      <span>{{ task.registration.accepted.length }} 人</span>
+                    </div>
+                    <div class="registration-pill-grid">
+                      <article v-for="entry in task.registration.accepted" :key="'accepted-' + entry[0]" class="registration-pill">
+                        <span class="registration-order">#{{ String(entry[0]).padStart(2, '0') }}</span>
+                        <span class="registration-badge">Badge {{ entry[1] }}</span>
+                        <strong>{{ entry[2] }}</strong>
+                      </article>
+                    </div>
+                  </div>
+                  <div class="registration-section">
+                    <div class="registration-heading">
+                      <h4>備取名單</h4>
+                      <span>{{ task.registration.waitlist.length }} 人</span>
+                    </div>
+                    <p v-if="!task.registration.waitlist.length" class="registration-empty">目前沒有已填寫的備取者；當日候補請依號碼牌順序現場登記。</p>
+                    <div v-else class="registration-pill-grid">
+                      <article v-for="entry in task.registration.waitlist" :key="'waitlist-' + entry[0]" class="registration-pill">
+                        <span class="registration-order">#{{ String(entry[0]).padStart(2, '0') }}</span>
+                        <span class="registration-badge">Badge {{ entry[1] }}</span>
+                        <strong>{{ entry[2] }}</strong>
+                      </article>
+                    </div>
+                  </div>
+                </details>
+                <details class="task-agenda">
+                  <summary>
+                    <span class="resource-summary-copy"><strong>同時段議程</strong><small>{{ task.speaker || task.title || '查看議程內容' }}</small></span>
+                    <span class="resource-chevron" aria-hidden="true"></span>
+                  </summary>
                   <ul><li v-for="item in task.agenda" :key="item">{{ item }}</li></ul>
                 </details>
               </div>
@@ -88,14 +133,14 @@
 
       <section v-else class="directory wrap">
         <div class="directory-heading">
-          <div><p class="section-label">營隊夥伴一覽</p><h2 class="system-title">CMS <small>Camp Mission Search System</small></h2></div>
+          <div><p class="section-label">人員一覽</p><h2 class="system-title">IMS <small>iPlayground Mission Search System</small></h2></div>
           <p>共 {{ filteredDirectory.length }} 位人員<br>資料涵蓋 7/24、7/25 與 7/26</p>
         </div>
         <div class="directory-tools">
           <div class="search-shell directory-search">
             <div class="search-row">
               <span class="search-icon" aria-hidden="true">⌕</span>
-              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋夥伴，例如 營隊夥伴01" autocomplete="off">
+              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋姓名，例如 Hokila" autocomplete="off">
               <button v-if="query" class="clear" @click="clearSearch" aria-label="清除搜尋">×</button>
             </div>
             <div v-if="query && !activeName" class="suggestions" role="listbox" aria-label="搜尋建議">
@@ -115,14 +160,14 @@
         </div>
       </section>
       <button v-show="showScrollTop" class="scroll-top" :class="{ 'directory-scroll-top': !activeStaff }" @click="scrollToTop" aria-label="回到頁面頂端">↑</button>
-      <footer class="wrap"><span>夏令營展示資料：所有人名與任務內容均為虛構</span><span>如有異動，請以現場營務組通知為準</span></footer>
+      <footer class="wrap"><span>資料來源：7/24 場佈任務、7/25 / 7/26 場務進度追蹤表</span><span>如有異動，請以現場總指揮通知為準</span></footer>
     </div>
     <noscript>此離線網頁需要啟用 JavaScript 才能查詢。</noscript>
     <script src="vendor/vue.global.prod.js"></script>
-    <script src="data/schedule.js?v=20260723-1"></script>
-    <script src="data/corrections.js?v=20260723-1"></script>
+    <script src="data/schedule.js?v=20260724-1"></script>
+    <script src="data/corrections.js?v=20260725-3"></script>
     <script src="assets/push-config.js"></script>
     <script src="assets/push-client.js?v=20260723-1"></script>
-    <script src="assets/app.js?v=20260723-2"></script>
+    <script src="assets/app.js?v=20260725-1"></script>
   </body>
 </html>

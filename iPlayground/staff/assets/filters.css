@@ -4,6 +4,261 @@
   gap: 8px;
 }
 
+.task-body > details {
+  margin-top: 10px;
+  padding: 0;
+  border: 1px solid oklch(0.9 0.006 95);
+  border-radius: 10px;
+  background: oklch(0.975 0.006 95);
+  overflow: clip;
+}
+
+.task-body > details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 52px;
+  padding: 10px 14px;
+  color: oklch(0.22 0.008 95);
+  list-style: none;
+  cursor: pointer;
+  transition: background-color 180ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.task-body > details summary::-webkit-details-marker {
+  display: none;
+}
+
+.task-body > details summary:hover {
+  background: oklch(0.945 0.008 95);
+}
+
+.task-body > details summary:focus-visible {
+  outline: 2px solid oklch(0.56 0.012 95);
+  outline-offset: -2px;
+}
+
+.task-body > details[open] {
+  background: oklch(0.99 0.004 95);
+}
+
+.task-body > details[open] summary {
+  border-bottom: 1px solid oklch(0.9 0.006 95);
+  background: oklch(0.955 0.008 95);
+}
+
+.resource-summary-copy {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.resource-summary-copy strong {
+  flex: none;
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: .01em;
+}
+
+.resource-summary-copy small {
+  min-width: 0;
+  overflow: hidden;
+  color: oklch(0.5 0.012 95);
+  font: 650 11px/1.4 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.resource-chevron {
+  width: 9px;
+  height: 9px;
+  flex: none;
+  margin-right: 3px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 180ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.task-body > details[open] .resource-chevron {
+  transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.workshop-intro-copy {
+  display: grid;
+  gap: 16px;
+  max-width: 72ch;
+  padding: 20px 22px 24px;
+}
+
+.workshop-intro-copy p {
+  margin: 0;
+  color: oklch(0.29 0.012 95);
+  font-size: 16px;
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+.task-agenda ul {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding: 16px 22px 18px 42px;
+  color: oklch(0.42 0.012 95);
+  line-height: 1.65;
+}
+
+.registration-section {
+  margin: 18px 18px 0;
+}
+
+.registration-section:last-of-type {
+  margin-bottom: 18px;
+}
+
+.registration-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.registration-heading h4 {
+  margin: 0;
+  color: #111111;
+  font-size: 14px;
+}
+
+.registration-heading span {
+  color: #666662;
+  font: 800 11px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.registration-pill-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.registration-pill {
+  min-width: 0;
+  min-height: 92px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "order badge"
+    "name name";
+  align-content: center;
+  gap: 8px 10px;
+  padding: 14px;
+  border: 1px solid oklch(0.88 0.008 95);
+  border-radius: 18px;
+  background: oklch(0.975 0.006 95);
+}
+
+.registration-order {
+  grid-area: order;
+  align-self: center;
+  color: oklch(0.28 0.012 95);
+  font: 850 11px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+}
+
+.registration-badge {
+  grid-area: badge;
+  justify-self: end;
+  align-self: center;
+  color: oklch(0.48 0.012 95);
+  font: 700 10px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  white-space: nowrap;
+}
+
+.registration-pill strong {
+  grid-area: name;
+  min-width: 0;
+  color: oklch(0.2 0.008 95);
+  font-size: 14px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.registration-empty {
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f1f1ee;
+  color: #666662;
+  line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+  .task-body > details summary {
+    min-height: 50px;
+    padding: 9px 12px;
+  }
+
+  .resource-summary-copy {
+    display: grid;
+    gap: 2px;
+  }
+
+  .resource-summary-copy strong {
+    font-size: 12px;
+  }
+
+  .resource-summary-copy small {
+    max-width: 48vw;
+    font-size: 10px;
+  }
+
+  .workshop-intro-copy {
+    gap: 14px;
+    padding: 16px 14px 18px;
+  }
+
+  .workshop-intro-copy p {
+    font-size: 15px;
+    line-height: 1.78;
+  }
+
+  .task-agenda ul {
+    padding: 14px 16px 16px 34px;
+  }
+
+  .registration-section {
+    margin-inline: 12px;
+  }
+
+  .registration-pill-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .registration-pill {
+    min-height: 86px;
+    gap: 7px 8px;
+    padding: 12px;
+    border-radius: 16px;
+  }
+
+  .registration-badge {
+    font-size: 9px;
+  }
+
+  .registration-pill strong {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .task-body > details summary,
+  .resource-chevron {
+    transition: none;
+  }
+}
+
 .type-filters button {
   padding: 10px 18px;
   border: 1px solid var(--line);

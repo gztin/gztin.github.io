@@ -1,7 +1,7 @@
 {
-  "name": "夏令營任務助手",
-  "short_name": "夏令營任務助手",
-  "description": "夏令營工作人員任務與提醒展示版",
+  "name": "iPlayground 任務助手",
+  "short_name": "iPlayground 任務助手",
+  "description": "iPlayground 工作人員任務與提醒",
   "lang": "zh-Hant",
   "start_url": "./app.html",
   "scope": "./",
