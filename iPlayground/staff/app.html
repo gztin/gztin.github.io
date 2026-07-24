@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png?v=20260722-2" />
     <link rel="manifest" href="manifest.webmanifest?v=20260722-3" />
     <link rel="stylesheet" href="assets/style.css" />
-    <link rel="stylesheet" href="assets/filters.css?v=20260725-4" />
+    <link rel="stylesheet" href="assets/filters.css?v=20260725-8" />
   </head>
   <body>
     <div id="app" v-cloak>
@@ -18,21 +18,26 @@
         <div class="result-heading">
           <button class="home-link" @click="clearSearch" aria-label="返回首頁"><span class="home-label">← 返回首頁</span><span class="home-icon" aria-hidden="true">⌂</span></button>
           <div class="day-tabs" aria-label="日期篩選">
-            <button v-for="value in ['D0','D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
+            <button v-for="value in ['D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
           </div>
         </div>
         <div class="fixed-task-controls">
           <div class="summary-grid">
-            <div class="person-summary"><strong>{{ activeStaff.person }}</strong><span>人員名稱</span></div>
+            <div class="person-summary"><strong>{{ personLabel(activeStaff.person) }}</strong><span>人員名稱</span></div>
             <div><strong>{{ visibleTasks.length }}</strong><span>段任務</span></div>
             <div><strong>{{ durationLabel }}</strong><span>排定時間</span></div>
-            <div class="roles"><strong>{{ roleLabel }}</strong><span>負責職務</span></div>
+            <div class="roles">
+              <nav class="role-anchor-list" aria-label="負責職務">
+                <a v-for="role in roleLinks" :key="role.anchor" :href="'#' + role.anchor">{{ role.label }}</a>
+              </nav>
+              <span>負責職務</span>
+            </div>
           </div>
         </div>
         <div class="mobile-controls-spacer" aria-hidden="true"></div>
         <div class="main-tasks-view">
           <div class="timeline">
-            <article v-for="(task, index) in visibleTasks" :key="task.day + task.start + task.role + index" class="task-card" :class="{ 'is-vacancy': task.assignment === '待補充' }">
+            <article v-for="(task, index) in visibleTasks" :id="taskAnchorId(task, index)" :key="task.day + task.start + task.role + index" class="task-card" :class="{ 'is-vacancy': task.assignment === '待補充' }">
               <div class="day-badge" :class="task.day.toLowerCase()">{{ dayLabel(task.day) }}</div>
               <div class="time"><strong>{{ task.start }}</strong><span>↓</span><strong>{{ task.endPending ? '待定' : task.end }}</strong></div>
               <div class="task-body">
@@ -50,7 +55,7 @@
                 <p v-if="reminderMessage(task)" class="task-reminder-status" :class="{ 'is-error': reminderError(task) }">{{ reminderMessage(task) }}</p>
                 <div v-if="taskPartners(task).length" class="task-card-partners">
                   <span>同時段夥伴</span>
-                  <button v-for="partner in taskPartners(task)" :key="partner" @click="choose(partner)">{{ partner }}</button>
+                  <button v-for="partner in taskPartners(task)" :key="partner" @click="choose(partner)">{{ personLabel(partner) }}</button>
                 </div>
                 <p v-if="task.assignment === '待補充'" class="vacancy-note">待補充｜需求人數：{{ task.requiredLabel }}</p>
                 <p class="duty">{{ task.duty || `請於此時段負責「${task.role}」相關工作與現場交接。` }}</p>
@@ -76,8 +81,8 @@
                     <div class="registration-pill-grid">
                       <article v-for="entry in task.registration.accepted" :key="'accepted-' + entry[0]" class="registration-pill">
                         <span class="registration-order">#{{ String(entry[0]).padStart(2, '0') }}</span>
-                        <span class="registration-badge">Badge {{ entry[1] }}</span>
-                        <strong>{{ entry[2] }}</strong>
+                        <span class="registration-badge"><strong class="registration-badge-number">{{ entry[1] }}</strong><small>Badge</small></span>
+                        <strong class="registration-name">{{ entry[2] }}</strong>
                       </article>
                     </div>
                   </div>
@@ -90,8 +95,8 @@
                     <div v-else class="registration-pill-grid">
                       <article v-for="entry in task.registration.waitlist" :key="'waitlist-' + entry[0]" class="registration-pill">
                         <span class="registration-order">#{{ String(entry[0]).padStart(2, '0') }}</span>
-                        <span class="registration-badge">Badge {{ entry[1] }}</span>
-                        <strong>{{ entry[2] }}</strong>
+                        <span class="registration-badge"><strong class="registration-badge-number">{{ entry[1] }}</strong><small>Badge</small></span>
+                        <strong class="registration-name">{{ entry[2] }}</strong>
                       </article>
                     </div>
                   </div>
@@ -126,7 +131,7 @@
         </section>
         <nav class="mobile-task-nav" aria-label="日期切換">
           <div class="mobile-task-dates" aria-label="日期篩選">
-            <button v-for="value in ['D0','D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
+            <button v-for="value in ['D1','D2']" :key="value" :class="{ active: day === value }" @click="day = value">{{ dayLabel(value) }}</button>
           </div>
         </nav>
       </section>
@@ -140,21 +145,20 @@
           <div class="search-shell directory-search">
             <div class="search-row">
               <span class="search-icon" aria-hidden="true">⌕</span>
-              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋姓名，例如 Hokila" autocomplete="off">
+              <input id="staff-search" v-model="query" @input="selected = ''" @keydown.down.prevent="moveSuggestion(1)" @keydown.up.prevent="moveSuggestion(-1)" @keydown.enter.prevent="chooseHighlighted" placeholder="搜尋 Ethan、Jeff 或 Evelyn" autocomplete="off">
               <button v-if="query" class="clear" @click="clearSearch" aria-label="清除搜尋">×</button>
             </div>
             <div v-if="query && !activeName" class="suggestions" role="listbox" aria-label="搜尋建議">
               <button v-for="(name, index) in suggestions" :key="name" :class="{ highlighted: index === highlighted }" @click="choose(name)">
-                <span>{{ name }}</span><small>查看任務 →</small>
+                <span>{{ personLabel(name) }}</span><small>查看任務 →</small>
               </button>
               <p v-if="!suggestions.length">找不到符合「{{ query }}」的人員</p>
             </div>
           </div>
-          <a class="reminder-test-link" href="reminder-test.html"><span aria-hidden="true">🔔</span> 通知設定教學</a>
         </div>
         <div class="staff-grid">
           <button v-for="staff in filteredDirectory" :key="staff.person" :class="'person-type-' + staff.type" @click="choose(staff.person)">
-            <span class="staff-info"><strong>{{ staff.person }}</strong><small>{{ staff.rolePreview }}</small></span>
+            <span class="staff-info"><strong>{{ personLabel(staff.person) }}</strong><small>{{ staff.rolePreview }}</small></span>
             <span class="count">{{ staff.merged.length }}<small>任務</small></span>
           </button>
         </div>
@@ -168,6 +172,6 @@
     <script src="data/corrections.js?v=20260725-3"></script>
     <script src="assets/push-config.js"></script>
     <script src="assets/push-client.js?v=20260723-1"></script>
-    <script src="assets/app.js?v=20260725-1"></script>
+    <script src="assets/app.js?v=20260725-4"></script>
   </body>
 </html>

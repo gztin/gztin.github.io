@@ -1,6 +1,6 @@
 "use strict";
 
-var SERVICE_WORKER_VERSION = "2026-07-25.5";
+var SERVICE_WORKER_VERSION = "2026-07-25.10";
 
 function reportToClients(message) {
   return self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (clients) {

@@ -62,8 +62,7 @@
     var month = Number(parts.find(function (part) { return part.type === "month"; }).value);
     var day = Number(parts.find(function (part) { return part.type === "day"; }).value);
     var monthDay = month * 100 + day;
-    if (monthDay <= 724) return "D0";
-    if (monthDay === 725) return "D1";
+    if (monthDay <= 725) return "D1";
     return "D2";
   }
 
@@ -141,9 +140,14 @@
 
   var people = Array.from(new Set(source.schedule.map(function (task) { return String(task.person); })))
     .sort(function (a, b) { return a.localeCompare(b, "zh-Hant", { numeric: false }); });
+  var visibleStaffPeople = ["ggt", "Jeff", "Evelyn"];
+
+  function displayPersonName(name) {
+    return String(name) === "ggt" ? "Ethan" : String(name);
+  }
 
   var directory = people.map(function (person) {
-    var tasks = source.schedule.filter(function (task) { return task.person === person; });
+    var tasks = source.schedule.filter(function (task) { return task.person === person && task.day !== "D0"; });
     var missions = (source.sideMissions || []).filter(function (mission) { return mission.person === person; });
     var roles = Array.from(new Set(tasks.map(function (task) { return task.role; })));
     return {
@@ -190,22 +194,32 @@
     computed: {
       suggestions: function () {
         var normalized = this.query.trim().toLocaleLowerCase("zh-Hant");
-        var staffPeople = this.staffDirectory.filter(function (person) { return person.type === "staff"; }).map(function (person) { return person.person; });
+        var staffPeople = this.filteredDirectory.map(function (person) { return person.person; });
         if (!normalized) return staffPeople.slice(0, 8);
-        return staffPeople.filter(function (name) { return name.toLocaleLowerCase("zh-Hant").includes(normalized); }).slice(0, 8);
+        return staffPeople.filter(function (name) {
+          return name.toLocaleLowerCase("zh-Hant").includes(normalized) ||
+            displayPersonName(name).toLocaleLowerCase("zh-Hant").includes(normalized);
+        }).slice(0, 8);
       },
       activeName: function () {
         if (this.selected) return this.selected;
         var query = this.query.trim().toLocaleLowerCase("zh-Hant");
-        var staffPeople = this.staffDirectory.filter(function (person) { return person.type === "staff"; }).map(function (person) { return person.person; });
-        return staffPeople.find(function (name) { return name.toLocaleLowerCase("zh-Hant") === query; }) || "";
+        var staffPeople = this.filteredDirectory.map(function (person) { return person.person; });
+        return staffPeople.find(function (name) {
+          return name.toLocaleLowerCase("zh-Hant") === query ||
+            displayPersonName(name).toLocaleLowerCase("zh-Hant") === query;
+        }) || "";
       },
       activeStaff: function () {
         var name = this.activeName;
         return this.staffDirectory.find(function (staff) { return staff.person === name; });
       },
       filteredDirectory: function () {
-        return this.staffDirectory.filter(function (person) { return person.type === "staff"; });
+        return this.staffDirectory.filter(function (person) {
+          return person.type === "staff" && visibleStaffPeople.includes(person.person);
+        }).sort(function (left, right) {
+          return visibleStaffPeople.indexOf(left.person) - visibleStaffPeople.indexOf(right.person);
+        });
       },
       visibleTasks: function () {
         var self = this;
@@ -239,6 +253,20 @@
         var vacancyCount = this.visibleTasks.filter(function (task) { return task.assignment === "待補充"; }).length;
         if (vacancyCount) assignedRoles.push("待補充 " + vacancyCount + " 項");
         return assignedRoles.join("、") || "—";
+      },
+      roleLinks: function () {
+        var seen = new Set();
+        var links = [];
+        this.visibleTasks.forEach(function (task, index) {
+          var label = task.assignment === "待補充" ? task.role.replace(/^待補充｜/, "") : task.role;
+          if (seen.has(label)) return;
+          seen.add(label);
+          links.push({
+            label: label,
+            anchor: "task-" + String(task.day).toLowerCase() + "-" + index
+          });
+        });
+        return links;
       }
     },
     methods: {
@@ -251,6 +279,7 @@
         this.highlighted = (this.highlighted + step + this.suggestions.length) % this.suggestions.length;
       },
       chooseHighlighted: function () { if (this.suggestions[this.highlighted]) this.choose(this.suggestions[this.highlighted]); },
+      personLabel: function (name) { return displayPersonName(name); },
       dayLabel: function (value) { return value === "D0" ? "7/24" : value === "D1" ? "7/25" : value === "D2" ? "7/26" : value; },
       taskPartners: function (task) {
         var self = this;
@@ -263,6 +292,7 @@
         });
       },
       taskDuration: function (task) { return minutes(task.end) - minutes(task.start); },
+      taskAnchorId: function (task, index) { return "task-" + String(task.day).toLowerCase() + "-" + index; },
       reminderEnabled: function (task) { return Boolean(this.taskReminders[taskKey(task)]) && !this.reminderExpired(task); },
       reminderBusy: function (task) { return Boolean(this.reminderBusyKeys[taskKey(task)]); },
       reminderExpired: function (task) {

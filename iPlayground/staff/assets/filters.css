@@ -145,12 +145,12 @@
 
 .registration-pill {
   min-width: 0;
-  min-height: 92px;
+  min-height: 106px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: minmax(0, 1fr) 58px;
   grid-template-areas:
     "order badge"
-    "name name";
+    "name badge";
   align-content: center;
   gap: 8px 10px;
   padding: 14px;
@@ -168,14 +168,33 @@
 
 .registration-badge {
   grid-area: badge;
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-content: center;
+  gap: 5px;
   justify-self: end;
   align-self: center;
-  color: oklch(0.48 0.012 95);
-  font: 700 10px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
-  white-space: nowrap;
+  border-radius: 14px;
+  background: oklch(0.17 0.008 95);
+  color: oklch(0.91 0.25 126);
+  text-align: center;
 }
 
-.registration-pill strong {
+.registration-badge-number {
+  color: oklch(0.91 0.25 126);
+  font: 800 20px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  letter-spacing: -.04em;
+}
+
+.registration-badge small {
+  color: oklch(0.91 0.25 126);
+  font: 750 8px/1 "Geist Mono", "SFMono-Regular", Consolas, monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.registration-name {
   grid-area: name;
   min-width: 0;
   color: oklch(0.2 0.008 95);
@@ -237,17 +256,24 @@
   }
 
   .registration-pill {
-    min-height: 86px;
+    min-height: 96px;
+    grid-template-columns: minmax(0, 1fr) 50px;
     gap: 7px 8px;
-    padding: 12px;
+    padding: 10px;
     border-radius: 16px;
   }
 
   .registration-badge {
-    font-size: 9px;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
   }
 
-  .registration-pill strong {
+  .registration-badge-number {
+    font-size: 17px;
+  }
+
+  .registration-name {
     font-size: 13px;
   }
 }
@@ -406,6 +432,31 @@
 .summary-grid .person-summary strong {
   overflow-wrap: anywhere;
   font: 500 28px/1.15 Georgia, "Noto Serif TC", serif;
+}
+
+.role-anchor-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 12px;
+}
+
+.role-anchor-list a {
+  color: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+.role-anchor-list a:hover,
+.role-anchor-list a:focus-visible {
+  text-decoration-thickness: 2px;
+}
+
+.task-card {
+  scroll-margin-top: 190px;
 }
 
 @media (max-width: 780px) {
@@ -1386,6 +1437,7 @@ footer {
   }
 
   .fixed-task-controls .summary-grid .person-summary {
+    grid-column: auto;
     min-height: 62px;
   }
 
@@ -1410,6 +1462,73 @@ footer {
     font-size: 9px;
   }
 
+  .fixed-task-controls .summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fixed-task-controls .summary-grid > div {
+    min-width: 0;
+    min-height: 64px;
+    align-items: center;
+    padding: 9px 11px;
+    text-align: center;
+  }
+
+  .fixed-task-controls .summary-grid > div:not(.roles) {
+    display: grid;
+    grid-template-rows: 32px 14px;
+    align-content: center;
+    justify-items: center;
+    gap: 4px;
+  }
+
+  .fixed-task-controls .summary-grid > div:not(.roles) strong {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    line-height: 32px;
+  }
+
+  .fixed-task-controls .summary-grid > div:not(.roles) span {
+    align-self: center;
+    margin: 0;
+    line-height: 1;
+  }
+
+  .fixed-task-controls .summary-grid > div:nth-child(3) strong {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .fixed-task-controls .summary-grid .person-summary strong {
+    overflow: hidden;
+    font-size: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fixed-task-controls .summary-grid .roles {
+    grid-column: 1 / -1;
+    min-height: 56px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .fixed-task-controls .role-anchor-list {
+    gap: 4px 10px;
+  }
+
+  .fixed-task-controls .role-anchor-list a {
+    font-size: 12px;
+  }
+
+  .task-card {
+    scroll-margin-top: 154px;
+  }
+
   .fixed-task-controls .task-view-tabs {
     display: none;
   }
@@ -1428,11 +1547,11 @@ footer {
 
   .mobile-controls-spacer {
     display: block;
-    height: 214px;
+    height: 122px;
   }
 
   .mobile-controls-spacer.has-task-tabs {
-    height: 214px;
+    height: 122px;
   }
 
   .directory {
