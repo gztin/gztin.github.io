@@ -1,110 +1,823 @@
-<!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>GZtin 作品集</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-		<link rel="stylesheet" href="assets/css/style.css?v=2"/>
-		<script src="https://unpkg.com/vue@next"></script>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
-				<!-- Header -->
-				<header id="header">
-					<div class="inner">
-						<!-- Logo -->
-						<a href="index.html" class="logo">
-							<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">GZtin 作品集</span>
-						</a>
-						<!-- Nav -->
-						<nav>
-							<ul>
-								<li><a href="#menu">選單</a></li>
-							</ul>
-						</nav>
-					</div>
-				</header>
-				<!-- Menu -->
-				<nav id="menu">
-					<h2>選單</h2>
-					<ul>
-						<li><a href="index.html">作品集</a></li>
-						<li><a href="aboutme.html">個人資訊</a></li>
-					</ul>
-				</nav>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="陳宗廷 Ethan 的 UI 設計、前端開發與專案協作履歷。">
+	<meta name="theme-color" content="#e5b9ed">
+	<link rel="icon" href="images/logo.svg" type="image/svg+xml">
+	<title>陳宗廷 Ethan｜UI Designer × Front-end Developer</title>
+	<style>
+		:root {
+			--canvas: oklch(95.5% 0.008 310);
+			--paper: oklch(98.5% 0.006 310);
+			--sidebar: oklch(95.2% 0.012 310);
+			--ink: oklch(23% 0.018 300);
+			--muted: oklch(48% 0.018 300);
+			--line: oklch(84% 0.018 310);
+			--accent: oklch(84% 0.09 315);
+			--accent-soft: oklch(92% 0.042 315);
+			--accent-strong: oklch(52% 0.14 315);
+			--sheet: min(980px, calc(100% - 40px));
+		}
 
-				<!-- Main -->
-					<div id="main">
-						<div id="app">
-							<div class="inner">
-								<header>
-									<h1>簡介</h1>
-									<p class="des">{{des}}</p>
-								</header>
-								<hr>
-								<section class="tiles">
-									<article v-for="i of index" class="style1">
-										<span class="image">
-											<img :src="i.img" alt="" />
-										</span>
-										<a :href="i.link">
-											<h2>{{i.title}}</h2>
-										</a>
-									</article>
-								</section>
-							</div>
-						</div>
-					</div>
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<h2>Get in touch</h2>
-								<form action='https://www.getform.org/f/4d7f2fe2-0d62-4b15-af24-9a39beafa299' method="POST">
-									<div class="fields">
-										<div class="field half">
-											<input type="text" name="user_name" id="name" placeholder="姓名" />
-										</div>
-										<div class="field half">
-											<input type="email" name="user_email" id="email" placeholder="Email" />
-										</div>
-										<div class="field">
-											<textarea name="message" id="message" placeholder="訊息"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><input type="submit" name="text_content" value="傳送" class="primary" /></li>
-									</ul>
-								</form>
-							</section>
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="tel:0972288738" class="icon style2 fa-phone"><span class="label">Phone</span></a></li>
-									<li><a href="mailto:atharsfake@gmail.com" class="icon style2 fa-envelope-o"><span class="label">Email</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>@copyright by gztin 2018</li>
-							</ul>
-						</div>
-					</footer>
+		* {
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			margin: 0;
+			overflow-x: clip;
+			background: var(--canvas);
+			color: var(--ink);
+			font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+			font-size: 14px;
+			line-height: 1.65;
+			text-rendering: optimizeLegibility;
+		}
+
+		a {
+			color: inherit;
+			text-decoration-thickness: 1px;
+			text-underline-offset: 0.2em;
+		}
+
+		a:focus-visible,
+		summary:focus-visible {
+			outline: 3px solid var(--accent-strong);
+			outline-offset: 3px;
+		}
+
+		.skip-link {
+			position: fixed;
+			top: 12px;
+			left: 12px;
+			z-index: 10;
+			padding: 8px 14px;
+			background: var(--ink);
+			color: var(--paper);
+			transform: translateY(-160%);
+		}
+
+		.skip-link:focus {
+			transform: translateY(0);
+		}
+
+		.resume-page {
+			width: var(--sheet);
+			margin: clamp(20px, 5vw, 56px) auto;
+			overflow: hidden;
+			background: var(--paper);
+			border: 1px solid var(--line);
+			border-radius: 18px;
+			box-shadow: 0 18px 55px oklch(30% 0.02 310 / 0.11);
+		}
+
+		.resume-header {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: center;
+			gap: 34px;
+			min-height: 190px;
+			padding: 34px clamp(28px, 5vw, 58px);
+			background: var(--accent);
+		}
+
+		.resume-header h1 {
+			margin: 0;
+			font-size: clamp(2.65rem, 6vw, 4.4rem);
+			font-weight: 900;
+			letter-spacing: -0.065em;
+			line-height: 0.95;
+		}
+
+		.name-en {
+			display: inline-block;
+			margin-left: 0.2em;
+			font-size: 0.46em;
+			font-weight: 750;
+			letter-spacing: 0.03em;
+			vertical-align: 0.25em;
+		}
+
+		.role {
+			margin: 13px 0 0;
+			font-size: clamp(1rem, 2vw, 1.25rem);
+			font-weight: 650;
+			letter-spacing: 0.01em;
+		}
+
+		.portrait {
+			width: clamp(108px, 14vw, 138px);
+			aspect-ratio: 1;
+			margin: 0;
+		}
+
+		.portrait img {
+			width: 100%;
+			height: 100%;
+			border: 4px solid oklch(98% 0.01 310 / 0.92);
+			border-radius: 50%;
+			object-fit: cover;
+			object-position: 50% 35%;
+		}
+
+		.resume-grid {
+			display: grid;
+			grid-template-columns: minmax(0, 2.2fr) minmax(250px, 0.8fr);
+			grid-template-areas:
+				"profile sidebar"
+				"experience sidebar";
+		}
+
+		.profile-section {
+			grid-area: profile;
+			padding: 38px 44px 14px;
+		}
+
+		.experience-section {
+			grid-area: experience;
+			padding: 18px 44px 48px;
+		}
+
+		.sidebar {
+			grid-area: sidebar;
+			padding: 38px 28px 46px;
+			background: var(--sidebar);
+		}
+
+		.section-title {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			margin: 0 0 18px;
+			color: var(--accent-strong);
+			font-size: 1.12rem;
+			font-weight: 900;
+			letter-spacing: -0.02em;
+			line-height: 1.2;
+		}
+
+		.section-title::after {
+			content: "";
+			flex: 1;
+			height: 1px;
+			background: var(--line);
+		}
+
+		.profile-section p {
+			max-width: 66ch;
+			margin: 0;
+			color: var(--muted);
+			font-size: 0.95rem;
+		}
+
+		.job-list {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.job {
+			display: grid;
+			grid-template-columns: 100px minmax(0, 1fr);
+			gap: 16px;
+			padding: 22px 0;
+			border-top: 1px solid var(--line);
+			break-inside: avoid;
+		}
+
+		.job:first-child {
+			border-top: 0;
+			padding-top: 0;
+		}
+
+		.job-date {
+			margin: 2px 0 0;
+			color: var(--muted);
+			font-size: 0.76rem;
+			font-weight: 750;
+			font-variant-numeric: tabular-nums;
+			line-height: 1.45;
+		}
+
+		.job-body h3 {
+			margin: 0;
+			font-size: 1rem;
+			font-weight: 900;
+			letter-spacing: -0.015em;
+			line-height: 1.35;
+		}
+
+		.job-role {
+			display: block;
+			margin-top: 3px;
+			color: var(--accent-strong);
+			font-size: 0.78rem;
+			font-weight: 750;
+		}
+
+		.job-summary {
+			margin: 9px 0 8px;
+			color: var(--muted);
+			font-size: 0.82rem;
+		}
+
+		.job-points {
+			margin: 0;
+			padding-left: 1.15em;
+			color: var(--muted);
+			font-size: 0.8rem;
+		}
+
+		.job-points li + li {
+			margin-top: 3px;
+		}
+
+		.job-details {
+			margin-top: 10px;
+			border-top: 1px dashed var(--line);
+		}
+
+		.job-details summary {
+			position: relative;
+			padding: 8px 24px 7px 0;
+			cursor: pointer;
+			color: var(--ink);
+			font-size: 0.77rem;
+			font-weight: 800;
+			list-style: none;
+		}
+
+		.job-details summary::-webkit-details-marker {
+			display: none;
+		}
+
+		.job-details summary::after {
+			content: "+";
+			position: absolute;
+			top: 6px;
+			right: 2px;
+			color: var(--accent-strong);
+			font-size: 1rem;
+		}
+
+		.job-details[open] summary::after {
+			content: "−";
+		}
+
+		.project-list {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 5px 14px;
+			padding: 3px 0 5px;
+			font-size: 0.76rem;
+		}
+
+		.project-item {
+			display: flex;
+			justify-content: space-between;
+			gap: 8px;
+			padding: 5px 0;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.project-item a {
+			font-weight: 700;
+		}
+
+		.project-type {
+			flex: 0 0 auto;
+			color: var(--muted);
+			font-size: 0.68rem;
+		}
+
+		.sidebar-section + .sidebar-section {
+			margin-top: 30px;
+		}
+
+		.sidebar h2 {
+			margin: 0 0 12px;
+			padding-bottom: 8px;
+			border-bottom: 1px solid var(--line);
+			color: var(--accent-strong);
+			font-size: 1.02rem;
+			font-weight: 900;
+		}
+
+		.info-list,
+		.link-list,
+		.skill-list {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.info-list li + li,
+		.link-list li + li,
+		.skill-list li + li {
+			margin-top: 9px;
+		}
+
+		.info-label {
+			display: block;
+			margin-bottom: 1px;
+			color: var(--ink);
+			font-size: 0.7rem;
+			font-weight: 850;
+		}
+
+		.info-value,
+		.sidebar p,
+		.sidebar li {
+			color: var(--muted);
+			font-size: 0.78rem;
+		}
+
+		.current-item {
+			padding: 10px 0;
+			border-bottom: 1px solid var(--line);
+		}
+
+		.current-item:first-of-type {
+			padding-top: 0;
+		}
+
+		.current-item:last-child {
+			padding-bottom: 0;
+			border-bottom: 0;
+		}
+
+		.current-item strong {
+			display: block;
+			color: var(--ink);
+			font-size: 0.78rem;
+		}
+
+		.link-list a {
+			font-weight: 700;
+		}
+
+		.resume-footer {
+			display: flex;
+			justify-content: space-between;
+			gap: 16px;
+			padding: 14px 28px;
+			background: var(--ink);
+			color: oklch(88% 0.015 310);
+			font-size: 0.7rem;
+		}
+
+		.resume-footer p {
+			margin: 0;
+		}
+
+		@media (max-width: 760px) {
+			:root {
+				--sheet: calc(100% - 24px);
+			}
+
+			.resume-page {
+				margin: 12px auto;
+				border-radius: 14px;
+			}
+
+			.resume-header {
+				gap: 18px;
+				min-height: 154px;
+				padding: 26px 24px;
+			}
+
+			.resume-header h1 {
+				font-size: clamp(2.15rem, 10vw, 3.2rem);
+			}
+
+			.name-en {
+				display: block;
+				margin: 7px 0 0;
+				font-size: 0.38em;
+				vertical-align: baseline;
+			}
+
+			.portrait {
+				width: 92px;
+			}
+
+			.resume-grid {
+				grid-template-columns: 1fr;
+				grid-template-areas:
+					"profile"
+					"sidebar"
+					"experience";
+			}
+
+			.profile-section,
+			.experience-section,
+			.sidebar {
+				padding-right: 24px;
+				padding-left: 24px;
+			}
+
+			.profile-section {
+				padding-top: 28px;
+			}
+
+			.sidebar {
+				display: grid;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				gap: 24px;
+				padding-top: 28px;
+				padding-bottom: 30px;
+			}
+
+			.sidebar-section + .sidebar-section {
+				margin-top: 0;
+			}
+		}
+
+		@media (max-width: 520px) {
+			:root {
+				--sheet: 100%;
+			}
+
+			body {
+				background: var(--paper);
+			}
+
+			.resume-page {
+				margin: 0;
+				border: 0;
+				border-radius: 0;
+				box-shadow: none;
+			}
+
+			.resume-header {
+				grid-template-columns: minmax(0, 1fr) 76px;
+				padding: 24px 18px;
+			}
+
+			.portrait {
+				width: 76px;
+			}
+
+			.role {
+				font-size: 0.88rem;
+			}
+
+			.profile-section,
+			.experience-section,
+			.sidebar {
+				padding-right: 18px;
+				padding-left: 18px;
+			}
+
+			.sidebar {
+				grid-template-columns: 1fr;
+				gap: 28px;
+			}
+
+			.job {
+				grid-template-columns: 1fr;
+				gap: 6px;
+			}
+
+			.job-date {
+				color: var(--accent-strong);
+			}
+
+			.project-list {
+				grid-template-columns: 1fr;
+			}
+
+			.resume-footer {
+				align-items: flex-start;
+				flex-direction: column;
+			}
+		}
+
+		@media print {
+			@page {
+				size: A4;
+				margin: 9mm;
+			}
+
+			:root {
+				--sheet: 100%;
+			}
+
+			body {
+				background: none;
+				font-size: 13px;
+			}
+
+			.resume-page {
+				width: 100%;
+				margin: 0;
+				border: 0;
+				border-radius: 0;
+				box-shadow: none;
+			}
+
+			.resume-header {
+				min-height: 120px;
+				padding: 20px 30px;
+				-webkit-print-color-adjust: exact;
+				print-color-adjust: exact;
+			}
+
+			.profile-section {
+				padding: 24px 30px 10px;
+			}
+
+			.experience-section {
+				padding: 12px 30px 28px;
+			}
+
+			.sidebar {
+				padding: 24px 20px 30px;
+				-webkit-print-color-adjust: exact;
+				print-color-adjust: exact;
+			}
+
+			.job {
+				grid-template-columns: 80px minmax(0, 1fr);
+				padding: 14px 0;
+			}
+
+			.job-details summary {
+				display: none;
+			}
+
+			.job-details:not([open]) > :not(summary) {
+				display: grid !important;
+			}
+
+			.resume-footer {
+				display: none;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="skip-link" href="#profile">跳至履歷內容</a>
+
+	<main class="resume-page">
+		<header class="resume-header">
+			<div>
+				<h1>陳宗廷 <span class="name-en">Ethan</span></h1>
+				<p class="role">UI Designer × Front-end Developer</p>
 			</div>
+			<figure class="portrait">
+				<img src="images/staff_Ethan.jpg" width="500" height="500" alt="陳宗廷在海邊鳥居前的個人照片">
+			</figure>
+		</header>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script src="assets/js/data.js?v=1"></script>
-	</body>
+		<div class="resume-grid">
+			<section class="profile-section" id="profile" aria-labelledby="profile-title">
+				<h2 class="section-title" id="profile-title">個人近況</h2>
+				<p>目前從事銀行業官網專案開發與行銷活動網頁製作。近期參與 iPlayground 議程活動並擔任設計職務，負責活動網站、印刷物、周邊商品及宣傳品的設計製作，持續累積數位介面、前端實作與跨媒介視覺整合經驗。</p>
+			</section>
+
+			<section class="experience-section" aria-labelledby="experience-title">
+				<h2 class="section-title" id="experience-title">工作歷程</h2>
+				<ol class="job-list">
+					<li class="job">
+						<p class="job-date">2024.07<br>至今</p>
+						<article class="job-body">
+							<h3>翰霖科技資訊股份有限公司</h3>
+							<span class="job-role">網頁設計師｜元大銀行駐點</span>
+							<p class="job-summary">協助銀行官網專案開發、既有功能維護與行銷活動網頁製作，目前仍在職。</p>
+							<ul class="job-points">
+								<li>官網功能開發、既有頁面維護與響應式活動頁製作。</li>
+								<li>需求確認、跨部門溝通、多裝置測試及上線驗證。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間公開專案</summary>
+								<div class="project-list">
+									<div class="project-item"><a href="https://reurl.cc/Vm9D3Y" target="_blank" rel="noopener noreferrer">元大溫馨關懷</a><span class="project-type">活動網頁</span></div>
+									<div class="project-item"><a href="https://reurl.cc/zKVZeQ" target="_blank" rel="noopener noreferrer">智能客服功能介紹</a><span class="project-type">功能介紹</span></div>
+									<div class="project-item"><a href="https://reurl.cc/eVr3mW" target="_blank" rel="noopener noreferrer">理財型房貸</a><span class="project-type">產品網頁</span></div>
+									<div class="project-item"><a href="https://reurl.cc/NNWAZ9" target="_blank" rel="noopener noreferrer">老朋友增貸</a><span class="project-type">活動網頁</span></div>
+									<div class="project-item"><a href="https://reurl.cc/Ab57KK" target="_blank" rel="noopener noreferrer">龍頭轉手貸</a><span class="project-type">活動網頁</span></div>
+									<div class="project-item"><a href="https://reurl.cc/zKVZMa" target="_blank" rel="noopener noreferrer">元大鑽金貸</a><span class="project-type">活動網頁</span></div>
+									<div class="project-item"><a href="https://reurl.cc/LQEmm4" target="_blank" rel="noopener noreferrer">簽單兌換活動</a><span class="project-type">活動網頁</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2022.09<br>2024.02</p>
+						<article class="job-body">
+							<h3>恒遠科技有限公司</h3>
+							<span class="job-role">UI 設計師</span>
+							<p class="job-summary">負責平台行銷活動的視覺策略、UI 介面與 H5 活動頁，支援運營端視覺需求。</p>
+							<ul class="job-points">
+								<li>節慶活動主視覺、2D 元素、Banner、Icon 與介面設計。</li>
+								<li>制定 UI Design Guidelines，協助工程團隊準確落地。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間作品類型</summary>
+								<div class="project-list">
+									<div class="project-item"><span>平台節慶活動</span><span class="project-type">主視覺</span></div>
+									<div class="project-item"><span>活動 H5 網頁</span><span class="project-type">UI 設計</span></div>
+									<div class="project-item"><span>Banner 與 Icon</span><span class="project-type">視覺素材</span></div>
+									<div class="project-item"><span>UI Design Guidelines</span><span class="project-type">設計文件</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2021.02<br>2022.08</p>
+						<article class="job-body">
+							<h3>東森新媒體控股股份有限公司</h3>
+							<span class="job-role">UI／網頁設計師</span>
+							<p class="job-summary">負責 UI/UX、RWD 前端與 LINE 智慧服務，並協助測試、需求溝通及資料自動化。</p>
+							<ul class="job-points">
+								<li>User Flow、產品 UI、前後台與響應式網站開發。</li>
+								<li>LINE@ 客服機器人、設備 QA、測試文件及技術支援。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間公開專案</summary>
+								<div class="project-list">
+									<div class="project-item"><a href="https://www.eiptv-eips.com/" target="_blank" rel="noopener noreferrer">EIPS 廣告委刊系統</a><span class="project-type">系統 UI</span></div>
+									<div class="project-item"><a href="https://www.eiptv.net/" target="_blank" rel="noopener noreferrer">東森分眾官網</a><span class="project-type">官方網站</span></div>
+									<div class="project-item"><a href="https://gztin.github.io/susi/0717project/index.html" target="_blank" rel="noopener noreferrer">員購車商競標</a><span class="project-type">活動網頁</span></div>
+									<div class="project-item"><span>LINE@ 客服機器人</span><span class="project-type">智慧服務</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2018.11<br>2020.11</p>
+						<article class="job-body">
+							<h3>華藝互動科技有限公司</h3>
+							<span class="job-role">網頁設計師</span>
+							<p class="job-summary">負責 RWD 網站開發、互動模組、跨瀏覽器相容性與既有專案維護。</p>
+							<ul class="job-points">
+								<li>HTML5、CSS3 語意化切版及 JavaScript／jQuery 互動。</li>
+								<li>跨瀏覽器除錯、舊專案維護與程式碼重構。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間作品類型</summary>
+								<div class="project-list">
+									<div class="project-item"><span>企業與產品網站</span><span class="project-type">前端開發</span></div>
+									<div class="project-item"><span>遊戲網站</span><span class="project-type">切版與互動</span></div>
+									<div class="project-item"><span>手機遊戲 UI</span><span class="project-type">介面設計</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2016.09<br>2018.10</p>
+						<article class="job-body">
+							<h3>富及數位互動股份有限公司</h3>
+							<span class="job-role">軟體專案管理師</span>
+							<p class="job-summary">負責專案時程、團隊協調與測試驗收，協助智慧社區服務導入，產品導入率曾達 70%。</p>
+							<ul class="job-points">
+								<li>社區 App、後台系統、票券與包裹管理功能規劃。</li>
+								<li>跨團隊協作、產品文件、視覺文宣與網頁切版。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間參與專案</summary>
+								<div class="project-list">
+									<div class="project-item"><span>富家匯 App</span><span class="project-type">智慧社區</span></div>
+									<div class="project-item"><span>富家保 App</span><span class="project-type">行動應用</span></div>
+									<div class="project-item"><span>App 後台管理系統</span><span class="project-type">系統規劃</span></div>
+									<div class="project-item"><span>社區票券與包裹管理</span><span class="project-type">產品功能</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2015.04<br>2016.08</p>
+						<article class="job-body">
+							<h3>名漢科技</h3>
+							<span class="job-role">UI／美術設計師</span>
+							<p class="job-summary">負責點歌機、KTV 平台與行動應用的 UI、視覺素材及功能企劃。</p>
+							<ul class="job-points">
+								<li>點歌機與 App 介面、視覺素材及既有功能畫面優化。</li>
+								<li>參與 KTV 評分功能企劃與娛樂平台建置。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間參與專案</summary>
+								<div class="project-list">
+									<div class="project-item"><span>GV001 點歌機</span><span class="project-type">產品 UI</span></div>
+									<div class="project-item"><span>KTV 娛樂平台</span><span class="project-type">系統 UI</span></div>
+									<div class="project-item"><span>K 歌評分系統</span><span class="project-type">功能企劃</span></div>
+									<div class="project-item"><span>智慧 e-link App</span><span class="project-type">App UI</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2014.02<br>2014.12</p>
+						<article class="job-body">
+							<h3>創赫數位科技股份有限公司</h3>
+							<span class="job-role">專案管理師</span>
+							<p class="job-summary">從官網設計與前端製作轉任專案管理，擔任業務與開發端的溝通窗口。</p>
+							<ul class="job-points">
+								<li>公司官網、視覺設計與前端切版。</li>
+								<li>產品方向、時程、需求協調、測試與驗收。</li>
+							</ul>
+						</article>
+					</li>
+
+					<li class="job">
+						<p class="job-date">2011.01<br>2013.08</p>
+						<article class="job-body">
+							<h3>台達電子工業股份有限公司</h3>
+							<span class="job-role">UI 設計／前端與軟體測試</span>
+							<p class="job-summary">負責能源管理平台介面、HTML/CSS 前端實作與軟硬體效能及 QA 測試。</p>
+							<ul class="job-points">
+								<li>平台 UI、網頁佈局、視覺資產與響應式前端。</li>
+								<li>效能測試、測試案例、異常分析及問題追蹤。</li>
+							</ul>
+							<details class="job-details">
+								<summary>查看在職期間參與專案</summary>
+								<div class="project-list">
+									<div class="project-item"><span>IBEMS 能源管理系統</span><span class="project-type">平台 UI</span></div>
+									<div class="project-item"><span>海寧皮革城能源管理</span><span class="project-type">系統介面</span></div>
+									<div class="project-item"><span>屏東太陽能監測系統</span><span class="project-type">監測平台</span></div>
+									<div class="project-item"><span>智慧電表效能測試</span><span class="project-type">QA 測試</span></div>
+								</div>
+							</details>
+						</article>
+					</li>
+				</ol>
+			</section>
+
+			<aside class="sidebar" aria-label="履歷補充資訊">
+				<section class="sidebar-section">
+					<h2>目前現況</h2>
+					<div class="current-item">
+						<strong>銀行業專案</strong>
+						<span class="info-value">官網開發與活動網頁製作</span>
+					</div>
+					<div class="current-item">
+						<strong>iPlayground</strong>
+						<span class="info-value">網站、印刷物、周邊商品與文宣設計</span>
+					</div>
+				</section>
+
+				<section class="sidebar-section">
+					<h2>聯絡方式</h2>
+					<ul class="info-list">
+						<li><span class="info-label">E-mail</span><a class="info-value" href="mailto:atharsfake@gmail.com">atharsfake@gmail.com</a></li>
+						<li><span class="info-label">工作地區</span><span class="info-value">桃園、台北、新北</span></li>
+						<li><span class="info-label">工作型態</span><span class="info-value">全職／可遠端協作</span></li>
+					</ul>
+				</section>
+
+				<section class="sidebar-section">
+					<h2>核心技能</h2>
+					<ul class="skill-list">
+						<li>UI／系統介面設計</li>
+						<li>活動視覺與平面設計</li>
+						<li>HTML5／CSS3／RWD</li>
+						<li>JavaScript／jQuery</li>
+						<li>Design Guidelines</li>
+						<li>專案溝通與 QA</li>
+					</ul>
+				</section>
+
+				<section class="sidebar-section">
+					<h2>設計工具</h2>
+					<p>Figma、Photoshop、Illustrator、Sketch、Visual Studio Code</p>
+				</section>
+
+				<section class="sidebar-section">
+					<h2>學歷</h2>
+					<p><strong class="info-label">中原大學</strong>資訊工程學系<br>2004.09－2009.06</p>
+				</section>
+
+				<section class="sidebar-section">
+					<h2>作品分類</h2>
+					<ul class="link-list">
+						<li><a href="work_system.html">Web／系統 UI</a></li>
+						<li><a href="work_app.html">App UI</a></li>
+						<li><a href="work_LOGO.html">Logo 設計</a></li>
+						<li><a href="work_active.html">平面視覺</a></li>
+						<li><a href="work_painter.html">插畫／繪圖</a></li>
+						<li><a href="work_gambleWeb.html">遊戲外包美術</a></li>
+					</ul>
+				</section>
+			</aside>
+		</div>
+
+		<footer class="resume-footer">
+			<p>© 2026 Ethan Chen</p>
+			<p>UI Design × Front-end Development</p>
+		</footer>
+	</main>
+</body>
 </html>

@@ -3,6 +3,13 @@ import webpush from "web-push";
 const REMINDER_LEAD_MS = 2 * 60 * 1000;
 const MAX_TASK_START_DELAY_MS = 14 * 24 * 60 * 60 * 1000;
 const TASK_TARGET_URL = "https://gztin.github.io/iPlayground/staff/";
+const SHEETS_CACHE_SECONDS = 60;
+const SHEET_DATASETS = Object.freeze({
+  "d1-roster": { sheet: "D1排班", gid: "2038369112", type: "roster", day: "D1" },
+  "d2-roster": { sheet: "D2排班", gid: "480476053", type: "roster", day: "D2" },
+  "d1-tasks": { sheet: "D1", gid: "1514512883", type: "tasks", day: "D1" },
+  "d2-tasks": { sheet: "D2", gid: "984910202", type: "tasks", day: "D2" }
+});
 
 function json(data, status, extraHeaders) {
   return new Response(JSON.stringify(data), {
@@ -32,6 +39,139 @@ function withCors(response, request, env) {
 function validBrowserRequest(request, env) {
   const origin = request.headers.get("Origin");
   return !origin || origin === env.ALLOWED_ORIGIN;
+}
+
+function cleanCell(value) {
+  return String(value == null ? "" : value).trim();
+}
+
+function nonEmptyCells(values) {
+  return values.map(cleanCell).filter(Boolean);
+}
+
+function uniqueCells(values) {
+  return Array.from(new Set(nonEmptyCells(values)));
+}
+
+function splitTimeRange(value) {
+  const parts = cleanCell(value).split(/\s*[-–—]\s*/);
+  return {
+    start: cleanCell(parts[0]),
+    end: cleanCell(parts[1])
+  };
+}
+
+function findHeaderRow(values, predicate) {
+  return values.findIndex(row => Array.isArray(row) && predicate(row.map(cleanCell)));
+}
+
+function normalizeTasks(values, config) {
+  const headerIndex = findHeaderRow(values, row => row[0] === "工作項目" && row[1] === "時間");
+  const rows = headerIndex >= 0 ? values.slice(headerIndex + 1) : values;
+  return rows.map((row, index) => {
+    const cells = Array.isArray(row) ? row.map(cleanCell) : [];
+    const item = cells[0];
+    if (!item) return null;
+    const time = splitTimeRange(cells[1]);
+    const photographers = config.day === "D1" ? uniqueCells(cells.slice(13, 15)) : uniqueCells(cells.slice(15, 17));
+    return {
+      id: `${config.day.toLowerCase()}-task-${headerIndex + index + 2}`,
+      day: config.day,
+      item,
+      time: cells[1],
+      start: time.start,
+      end: time.end,
+      location: cells[2],
+      description: cells[3],
+      requiredCount: /^\d+$/.test(cells[4]) ? Number(cells[4]) : null,
+      workers: uniqueCells(cells.slice(5, 12)),
+      owner: cells[12],
+      photographers
+    };
+  }).filter(Boolean);
+}
+
+function normalizeRoster(values, config) {
+  const headerIndex = findHeaderRow(values, row => row[1] === "開始時間" && row[2] === "結束時間");
+  if (headerIndex < 0) return [];
+  const headers = values[headerIndex].map(cleanCell);
+  return values.slice(headerIndex + 1).map((row, index) => {
+    const cells = Array.isArray(row) ? row.map(cleanCell) : [];
+    if (!cells[1] || !cells[2]) return null;
+    const assignments = [];
+    for (let column = 8; column < cells.length; column += 1) {
+      if (!cells[column]) continue;
+      assignments.push({
+        column: column + 1,
+        role: headers[column] || `column-${column + 1}`,
+        person: cells[column]
+      });
+    }
+    return {
+      id: `${config.day.toLowerCase()}-slot-${headerIndex + index + 2}`,
+      day: config.day,
+      start: cells[1],
+      end: cells[2],
+      minutes: /^\d+$/.test(cells[3]) ? Number(cells[3]) : null,
+      period: cells[4],
+      content: cells[5],
+      speaker: cells[6],
+      title: cells[7],
+      assignments
+    };
+  }).filter(Boolean);
+}
+
+function normalizeSheetValues(values, config) {
+  if (!Array.isArray(values)) throw new Error("Sheet values are not an array");
+  return config.type === "tasks" ? normalizeTasks(values, config) : normalizeRoster(values, config);
+}
+
+async function fetchSheetDataset(dataset, env) {
+  const config = SHEET_DATASETS[dataset];
+  if (!config) return { errorResponse: json({ error: "Unknown dataset" }, 404) };
+  if (!env.SHEETS_API_URL || !env.SHEETS_API_TOKEN) {
+    return { errorResponse: json({ error: "Sheets API is not configured" }, 503) };
+  }
+
+  const upstreamUrl = new URL(env.SHEETS_API_URL);
+  upstreamUrl.searchParams.set("dataset", dataset);
+  upstreamUrl.searchParams.set("token", env.SHEETS_API_TOKEN);
+  const upstream = await fetch(upstreamUrl.toString(), { redirect: "follow" });
+  if (!upstream.ok) {
+    return { errorResponse: json({ error: "Sheets API request failed" }, 502) };
+  }
+
+  const payload = await upstream.json().catch(() => null);
+  if (!payload || payload.ok !== true || !Array.isArray(payload.values)) {
+    return { errorResponse: json({ error: payload && payload.error || "Invalid Sheets API response" }, 502) };
+  }
+
+  return {
+    response: json({
+      dataset,
+      sheet: config.sheet,
+      gid: config.gid,
+      fetchedAt: payload.fetchedAt || new Date().toISOString(),
+      data: normalizeSheetValues(payload.values, config)
+    }, 200, {
+      "Cache-Control": `public, max-age=${SHEETS_CACHE_SECONDS}`,
+      "X-Content-Type-Options": "nosniff"
+    })
+  };
+}
+
+async function sheetDatasetResponse(request, dataset, env, ctx) {
+  const cache = caches.default;
+  const requestUrl = new URL(request.url);
+  const cacheKey = new Request(`${requestUrl.origin}/__sheet-cache/${dataset}`, { method: "GET" });
+  const cached = await cache.match(cacheKey);
+  if (cached) return cached;
+
+  const result = await fetchSheetDataset(dataset, env);
+  if (result.errorResponse) return result.errorResponse;
+  ctx.waitUntil(cache.put(cacheKey, result.response.clone()));
+  return result.response;
 }
 
 async function subscriptionId(endpoint) {
@@ -218,6 +358,18 @@ export default {
       response = json({ ok: true, service: "iplayground-reminders" });
     } else if (request.method === "GET" && url.pathname === "/api/config") {
       response = json({ vapidPublicKey: env.VAPID_PUBLIC_KEY });
+    } else if (request.method === "GET" && url.pathname === "/api/sheets") {
+      response = json({
+        datasets: Object.entries(SHEET_DATASETS).map(([dataset, config]) => ({
+          dataset,
+          sheet: config.sheet,
+          gid: config.gid,
+          url: `/api/sheets/${dataset}`
+        }))
+      });
+    } else if (request.method === "GET" && url.pathname.startsWith("/api/sheets/")) {
+      const dataset = decodeURIComponent(url.pathname.slice("/api/sheets/".length));
+      response = await sheetDatasetResponse(request, dataset, env, ctx);
     } else if (request.method === "POST" && url.pathname === "/api/task-reminder") {
       const scheduled = await saveTaskReminder(request, env);
       response = scheduled.errorResponse || json({

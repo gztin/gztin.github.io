@@ -1,4 +1,4 @@
-# IMS Web Push Worker
+# IMS Worker：Web Push 與 Google Sheets API
 
 這個 Worker 僅供第一階段測試：接收瀏覽器 Push Subscription，並在 15 秒後送出「報到桌佈置」系統通知。
 
@@ -43,3 +43,25 @@
 - Cron 測試：`npm run dev` 後請求 `/__scheduled`
 
 VAPID 私鑰不可寫入 Git、`wrangler.jsonc` 或前端檔案。
+
+## Google Sheets 唯讀 API
+
+這個 Worker 也提供四個唯讀資料端點：
+
+- `/api/sheets/d1-roster`：`D1排班`（gid `2038369112`）
+- `/api/sheets/d2-roster`：`D2排班`（gid `480476053`）
+- `/api/sheets/d1-tasks`：`D1`（gid `1514512883`）
+- `/api/sheets/d2-tasks`：`D2`（gid `984910202`）
+- `/api/sheets`：列出所有可用資料集
+
+Apps Script 原始碼位於 `apps-script/Code.gs`。部署前：
+
+1. 在目標試算表開啟「擴充功能 → Apps Script」。
+2. 將 `apps-script/Code.gs` 貼入指令碼專案。
+3. 在「專案設定 → 指令碼屬性」新增 `API_TOKEN`，使用足夠長度的隨機值。
+4. 將指令碼部署為 Web App，以擁有者身分執行。
+5. 將 Web App `/exec` URL 設為 Worker Secret `SHEETS_API_URL`。
+6. 將同一個 `API_TOKEN` 設為 Worker Secret `SHEETS_API_TOKEN`。
+7. 重新部署 Worker。
+
+`SHEETS_API_URL` 與 `SHEETS_API_TOKEN` 不可寫入 Git、`wrangler.jsonc` 或前端檔案。Worker 會將成功結果快取 60 秒，並把工作人員欄位正規化為陣列，避免空白欄及重複標題形成重複 JSON key。
